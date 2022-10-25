@@ -13,7 +13,7 @@ import java.util.List;
 @TableName("t_student")
 public class Student {
   @TableId(value = "pk_student_id", type = IdType.AUTO)
-  private BigInteger PKTStudent;
+  private BigInteger PKStudentId;
 
   @TableField(value = "id")
   private String id;
