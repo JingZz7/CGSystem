@@ -14,7 +14,7 @@ import java.util.List;
 public class Classs {
 
     @TableId(value = "pk_class_id",type = IdType.AUTO)
-    private BigInteger PKTClass;
+    private BigInteger PKClassId;
 
     @TableField("id")
     private String id;
