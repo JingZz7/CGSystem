@@ -11,6 +11,5 @@ Technology stack and middleware used：
 - SpringBoot 2.3.7.RELEASE
 - MyBatis-Plus 3.4.2
 - Druid 1.1.16
-- Vue ?
-- Element-ui ?
-- ?
+- Vue?
+- Element-ui?
