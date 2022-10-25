@@ -11,7 +11,7 @@ import java.util.List;
 
 @Data
 @TableName("t_problem")
-public class problem {
+public class Problem {
 
     @TableId(value = "pk_problem_id",type = IdType.AUTO)
     private BigInteger PKProblemId;
@@ -32,5 +32,5 @@ public class problem {
     private String label;
 
     @TableField(exist = false)
-    private List<problem> problemList;
+    private List<Problem> problemList;
 }
