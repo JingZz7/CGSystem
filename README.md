@@ -1,4 +1,5 @@
-# 工程简介
+# Recommended questions system based on CG platform
 
-# 延伸阅读
-
+- springboot 2.3.7.RELEASE
+- mybatis-plus 3.4.2
+- druid 1.1.16
