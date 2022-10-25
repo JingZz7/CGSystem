@@ -12,7 +12,7 @@ import java.util.List;
 @TableName("t_teacher")
 public class Teacher {
 
-    @TableId(value = "pk_t_teacher",type = IdType.AUTO)
+    @TableId(value = "pk_teacher_id",type = IdType.AUTO)
     private BigInteger PKTTeacher;
 
     @TableField("id")
@@ -26,6 +26,9 @@ public class Teacher {
 
     @TableField("phone")
     private String phone;
+
+    @TableField("email")
+    private String email;
 
     @TableField(exist = false)
     private List<Teacher> teacherList;
