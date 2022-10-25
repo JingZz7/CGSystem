@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-
 import java.math.BigInteger;
 import java.util.List;
 
@@ -13,24 +12,24 @@ import java.util.List;
 @TableName("t_problem")
 public class Problem {
 
-    @TableId(value = "pk_problem_id",type = IdType.AUTO)
-    private BigInteger PKProblemId;
+  @TableId(value = "pk_problem_id", type = IdType.AUTO)
+  private BigInteger PKProblemId;
 
-    @TableField("id")
-    private String id;
+  @TableField("id")
+  private String id;
 
-    @TableField("knowledge_point_id")
-    private String KnowledgePointId;
+  @TableField("knowledge_point_id")
+  private String KnowledgePointId;
 
-    @TableField("name")
-    private String name;
+  @TableField("name")
+  private String name;
 
-    @TableField("difficulty")
-    private char difficulty;
+  @TableField("difficulty")
+  private char difficulty;
 
-    @TableField("label")
-    private String label;
+  @TableField("label")
+  private String label;
 
-    @TableField(exist = false)
-    private List<Problem> problemList;
+  @TableField(exist = false)
+  private List<Problem> problemList;
 }
