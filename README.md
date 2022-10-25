@@ -14,4 +14,4 @@ Technology stack and middleware used：
 - Vue?
 - Element-ui?
 
-`目前还处于后端开发阶段`
+`Still in the back-end development stage`
