@@ -12,8 +12,8 @@ public class StudentDaoTest {
 
   @Test
   public void selectListTest() {
-    QueryWrapper qw=new QueryWrapper();
-    qw.like("id","202026010512");
-    System.out.println(studentDao.selectList(qw));
+//    QueryWrapper qw=new QueryWrapper();
+//    qw.like("id","202026010512");
+    System.out.println(studentDao.selectList(null));
   }
 }
