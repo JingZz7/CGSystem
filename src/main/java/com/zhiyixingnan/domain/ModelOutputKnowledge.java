@@ -5,24 +5,22 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 
 @Data
-@TableName("t_model_output")
-public class ModelOutput {
+@TableName("t_model_output_knowledge")
+public class ModelOutputKnowledge {
 
-  @TableId(value = "pk_model_output_id", type = IdType.AUTO)
-  private BigInteger PKModelOutputId;
+  @TableId(value = "pk_model_output_knowledge_id", type = IdType.AUTO)
+  private BigInteger PKModelOutputKnowledgeId;
 
   @TableField("student_id")
   private String studentId;
 
-  @TableField("chapter_id")
-  private String chapterId;
-
-  @TableField("class_id")
-  private String classId;
+  @TableField("knowledge_point_id")
+  private String knowledgePointId;
 
   @TableField("forecast")
-  private Integer forecast;
+  private BigDecimal forecast;
 }
