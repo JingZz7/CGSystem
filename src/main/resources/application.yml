@@ -1,19 +1,19 @@
-spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/cgsystem?serverTimezone=UTC
-    username: root
-    password: 123456
-    type: com.alibaba.druid.pool.DruidDataSource
-
 server:
   port: 80
 
+spring:
+  datasource:
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/cgsystem?serverTimezone=UTC
+      username: root
+      password: 123456
+
 mybatis-plus:
   global-config:
-    field-strategy: 0
     db-config:
       table-prefix: t_
       id-type: auto
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # field-strategy: 0
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
