@@ -25,4 +25,9 @@ public class IStudentServiceTest {
   public void getStudentByClassNameTest() {
     System.out.println(iStudentService.getStudentByClassName("软件二班"));
   }
+
+  @Test
+  public void loginTest() {
+    System.out.println(iStudentService.login("曾靖", "xxx"));
+  }
 }

@@ -8,4 +8,6 @@ import java.util.List;
 public interface IStudentService extends IService<Student> {
 
     public List<Student> getStudentByClassName(String name);
+
+    public Boolean login(String name,String password);
 }
