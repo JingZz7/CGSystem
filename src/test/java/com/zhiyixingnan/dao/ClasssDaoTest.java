@@ -79,4 +79,13 @@ public class ClasssDaoTest {
 
     classsDao.selectPage(page, lqw);
   }
+
+  @Test
+  public void getIdByName() {
+    LambdaQueryWrapper<Classs> lqw = new LambdaQueryWrapper<>();
+    lqw.eq(Classs::getName, "软件一班");
+    //    System.out.println(classsDao.selectOne(lqw));
+    Classs classs = classsDao.selectOne(lqw);
+    System.out.println(classs.getId());
+  }
 }
