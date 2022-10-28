@@ -8,10 +8,11 @@
 
 Technology stack and middleware used：
 
-- SpringBoot 2.3.7.RELEASE
-- MyBatis-Plus 3.4.2
+- SpringBoot 2.3.x.RELEASE
+- MyBatis-Plus 3.4.x
+- MySQL 8.0.x
 - Druid 1.1.16
-- Vue?
-- Element-ui?
+- Vue ?
+- Element-ui ?
 
 `Still in the back-end development stage`

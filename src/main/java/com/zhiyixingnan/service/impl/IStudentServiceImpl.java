@@ -35,6 +35,27 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
   }
 
   @Override
+  public Boolean register(
+      String id, String name, String password, String phone, String email, String classId) {
+
+    LambdaQueryWrapper<Student> lqw = new LambdaQueryWrapper<>();
+    lqw.eq(Strings.isNotEmpty(id), Student::getId, id);
+    if (studentDao.selectOne(lqw) != null) {
+      return false;
+    }
+
+    Student student = new Student();
+    student.setId(id);
+    student.setName(name);
+    student.setPassword(password);
+    student.setPhone(phone);
+    student.setEmail(email);
+    student.setClassId(classId);
+
+    return studentDao.insert(student) > 0;
+  }
+
+  @Override
   public List<Student> getStudentByClassName(String name) {
     LambdaQueryWrapper<Classs> lqw = new LambdaQueryWrapper<>();
     lqw.eq(Classs::getName, name);

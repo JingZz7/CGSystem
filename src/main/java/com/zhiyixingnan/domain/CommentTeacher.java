@@ -4,12 +4,15 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.math.BigInteger;
-import java.util.List;
 
 @Data
 @TableName("t_comment_teacher")
+@NoArgsConstructor
+@AllArgsConstructor
 public class CommentTeacher {
 
   @TableId(value = "pk_comment_teacher_id", type = IdType.AUTO)
@@ -23,7 +26,4 @@ public class CommentTeacher {
 
   @TableField("problem_id")
   private String problemId;
-
-  @TableField(exist = false)
-  private List<CommentTeacher> commentTeacherList;
 }

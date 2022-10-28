@@ -4,13 +4,16 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.math.BigInteger;
 import java.util.List;
 
 @Data
 @TableName("t_student")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Student {
   @TableId(value = "pk_student_id", type = IdType.AUTO)
   private BigInteger PKStudentId;
@@ -32,7 +35,4 @@ public class Student {
 
   @TableField("class_id")
   private String classId;
-
-  @TableField(exist = false)
-  private List<Student> studentList;
 }

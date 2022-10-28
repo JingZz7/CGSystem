@@ -7,7 +7,10 @@ import java.util.List;
 
 public interface IStudentService extends IService<Student> {
 
-    public List<Student> getStudentByClassName(String name);
+  public List<Student> getStudentByClassName(String name);
 
-    public Boolean login(String name,String password);
+  public Boolean login(String name, String password);
+
+  public Boolean register(
+      String id, String name, String password, String phone, String email, String classId);
 }
