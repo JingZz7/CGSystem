@@ -1,6 +1,7 @@
 package com.zhiyixingnan.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhiyixingnan.domain.Student;
 import com.zhiyixingnan.service.IStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,5 +70,15 @@ public class StudentController {
     LambdaQueryWrapper<Student> lqw = new LambdaQueryWrapper<>();
     lqw.eq(Student::getId, id);
     return iStudentService.getOne(lqw);
+  }
+
+  /**
+   * @author ZJ Description 分页查询 date 2022-10-31 21:36:28 21:36
+   * @param currentPage
+   * @param pageSize
+   */
+  @GetMapping("{currentPage}/{pageSize}")
+  public IPage<Student> getPage(@PathVariable int currentPage, @PathVariable int pageSize) {
+    return iStudentService.getPage(currentPage, pageSize);
   }
 }

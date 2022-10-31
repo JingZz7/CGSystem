@@ -1,6 +1,8 @@
 package com.zhiyixingnan.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhiyixingnan.dao.ClasssDao;
 import com.zhiyixingnan.dao.StudentDao;
@@ -52,6 +54,13 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
     student.setClassId(classId);
 
     return studentDao.insert(student) > 0;
+  }
+
+  @Override
+  public IPage<Student> getPage(int currentPage, int pageSize) {
+    IPage page = new Page(currentPage, pageSize);
+    studentDao.selectPage(page, null);
+    return page;
   }
 
   @Override

@@ -1,8 +1,8 @@
 package com.zhiyixingnan.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhiyixingnan.domain.Student;
-
 import java.util.List;
 
 public interface IStudentService extends IService<Student> {
@@ -13,4 +13,6 @@ public interface IStudentService extends IService<Student> {
 
   public Boolean register(
       String id, String name, String password, String phone, String email, String classId);
+
+  public IPage<Student> getPage(int currentPage,int pageSize);
 }
