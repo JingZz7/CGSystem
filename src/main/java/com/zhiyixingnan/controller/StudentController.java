@@ -2,6 +2,8 @@ package com.zhiyixingnan.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.api.R;
+import com.zhiyixingnan.controller.utils.Result;
 import com.zhiyixingnan.domain.Student;
 import com.zhiyixingnan.service.IStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +28,8 @@ public class StudentController {
    * @param
    */
   @GetMapping
-  public List<Student> getAll() {
-    return iStudentService.list();
+  public Result getAll() {
+    return new Result(true, iStudentService.list());
   }
 
   /**
@@ -35,8 +37,8 @@ public class StudentController {
    * @param student
    */
   @PostMapping
-  public Boolean save(@RequestBody Student student) {
-    return iStudentService.save(student);
+  public Result save(@RequestBody Student student) {
+    return new Result(iStudentService.save(student));
   }
 
   /**
@@ -44,10 +46,10 @@ public class StudentController {
    * @param student
    */
   @PutMapping
-  public Boolean update(@RequestBody Student student) {
+  public Result update(@RequestBody Student student) {
     LambdaQueryWrapper<Student> lqw = new LambdaQueryWrapper<>();
     lqw.eq(Student::getId, student.getId());
-    return iStudentService.update(student, lqw);
+    return new Result(iStudentService.update(student, lqw));
   }
 
   /**
@@ -55,10 +57,10 @@ public class StudentController {
    * @param id
    */
   @DeleteMapping("{id}") // http://localhost/Student/202026010512
-  public Boolean delete(@PathVariable String id) {
+  public Result delete(@PathVariable String id) {
     LambdaQueryWrapper<Student> lqw = new LambdaQueryWrapper<>();
     lqw.eq(Student::getId, id);
-    return iStudentService.remove(lqw);
+    return new Result(iStudentService.remove(lqw));
   }
 
   /**
@@ -66,10 +68,10 @@ public class StudentController {
    * @param id
    */
   @GetMapping("{id}")
-  public Student getById(@PathVariable String id) {
+  public Result getById(@PathVariable String id) {
     LambdaQueryWrapper<Student> lqw = new LambdaQueryWrapper<>();
     lqw.eq(Student::getId, id);
-    return iStudentService.getOne(lqw);
+    return new Result(true, iStudentService.getOne(lqw));
   }
 
   /**
@@ -78,7 +80,7 @@ public class StudentController {
    * @param pageSize
    */
   @GetMapping("{currentPage}/{pageSize}")
-  public IPage<Student> getPage(@PathVariable int currentPage, @PathVariable int pageSize) {
-    return iStudentService.getPage(currentPage, pageSize);
+  public Result getPage(@PathVariable int currentPage, @PathVariable int pageSize) {
+    return new Result(true, iStudentService.getPage(currentPage, pageSize));
   }
 }
