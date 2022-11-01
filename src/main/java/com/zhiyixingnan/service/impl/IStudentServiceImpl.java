@@ -12,6 +12,8 @@ import com.zhiyixingnan.service.IStudentService;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+
 import java.util.List;
 
 @Service
@@ -23,16 +25,16 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
   @Autowired private StudentDao studentDao;
 
   @Override
-  public Boolean login(String name, String password) {
-    LambdaQueryWrapper<Student> lqw = new LambdaQueryWrapper<>();
-    lqw.eq(Strings.isNotEmpty(name), Student::getName, name);
-    Student student = studentDao.selectOne(lqw);
+  public Student login(String id, String password) {
+    //    LambdaQueryWrapper<Student> lqw = new LambdaQueryWrapper<>();
+    //    lqw.eq(Strings.isNotEmpty(name), Student::getName, name);
+    //    Student student = studentDao.selectOne(lqw);
+    //    if (student == null) {
+    //      return false;
+    //    }
+    //    return password.equals(student.getPassword());
 
-    if (student == null) {
-      return false;
-    }
-
-    return password.equals(student.getPassword());
+    return studentDao.getResultByIdAndPassword(id, password);
   }
 
   @Override

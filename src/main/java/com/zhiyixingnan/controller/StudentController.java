@@ -74,13 +74,18 @@ public class StudentController {
     return new Result(true, iStudentService.getOne(lqw));
   }
 
-  /**
-   * @author ZJ Description 分页查询 date 2022-10-31 21:36:28 21:36
-   * @param currentPage
-   * @param pageSize
-   */
-  @GetMapping("{currentPage}/{pageSize}")
-  public Result getPage(@PathVariable int currentPage, @PathVariable int pageSize) {
-    return new Result(true, iStudentService.getPage(currentPage, pageSize));
+  //    /**
+  //     * @author ZJ Description 分页查询 date 2022-10-31 21:36:28 21:36
+  //     * @param currentPage
+  //     * @param pageSize
+  //     */
+  //    @GetMapping("{currentPage}/{pageSize}")
+  //    public Result getPage(@PathVariable int currentPage, @PathVariable int pageSize) {
+  //      return new Result(true, iStudentService.getPage(currentPage, pageSize));
+  //    }
+
+  @GetMapping("/{id}/{password}")
+  public Result login(@PathVariable String id, @PathVariable String password) {
+    return new Result(true, iStudentService.login(id, password));
   }
 }

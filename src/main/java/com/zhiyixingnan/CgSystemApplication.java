@@ -5,9 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 
 @SpringBootApplication
-@ServletComponentScan("filter/SqlInjectFilter")
+@ServletComponentScan
 public class CgSystemApplication {
-
   public static void main(String[] args) {
     SpringApplication.run(CgSystemApplication.class, args);
   }
