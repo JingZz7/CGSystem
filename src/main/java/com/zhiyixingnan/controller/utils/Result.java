@@ -16,4 +16,8 @@ public class Result {
   public Result(Boolean flag) {
     this.flag = flag;
   }
+
+  public Result(Object data) {
+    this.data = data;
+  }
 }

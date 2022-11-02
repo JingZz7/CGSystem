@@ -45,10 +45,10 @@ public class StudentController {
    * @author ZJ Description 改 date 2022-10-31 20:40:21 20:40
    * @param student
    */
-  @PutMapping
-  public Result update(@RequestBody Student student) {
+  @PutMapping("{id}")
+  public Result update(@PathVariable String id, @RequestBody Student student) {
     LambdaQueryWrapper<Student> lqw = new LambdaQueryWrapper<>();
-    lqw.eq(Student::getId, student.getId());
+    lqw.eq(Student::getId, id);
     return new Result(iStudentService.update(student, lqw));
   }
 
@@ -86,6 +86,6 @@ public class StudentController {
 
   @GetMapping("/{id}/{password}")
   public Result login(@PathVariable String id, @PathVariable String password) {
-    return new Result(true, iStudentService.login(id, password));
+    return new Result(iStudentService.login(id, password));
   }
 }
