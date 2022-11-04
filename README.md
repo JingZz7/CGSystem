@@ -15,4 +15,6 @@ Technology stack and middleware used：
 - Vue ?
 - Element-ui ?
 
+**统一采用RESTful风格编码方式**
+
 `Still in the back-end development stage`
