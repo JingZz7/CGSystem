@@ -17,8 +17,8 @@ public class LoginController {
 
   @Autowired private IStudentService iStudentService;
 
-  //  @RequestMapping(value = "/login", method = RequestMethod.GET)
-  @GetMapping("/{id}/{password}")
+  @RequestMapping(value = "/students/{id}/{password}",method = RequestMethod.GET)
+//  @GetMapping("/{id}/{password}")
   public JsonResult login(@PathVariable String id, @PathVariable String password) {
     LambdaQueryWrapper<Student> lqw = new LambdaQueryWrapper<>();
     lqw.eq(Student::getId, id);
