@@ -25,6 +25,7 @@ public class LoginController {
   @Autowired private IStudentService iStudentService;
   @Autowired private ITeacherService iTeacherService;
   @Autowired private IAdministratorService iAdministratorService;
+  @Autowired private LoginController loginController;
 
   /**
    * @author ZJ Description 学生登录 date 2022-11-05 21:01:32 21:01
@@ -81,6 +82,10 @@ public class LoginController {
     return JsonResult.failed("用户名或密码错误");
   }
 
+  /**
+   * @author ZJ Description 忘记密码 date 2022-11-06 23:02:30 23:02
+   * @param phone
+   */
   @RequestMapping(value = "/forgotPassword/{phone}", method = RequestMethod.GET)
   public JsonResult forgotPassword(@PathVariable String phone) {
     LambdaQueryWrapper<Student> lqw1 = new LambdaQueryWrapper<>();
@@ -96,10 +101,46 @@ public class LoginController {
       return JsonResult.failed("手机号不存在");
     }
     if (student != null) {
-      return JsonResult.success(student);
+      return JsonResult.success(student, "student");
     } else if (teacher != null) {
-      return JsonResult.success(teacher);
+      return JsonResult.success(teacher, "teacher");
     }
-    return JsonResult.success(administrator);
+    return JsonResult.success(administrator, "administrator");
+  }
+
+  /**
+   * @author ZJ Description 修改学生密码 date 2022-11-07 00:11:37 0:11
+   * @param student
+   */
+  @RequestMapping(value = "/modifyStudentPassword", method = RequestMethod.PUT)
+  public JsonResult modifyStudentPassword(@RequestBody Student student) {
+    LambdaQueryWrapper<Student> lqw = new LambdaQueryWrapper<>();
+    lqw.eq(Student::getPhone, student.getPhone());
+    iStudentService.update(student, lqw);
+    return JsonResult.success("修改成功!");
+  }
+
+  /**
+   * @author ZJ Description 修改教师密码 date 2022-11-07 00:13:55 0:13
+   * @param teacher
+   */
+  @RequestMapping(value = "/modifyTeacherPassword", method = RequestMethod.PUT)
+  public JsonResult modifyTeacherPassword(@RequestBody Teacher teacher) {
+    LambdaQueryWrapper<Teacher> lqw = new LambdaQueryWrapper<>();
+    lqw.eq(Teacher::getPhone, teacher.getPhone());
+    iTeacherService.update(teacher, lqw);
+    return JsonResult.success("修改成功!");
+  }
+
+  /**
+   * @author ZJ Description 修改管理员密码 date 2022-11-07 00:15:14 0:15
+   * @param administrator
+   */
+  @RequestMapping(value = "/modifyAdministratorPassword", method = RequestMethod.PUT)
+  public JsonResult modifyAdministratorPassword(@RequestBody Administrator administrator) {
+    LambdaQueryWrapper<Administrator> lqw = new LambdaQueryWrapper<>();
+    lqw.eq(Administrator::getPhone, administrator.getPhone());
+    iAdministratorService.update(administrator, lqw);
+    return JsonResult.success("修改成功!");
   }
 }

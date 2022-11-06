@@ -66,6 +66,16 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
   }
 
   @Override
+  public String modify(String phone, Student student) {
+    LambdaQueryWrapper<Student> lqw = new LambdaQueryWrapper<>();
+    lqw.eq(Student::getPhone, phone);
+    if (studentDao.update(student, lqw) > 0) {
+      return "修改成功";
+    }
+    return "修改失败";
+  }
+
+  @Override
   public List<Student> getStudentByClassName(String name) {
     LambdaQueryWrapper<Classs> lqw = new LambdaQueryWrapper<>();
     lqw.eq(Classs::getName, name);

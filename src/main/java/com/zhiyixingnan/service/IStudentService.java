@@ -14,5 +14,7 @@ public interface IStudentService extends IService<Student> {
   public Boolean register(
       String id, String name, String password, String phone, String email, String classId);
 
-  public IPage<Student> getPage(int currentPage,int pageSize);
+  public IPage<Student> getPage(int currentPage, int pageSize);
+
+  public String modify(String phone, Student student);
 }
