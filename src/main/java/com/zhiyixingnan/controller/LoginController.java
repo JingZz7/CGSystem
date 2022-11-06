@@ -1,6 +1,7 @@
 package com.zhiyixingnan.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.zhiyixingnan.controller.utils.JsonResult;
 import com.zhiyixingnan.domain.Administrator;
 import com.zhiyixingnan.domain.Student;
@@ -8,6 +9,7 @@ import com.zhiyixingnan.domain.Teacher;
 import com.zhiyixingnan.service.IAdministratorService;
 import com.zhiyixingnan.service.IStudentService;
 import com.zhiyixingnan.service.ITeacherService;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,10 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoginController {
 
   @Autowired private IStudentService iStudentService;
-  @Autowired
-  private ITeacherService iTeacherService;
-  @Autowired
-  private IAdministratorService iAdministratorService;
+  @Autowired private ITeacherService iTeacherService;
+  @Autowired private IAdministratorService iAdministratorService;
 
   /**
    * @author ZJ Description 学生登录 date 2022-11-05 21:01:32 21:01
@@ -79,5 +79,27 @@ public class LoginController {
       return JsonResult.success("success");
     }
     return JsonResult.failed("用户名或密码错误");
+  }
+
+  @RequestMapping(value = "/forgotPassword/{phone}", method = RequestMethod.GET)
+  public JsonResult forgotPassword(@PathVariable String phone) {
+    LambdaQueryWrapper<Student> lqw1 = new LambdaQueryWrapper<>();
+    LambdaQueryWrapper<Teacher> lqw2 = new LambdaQueryWrapper<>();
+    LambdaQueryWrapper<Administrator> lqw3 = new LambdaQueryWrapper<>();
+    lqw1.eq(Student::getPhone, phone);
+    lqw2.eq(Teacher::getPhone, phone);
+    lqw3.eq(Administrator::getPhone, phone);
+    Student student = iStudentService.getOne(lqw1);
+    Teacher teacher = iTeacherService.getOne(lqw2);
+    Administrator administrator = iAdministratorService.getOne(lqw3);
+    if (student == null && teacher == null && administrator == null) {
+      return JsonResult.failed("手机号不存在");
+    }
+    if (student != null) {
+      return JsonResult.success(student);
+    } else if (teacher != null) {
+      return JsonResult.success(teacher);
+    }
+    return JsonResult.success(administrator);
   }
 }
