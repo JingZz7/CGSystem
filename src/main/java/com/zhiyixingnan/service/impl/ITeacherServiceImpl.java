@@ -7,7 +7,9 @@ import com.zhiyixingnan.domain.Teacher;
 import com.zhiyixingnan.service.ITeacherService;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
     implements ITeacherService {
 
