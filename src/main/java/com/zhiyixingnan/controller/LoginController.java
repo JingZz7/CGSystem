@@ -28,11 +28,15 @@ public class LoginController {
   @Autowired private IAdministratorService iAdministratorService;
   @Autowired private LoginController loginController;
 
+  /**
+   * @author ZJ Description 学生登录 date jsonObject数据包含"id"和"password"即可 2022-11-07 21:28:34 21:28
+   * @param jsonObject
+   */
   @RequestMapping(value = "/students", method = RequestMethod.POST)
   //  @GetMapping("/{id}/{password}")
   public JsonResult loginStudent(@RequestBody JSONObject jsonObject) {
-//    lqw.eq(Student::getDeleted        , 0)
-//            .and(i -> i.eq(Student::getId, id).eq(Student::getPassword, password));
+    //    lqw.eq(Student::getDeleted        , 0)
+    //            .and(i -> i.eq(Student::getId, id).eq(Student::getPassword, password));
     if (iStudentService.isExistStudent(
         jsonObject.getString("id"), jsonObject.getString("password"))) {
       return JsonResult.success("登录成功");
