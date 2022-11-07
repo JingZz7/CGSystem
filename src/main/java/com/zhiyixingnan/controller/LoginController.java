@@ -31,7 +31,7 @@ public class LoginController {
   @RequestMapping(value = "/students", method = RequestMethod.POST)
   //  @GetMapping("/{id}/{password}")
   public JsonResult loginStudent(@RequestBody JSONObject jsonObject) {
-//    lqw.eq(Student::getDeleted, 0)
+//    lqw.eq(Student::getDeleted        , 0)
 //            .and(i -> i.eq(Student::getId, id).eq(Student::getPassword, password));
     if (iStudentService.isExistStudent(
         jsonObject.getString("id"), jsonObject.getString("password"))) {
