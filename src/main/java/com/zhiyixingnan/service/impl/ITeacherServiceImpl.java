@@ -30,6 +30,17 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
   }
 
   @Override
+  public Boolean isExistTeacher(String id, String password) {
+    LambdaQueryWrapper<Teacher> lqw = new LambdaQueryWrapper<>();
+    lqw.eq(Teacher::getDeleted, 0)
+            .and(i -> i.eq(Teacher::getId, id).eq(Teacher::getPassword, password));
+    if (teacherDao.selectOne(lqw) == null) {
+      return false;
+    }
+    return true;
+  }
+
+  @Override
   public Boolean isTeacherPhone(String phone) {
     LambdaQueryWrapper<Teacher> lqw = new LambdaQueryWrapper<>();
     lqw.eq(Teacher::getPhone, phone);

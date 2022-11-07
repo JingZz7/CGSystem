@@ -12,7 +12,6 @@ DROP TABLE IF EXISTS `t_favorite`;
 DROP TABLE IF EXISTS `t_recommend_problem`;
 DROP TABLE IF EXISTS `t_comment_student`;
 DROP TABLE IF EXISTS `t_model_input`;
-DROP TABLE IF EXISTS `t_model_output`;
 DROP TABLE IF EXISTS `t_comment_teacher`;
 DROP TABLE IF EXISTS `t_model_output_knowledge`;
 DROP TABLE IF EXISTS `t_model_output_score`;
@@ -27,8 +26,8 @@ CREATE TABLE `t_student`
     `password`      VARCHAR(16)  NOT NULL,
     `phone`         CHAR(11)     NOT NULL,
     `email`         VARCHAR(255) NOT NULL,
+    `deleted`       INTEGER      NOT NULL,
     `class_id`      CHAR(6)      NOT NULL,
-    `deleted`       TINYINT      NOT NULL,
     PRIMARY KEY (`pk_student_id`),
     UNIQUE (`id`)
 );
@@ -38,6 +37,7 @@ CREATE TABLE `t_class`
     `pk_class_id` BIGINT     NOT NULL,
     `id`          CHAR(6)    NOT NULL,
     `name`        VARCHAR(8) NOT NULL,
+    `deleted`     INTEGER    NOT NULL,
     PRIMARY KEY (`pk_class_id`),
     UNIQUE (`id`)
 );
@@ -50,6 +50,7 @@ CREATE TABLE `t_teacher`
     `password`      VARCHAR(16)  NOT NULL,
     `phone`         CHAR(11)     NOT NULL,
     `email`         VARCHAR(255) NOT NULL,
+    `deleted`       INTEGER      NOT NULL,
     PRIMARY KEY (`pk_teacher_id`),
     UNIQUE (`id`)
 );
@@ -83,6 +84,7 @@ CREATE TABLE `t_knowledge_point`
     `pk_knowledge_point_id` BIGINT       NOT NULL,
     `id`                    VARCHAR(10)  NOT NULL,
     `name`                  VARCHAR(255) NOT NULL,
+    `deleted`               INTEGER      NOT NULL,
     `student_id`            CHAR(12)     NOT NULL,
     PRIMARY KEY (`pk_knowledge_point_id`),
     UNIQUE (`id`)
@@ -96,6 +98,7 @@ CREATE TABLE `t_problem`
     `name`               VARCHAR(20) NOT NULL,
     `difficulty`         CHAR(1)     NOT NULL,
     `label`              VARCHAR(20) NOT NULL,
+    `deleted`            INTEGER     NOT NULL,
     PRIMARY KEY (`pk_problem_id`),
     UNIQUE (`id`)
 );
@@ -148,16 +151,6 @@ CREATE TABLE `t_model_input`
     PRIMARY KEY (`pk_model_input_id`)
 );
 
-CREATE TABLE `t_model_output`
-(
-    `pk_model_output_id` BIGINT      NOT NULL,
-    `student_id`         CHAR(12)    NOT NULL,
-    `chapter_id`         VARCHAR(10) NOT NULL,
-    `class_id`           CHAR(6)     NOT NULL,
-    `forecast`           BOOLEAN     NOT NULL,
-    PRIMARY KEY (`pk_model_output_id`)
-);
-
 CREATE TABLE `t_comment_teacher`
 (
     `pk_comment_teacher_id` BIGINT       NOT NULL,
@@ -206,12 +199,6 @@ ALTER TABLE `t_comment_student`
     ADD FOREIGN KEY (`problem_id`) REFERENCES `t_problem` (`id`);
 ALTER TABLE `t_model_input`
     ADD FOREIGN KEY (`student_id`) REFERENCES `t_student` (`id`);
-ALTER TABLE `t_model_output`
-    ADD FOREIGN KEY (`student_id`) REFERENCES `t_student` (`id`);
-ALTER TABLE `t_model_output`
-    ADD FOREIGN KEY (`chapter_id`) REFERENCES `t_knowledge_point` (`id`);
-ALTER TABLE `t_model_output`
-    ADD FOREIGN KEY (`class_id`) REFERENCES `t_class` (`id`);
 ALTER TABLE `t_comment_teacher`
     ADD FOREIGN KEY (`teacher_id`) REFERENCES `t_teacher` (`id`);
 ALTER TABLE `t_comment_teacher`

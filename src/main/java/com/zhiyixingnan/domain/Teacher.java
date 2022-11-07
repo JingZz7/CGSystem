@@ -32,4 +32,7 @@ public class Teacher {
 
   @TableField("email")
   private String email;
+
+  @TableField("deleted")
+  private int deleted;
 }
