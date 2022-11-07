@@ -1,5 +1,6 @@
 package com.zhiyixingnan.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.zhiyixingnan.controller.utils.JsonResult;
@@ -83,64 +84,58 @@ public class LoginController {
   }
 
   /**
-   * @author ZJ Description 忘记密码 date 2022-11-06 23:02:30 23:02
-   * @param phone
+   * @author ZJ Description 忘记密码 date jsonObject数据包含"phone"字段即可 2022-11-07 18:04:21 18:04
+   * @param jsonObject
    */
-  @RequestMapping(value = "/forgotPassword/{phone}", method = RequestMethod.GET)
-  public JsonResult forgotPassword(@PathVariable String phone) {
-    LambdaQueryWrapper<Student> lqw1 = new LambdaQueryWrapper<>();
-    LambdaQueryWrapper<Teacher> lqw2 = new LambdaQueryWrapper<>();
-    LambdaQueryWrapper<Administrator> lqw3 = new LambdaQueryWrapper<>();
-    lqw1.eq(Student::getPhone, phone);
-    lqw2.eq(Teacher::getPhone, phone);
-    lqw3.eq(Administrator::getPhone, phone);
-    Student student = iStudentService.getOne(lqw1);
-    Teacher teacher = iTeacherService.getOne(lqw2);
-    Administrator administrator = iAdministratorService.getOne(lqw3);
-    if (student == null && teacher == null && administrator == null) {
-      return JsonResult.failed("手机号不存在");
+  @RequestMapping(value = "/forgotPassword", method = RequestMethod.POST)
+  public JsonResult forgotPassword(@RequestBody JSONObject jsonObject) {
+    if (!iStudentService.isStudentPhone(jsonObject.getString("phone"))
+        && !iTeacherService.isTeacherPhone(jsonObject.getString("phone"))
+        && !iAdministratorService.isAdministratorPhone(jsonObject.getString("phone"))) {
+      return JsonResult.validateFailed("手机号不存在");
     }
-    if (student != null) {
-      return JsonResult.success(student, "student");
-    } else if (teacher != null) {
-      return JsonResult.success(teacher, "teacher");
+    return JsonResult.success("手机号存在");
+  }
+
+  /**
+   * @author ZJ Description 修改密码 date jsonObject数据包含"phone"字段和"password"字段即可 2022-11-07 17:47:14 17:47
+   * @param jsonObject
+   */
+  @RequestMapping(value = "/modifyPassword", method = RequestMethod.PUT)
+  public JsonResult modifyPassword(@RequestBody JSONObject jsonObject) {
+    String phone = jsonObject.getString("phone");
+    if (iStudentService.isStudentPhone(phone)) {
+      iStudentService.updatePasswordByPhone(phone, jsonObject.getString("password"));
+      return JsonResult.success("修改成功！");
+    } else if (iTeacherService.isTeacherPhone(phone)) {
+      iTeacherService.updatePasswordByPhone(phone, jsonObject.getString("password"));
+      return JsonResult.success("修改成功！");
     }
-    return JsonResult.success(administrator, "administrator");
+    iAdministratorService.updatePasswordByPhone(phone, jsonObject.getString("password"));
+    return JsonResult.success("修改成功！");
   }
 
-  /**
-   * @author ZJ Description 修改学生密码 date 2022-11-07 00:11:37 0:11
-   * @param student
-   */
-  @RequestMapping(value = "/modifyStudentPassword", method = RequestMethod.PUT)
-  public JsonResult modifyStudentPassword(@RequestBody Student student) {
-    LambdaQueryWrapper<Student> lqw = new LambdaQueryWrapper<>();
-    lqw.eq(Student::getPhone, student.getPhone());
-    iStudentService.update(student, lqw);
-    return JsonResult.success("修改成功!");
-  }
-
-  /**
-   * @author ZJ Description 修改教师密码 date 2022-11-07 00:13:55 0:13
-   * @param teacher
-   */
-  @RequestMapping(value = "/modifyTeacherPassword", method = RequestMethod.PUT)
-  public JsonResult modifyTeacherPassword(@RequestBody Teacher teacher) {
-    LambdaQueryWrapper<Teacher> lqw = new LambdaQueryWrapper<>();
-    lqw.eq(Teacher::getPhone, teacher.getPhone());
-    iTeacherService.update(teacher, lqw);
-    return JsonResult.success("修改成功!");
-  }
-
-  /**
-   * @author ZJ Description 修改管理员密码 date 2022-11-07 00:15:14 0:15
-   * @param administrator
-   */
-  @RequestMapping(value = "/modifyAdministratorPassword", method = RequestMethod.PUT)
-  public JsonResult modifyAdministratorPassword(@RequestBody Administrator administrator) {
-    LambdaQueryWrapper<Administrator> lqw = new LambdaQueryWrapper<>();
-    lqw.eq(Administrator::getPhone, administrator.getPhone());
-    iAdministratorService.update(administrator, lqw);
-    return JsonResult.success("修改成功!");
-  }
+  //  /**
+  //   * @author ZJ Description 修改教师密码 date 2022-11-07 00:13:55 0:13
+  //   * @param teacher
+  //   */
+  //  @RequestMapping(value = "/modifyTeacherPassword", method = RequestMethod.PUT)
+  //  public JsonResult modifyTeacherPassword(@RequestBody Teacher teacher) {
+  //    LambdaQueryWrapper<Teacher> lqw = new LambdaQueryWrapper<>();
+  //    lqw.eq(Teacher::getPhone, teacher.getPhone());
+  //    iTeacherService.update(teacher, lqw);
+  //    return JsonResult.success("修改成功!");
+  //  }
+  //
+  //
+  //  @RequestMapping(value = "/modifyAdministratorPassword", method = RequestMethod.PUT)
+  //  public JsonResult modifyAdministratorPassword(@RequestBody JSONObject jsonObject) {
+  ////    LambdaQueryWrapper<Administrator> lqw = new LambdaQueryWrapper<>();
+  ////    lqw.eq(Administrator::getPhone, administrator.getPhone());
+  ////    iAdministratorService.update(administrator, lqw);
+  ////    return JsonResult.success("修改成功!");
+  //
+  //    Student student=jsonObject.toJavaObject(Student.class);
+  //    return JsonResult.success(student);
+  //  }
 }

@@ -17,4 +17,8 @@ public interface IStudentService extends IService<Student> {
   public IPage<Student> getPage(int currentPage, int pageSize);
 
   public String modify(String phone, Student student);
+
+  public Boolean isStudentPhone(String phone);
+
+  public Boolean updatePasswordByPhone(String phone,String password);
 }

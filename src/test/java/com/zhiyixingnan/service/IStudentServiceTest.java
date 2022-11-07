@@ -30,4 +30,9 @@ public class IStudentServiceTest {
   public void loginTest() {
     System.out.println(iStudentService.login("曾靖", "xxx"));
   }
+
+  @Test
+  public void isStudentPhoneTest() {
+    System.out.println(iStudentService.isStudentPhone("12424234233"));
+  }
 }

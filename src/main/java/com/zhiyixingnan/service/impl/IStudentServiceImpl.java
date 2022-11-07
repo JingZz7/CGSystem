@@ -76,6 +76,26 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
   }
 
   @Override
+  public Boolean isStudentPhone(String phone) {
+    LambdaQueryWrapper<Student> lqw = new LambdaQueryWrapper<>();
+    lqw.eq(Student::getPhone, phone);
+    if (studentDao.selectOne(lqw) == null) {
+      return false;
+    }
+    return true;
+  }
+
+  @Override
+  public Boolean updatePasswordByPhone(String phone, String password) {
+    LambdaQueryWrapper<Student> lqw = new LambdaQueryWrapper<>();
+    lqw.eq(Student::getPhone, phone);
+    Student student = studentDao.selectOne(lqw);
+    student.setPassword(password);
+    studentDao.updateById(student);
+    return true;
+  }
+
+  @Override
   public List<Student> getStudentByClassName(String name) {
     LambdaQueryWrapper<Classs> lqw = new LambdaQueryWrapper<>();
     lqw.eq(Classs::getName, name);

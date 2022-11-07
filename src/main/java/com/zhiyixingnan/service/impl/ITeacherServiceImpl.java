@@ -3,6 +3,7 @@ package com.zhiyixingnan.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhiyixingnan.dao.TeacherDao;
+import com.zhiyixingnan.domain.Student;
 import com.zhiyixingnan.domain.Teacher;
 import com.zhiyixingnan.service.ITeacherService;
 import org.apache.logging.log4j.util.Strings;
@@ -26,5 +27,25 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
     }
 
     return password.equals(teacher.getPassword());
+  }
+
+  @Override
+  public Boolean isTeacherPhone(String phone) {
+    LambdaQueryWrapper<Teacher> lqw = new LambdaQueryWrapper<>();
+    lqw.eq(Teacher::getPhone, phone);
+    if (teacherDao.selectOne(lqw) == null) {
+      return false;
+    }
+    return true;
+  }
+
+  @Override
+  public Boolean updatePasswordByPhone(String phone, String password) {
+    LambdaQueryWrapper<Teacher> lqw = new LambdaQueryWrapper<>();
+    lqw.eq(Teacher::getPhone, phone);
+    Teacher teacher = teacherDao.selectOne(lqw);
+    teacher.setPassword(password);
+    teacherDao.updateById(teacher);
+    return true;
   }
 }
