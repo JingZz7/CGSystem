@@ -35,4 +35,9 @@ public class IStudentServiceTest {
   public void isStudentPhoneTest() {
     System.out.println(iStudentService.isStudentPhone("12424234233"));
   }
+
+  @Test
+  public void isExistStudentTest() {
+    System.out.println(iStudentService.isExistStudent("202126010446", "QkwGdoz6joliYE2g"));
+  }
 }

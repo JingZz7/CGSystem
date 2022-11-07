@@ -66,13 +66,14 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
   }
 
   @Override
-  public String modify(String phone, Student student) {
+  public Boolean isExistStudent(String id, String password) {
     LambdaQueryWrapper<Student> lqw = new LambdaQueryWrapper<>();
-    lqw.eq(Student::getPhone, phone);
-    if (studentDao.update(student, lqw) > 0) {
-      return "修改成功";
+    lqw.eq(Student::getDeleted, 0)
+        .and(i -> i.eq(Student::getId, id).eq(Student::getPassword, password));
+    if (studentDao.selectOne(lqw) == null) {
+      return false;
     }
-    return "修改失败";
+    return true;
   }
 
   @Override

@@ -28,23 +28,16 @@ public class LoginController {
   @Autowired private IAdministratorService iAdministratorService;
   @Autowired private LoginController loginController;
 
-  /**
-   * @author ZJ Description 学生登录 date 2022-11-05 21:01:32 21:01
-   * @param student
-   */
   @RequestMapping(value = "/students", method = RequestMethod.POST)
   //  @GetMapping("/{id}/{password}")
-  public JsonResult loginStudent(@RequestBody Student student) {
-    LambdaQueryWrapper<Student> lqw = new LambdaQueryWrapper<>();
-    lqw.eq(Student::getId, student.getId());
-    Student studentTemp = iStudentService.getOne(lqw);
-    if (studentTemp == null) {
-      return JsonResult.validateFailed("用户名或密码错误");
+  public JsonResult loginStudent(@RequestBody JSONObject jsonObject) {
+//    lqw.eq(Student::getDeleted, 0)
+//            .and(i -> i.eq(Student::getId, id).eq(Student::getPassword, password));
+    if (iStudentService.isExistStudent(
+        jsonObject.getString("id"), jsonObject.getString("password"))) {
+      return JsonResult.success("登录成功");
     }
-    if (studentTemp.getPassword().equals(student.getPassword())) {
-      return JsonResult.success("success");
-    }
-    return JsonResult.failed("用户名或密码错误");
+    return JsonResult.failed("登录失败");
   }
 
   /**
@@ -98,7 +91,8 @@ public class LoginController {
   }
 
   /**
-   * @author ZJ Description 修改密码 date jsonObject数据包含"phone"字段和"password"字段即可 2022-11-07 17:47:14 17:47
+   * @author ZJ Description 修改密码 date jsonObject数据包含"phone"字段和"password"字段即可 2022-11-07 17:47:14
+   *     17:47
    * @param jsonObject
    */
   @RequestMapping(value = "/modifyPassword", method = RequestMethod.PUT)

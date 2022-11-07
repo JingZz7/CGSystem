@@ -34,4 +34,7 @@ public class Student {
 
   @TableField("class_id")
   private String classId;
+
+  @TableField("deleted")
+  private int deleted;
 }
