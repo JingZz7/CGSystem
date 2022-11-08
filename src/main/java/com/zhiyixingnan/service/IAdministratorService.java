@@ -7,7 +7,7 @@ public interface IAdministratorService extends IService<Administrator> {
 
   public Boolean login(String name, String password);
 
-  public Boolean isExistAdministrator(String id, String password);
+  public Boolean isExistAdministrator(String id,String password);
 
   public Boolean isAdministratorPhone(String phone);
 

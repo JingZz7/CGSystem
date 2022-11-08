@@ -10,8 +10,11 @@ import com.zhiyixingnan.domain.Teacher;
 import com.zhiyixingnan.service.IAdministratorService;
 import com.zhiyixingnan.service.IStudentService;
 import com.zhiyixingnan.service.ITeacherService;
+import lombok.Value;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@CrossOrigin
+@Slf4j
 @RequestMapping("/login")
 public class LoginController {
 
@@ -27,6 +32,13 @@ public class LoginController {
   @Autowired private ITeacherService iTeacherService;
   @Autowired private IAdministratorService iAdministratorService;
   @Autowired private LoginController loginController;
+
+  @RequestMapping(value = "/test", method = RequestMethod.GET)
+  public JsonResult test() {
+    System.out.println("test hot deploy..");
+    System.out.println("test hot deploy..");
+    return JsonResult.success("test hot deploy..");
+  }
 
   /**
    * @author ZJ Description 学生登录 date jsonObject数据包含"id"和"password"即可 2022-11-07 21:28:34 21:28
@@ -45,39 +57,29 @@ public class LoginController {
   }
 
   /**
-   * @author ZJ Description 教师登录 date 2022-11-06 22:05:57 22:05
-   * @param teacher
+   * @author ZJ Description 教师登录 date jsonObject数据包含"id"和"password"即可 2022-11-07 21:52:57 21:52
+   * @param jsonObject
    */
   @RequestMapping(value = "/teachers", method = RequestMethod.POST)
-  public JsonResult loginTeacher(@RequestBody Teacher teacher) {
-    LambdaQueryWrapper<Teacher> lqw = new LambdaQueryWrapper<>();
-    lqw.eq(Teacher::getId, teacher.getId());
-    Teacher teacherTemp = iTeacherService.getOne(lqw);
-    if (teacherTemp == null) {
-      return JsonResult.validateFailed("用户名或密码错误");
+  public JsonResult loginTeacher(@RequestBody JSONObject jsonObject) {
+    if (iTeacherService.isExistTeacher(
+        jsonObject.getString("id"), jsonObject.getString("password"))) {
+      return JsonResult.success("登录成功");
     }
-    if (teacherTemp.getPassword().equals(teacher.getPassword())) {
-      return JsonResult.success("success");
-    }
-    return JsonResult.failed("用户名或密码错误");
+    return JsonResult.failed("登录失败");
   }
 
   /**
-   * @author ZJ Description 管理员登录 date 2022-11-06 22:07:50 22:07
-   * @param administrator
+   * @author ZJ Description 管理员登录 date jsonObject数据包含"id"和"password"即可 2022-11-07 21:56:40 21:56
+   * @param jsonObject
    */
   @RequestMapping(value = "/administrators", method = RequestMethod.POST)
-  public JsonResult loginAdministrator(@RequestBody Administrator administrator) {
-    LambdaQueryWrapper<Administrator> lqw = new LambdaQueryWrapper<>();
-    lqw.eq(Administrator::getId, administrator.getId());
-    Administrator administratorTemp = iAdministratorService.getOne(lqw);
-    if (administratorTemp == null) {
-      return JsonResult.validateFailed("用户名或密码错误");
+  public JsonResult loginAdministrator(@RequestBody JSONObject jsonObject) {
+    if (iAdministratorService.isExistAdministrator(
+        jsonObject.getString("id"), jsonObject.getString("password"))) {
+      return JsonResult.success("登录成功");
     }
-    if (administratorTemp.getPassword().equals(administrator.getPassword())) {
-      return JsonResult.success("success");
-    }
-    return JsonResult.failed("用户名或密码错误");
+    return JsonResult.failed("登录失败");
   }
 
   /**

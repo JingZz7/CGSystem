@@ -30,6 +30,16 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
   }
 
   @Override
+  public Boolean isExistAdministrator(String id, String password) {
+    LambdaQueryWrapper<Administrator> lqw = new LambdaQueryWrapper<>();
+    lqw.eq(Administrator::getId, id).eq(Administrator::getPassword, password);
+    if (administratorDao.selectOne(lqw) == null) {
+      return false;
+    }
+    return true;
+  }
+
+  @Override
   public Boolean isAdministratorPhone(String phone) {
     LambdaQueryWrapper<Administrator> lqw = new LambdaQueryWrapper<>();
     lqw.eq(Administrator::getPhone, phone);
