@@ -8,7 +8,7 @@
   },
 
   "忘记密码": "json数据包含phone字段",
-  "login/forgotPassword": {
+  "/login/forgotPassword": {
     "String": "phone"
   },
 
