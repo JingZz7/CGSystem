@@ -1,0 +1,20 @@
+{
+  "主路径": "124.223.187.49",
+
+  "学生登录": "json数据包含id字段和password字段",
+  "/login/students": {
+    "String": "id",
+    "String": "password"
+  },
+
+  "忘记密码": "json数据包含phone字段",
+  "login/forgotPassword": {
+    "String": "phone"
+  },
+
+  "修改密码": "json数据包含phone字段和password字段",
+  "/login/modifyPassword": {
+    "String": "phone",
+    "String": "password"
+  }
+}
