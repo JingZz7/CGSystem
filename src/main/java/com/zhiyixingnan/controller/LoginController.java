@@ -37,7 +37,9 @@ public class LoginController {
   public JsonResult test() {
     System.out.println("test hot deploy..");
     System.out.println("test hot deploy..");
-    return JsonResult.success("test hot deploy..");
+    LambdaQueryWrapper<Student> lqw = new LambdaQueryWrapper<>();
+    lqw.eq(Student::getId, "202026010512");
+    return JsonResult.success(iStudentService.getOne(lqw));
   }
 
   /**
