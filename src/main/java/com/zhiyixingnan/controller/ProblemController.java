@@ -38,11 +38,22 @@ public class ProblemController {
    */
   @RequestMapping(value = "/collectProblem", method = RequestMethod.POST)
   public JsonResult collectProblem(@RequestBody JSONObject jsonObject) {
-    iFavoriteService.collectProblem(
-        jsonObject.getString("studentId"), jsonObject.getString("problemId"));
-    return JsonResult.success("收藏成功");
+    //    iFavoriteService.collectProblem(
+    //        jsonObject.getString("studentId"), jsonObject.getString("problemId"));
+    //    return JsonResult.success("收藏成功");
+    if (iFavoriteService.collectProblem(
+        jsonObject.getString("studentId"), jsonObject.getString("problemId"))) {
+      return JsonResult.success("收藏成功");
+    }
+    return JsonResult.failed("收藏失败");
   }
 
-//  @RequestMapping(value = "/cancelCollectedProblem", method = RequestMethod.DELETE)
-//  public JsonResult cancelCollectedProblem(@RequestBody JSONObject jsonObject) {}
+  @RequestMapping(value = "/cancelCollectedProblem", method = RequestMethod.DELETE)
+  public JsonResult cancelCollectedProblem(@RequestBody JSONObject jsonObject) {
+    if (iFavoriteService.cancelCollectedProblem(
+        jsonObject.getString("studentId"), jsonObject.getString("problemId"))) {
+      return JsonResult.success("取消收藏成功");
+    }
+    return JsonResult.failed("取消收藏失败");
+  }
 }

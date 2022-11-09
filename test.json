@@ -38,6 +38,12 @@
   "/problem/collectProblem": {
     "学号 String": "studentId",
     "题号 String": "problemId"
+  },
+
+  "取消收藏题目 DELETE": "json数据包含studentId字段和problemId字段",
+  "/problem/cancelCollectedProblem": {
+    "学号 String": "studentId",
+    "题号 String": "problemId"
   }
 
 }
