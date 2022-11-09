@@ -1,32 +1,43 @@
 {
   "主路径": "http://124.223.187.49",
 
-  "学生登录 POST": "json数据包含id字段和password字段",
-  "/login/students": {
-    "String": "id",
-    "String": "password"
+  "登录 POST": "json数据包含id字段和password字段",
+  "/login/logins": {
+    "账号 String": "id",
+    "密码 String": "password"
   },
 
-  "教师登录 POST": "json数据包含id字段和password字段",
-  "/login/teachers": {
-    "String": "id",
-    "String": "password"
-  },
+//  "教师登录 POST": "json数据包含id字段和password字段",
+//  "/login/teachers": {
+//    "教师id String": "id",
+//    "密码 String": "password"
+//  },
 
-  "管理登录 POST": "json数据包含id字段和password字段",
-  "/login/administrators": {
-    "String": "id",
-    "String": "password"
-  },
+//  "管理员登录 POST": "json数据包含id字段和password字段",
+//  "/login/administrators": {
+//    "管理员id String": "id",
+//    "密码 String": "password"
+//  },
 
   "忘记密码 POST": "json数据包含phone字段",
   "/login/forgotPassword": {
-    "String": "phone"
+    "电话 String": "phone"
   },
 
   "修改密码 POST": "json数据包含phone字段和password字段",
   "/login/modifyPassword": {
-    "String": "phone",
-    "String": "password"
+    "电话 String": "phone",
+    "密码 String": "password"
+  },
+
+
+  "获取题目列表 GET": "不需要传参",
+  "/problem/getProblemList": {},
+
+  "收藏题目 POST": "json数据包含studentId字段和problemId字段",
+  "/problem/collectProblem": {
+    "学号 String": "studentId",
+    "题号 String": "problemId"
   }
+
 }

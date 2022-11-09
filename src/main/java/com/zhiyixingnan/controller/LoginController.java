@@ -43,17 +43,33 @@ public class LoginController {
   }
 
   /**
-   * @author ZJ Description 学生登录 date jsonObject数据包含"id"和"password"即可 2022-11-07 21:28:34 21:28
+   * @author ZJ Description 登录 date jsonObject数据包含"id"和"password"即可 2022-11-07 21:28:34 21:28
    * @param jsonObject
    */
-  @RequestMapping(value = "/students", method = RequestMethod.POST)
+  @RequestMapping(value = "/logins", method = RequestMethod.POST)
   //  @GetMapping("/{id}/{password}")
-  public JsonResult loginStudent(@RequestBody JSONObject jsonObject) {
+  public JsonResult logins(@RequestBody JSONObject jsonObject) {
     //    lqw.eq(Student::getDeleted        , 0)
     //            .and(i -> i.eq(Student::getId, id).eq(Student::getPassword, password));
     if (iStudentService.isExistStudent(
         jsonObject.getString("id"), jsonObject.getString("password"))) {
-      return JsonResult.success("登录成功");
+      return JsonResult.success(
+          iStudentService.getOne(
+              new LambdaQueryWrapper<Student>().eq(Student::getId, jsonObject.getString("id"))),
+          "学生登录成功");
+    } else if (iTeacherService.isExistTeacher(
+        jsonObject.getString("id"), jsonObject.getString("password"))) {
+      return JsonResult.success(
+          iTeacherService.getOne(
+              new LambdaQueryWrapper<Teacher>().eq(Teacher::getId, jsonObject.getString("id"))),
+          "教师登录成功");
+    } else if (iAdministratorService.isExistAdministrator(
+        jsonObject.getString("id"), jsonObject.getString("password"))) {
+      return JsonResult.success(
+          iAdministratorService.getOne(
+              new LambdaQueryWrapper<Administrator>()
+                  .eq(Administrator::getId, jsonObject.getString("id"))),
+          "管理员登录成功");
     }
     return JsonResult.failed("登录失败");
   }

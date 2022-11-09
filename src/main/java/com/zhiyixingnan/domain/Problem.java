@@ -32,4 +32,7 @@ public class Problem {
 
   @TableField("label")
   private String label;
+
+  @TableField("deleted")
+  private Integer deleted;
 }

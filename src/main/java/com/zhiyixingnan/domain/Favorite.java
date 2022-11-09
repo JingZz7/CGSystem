@@ -15,12 +15,17 @@ import java.math.BigInteger;
 @AllArgsConstructor
 public class Favorite {
 
-  @TableId(value = "pk_favorite_id", type = IdType.AUTO)
-  private BigInteger PKFavoriteId;
+  @TableId(value = "pk_favorite_id", type = IdType.ASSIGN_ID)
+  private String PKFavoriteId;
 
   @TableField("student_id")
   private String studentId;
 
   @TableField("problem_id")
   private String problemId;
+
+  public Favorite(String studentId, String problemId) {
+    this.studentId = studentId;
+    this.problemId = problemId;
+  }
 }
