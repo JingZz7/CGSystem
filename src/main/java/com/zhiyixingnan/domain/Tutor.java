@@ -15,7 +15,7 @@ import java.math.BigInteger;
 @AllArgsConstructor
 public class Tutor {
 
-    @TableId(value = "pk_tutor_id",type = IdType.AUTO)
+    @TableId(value = "pk_tutor_id",type = IdType.ASSIGN_ID)
     private BigInteger PKTutorId;
 
     @TableField("id")
@@ -32,4 +32,5 @@ public class Tutor {
 
     @TableField("email")
     private String email;
+
 }

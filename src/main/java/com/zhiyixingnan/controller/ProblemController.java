@@ -32,10 +32,17 @@ public class ProblemController {
     return JsonResult.success(iProblemService.list());
   }
 
+  /**
+   * @author ZJ Description 收藏题目 date json数据包含studnetId字段和problemId字段即可 2022-11-09 17:40:06 17:40
+   * @param jsonObject
+   */
   @RequestMapping(value = "/collectProblem", method = RequestMethod.POST)
   public JsonResult collectProblem(@RequestBody JSONObject jsonObject) {
     iFavoriteService.collectProblem(
-            jsonObject.getString("studentId"), jsonObject.getString("problemId"));
+        jsonObject.getString("studentId"), jsonObject.getString("problemId"));
     return JsonResult.success("收藏成功");
   }
+
+//  @RequestMapping(value = "/cancelCollectedProblem", method = RequestMethod.DELETE)
+//  public JsonResult cancelCollectedProblem(@RequestBody JSONObject jsonObject) {}
 }

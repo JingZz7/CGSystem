@@ -7,9 +7,11 @@ import com.zhiyixingnan.controller.utils.JsonResult;
 import com.zhiyixingnan.domain.Administrator;
 import com.zhiyixingnan.domain.Student;
 import com.zhiyixingnan.domain.Teacher;
+import com.zhiyixingnan.domain.Tutor;
 import com.zhiyixingnan.service.IAdministratorService;
 import com.zhiyixingnan.service.IStudentService;
 import com.zhiyixingnan.service.ITeacherService;
+import com.zhiyixingnan.service.ITutorService;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
@@ -31,6 +33,7 @@ public class LoginController {
   @Autowired private IStudentService iStudentService;
   @Autowired private ITeacherService iTeacherService;
   @Autowired private IAdministratorService iAdministratorService;
+  @Autowired private ITutorService iTutorService;
   @Autowired private LoginController loginController;
 
   @RequestMapping(value = "/test", method = RequestMethod.GET)
@@ -70,6 +73,12 @@ public class LoginController {
               new LambdaQueryWrapper<Administrator>()
                   .eq(Administrator::getId, jsonObject.getString("id"))),
           "管理员登录成功");
+    } else if (iTutorService.isExistTutor(
+        jsonObject.getString("id"), jsonObject.getString("password"))) {
+      return JsonResult.success(
+          iTutorService.getOne(
+              new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, jsonObject.getString("id"))),
+          "助教登录成功");
     }
     return JsonResult.failed("登录失败");
   }
