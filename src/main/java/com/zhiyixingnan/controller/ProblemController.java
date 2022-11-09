@@ -48,6 +48,10 @@ public class ProblemController {
     return JsonResult.failed("收藏失败");
   }
 
+  /**
+   * @author ZJ Description 取消收藏 date json数据包含studnetId字段和problemId字段即可 2022-11-09 20:28:33 20:28
+   * @param jsonObject
+   */
   @RequestMapping(value = "/cancelCollectedProblem", method = RequestMethod.DELETE)
   public JsonResult cancelCollectedProblem(@RequestBody JSONObject jsonObject) {
     if (iFavoriteService.cancelCollectedProblem(
