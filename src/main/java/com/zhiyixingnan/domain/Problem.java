@@ -15,8 +15,8 @@ import java.math.BigInteger;
 @AllArgsConstructor
 public class Problem {
 
-  @TableId(value = "pk_problem_id", type = IdType.AUTO)
-  private BigInteger PKProblemId;
+  @TableId(value = "pk_problem_id", type = IdType.ASSIGN_ID)
+  private String PKProblemId;
 
   @TableField("id")
   private String id;

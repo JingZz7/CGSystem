@@ -12,12 +12,13 @@ public class IStudentServiceTest {
   @Test
   public void saveTest() {
     Student student = new Student();
-    student.setId("202026010513");
-    student.setName("笑睿张");
-    student.setPhone("12424234234");
+    student.setId("202026010512");
+    student.setName("lcc");
+    student.setPhone("12424234134");
     student.setEmail("xxx@xxx.com");
     student.setPassword("xxxxxaaaaa");
     student.setClassId("260105");
+    student.setDeleted(0);
     System.out.println(iStudentService.save(student));
   }
 

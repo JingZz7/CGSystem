@@ -14,8 +14,8 @@ import java.math.BigInteger;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Student {
-  @TableId(value = "pk_student_id", type = IdType.AUTO)
-  private BigInteger PKStudentId;
+  @TableId(value = "pk_student_id", type = IdType.ASSIGN_ID)
+  private String PKStudentId;
 
   @TableField(value = "id")
   private String id;
