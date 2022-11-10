@@ -1,13 +1,16 @@
 package com.zhiyixingnan.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.zhiyixingnan.controller.utils.JsonResult;
+import com.zhiyixingnan.domain.Problem;
 import com.zhiyixingnan.service.IFavoriteService;
 import com.zhiyixingnan.service.IProblemDescriptionService;
 import com.zhiyixingnan.service.IProblemService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -59,5 +62,20 @@ public class ProblemController {
       return JsonResult.success("取消收藏成功");
     }
     return JsonResult.failed("取消收藏失败");
+  }
+
+  /**
+   * @author ZJ Description 根据id查询问题 date 2022-11-09 21:09:21 21:09
+   * @param problemId
+   */
+  @RequestMapping(value = "/getProblemById/{problemId}", method = RequestMethod.GET)
+  public JsonResult getProblemById(@PathVariable String problemId) {
+    if (iProblemService.getOne(new LambdaQueryWrapper<Problem>().eq(Problem::getId, problemId))
+        == null) {
+      return JsonResult.failed("查找失败");
+    }
+    return JsonResult.success(
+        iProblemService.getOne(new LambdaQueryWrapper<Problem>().eq(Problem::getId, problemId)),
+        "查找成功");
   }
 }
