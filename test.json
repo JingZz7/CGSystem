@@ -34,6 +34,11 @@
   "获取题目列表 GET": "不需要传参",
   "/problem/getProblemList": {},
 
+  "根据id查询问题(刷题推荐) GET": "传入题号problemId即可",
+  "/problem//getProblemById/{problemId}": {
+    "题号 String": "problemId"
+  },
+
   "收藏题目 POST": "json数据包含studentId字段和problemId字段",
   "/problem/collectProblem": {
     "学号 String": "studentId",
@@ -44,6 +49,11 @@
   "/problem/cancelCollectedProblem": {
     "学号 String": "studentId",
     "题号 String": "problemId"
-  }
+  },
 
+  "批量删除收藏夹的题目 DELETE": "json数据包含studentId字段和ids的list集合",
+  "/problem/bulkDeleteCollectedProblem": {
+    "学号 String": "studentId",
+    "需要删除id的集合 List": "ids"
+  }
 }

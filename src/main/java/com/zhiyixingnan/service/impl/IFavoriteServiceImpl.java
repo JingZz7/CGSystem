@@ -9,6 +9,8 @@ import com.zhiyixingnan.service.IFavoriteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class IFavoriteServiceImpl extends ServiceImpl<FavoriteDao, Favorite>
     implements IFavoriteService {
@@ -42,6 +44,21 @@ public class IFavoriteServiceImpl extends ServiceImpl<FavoriteDao, Favorite>
         new LambdaQueryWrapper<Favorite>()
             .eq(Favorite::getStudentId, studentId)
             .eq(Favorite::getProblemId, problemId));
+    return true;
+  }
+
+  @Override
+  public Boolean bulkDeleteCollectedProblem(String studentId, List<Integer> ids) {
+    if (studentId == null || ids == null) {
+      return false;
+    }
+
+    for (Integer id : ids) {
+      favoriteDao.delete(
+          new LambdaQueryWrapper<Favorite>()
+              .eq(Favorite::getStudentId, studentId)
+              .eq(Favorite::getProblemId, id));
+    }
     return true;
   }
 }

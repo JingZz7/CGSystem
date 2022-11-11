@@ -3,8 +3,6 @@ package com.zhiyixingnan.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhiyixingnan.dao.TutorDao;
-import com.zhiyixingnan.domain.Administrator;
-import com.zhiyixingnan.domain.Student;
 import com.zhiyixingnan.domain.Tutor;
 import com.zhiyixingnan.service.ITutorService;
 import org.apache.logging.log4j.util.Strings;

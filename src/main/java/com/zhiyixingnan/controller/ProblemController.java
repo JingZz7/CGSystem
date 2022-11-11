@@ -27,7 +27,7 @@ public class ProblemController {
   @Autowired private IFavoriteService iFavoriteService;
 
   /**
-   * @author ZJ Description 获取题目列表 date 无参 2022-11-09 16:44:13 16:44
+   * @author ZJ Description 获取题目列表 无参 date 2022-11-09 16:44:13 16:44
    * @param
    */
   @RequestMapping(value = "/getProblemList", method = RequestMethod.GET)
@@ -36,7 +36,7 @@ public class ProblemController {
   }
 
   /**
-   * @author ZJ Description 收藏题目 date json数据包含studnetId字段和problemId字段即可 2022-11-09 17:40:06 17:40
+   * @author ZJ Description 收藏题目 json数据包含studnetId字段和problemId字段即可 date 2022-11-09 17:40:06 17:40
    * @param jsonObject
    */
   @RequestMapping(value = "/collectProblem", method = RequestMethod.POST)
@@ -52,7 +52,7 @@ public class ProblemController {
   }
 
   /**
-   * @author ZJ Description 取消收藏 date json数据包含studnetId字段和problemId字段即可 2022-11-09 20:28:33 20:28
+   * @author ZJ Description 取消收藏 json数据包含studnetId字段和problemId字段即可 date 2022-11-09 20:28:33 20:28
    * @param jsonObject
    */
   @RequestMapping(value = "/cancelCollectedProblem", method = RequestMethod.DELETE)
@@ -65,7 +65,22 @@ public class ProblemController {
   }
 
   /**
-   * @author ZJ Description 根据id查询问题 date 2022-11-09 21:09:21 21:09
+   * @author ZJ Description 批量删除收藏夹的题目 json数据包含studentId字段和ids的list集合 date 2022-11-11 15:00:47 15:00
+   * @param jsonObject
+   */
+  @RequestMapping(value = "/bulkDeleteCollectedProblem", method = RequestMethod.DELETE)
+  public JsonResult bulkDeleteCollectedProblem(@RequestBody JSONObject jsonObject) {
+    if (jsonObject == null) {
+      return JsonResult.validateFailed("删除失败");
+    }
+    iFavoriteService.bulkDeleteCollectedProblem(
+        jsonObject.getString("studentId"),
+        jsonObject.getJSONArray("ids").toJavaList(Integer.class));
+    return JsonResult.success("删除成功");
+  }
+
+  /**
+   * @author ZJ Description 根据id查询问题(刷题推荐) date 2022-11-09 21:09:21 21:09
    * @param problemId
    */
   @RequestMapping(value = "/getProblemById/{problemId}", method = RequestMethod.GET)
