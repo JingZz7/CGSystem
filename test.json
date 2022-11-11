@@ -44,13 +44,13 @@
   },
 
   "根据id查询问题(收藏夹) POST": "json数据包含studentId和problemId",
-  "/problem/getProblemById": {
+  "/recommend/getProblemById": {
     "学号 String": "studentId",
     "题号 String": "problemId"
   },
 
   "根据名称查询问题(收藏夹) POST": "json数据包含studentId和problemName",
-  "/problem/getProblemById": {
+  "/recommend/getProblemById": {
     "学号 String": "studentId",
     "题目名称 String": "problemName"
   },
