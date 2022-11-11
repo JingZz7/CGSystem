@@ -39,8 +39,20 @@
   },
 
   "根据id查询问题(刷题推荐) GET": "传入题号problemId即可",
-  "/problem//getProblemById/{problemId}": {
+  "/problem/getProblemById/{problemId}": {
     "题号 String": "problemId"
+  },
+
+  "根据id查询问题(收藏夹) POST": "json数据包含studentId和problemId",
+  "/problem/getProblemById": {
+    "学号 String": "studentId",
+    "题号 String": "problemId"
+  },
+
+  "根据名称查询问题(收藏夹) POST": "json数据包含studentId和problemName",
+  "/problem/getProblemById": {
+    "学号 String": "studentId",
+    "题目名称 String": "problemName"
   },
 
   "收藏题目 POST": "json数据包含studentId字段和problemId字段",

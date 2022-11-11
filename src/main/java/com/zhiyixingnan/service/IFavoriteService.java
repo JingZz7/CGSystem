@@ -10,6 +10,10 @@ public interface IFavoriteService extends IService<Favorite> {
 
   public List<Problem> getFavoriteProblemList(String studentId);
 
+  public Problem getProblemById(String studentId, String problemId);
+
+  public List<Problem> getProblemByName(String studentId, String problemName);
+
   public Boolean collectProblem(String studentId, String problemId);
 
   public Boolean cancelCollectedProblem(String studentId, String problemId);

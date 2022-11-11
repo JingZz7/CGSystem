@@ -43,6 +43,53 @@ public class IFavoriteServiceImpl extends ServiceImpl<FavoriteDao, Favorite>
   }
 
   @Override
+  public Problem getProblemById(String studentId, String problemId) {
+    LambdaQueryWrapper<Favorite> lqw =
+        new LambdaQueryWrapper<Favorite>()
+            .eq(Favorite::getStudentId, studentId)
+            .eq(Favorite::getProblemId, problemId);
+    Favorite favorite = favoriteDao.selectOne(lqw);
+    if (favorite != null) {
+      LambdaQueryWrapper<Problem> lqw1 =
+          new LambdaQueryWrapper<Problem>().eq(Problem::getId, favorite.getProblemId());
+      Problem problem = problemDao.selectOne(lqw1);
+      return problem;
+    }
+    return null;
+  }
+
+  @Override
+  public List<Problem> getProblemByName(String studentId, String problemName) {
+    LambdaQueryWrapper<Favorite> lqw1 =
+        new LambdaQueryWrapper<Favorite>().eq(Favorite::getStudentId, studentId);
+    List<Favorite> favorites = favoriteDao.selectList(lqw1);
+    List<Problem> problems = new ArrayList<>();
+
+    for (Favorite favorite : favorites) {
+      LambdaQueryWrapper<Problem> lqw2 =
+          new LambdaQueryWrapper<Problem>().eq(Problem::getId, favorite.getProblemId());
+      problems.add(problemDao.selectOne(lqw2));
+    }
+
+    List<Problem> resultProblems = new ArrayList<>();
+
+    for (Problem problem : problems) {
+      LambdaQueryWrapper<Problem> lqw3 =
+          new LambdaQueryWrapper<Problem>()
+              .eq(Problem::getId, problem.getId())
+              .like(Problem::getName, problemName);
+      if (problemDao.selectOne(lqw3) != null) {
+        resultProblems.add(problemDao.selectOne(lqw3));
+      }
+    }
+
+    if (resultProblems == null) {
+      return null;
+    }
+    return resultProblems;
+  }
+
+  @Override
   public Boolean collectProblem(String studentId, String problemId) {
     //    favoriteDao.insert(new Favorite(studentId, problemId));
     if (favoriteDao.selectOne(

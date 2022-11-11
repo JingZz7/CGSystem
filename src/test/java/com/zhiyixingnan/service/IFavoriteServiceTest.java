@@ -10,19 +10,23 @@ import java.util.ArrayList;
 @SpringBootTest
 public class IFavoriteServiceTest {
 
-    @Autowired
-    private IFavoriteService iFavoriteService;
+  @Autowired private IFavoriteService iFavoriteService;
 
-    @Test
-    public void bulkDeleteCollectedProblemTest(){
-        ArrayList<Integer> list = new ArrayList<>();
-        list.add(3);
-        list.add(4);
-        iFavoriteService.bulkDeleteCollectedProblem("202026010512",list);
-    }
+  @Test
+  public void bulkDeleteCollectedProblemTest() {
+    ArrayList<Integer> list = new ArrayList<>();
+    list.add(3);
+    list.add(4);
+    iFavoriteService.bulkDeleteCollectedProblem("202026010512", list);
+  }
 
-    @Test
-    public void getFavoriteProblemListTest(){
+  @Test
+  public void getFavoriteProblemListTest() {
     System.out.println(iFavoriteService.getFavoriteProblemList("202026010512"));
-    }
+  }
+
+  @Test
+  public void getProblemByNameTest() {
+    iFavoriteService.getProblemByName("202026010512", "回文");
+  }
 }
