@@ -20,4 +20,9 @@ public class IFavoriteServiceTest {
         list.add(4);
         iFavoriteService.bulkDeleteCollectedProblem("202026010512",list);
     }
+
+    @Test
+    public void getFavoriteProblemListTest(){
+    System.out.println(iFavoriteService.getFavoriteProblemList("202026010512"));
+    }
 }

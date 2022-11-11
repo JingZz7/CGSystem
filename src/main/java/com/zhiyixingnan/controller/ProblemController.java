@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @Slf4j
 @CrossOrigin
@@ -27,12 +29,25 @@ public class ProblemController {
   @Autowired private IFavoriteService iFavoriteService;
 
   /**
-   * @author ZJ Description 获取题目列表 无参 date 2022-11-09 16:44:13 16:44
+   * @author ZJ Description 获取题目列表(刷题推荐) 无参 date 2022-11-09 16:44:13 16:44
    * @param
    */
   @RequestMapping(value = "/getProblemList", method = RequestMethod.GET)
   public JsonResult getProblemList() {
     return JsonResult.success(iProblemService.list());
+  }
+
+  /**
+   * @author ZJ Description 获取题目列表(收藏夹) 传入数据为学号 date 2022-11-11 15:34:00 15:34
+   * @param studentId
+   */
+  @RequestMapping(value = "/getFavoriteProblemList/{studentId}", method = RequestMethod.GET)
+  public JsonResult getFavoriteProblemList(@PathVariable String studentId) {
+    List<Problem> list = iFavoriteService.getFavoriteProblemList(studentId);
+    if (list == null) {
+      return JsonResult.failed("获取失败,此学生收藏夹无题目");
+    }
+    return JsonResult.success(list, "获取成功");
   }
 
   /**

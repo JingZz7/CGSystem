@@ -2,10 +2,13 @@ package com.zhiyixingnan.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhiyixingnan.domain.Favorite;
+import com.zhiyixingnan.domain.Problem;
 
 import java.util.List;
 
 public interface IFavoriteService extends IService<Favorite> {
+
+  public List<Problem> getFavoriteProblemList(String studentId);
 
   public Boolean collectProblem(String studentId, String problemId);
 
