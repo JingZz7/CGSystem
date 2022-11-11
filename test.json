@@ -30,15 +30,15 @@
     "密码 String": "password"
   },
 
-  "获取题目列表(刷题推荐) GET": "不需要传参",
+  "获取题目列表(刷题推荐) POST": "不需要传参",
   "/problem/getProblemList": {},
 
-  "获取题目列表(收藏夹) GET": "传入学号studentId即可",
+  "获取题目列表(收藏夹) POST": "传入学号studentId即可",
   "/problem/getFavoriteProblemList": {
     "学号 String": "studentId"
   },
 
-  "根据id查询问题(刷题推荐) GET": "传入题号problemId即可",
+  "根据id查询问题(刷题推荐) POST": "传入题号problemId即可",
   "/problem/getProblemById/{problemId}": {
     "题号 String": "problemId"
   },

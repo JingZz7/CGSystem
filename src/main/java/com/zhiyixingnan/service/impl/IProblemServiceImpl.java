@@ -8,7 +8,6 @@ import com.zhiyixingnan.service.IProblemService;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -24,6 +23,18 @@ public class IProblemServiceImpl extends ServiceImpl<ProblemDao, Problem>
 
     List<Problem> problems = problemDao.selectList(lqw);
 
+    return problems;
+  }
+
+  @Override
+  public List<Problem> getProblemListByName(String problemName) {
+    LambdaQueryWrapper<Problem> lqw = new LambdaQueryWrapper<>();
+    lqw.like(Problem::getName, problemName);
+    List<Problem> problems = problemDao.selectList(lqw);
+
+    if (problems == null) {
+      return null;
+    }
     return problems;
   }
 }

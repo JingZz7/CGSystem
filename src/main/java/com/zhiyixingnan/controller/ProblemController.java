@@ -31,18 +31,18 @@ public class ProblemController {
    * @author ZJ Description 获取题目列表(刷题推荐) 无参 date 2022-11-09 16:44:13 16:44
    * @param
    */
-  @RequestMapping(value = "/getProblemList", method = RequestMethod.GET)
+  @RequestMapping(value = "/getProblemList", method = RequestMethod.POST)
   public JsonResult getProblemList() {
     return JsonResult.success(iProblemService.list());
   }
 
   /**
    * @author ZJ Description 获取题目列表(收藏夹) 传入数据为学号 date 2022-11-11 15:34:00 15:34
-   * @param studentId
+   * @param jsonObject
    */
-  @RequestMapping(value = "/getFavoriteProblemList/{studentId}", method = RequestMethod.GET)
-  public JsonResult getFavoriteProblemList(@PathVariable String studentId) {
-    List<Problem> list = iFavoriteService.getFavoriteProblemList(studentId);
+  @RequestMapping(value = "/getFavoriteProblemList", method = RequestMethod.POST)
+  public JsonResult getFavoriteProblemList(@RequestBody JSONObject jsonObject) {
+    List<Problem> list = iFavoriteService.getFavoriteProblemList(jsonObject.getString("studentId"));
     if (list == null) {
       return JsonResult.failed("获取失败,此学生收藏夹无题目");
     }
@@ -95,16 +95,19 @@ public class ProblemController {
 
   /**
    * @author ZJ Description 根据id查询问题(刷题推荐) date 2022-11-09 21:09:21 21:09
-   * @param problemId
+   * @param jsonObject
    */
-  @RequestMapping(value = "/getProblemById/{problemId}", method = RequestMethod.GET)
-  public JsonResult getProblemById(@PathVariable String problemId) {
-    if (iProblemService.getOne(new LambdaQueryWrapper<Problem>().eq(Problem::getId, problemId))
+  @RequestMapping(value = "/getProblemById", method = RequestMethod.POST)
+  public JsonResult getProblemById(@RequestBody JSONObject jsonObject) {
+    if (iProblemService.getOne(
+            new LambdaQueryWrapper<Problem>().eq(Problem::getId, jsonObject.getString("problemId")))
         == null) {
       return JsonResult.failed("查找失败");
     }
     return JsonResult.success(
-        iProblemService.getOne(new LambdaQueryWrapper<Problem>().eq(Problem::getId, problemId)),
+        iProblemService.getOne(
+            new LambdaQueryWrapper<Problem>()
+                .eq(Problem::getId, jsonObject.getString("problemId"))),
         "查找成功");
   }
 }
