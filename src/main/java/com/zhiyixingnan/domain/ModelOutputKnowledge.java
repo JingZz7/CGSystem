@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-@Data
+// @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("t_model_output_knowledge")
@@ -27,4 +27,52 @@ public class ModelOutputKnowledge {
 
   @TableField("forecast")
   private BigDecimal forecast;
+
+  public BigInteger getPKModelOutputKnowledgeId() {
+    return PKModelOutputKnowledgeId;
+  }
+
+  public void setPKModelOutputKnowledgeId(BigInteger PKModelOutputKnowledgeId) {
+    this.PKModelOutputKnowledgeId = PKModelOutputKnowledgeId;
+  }
+
+  public String getStudentId() {
+    return studentId;
+  }
+
+  public void setStudentId(String studentId) {
+    this.studentId = studentId;
+  }
+
+  public String getKnowledgePointId() {
+    return knowledgePointId;
+  }
+
+  public void setKnowledgePointId(String knowledgePointId) {
+    this.knowledgePointId = knowledgePointId;
+  }
+
+  public BigDecimal getForecast() {
+    return forecast;
+  }
+
+  public void setForecast(BigDecimal forecast) {
+    this.forecast = forecast;
+  }
+
+  @Override
+  public String toString() {
+    return "ModelOutputKnowledge{"
+        + "PKModelOutputKnowledgeId="
+        + PKModelOutputKnowledgeId
+        + ", studentId='"
+        + studentId
+        + '\''
+        + ", knowledgePointId='"
+        + knowledgePointId
+        + '\''
+        + ", forecast="
+        + forecast
+        + '}';
+  }
 }

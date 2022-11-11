@@ -5,11 +5,9 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.math.BigInteger;
 
-@Data
 @TableName("t_class")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,4 +21,42 @@ public class Classs {
 
   @TableField("name")
   private String name;
+
+  public BigInteger getPKClassId() {
+    return PKClassId;
+  }
+
+  public void setPKClassId(BigInteger PKClassId) {
+    this.PKClassId = PKClassId;
+  }
+
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  @Override
+  public String toString() {
+    return "Classs{"
+        + "PKClassId="
+        + PKClassId
+        + ", id='"
+        + id
+        + '\''
+        + ", name='"
+        + name
+        + '\''
+        + '}';
+  }
 }

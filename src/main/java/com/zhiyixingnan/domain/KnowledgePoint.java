@@ -9,7 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.math.BigInteger;
 
-@Data
+// @Data
 @TableName("t_knowledge_point")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,4 +26,53 @@ public class KnowledgePoint {
 
   @TableField("student_id")
   private String StudentId;
+
+  @Override
+  public String toString() {
+    return "KnowledgePoint{"
+        + "PKKnowledgePointId="
+        + PKKnowledgePointId
+        + ", id='"
+        + id
+        + '\''
+        + ", name='"
+        + name
+        + '\''
+        + ", StudentId='"
+        + StudentId
+        + '\''
+        + '}';
+  }
+
+  public BigInteger getPKKnowledgePointId() {
+    return PKKnowledgePointId;
+  }
+
+  public void setPKKnowledgePointId(BigInteger PKKnowledgePointId) {
+    this.PKKnowledgePointId = PKKnowledgePointId;
+  }
+
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getStudentId() {
+    return StudentId;
+  }
+
+  public void setStudentId(String studentId) {
+    StudentId = studentId;
+  }
 }

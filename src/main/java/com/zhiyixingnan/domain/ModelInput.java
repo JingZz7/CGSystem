@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-@Data
+// @Data
 @TableName("t_model_input")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,4 +27,52 @@ public class ModelInput {
 
   @TableField("homework_score")
   private BigDecimal homeworkScore;
+
+  public BigInteger getPKModelInputId() {
+    return PKModelInputId;
+  }
+
+  public void setPKModelInputId(BigInteger PKModelInputId) {
+    this.PKModelInputId = PKModelInputId;
+  }
+
+  public String getStudentId() {
+    return studentId;
+  }
+
+  public void setStudentId(String studentId) {
+    this.studentId = studentId;
+  }
+
+  public String getHomeworkChapter() {
+    return homeworkChapter;
+  }
+
+  public void setHomeworkChapter(String homeworkChapter) {
+    this.homeworkChapter = homeworkChapter;
+  }
+
+  public BigDecimal getHomeworkScore() {
+    return homeworkScore;
+  }
+
+  public void setHomeworkScore(BigDecimal homeworkScore) {
+    this.homeworkScore = homeworkScore;
+  }
+
+  @Override
+  public String toString() {
+    return "ModelInput{"
+        + "PKModelInputId="
+        + PKModelInputId
+        + ", studentId='"
+        + studentId
+        + '\''
+        + ", homeworkChapter='"
+        + homeworkChapter
+        + '\''
+        + ", homeworkScore="
+        + homeworkScore
+        + '}';
+  }
 }

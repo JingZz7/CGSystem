@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-@Data
+//@Data
 @TableName("t_model_output_score")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,4 +24,37 @@ public class ModelOutputKScore {
 
   @TableField("exam_score")
   private BigDecimal examScore;
+
+  public BigInteger getPKModelOutputScore() {
+    return PKModelOutputScore;
+  }
+
+  public void setPKModelOutputScore(BigInteger PKModelOutputScore) {
+    this.PKModelOutputScore = PKModelOutputScore;
+  }
+
+  public String getStudentId() {
+    return studentId;
+  }
+
+  public void setStudentId(String studentId) {
+    this.studentId = studentId;
+  }
+
+  public BigDecimal getExamScore() {
+    return examScore;
+  }
+
+  public void setExamScore(BigDecimal examScore) {
+    this.examScore = examScore;
+  }
+
+  @Override
+  public String toString() {
+    return "ModelOutputKScore{" +
+            "PKModelOutputScore=" + PKModelOutputScore +
+            ", studentId='" + studentId + '\'' +
+            ", examScore=" + examScore +
+            '}';
+  }
 }

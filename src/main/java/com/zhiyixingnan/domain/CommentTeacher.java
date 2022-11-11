@@ -9,7 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.math.BigInteger;
 
-@Data
+// @Data
 @TableName("t_comment_teacher")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,4 +26,53 @@ public class CommentTeacher {
 
   @TableField("problem_id")
   private String problemId;
+
+  @Override
+  public String toString() {
+    return "CommentTeacher{"
+        + "PKCommentTeacherId="
+        + PKCommentTeacherId
+        + ", description='"
+        + description
+        + '\''
+        + ", teacherId='"
+        + teacherId
+        + '\''
+        + ", problemId='"
+        + problemId
+        + '\''
+        + '}';
+  }
+
+  public BigInteger getPKCommentTeacherId() {
+    return PKCommentTeacherId;
+  }
+
+  public void setPKCommentTeacherId(BigInteger PKCommentTeacherId) {
+    this.PKCommentTeacherId = PKCommentTeacherId;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public String getTeacherId() {
+    return teacherId;
+  }
+
+  public void setTeacherId(String teacherId) {
+    this.teacherId = teacherId;
+  }
+
+  public String getProblemId() {
+    return problemId;
+  }
+
+  public void setProblemId(String problemId) {
+    this.problemId = problemId;
+  }
 }

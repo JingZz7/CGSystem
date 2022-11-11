@@ -9,7 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.math.BigInteger;
 
-@Data
+// @Data
 @TableName("t_favorite")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,6 +26,45 @@ public class Favorite {
 
   public Favorite(String studentId, String problemId) {
     this.studentId = studentId;
+    this.problemId = problemId;
+  }
+
+  @Override
+  public String toString() {
+    return "Favorite{"
+        + "PKFavoriteId='"
+        + PKFavoriteId
+        + '\''
+        + ", studentId='"
+        + studentId
+        + '\''
+        + ", problemId='"
+        + problemId
+        + '\''
+        + '}';
+  }
+
+  public String getPKFavoriteId() {
+    return PKFavoriteId;
+  }
+
+  public void setPKFavoriteId(String PKFavoriteId) {
+    this.PKFavoriteId = PKFavoriteId;
+  }
+
+  public String getStudentId() {
+    return studentId;
+  }
+
+  public void setStudentId(String studentId) {
+    this.studentId = studentId;
+  }
+
+  public String getProblemId() {
+    return problemId;
+  }
+
+  public void setProblemId(String problemId) {
     this.problemId = problemId;
   }
 }
