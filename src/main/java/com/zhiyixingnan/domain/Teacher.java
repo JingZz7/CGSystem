@@ -5,18 +5,15 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.math.BigInteger;
 
-//@Data
 @TableName("t_teacher")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Teacher {
 
-  @TableId(value = "pk_teacher_id", type = IdType.AUTO)
-  private BigInteger PKTeacherId;
+  @TableId(value = "pk_teacher_id", type = IdType.ASSIGN_ID)
+  private String PKTeacherId;
 
   @TableField("id")
   private String id;
@@ -38,22 +35,35 @@ public class Teacher {
 
   @Override
   public String toString() {
-    return "Teacher{" +
-            "PKTeacherId=" + PKTeacherId +
-            ", id='" + id + '\'' +
-            ", name='" + name + '\'' +
-            ", password='" + password + '\'' +
-            ", phone='" + phone + '\'' +
-            ", email='" + email + '\'' +
-            ", deleted=" + deleted +
-            '}';
+    return "Teacher{"
+        + "PKTeacherId='"
+        + PKTeacherId
+        + '\''
+        + ", id='"
+        + id
+        + '\''
+        + ", name='"
+        + name
+        + '\''
+        + ", password='"
+        + password
+        + '\''
+        + ", phone='"
+        + phone
+        + '\''
+        + ", email='"
+        + email
+        + '\''
+        + ", deleted="
+        + deleted
+        + '}';
   }
 
-  public BigInteger getPKTeacherId() {
+  public String getPKTeacherId() {
     return PKTeacherId;
   }
 
-  public void setPKTeacherId(BigInteger PKTeacherId) {
+  public void setPKTeacherId(String PKTeacherId) {
     this.PKTeacherId = PKTeacherId;
   }
 

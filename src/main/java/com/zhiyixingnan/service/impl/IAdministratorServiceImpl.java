@@ -3,18 +3,29 @@ package com.zhiyixingnan.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhiyixingnan.dao.AdministratorDao;
+import com.zhiyixingnan.dao.StudentDao;
+import com.zhiyixingnan.dao.TeacherDao;
+import com.zhiyixingnan.dao.TutorDao;
 import com.zhiyixingnan.domain.Administrator;
 import com.zhiyixingnan.domain.Student;
+import com.zhiyixingnan.domain.Teacher;
+import com.zhiyixingnan.domain.Tutor;
 import com.zhiyixingnan.service.IAdministratorService;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Administrator>
     implements IAdministratorService {
 
   @Autowired private AdministratorDao administratorDao;
+  @Autowired private StudentDao studentDao;
+  @Autowired private TeacherDao teacherDao;
+  @Autowired private TutorDao tutorDao;
 
   @Override
   public Boolean login(String name, String password) {
@@ -57,5 +68,21 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
     administrator.setPassword(password);
     administratorDao.updateById(administrator);
     return true;
+  }
+
+  @Override
+  public List<Object> getList() {
+    List<Student> students = studentDao.selectList(null);
+    List<Teacher> teachers = teacherDao.selectList(null);
+    List<Tutor> tutors = tutorDao.selectList(null);
+    ArrayList<Object> objects = new ArrayList<>();
+    objects.add(students);
+    objects.add(teachers);
+    objects.add(tutors);
+
+    if (objects == null) {
+      return null;
+    }
+    return objects;
   }
 }

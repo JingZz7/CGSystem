@@ -5,18 +5,15 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.math.BigInteger;
 
-// @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("t_tutor")
 public class Tutor {
 
   @TableId(value = "pk_tutor_id", type = IdType.ASSIGN_ID)
-  private BigInteger PKTutorId;
+  private String PKTutorId;
 
   @TableField("id")
   private String id;
@@ -33,24 +30,12 @@ public class Tutor {
   @TableField("email")
   private String email;
 
-  //  public Tutor() {}
-  //
-  //  public Tutor(
-  //      BigInteger PKTutorId, String id, String name, String password, String phone, String email)
-  // {
-  //    this.PKTutorId = PKTutorId;
-  //    this.id = id;
-  //    this.name = name;
-  //    this.password = password;
-  //    this.phone = phone;
-  //    this.email = email;
-  //  }
-
   @Override
   public String toString() {
     return "Tutor{"
-        + "PKTutorId="
+        + "PKTutorId='"
         + PKTutorId
+        + '\''
         + ", id='"
         + id
         + '\''
@@ -69,11 +54,11 @@ public class Tutor {
         + '}';
   }
 
-  public BigInteger getPKTutorId() {
+  public String getPKTutorId() {
     return PKTutorId;
   }
 
-  public void setPKTutorId(BigInteger PKTutorId) {
+  public void setPKTutorId(String PKTutorId) {
     this.PKTutorId = PKTutorId;
   }
 

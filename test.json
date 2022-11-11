@@ -7,17 +7,6 @@
     "密码 String": "password"
   },
 
-//  "教师登录 POST": "json数据包含id字段和password字段",
-//  "/login/teachers": {
-//    "教师id String": "id",
-//    "密码 String": "password"
-//  },
-
-//  "管理员登录 POST": "json数据包含id字段和password字段",
-//  "/login/administrators": {
-//    "管理员id String": "id",
-//    "密码 String": "password"
-//  },
 
   "忘记密码 POST": "json数据包含phone字段",
   "/login/forgotPassword": {
@@ -30,46 +19,64 @@
     "密码 String": "password"
   },
 
-  "获取题目列表(刷题推荐) POST": "不需要传参",
+  "[学生]获取题目列表(刷题推荐) POST": "不需要传参",
   "/problem/getProblemList": {},
 
-  "获取题目列表(收藏夹) POST": "传入学号studentId即可",
+  "[学生]获取题目列表(收藏夹) POST": "传入学号studentId即可",
   "/problem/getFavoriteProblemList": {
     "学号 String": "studentId"
   },
 
-  "根据id查询问题(刷题推荐) POST": "传入题号problemId即可",
-  "/problem/getProblemById/{problemId}": {
+  "[学生]根据id查询问题(刷题推荐) POST": "传入题号problemId即可",
+  "/problem/getProblemById": {
     "题号 String": "problemId"
   },
 
-  "根据id查询问题(收藏夹) POST": "json数据包含studentId和problemId",
+  "[学生]根据id查询问题(收藏夹) POST": "json数据包含studentId和problemId",
   "/recommend/getProblemById": {
     "学号 String": "studentId",
     "题号 String": "problemId"
   },
 
-  "根据名称查询问题(收藏夹) POST": "json数据包含studentId和problemName",
+  "[学生]根据名称查询问题(收藏夹) POST": "json数据包含studentId和problemName",
   "/recommend/getProblemById": {
     "学号 String": "studentId",
     "题目名称 String": "problemName"
   },
 
-  "收藏题目 POST": "json数据包含studentId字段和problemId字段",
+  "[学生]收藏题目 POST": "json数据包含studentId字段和problemId字段",
   "/problem/collectProblem": {
     "学号 String": "studentId",
     "题号 String": "problemId"
   },
 
-  "取消收藏题目 DELETE": "json数据包含studentId字段和problemId字段",
+  "[学生]取消收藏题目 DELETE": "json数据包含studentId字段和problemId字段",
   "/problem/cancelCollectedProblem": {
     "学号 String": "studentId",
     "题号 String": "problemId"
   },
 
-  "批量删除收藏夹的题目 DELETE": "json数据包含studentId字段和ids的list集合",
+  "[学生]批量删除收藏夹的题目 DELETE": "json数据包含studentId字段和ids的list集合",
   "/problem/bulkDeleteCollectedProblem": {
     "学号 String": "studentId",
     "需要删除id的集合 List": "ids"
-  }
+  },
+
+
+  "[教师]获取题目列表(题库管理) POST": "不需要传参",
+  "/problemManagement/getProblemList": {},
+
+  "[教师]根据id查询问题(题库管理) POST": "传入题号problemId即可",
+  "/problemManagement/getProblemById": {
+    "题号 String": "problemId"
+  },
+
+  "[教师]根据名称查询问题(题库管理) POST": "传入题目名称problemName即可",
+  "/problemManagement/getProblemListByName": {
+    "题目名称 String": "problemName"
+  },
+
+
+  "[管理员]获取用户列表(账户管理) POST": "不需要传参",
+  "/accountManagement/getList": {}
 }

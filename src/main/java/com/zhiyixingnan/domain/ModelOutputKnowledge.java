@@ -5,14 +5,10 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-// @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @TableName("t_model_output_knowledge")
 public class ModelOutputKnowledge {
 
@@ -27,6 +23,19 @@ public class ModelOutputKnowledge {
 
   @TableField("forecast")
   private BigDecimal forecast;
+
+  public ModelOutputKnowledge() {}
+
+  public ModelOutputKnowledge(
+      BigInteger PKModelOutputKnowledgeId,
+      String studentId,
+      String knowledgePointId,
+      BigDecimal forecast) {
+    this.PKModelOutputKnowledgeId = PKModelOutputKnowledgeId;
+    this.studentId = studentId;
+    this.knowledgePointId = knowledgePointId;
+    this.forecast = forecast;
+  }
 
   public BigInteger getPKModelOutputKnowledgeId() {
     return PKModelOutputKnowledgeId;

@@ -9,12 +9,12 @@ import lombok.NoArgsConstructor;
 import java.math.BigInteger;
 
 @TableName("t_administrator")
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class Administrator {
 
-  @TableId(value = "pk_administrator_id", type = IdType.AUTO)
-  private BigInteger PKAdministrator;
+  @TableId(value = "pk_administrator_id", type = IdType.ASSIGN_ID)
+  private String PKAdministrator;
 
   @TableField("id")
   private String id;
@@ -34,8 +34,9 @@ public class Administrator {
   @Override
   public String toString() {
     return "Administrator{"
-        + "PKAdministrator="
+        + "PKAdministrator='"
         + PKAdministrator
+        + '\''
         + ", id='"
         + id
         + '\''
@@ -54,11 +55,11 @@ public class Administrator {
         + '}';
   }
 
-  public BigInteger getPKAdministrator() {
+  public String getPKAdministrator() {
     return PKAdministrator;
   }
 
-  public void setPKAdministrator(BigInteger PKAdministrator) {
+  public void setPKAdministrator(String PKAdministrator) {
     this.PKAdministrator = PKAdministrator;
   }
 

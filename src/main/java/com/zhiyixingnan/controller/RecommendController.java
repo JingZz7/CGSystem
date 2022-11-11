@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
 
 @RestController
@@ -23,7 +22,8 @@ public class RecommendController {
   @Autowired private IFavoriteService iFavoriteService;
 
   /**
-   * @author ZJ Description 根据id查询问题(收藏夹) json数据包含studentId和problemId date 2022-11-11 16:23:38 16:23
+   * @author ZJ Description [学生]根据id查询问题(收藏夹) json数据包含studentId和problemId date 2022-11-11 16:23:38
+   *     16:23
    * @param jsonObject
    */
   @RequestMapping(value = "/getProblemById", method = RequestMethod.POST)
@@ -40,7 +40,7 @@ public class RecommendController {
   }
 
   /**
-   * @author ZJ Description 根据名称查询问题(收藏夹) json数据包含studentId和problemName date 2022-11-11 16:56:34
+   * @author ZJ Description [学生]根据名称查询问题(收藏夹) json数据包含studentId和problemName date 2022-11-11 16:56:34
    *     16:56
    * @param jsonObject
    */

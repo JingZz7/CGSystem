@@ -1,5 +1,6 @@
 package com.zhiyixingnan.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.zhiyixingnan.controller.utils.JsonResult;
 import com.zhiyixingnan.domain.Problem;
@@ -8,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +24,7 @@ public class ProblemManagementController {
   @Autowired private IProblemService iProblemService;
 
   /**
-   * @author ZJ Description 获取题目列表(刷题推荐) 无参 date 2022-11-11 18:07:17 18:07
+   * @author ZJ Description [教师]获取题目列表(题库管理) 无参 date 2022-11-11 18:07:17 18:07
    * @param
    */
   @RequestMapping(value = "/getProblemList", method = RequestMethod.POST)
@@ -31,27 +33,30 @@ public class ProblemManagementController {
   }
 
   /**
-   * @author ZJ Description 根据id查询问题(刷题推荐) date 2022-11-09 21:09:21 21:09
-   * @param problemId
+   * @author ZJ Description [教师]根据id查询问题(题库管理) date 2022-11-09 21:09:21 21:09
+   * @param jsonObject
    */
-  @RequestMapping(value = "/getProblemById/{problemId}", method = RequestMethod.GET)
-  public JsonResult getProblemById(@PathVariable String problemId) {
-    if (iProblemService.getOne(new LambdaQueryWrapper<Problem>().eq(Problem::getId, problemId))
+  @RequestMapping(value = "/getProblemById", method = RequestMethod.POST)
+  public JsonResult getProblemById(@RequestBody JSONObject jsonObject) {
+    if (iProblemService.getOne(
+            new LambdaQueryWrapper<Problem>().eq(Problem::getId, jsonObject.getString("problemId")))
         == null) {
       return JsonResult.failed("查找失败");
     }
     return JsonResult.success(
-        iProblemService.getOne(new LambdaQueryWrapper<Problem>().eq(Problem::getId, problemId)),
+        iProblemService.getOne(
+            new LambdaQueryWrapper<Problem>()
+                .eq(Problem::getId, jsonObject.getString("problemId"))),
         "查找成功");
   }
 
   /**
-   * @author ZJ Description 根据名称查询问题(题库管理) problemName即可 date 2022-11-11 18:16:45 18:16
-   * @param problemName
+   * @author ZJ Description [教师]根据名称查询问题(题库管理) problemName即可 date 2022-11-11 18:16:45 18:16
+   * @param jsonObject
    */
-  @RequestMapping(value = "/getProblemListByName/{problemName}", method = RequestMethod.GET)
-  public JsonResult getProblemListByName(@PathVariable String problemName) {
-    List<Problem> list = iProblemService.getProblemListByName(problemName);
+  @RequestMapping(value = "/getProblemListByName", method = RequestMethod.POST)
+  public JsonResult getProblemListByName(@RequestBody JSONObject jsonObject) {
+    List<Problem> list = iProblemService.getProblemListByName(jsonObject.getString("problemName"));
 
     if (list == null) {
       return JsonResult.failed("查找失败");

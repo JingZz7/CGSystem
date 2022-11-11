@@ -4,17 +4,12 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import java.math.BigInteger;
 
 @TableName("t_class")
-@NoArgsConstructor
-@AllArgsConstructor
 public class Classs {
 
-  @TableId(value = "pk_class_id", type = IdType.AUTO)
-  private BigInteger PKClassId;
+  @TableId(value = "pk_class_id", type = IdType.ASSIGN_ID)
+  private String PKClassId;
 
   @TableField("id")
   private String id;
@@ -22,11 +17,34 @@ public class Classs {
   @TableField("name")
   private String name;
 
-  public BigInteger getPKClassId() {
+  public Classs() {}
+
+  public Classs(String PKClassId, String id, String name) {
+    this.PKClassId = PKClassId;
+    this.id = id;
+    this.name = name;
+  }
+
+  @Override
+  public String toString() {
+    return "Classs{"
+        + "PKClassId='"
+        + PKClassId
+        + '\''
+        + ", id='"
+        + id
+        + '\''
+        + ", name='"
+        + name
+        + '\''
+        + '}';
+  }
+
+  public String getPKClassId() {
     return PKClassId;
   }
 
-  public void setPKClassId(BigInteger PKClassId) {
+  public void setPKClassId(String PKClassId) {
     this.PKClassId = PKClassId;
   }
 
@@ -44,19 +62,5 @@ public class Classs {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  @Override
-  public String toString() {
-    return "Classs{"
-        + "PKClassId="
-        + PKClassId
-        + ", id='"
-        + id
-        + '\''
-        + ", name='"
-        + name
-        + '\''
-        + '}';
   }
 }

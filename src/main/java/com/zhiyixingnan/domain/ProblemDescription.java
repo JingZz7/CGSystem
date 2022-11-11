@@ -4,15 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import java.math.BigInteger;
 
-// @Data
 @TableName("t_problem_description")
-@NoArgsConstructor
-@AllArgsConstructor
 public class ProblemDescription {
 
   @TableId(value = "pk_problem_description_id", type = IdType.ASSIGN_ID)
@@ -41,6 +34,29 @@ public class ProblemDescription {
 
   @TableField("problem_id")
   private String problemId;
+
+  public ProblemDescription() {}
+
+  public ProblemDescription(
+      String PKProblemDescriptionId,
+      String description,
+      String inputForm,
+      String outputForm,
+      String sampleInput1,
+      String sampleOutput1,
+      String sampleInput2,
+      String sampleOutput2,
+      String problemId) {
+    this.PKProblemDescriptionId = PKProblemDescriptionId;
+    this.description = description;
+    this.inputForm = inputForm;
+    this.outputForm = outputForm;
+    this.sampleInput1 = sampleInput1;
+    this.sampleOutput1 = sampleOutput1;
+    this.sampleInput2 = sampleInput2;
+    this.sampleOutput2 = sampleOutput2;
+    this.problemId = problemId;
+  }
 
   @Override
   public String toString() {

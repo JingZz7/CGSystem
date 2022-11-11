@@ -4,15 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import java.math.BigInteger;
 
-// @Data
 @TableName("t_student")
-@NoArgsConstructor
-@AllArgsConstructor
 public class Student {
   @TableId(value = "pk_student_id", type = IdType.ASSIGN_ID)
   private String PKStudentId;
@@ -38,26 +31,26 @@ public class Student {
   @TableField("deleted")
   private int deleted;
 
-  //  public Student() {}
-  //
-  //  public Student(
-  //      String PKStudentId,
-  //      String id,
-  //      String name,
-  //      String password,
-  //      String phone,
-  //      String email,
-  //      String classId,
-  //      int deleted) {
-  //    this.PKStudentId = PKStudentId;
-  //    this.id = id;
-  //    this.name = name;
-  //    this.password = password;
-  //    this.phone = phone;
-  //    this.email = email;
-  //    this.classId = classId;
-  //    this.deleted = deleted;
-  //  }
+  public Student() {}
+
+  public Student(
+      String PKStudentId,
+      String id,
+      String name,
+      String password,
+      String phone,
+      String email,
+      String classId,
+      int deleted) {
+    this.PKStudentId = PKStudentId;
+    this.id = id;
+    this.name = name;
+    this.password = password;
+    this.phone = phone;
+    this.email = email;
+    this.classId = classId;
+    this.deleted = deleted;
+  }
 
   @Override
   public String toString() {

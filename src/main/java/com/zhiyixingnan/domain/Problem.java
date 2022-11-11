@@ -4,15 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import java.math.BigInteger;
 
-// @Data
 @TableName("t_problem")
-@NoArgsConstructor
-@AllArgsConstructor
 public class Problem {
 
   @TableId(value = "pk_problem_id", type = IdType.ASSIGN_ID)
@@ -35,6 +28,25 @@ public class Problem {
 
   @TableField("deleted")
   private Integer deleted;
+
+  public Problem() {}
+
+  public Problem(
+      String PKProblemId,
+      String id,
+      String knowledgePointId,
+      String name,
+      char difficulty,
+      String label,
+      Integer deleted) {
+    this.PKProblemId = PKProblemId;
+    this.id = id;
+    KnowledgePointId = knowledgePointId;
+    this.name = name;
+    this.difficulty = difficulty;
+    this.label = label;
+    this.deleted = deleted;
+  }
 
   @Override
   public String toString() {

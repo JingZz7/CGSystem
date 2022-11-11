@@ -4,15 +4,9 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import java.math.BigInteger;
 
-// @Data
 @TableName("t_recommend_problem")
-@NoArgsConstructor
-@AllArgsConstructor
 public class RecommendProblem {
 
   @TableId(value = "pk_recommend_problem_id", type = IdType.AUTO)
@@ -36,6 +30,14 @@ public class RecommendProblem {
         + problemId
         + '\''
         + '}';
+  }
+
+  public RecommendProblem() {}
+
+  public RecommendProblem(BigInteger PKRecommendProblemId, String studentId, String problemId) {
+    this.PKRecommendProblemId = PKRecommendProblemId;
+    this.studentId = studentId;
+    this.problemId = problemId;
   }
 
   public BigInteger getPKRecommendProblemId() {

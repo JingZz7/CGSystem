@@ -11,8 +11,8 @@ import java.math.BigInteger;
 
 // @Data
 @TableName("t_comment_teacher")
-@NoArgsConstructor
-@AllArgsConstructor
+//@NoArgsConstructor
+//@AllArgsConstructor
 public class CommentTeacher {
 
   @TableId(value = "pk_comment_teacher_id", type = IdType.AUTO)
@@ -26,6 +26,16 @@ public class CommentTeacher {
 
   @TableField("problem_id")
   private String problemId;
+
+  public CommentTeacher() {
+  }
+
+  public CommentTeacher(BigInteger PKCommentTeacherId, String description, String teacherId, String problemId) {
+    this.PKCommentTeacherId = PKCommentTeacherId;
+    this.description = description;
+    this.teacherId = teacherId;
+    this.problemId = problemId;
+  }
 
   @Override
   public String toString() {
