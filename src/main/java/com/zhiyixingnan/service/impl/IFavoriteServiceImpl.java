@@ -6,11 +6,9 @@ import com.zhiyixingnan.dao.FavoriteDao;
 import com.zhiyixingnan.dao.ProblemDao;
 import com.zhiyixingnan.domain.Favorite;
 import com.zhiyixingnan.domain.Problem;
-import com.zhiyixingnan.domain.Student;
 import com.zhiyixingnan.service.IFavoriteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;

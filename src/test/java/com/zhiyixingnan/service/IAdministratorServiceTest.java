@@ -13,4 +13,10 @@ public class IAdministratorServiceTest {
   public void editAccountTest() {
     iAdministratorService.editAccount("201810040106", "111111", "xxx@gmail.com", "123456789");
   }
+
+  @Test
+  public void addAccountTest() {
+    iAdministratorService.addAccount(
+        "tutor", "202026010512", "zj", "123456", "xxx@qq.com", "123321123");
+  }
 }

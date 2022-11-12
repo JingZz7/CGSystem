@@ -39,7 +39,7 @@
   },
 
   "[学生]根据名称查询问题(收藏夹) POST": "json数据包含studentId和problemName",
-  "/recommend/getProblemById": {
+  "/recommend/getProblemByName": {
     "学号 String": "studentId",
     "题目名称 String": "problemName"
   },

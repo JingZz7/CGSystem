@@ -122,4 +122,52 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
     }
     return false;
   }
+
+  @Override
+  public Boolean addAccount(
+      String type, String id, String name, String password, String email, String phone) {
+
+    if (type.equals("student")) {
+      if (studentDao.selectOne(new LambdaQueryWrapper<Student>().eq(Student::getId, id)) != null) {
+        return false;
+      }
+      Student student = new Student();
+      student.setId(id);
+      student.setName(name);
+      student.setPassword(password);
+      student.setEmail(email);
+      student.setPhone(phone);
+      student.setDeleted(0);
+      student.setClassId("未分配");
+      studentDao.insert(student);
+      return true;
+    } else if (type.equals("teacher")) {
+      if (teacherDao.selectOne(new LambdaQueryWrapper<Teacher>().eq(Teacher::getId, id)) != null) {
+        return false;
+      }
+      Teacher teacher = new Teacher();
+      teacher.setId(id);
+      teacher.setName(name);
+      teacher.setPassword(password);
+      teacher.setEmail(email);
+      teacher.setPhone(phone);
+      teacher.setDeleted(0);
+      teacherDao.insert(teacher);
+      return true;
+    } else if (type.equals("tutor")) {
+      if (tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id)) != null) {
+        return false;
+      }
+      Tutor tutor = new Tutor();
+      tutor.setId(id);
+      tutor.setName(name);
+      tutor.setPassword(password);
+      tutor.setEmail(email);
+      tutor.setPhone(phone);
+      tutorDao.insert(tutor);
+      return true;
+    }
+
+    return false;
+  }
 }

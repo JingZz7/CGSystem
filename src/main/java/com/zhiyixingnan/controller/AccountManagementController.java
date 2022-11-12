@@ -52,4 +52,25 @@ public class AccountManagementController {
     }
     return JsonResult.failed("修改失败");
   }
+
+  /**
+   * @author ZJ Description [管理员]添加账户(账户管理) json数据包含type、id、name、password、email、phone date
+   *     2022-11-12 16:28:51 16:28
+   * @param jsonObject
+   */
+  @RequestMapping(value = "/addAccount", method = RequestMethod.POST)
+  public JsonResult addAccount(@RequestBody JSONObject jsonObject) {
+    Boolean flag =
+        iAdministratorService.addAccount(
+            jsonObject.getString("type"),
+            jsonObject.getString("id"),
+            jsonObject.getString("name"),
+            jsonObject.getString("password"),
+            jsonObject.getString("email"),
+            jsonObject.getString("phone"));
+    if (flag) {
+      return JsonResult.success("添加成功");
+    }
+    return JsonResult.failed("添加失败");
+  }
 }
