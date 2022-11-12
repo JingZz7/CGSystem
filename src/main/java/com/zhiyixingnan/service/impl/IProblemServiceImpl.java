@@ -27,6 +27,19 @@ public class IProblemServiceImpl extends ServiceImpl<ProblemDao, Problem>
   }
 
   @Override
+  public List<Problem> getProblemById(String problemId) {
+    List<Problem> problems =
+        problemDao.selectList(
+            new LambdaQueryWrapper<Problem>()
+                .eq(Problem::getId, problemId)
+                .eq(Problem::getDeleted, 0));
+    if (problems.isEmpty()) {
+      return null;
+    }
+    return problems;
+  }
+
+  @Override
   public List<Problem> getProblemListByName(String problemName) {
     LambdaQueryWrapper<Problem> lqw = new LambdaQueryWrapper<>();
     lqw.like(Problem::getName, problemName);

@@ -37,16 +37,11 @@ public class ProblemManagementController {
    */
   @RequestMapping(value = "/getProblemById", method = RequestMethod.POST)
   public JsonResult getProblemById(@RequestBody JSONObject jsonObject) {
-    if (iProblemService.getOne(
-            new LambdaQueryWrapper<Problem>().eq(Problem::getId, jsonObject.getString("problemId")))
-        == null) {
+    List<Problem> problems = iProblemService.getProblemById(jsonObject.getString("problemId"));
+    if (problems.isEmpty()) {
       return JsonResult.failed("查找失败");
     }
-    return JsonResult.success(
-        iProblemService.getOne(
-            new LambdaQueryWrapper<Problem>()
-                .eq(Problem::getId, jsonObject.getString("problemId"))),
-        "查找成功");
+    return JsonResult.success(problems, "查找成功");
   }
 
   /**
