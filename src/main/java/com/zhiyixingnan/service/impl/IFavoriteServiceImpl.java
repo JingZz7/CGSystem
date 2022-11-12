@@ -43,7 +43,7 @@ public class IFavoriteServiceImpl extends ServiceImpl<FavoriteDao, Favorite>
   }
 
   @Override
-  public Problem getProblemById(String studentId, String problemId) {
+  public List<Problem> getProblemById(String studentId, String problemId) {
     LambdaQueryWrapper<Favorite> lqw =
         new LambdaQueryWrapper<Favorite>()
             .eq(Favorite::getStudentId, studentId)
@@ -53,7 +53,9 @@ public class IFavoriteServiceImpl extends ServiceImpl<FavoriteDao, Favorite>
       LambdaQueryWrapper<Problem> lqw1 =
           new LambdaQueryWrapper<Problem>().eq(Problem::getId, favorite.getProblemId());
       Problem problem = problemDao.selectOne(lqw1);
-      return problem;
+      List<Problem> problems = new ArrayList<>();
+      problems.add(problem);
+      return problems;
     }
     return null;
   }

@@ -28,7 +28,7 @@ public class RecommendController {
    */
   @RequestMapping(value = "/getProblemById", method = RequestMethod.POST)
   public JsonResult getProblemById(@RequestBody JSONObject jsonObject) {
-    Problem problem =
+    List<Problem> problem =
         iFavoriteService.getProblemById(
             jsonObject.getString("studentId"), jsonObject.getString("problemId"));
 

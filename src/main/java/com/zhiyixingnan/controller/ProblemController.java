@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -49,7 +51,8 @@ public class ProblemController {
   }
 
   /**
-   * @author ZJ Description [学生]收藏题目 json数据包含studnetId字段和problemId字段即可 date 2022-11-09 17:40:06 17:40
+   * @author ZJ Description [学生]收藏题目 json数据包含studnetId字段和problemId字段即可 date 2022-11-09 17:40:06
+   *     17:40
    * @param jsonObject
    */
   @RequestMapping(value = "/collectProblem", method = RequestMethod.POST)
@@ -65,7 +68,8 @@ public class ProblemController {
   }
 
   /**
-   * @author ZJ Description [学生]取消收藏 json数据包含studnetId字段和problemId字段即可 date 2022-11-09 20:28:33 20:28
+   * @author ZJ Description [学生]取消收藏 json数据包含studnetId字段和problemId字段即可 date 2022-11-09 20:28:33
+   *     20:28
    * @param jsonObject
    */
   @RequestMapping(value = "/cancelCollectedProblem", method = RequestMethod.DELETE)
@@ -78,7 +82,8 @@ public class ProblemController {
   }
 
   /**
-   * @author ZJ Description [学生]批量删除收藏夹的题目 json数据包含studentId字段和ids的list集合 date 2022-11-11 15:00:47 15:00
+   * @author ZJ Description [学生]批量删除收藏夹的题目 json数据包含studentId字段和ids的list集合 date 2022-11-11 15:00:47
+   *     15:00
    * @param jsonObject
    */
   @RequestMapping(value = "/bulkDeleteCollectedProblem", method = RequestMethod.DELETE)
@@ -98,15 +103,18 @@ public class ProblemController {
    */
   @RequestMapping(value = "/getProblemById", method = RequestMethod.POST)
   public JsonResult getProblemById(@RequestBody JSONObject jsonObject) {
-    if (iProblemService.getOne(
-            new LambdaQueryWrapper<Problem>().eq(Problem::getId, jsonObject.getString("problemId")))
-        == null) {
-      return JsonResult.failed("查找失败");
-    }
-    return JsonResult.success(
+    Problem problem =
         iProblemService.getOne(
             new LambdaQueryWrapper<Problem>()
-                .eq(Problem::getId, jsonObject.getString("problemId"))),
-        "查找成功");
+                .eq(Problem::getId, jsonObject.getString("problemId")));
+
+    List<Problem> problems = new ArrayList<>();
+
+    problems.add(problem);
+
+    if (problems == null) {
+      return JsonResult.failed("查找失败");
+    }
+    return JsonResult.success(problems, "查找成功");
   }
 }
