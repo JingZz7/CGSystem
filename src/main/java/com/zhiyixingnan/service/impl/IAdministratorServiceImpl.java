@@ -72,8 +72,12 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
 
   @Override
   public List<Object> getList() {
-    List<Student> students = studentDao.selectList(null);
-    List<Teacher> teachers = teacherDao.selectList(null);
+    List<Student> students =
+        studentDao.selectList(
+            new LambdaQueryWrapper<Student>().eq(Student::getDeleted, 0)); // deleted为1的表示已被逻辑删除了
+    List<Teacher> teachers =
+        teacherDao.selectList(
+            new LambdaQueryWrapper<Teacher>().eq(Teacher::getDeleted, 0)); // deleted为1的表示已被逻辑删除了
     List<Tutor> tutors = tutorDao.selectList(null);
     ArrayList<Object> objects = new ArrayList<>();
     objects.add(students);
@@ -84,5 +88,38 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
       return null;
     }
     return objects;
+  }
+
+  @Override
+  public Boolean editAccount(String id, String password, String email, String phone) {
+
+    LambdaQueryWrapper<Student> lqw1 = new LambdaQueryWrapper<Student>().eq(Student::getId, id);
+    LambdaQueryWrapper<Teacher> lqw2 = new LambdaQueryWrapper<Teacher>().eq(Teacher::getId, id);
+    LambdaQueryWrapper<Tutor> lqw3 = new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id);
+
+    Student student = studentDao.selectOne(lqw1);
+    Teacher teacher = teacherDao.selectOne(lqw2);
+    Tutor tutor = tutorDao.selectOne(lqw3);
+
+    if (student != null) {
+      student.setPassword(password);
+      student.setEmail(email);
+      student.setPhone(phone);
+      studentDao.updateById(student);
+      return true;
+    } else if (teacher != null) {
+      teacher.setPassword(password);
+      teacher.setEmail(email);
+      teacher.setPhone(phone);
+      teacherDao.updateById(teacher);
+      return true;
+    } else if (tutor != null) {
+      tutor.setPassword(password);
+      tutor.setEmail(email);
+      tutor.setPhone(phone);
+      tutorDao.updateById(tutor);
+      return true;
+    }
+    return false;
   }
 }

@@ -78,5 +78,13 @@
 
 
   "[管理员]获取用户列表(账户管理) POST": "不需要传参",
-  "/accountManagement/getList": {}
+  "/accountManagement/getList": {},
+
+  "[管理员]编辑账户(账户管理) PUT": "json数据包含id、password、email、phone",
+  "/accountManagement/editAccount": {
+    "学号/工号 String": "id",
+    "密码 String": "password",
+    "邮箱 String": "email",
+    "电话 String": "phone"
+  }
 }
