@@ -9,4 +9,6 @@ public interface IProblemService extends IService<Problem> {
   public List<Problem> findProblem(String problemName);
 
   public List<Problem> getProblemListByName(String problemName);
+
+  public List<Problem> getProblemsByDifficulty(String difficulty);
 }

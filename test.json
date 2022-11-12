@@ -32,6 +32,11 @@
     "题号 String": "problemId"
   },
 
+  "[学生]根据难度查询(刷题推荐) POST": "json数据包含difficulty",
+  "/problem/getProblemsByDifficulty": {
+    "难度 String": "difficulty"
+  },
+
   "[学生]根据id查询问题(收藏夹) POST": "json数据包含studentId和problemId",
   "/recommend/getProblemById": {
     "学号 String": "studentId",

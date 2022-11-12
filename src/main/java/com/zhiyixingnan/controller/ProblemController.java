@@ -116,4 +116,19 @@ public class ProblemController {
     }
     return JsonResult.success(problems, "查找成功");
   }
+
+  /**
+   * @author ZJ Description [学生]根据难度查询(刷题推荐) json数据包含difficulty date 2022-11-12 16:43:47 16:43
+   * @param jsonObject
+   */
+  @RequestMapping(value = "/getProblemsByDifficulty", method = RequestMethod.POST)
+  public JsonResult getProblemsByDifficulty(@RequestBody JSONObject jsonObject) {
+    List<Problem> problems =
+        iProblemService.getProblemsByDifficulty(jsonObject.getString("difficulty"));
+    if (problems == null) {
+      return JsonResult.failed("查找失败");
+    }
+
+    return JsonResult.success(problems, "查找成功");
+  }
 }

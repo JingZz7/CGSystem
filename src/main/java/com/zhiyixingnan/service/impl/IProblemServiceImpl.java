@@ -37,4 +37,26 @@ public class IProblemServiceImpl extends ServiceImpl<ProblemDao, Problem>
     }
     return problems;
   }
+
+  @Override
+  public List<Problem> getProblemsByDifficulty(String difficulty) {
+    if (!difficulty.equals("all")) {
+      //      int diff = Integer.parseInt(difficulty);
+      LambdaQueryWrapper<Problem> lqw =
+          new LambdaQueryWrapper<Problem>()
+              .eq(Problem::getDifficulty, difficulty)
+              .eq(Problem::getDeleted, 0);
+      List<Problem> problems = problemDao.selectList(lqw);
+      if (problems == null) {
+        return null;
+      }
+      return problems;
+    }
+    List<Problem> problems =
+        problemDao.selectList(new LambdaQueryWrapper<Problem>().eq(Problem::getDeleted, 0));
+    if (problems == null) {
+      return null;
+    }
+    return problems;
+  }
 }
