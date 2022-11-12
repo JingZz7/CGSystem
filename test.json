@@ -86,5 +86,15 @@
     "密码 String": "password",
     "邮箱 String": "email",
     "电话 String": "phone"
+  },
+
+  "[管理员]添加账户(账户管理) POST": "json数据包含type、id、name、password、email、phone",
+  "/accountManagement/addAccount": {
+    "类型 String": "type",
+    "学号/工号 String": "id",
+    "名字 String": "name",
+    "密码 String": "password",
+    "邮箱 String": "email",
+    "电话 String": "phone"
   }
 }
