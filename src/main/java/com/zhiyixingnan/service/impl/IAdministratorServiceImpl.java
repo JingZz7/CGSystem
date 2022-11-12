@@ -80,11 +80,17 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
             new LambdaQueryWrapper<Teacher>().eq(Teacher::getDeleted, 0)); // deleted为1的表示已被逻辑删除了
     List<Tutor> tutors = tutorDao.selectList(null);
     ArrayList<Object> objects = new ArrayList<>();
-    objects.add(students);
-    objects.add(teachers);
-    objects.add(tutors);
+    for (Student student : students) {
+      objects.add(student);
+    }
+    for (Teacher teacher : teachers) {
+      objects.add(teacher);
+    }
+    for (Tutor tutor : tutors) {
+      objects.add(tutor);
+    }
 
-    if (objects == null) {
+    if (objects.isEmpty()) {
       return null;
     }
     return objects;
