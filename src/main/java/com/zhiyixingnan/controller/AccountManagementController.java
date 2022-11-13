@@ -75,7 +75,7 @@ public class AccountManagementController {
   }
 
   /**
-   * @author ZJ Description [管理员]批量重置密码(账户管理) date 2022-11-13 10:00:24 10:00
+   * @author ZJ Description [管理员]批量重置密码(账户管理) json数据包含ids数组和password date 2022-11-13 10:00:24 10:00
    * @param jsonObject
    */
   @RequestMapping(value = "/bulkResetPasswords", method = RequestMethod.PUT)
@@ -97,6 +97,20 @@ public class AccountManagementController {
   public JsonResult deleteAccount(@RequestBody JSONObject jsonObject) {
     Boolean flag = iAdministratorService.deleteAccount(jsonObject.getString("id"));
 
+    if (flag) {
+      return JsonResult.success("删除成功");
+    }
+    return JsonResult.failed("删除失败");
+  }
+
+  /**
+   * @author ZJ Description [管理员]批量删除账号(账户管理) json数据包含ids数组 date 2022-11-13 14:43:21 14:43
+   * @param jsonObject
+   */
+  @RequestMapping(value = "/bulkDeleteAccount", method = RequestMethod.DELETE)
+  public JsonResult bulkDeleteAccount(@RequestBody JSONObject jsonObject) {
+    List<String> ids = jsonObject.getJSONArray("ids").toJavaList(String.class);
+    Boolean flag = iAdministratorService.bulkDeleteAccount(ids);
     if (flag) {
       return JsonResult.success("删除成功");
     }

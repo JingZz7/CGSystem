@@ -25,4 +25,6 @@ public interface IAdministratorService extends IService<Administrator> {
   public Boolean bulkResetPasswords(List<String> ids, String password);
 
   public Boolean deleteAccount(String id);
+
+  public Boolean bulkDeleteAccount(List<String> ids);
 }

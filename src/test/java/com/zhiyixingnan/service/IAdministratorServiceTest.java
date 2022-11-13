@@ -1,11 +1,13 @@
 package com.zhiyixingnan.service;
 
+import com.zhiyixingnan.domain.Student;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootTest
 public class IAdministratorServiceTest {
@@ -36,5 +38,15 @@ public class IAdministratorServiceTest {
   @Test
   public void deleteAccountTest() {
     iAdministratorService.deleteAccount("2222222223");
+  }
+
+  @Test
+  public void bulkDeleteAccountTest() {
+    List<String> list = new ArrayList<>();
+    list.add("202108030204");
+    list.add("202108030207");
+    list.add("202026010512");
+    list.add("2222222224");
+    iAdministratorService.bulkDeleteAccount(list);
   }
 }

@@ -221,4 +221,46 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
     }
     return true;
   }
+
+  @Override
+  public Boolean bulkDeleteAccount(List<String> ids) {
+
+    for (String id : ids) {
+      // 三个都为空，返回false，学生的deleted已经为1或者教师的deleted已经为1，返回false
+      if ((studentDao.selectOne(new LambdaQueryWrapper<Student>().eq(Student::getId, id)) == null
+              && teacherDao.selectOne(new LambdaQueryWrapper<Teacher>().eq(Teacher::getId, id))
+                  == null
+              && tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id)) == null)
+          || (studentDao.selectOne(
+                      new LambdaQueryWrapper<Student>()
+                          .eq(Student::getId, id)
+                          .eq(Student::getDeleted, 1))
+                  != null
+              || teacherDao.selectOne(
+                      new LambdaQueryWrapper<Teacher>()
+                          .eq(Teacher::getId, id)
+                          .eq(Teacher::getDeleted, 1))
+                  != null)) {
+        return false;
+      }
+
+      // 学生和教师进行逻辑删除，助教进行物理删除
+      if (studentDao.selectOne(new LambdaQueryWrapper<Student>().eq(Student::getId, id)) != null) {
+        Student student =
+            studentDao.selectOne(new LambdaQueryWrapper<Student>().eq(Student::getId, id));
+        student.setDeleted(1);
+        studentDao.updateById(student);
+      }
+      if (teacherDao.selectOne(new LambdaQueryWrapper<Teacher>().eq(Teacher::getId, id)) != null) {
+        Teacher teacher =
+            teacherDao.selectOne(new LambdaQueryWrapper<Teacher>().eq(Teacher::getId, id));
+        teacher.setDeleted(1);
+        teacherDao.updateById(teacher);
+      }
+      if (tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id)) != null) {
+        tutorDao.delete(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id));
+      }
+    }
+    return true;
+  }
 }
