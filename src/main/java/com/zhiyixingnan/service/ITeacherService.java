@@ -18,4 +18,6 @@ public interface ITeacherService extends IService<Teacher> {
   public List<Object> teacherGetAccountList();
 
   public List<Object> teacherGetAccountById(String id);
+
+  public List<Object> teacherGetAccountByName(String name);
 }

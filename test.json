@@ -89,6 +89,11 @@
     "工号 String": "id"
   },
 
+  "[教师]根据姓名查询(账户管理) POST": "json数据包含name",
+  "/accountManagement/teacherGetAccountByName": {
+    "姓名 String": "name"
+  },
+
 
   "[管理员]获取用户列表(账户管理) POST": "不需要传参",
   "/accountManagement/getList": {},
