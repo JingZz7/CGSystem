@@ -103,6 +103,11 @@
     "电话 String": "phone"
   },
 
+  "[管理员]删除账号(账户管理) DELETE": "json数据包含id",
+  "/accountManagement/deleteAccount": {
+    "工号 String": "id"
+  },
+
   "[管理员]批量重置密码(账户管理) PUT": "json数据包含ids数组和password",
   "/accountManagement/bulkResetPasswords": {
     "工号的数组 List": "ids",

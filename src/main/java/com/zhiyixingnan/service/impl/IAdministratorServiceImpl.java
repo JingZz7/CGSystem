@@ -199,4 +199,26 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
     }
     return true;
   }
+
+  @Override
+  public Boolean deleteAccount(String id) {
+    Student student =
+        studentDao.selectOne(new LambdaQueryWrapper<Student>().eq(Student::getId, id));
+    Teacher teacher =
+        teacherDao.selectOne(new LambdaQueryWrapper<Teacher>().eq(Teacher::getId, id));
+    Tutor tutor = tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id));
+
+    if (student == null && teacher == null && tutor == null) {
+      return false;
+    }
+
+    if (student != null) {
+      studentDao.delete(new LambdaQueryWrapper<Student>().eq(Student::getId, id));
+    } else if (teacher != null) {
+      teacherDao.delete(new LambdaQueryWrapper<Teacher>().eq(Teacher::getId, id));
+    } else {
+      tutorDao.delete(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id));
+    }
+    return true;
+  }
 }

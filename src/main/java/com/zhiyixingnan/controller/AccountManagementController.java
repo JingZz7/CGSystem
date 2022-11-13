@@ -89,4 +89,18 @@ public class AccountManagementController {
     }
     return JsonResult.failed("修改失败");
   }
+
+  /**
+   * @author ZJ Description [管理员]删除账号(账户管理) json数据包含id date 2022-11-13 10:22:41 10:22
+   * @param jsonObject
+   */
+  @RequestMapping(value = "/deleteAccount", method = RequestMethod.DELETE)
+  public JsonResult deleteAccount(@RequestBody JSONObject jsonObject) {
+    Boolean flag = iAdministratorService.deleteAccount(jsonObject.getString("id"));
+
+    if (flag) {
+      return JsonResult.success("删除成功");
+    }
+    return JsonResult.failed("删除失败");
+  }
 }
