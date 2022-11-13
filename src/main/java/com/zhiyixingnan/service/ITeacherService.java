@@ -16,4 +16,6 @@ public interface ITeacherService extends IService<Teacher> {
   public Boolean updatePasswordByPhone(String phone, String password);
 
   public List<Object> teacherGetAccountList();
+
+  public List<Object> teacherGetAccountById(String id);
 }

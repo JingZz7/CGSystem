@@ -81,8 +81,13 @@
     "题目名称 String": "problemName"
   },
 
-  "[管理员]获取用户列表(账户管理) POST": "不需要传参",
+  "[教师]获取用户列表(账户管理) POST": "不需要传参",
   "/accountManagement/teacherGetAccountList": {},
+
+  "[教师]根据工号查询(账户管理) POST": "json数据包含id",
+  "/accountManagement/teacherGetAccountById": {
+    "工号 String": "id"
+  },
 
 
   "[管理员]获取用户列表(账户管理) POST": "不需要传参",

@@ -13,4 +13,9 @@ public class ITeacherServiceTest {
   public void teacherGetAccountListTest() {
     System.out.println(iTeacherService.teacherGetAccountList());
   }
+
+  @Test
+  public void teacherGetAccountByIdTest() {
+    System.out.println(iTeacherService.teacherGetAccountById("202026010512"));
+  }
 }

@@ -86,4 +86,24 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
     }
     return objects;
   }
+
+  @Override
+  public List<Object> teacherGetAccountById(String id) {
+    ArrayList<Object> objects = new ArrayList<>();
+    if (studentDao.selectOne(
+            new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted, 0))
+        != null) {
+      objects.add(
+          studentDao.selectOne(
+              new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted, 0)));
+    }
+    if (tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id)) != null) {
+      objects.add(tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id)));
+    }
+
+    if (objects.isEmpty()) {
+      return null;
+    }
+    return objects;
+  }
 }

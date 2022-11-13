@@ -36,6 +36,20 @@ public class AccountManagementController {
   }
 
   /**
+   * @author ZJ Description [教师]根据工号查询(账户管理) json数据包含id date 2022-11-13 17:01:55 17:01
+   * @param jsonObject
+   */
+  @RequestMapping(value = "/teacherGetAccountById", method = RequestMethod.POST)
+  public JsonResult teacherGetAccountById(@RequestBody JSONObject jsonObject) {
+    List<Object> list = iTeacherService.teacherGetAccountById(jsonObject.getString("id"));
+
+    if (list == null) {
+      return JsonResult.failed("查找失败");
+    }
+    return JsonResult.success(list, "查找成功");
+  }
+
+  /**
    * @author ZJ Description [管理员]获取用户列表(账户管理) date 2022-11-12 00:04:14 0:04
    * @param
    */
