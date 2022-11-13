@@ -133,10 +133,13 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
   public Boolean addAccount(
       String type, String id, String name, String password, String email, String phone) {
 
+    if (studentDao.selectOne(new LambdaQueryWrapper<Student>().eq(Student::getId, id)) != null
+        || teacherDao.selectOne(new LambdaQueryWrapper<Teacher>().eq(Teacher::getId, id)) != null
+        || tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id)) != null) {
+      return false;
+    }
+
     if (type.equals("student")) {
-      if (studentDao.selectOne(new LambdaQueryWrapper<Student>().eq(Student::getId, id)) != null) {
-        return false;
-      }
       Student student = new Student();
       student.setId(id);
       student.setName(name);
@@ -148,9 +151,6 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
       studentDao.insert(student);
       return true;
     } else if (type.equals("teacher")) {
-      if (teacherDao.selectOne(new LambdaQueryWrapper<Teacher>().eq(Teacher::getId, id)) != null) {
-        return false;
-      }
       Teacher teacher = new Teacher();
       teacher.setId(id);
       teacher.setName(name);
@@ -161,9 +161,6 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
       teacherDao.insert(teacher);
       return true;
     } else if (type.equals("tutor")) {
-      if (tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id)) != null) {
-        return false;
-      }
       Tutor tutor = new Tutor();
       tutor.setId(id);
       tutor.setName(name);
