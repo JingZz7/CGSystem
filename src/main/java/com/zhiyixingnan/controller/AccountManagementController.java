@@ -1,6 +1,5 @@
 package com.zhiyixingnan.controller;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.zhiyixingnan.controller.utils.JsonResult;
 import com.zhiyixingnan.service.IAdministratorService;
