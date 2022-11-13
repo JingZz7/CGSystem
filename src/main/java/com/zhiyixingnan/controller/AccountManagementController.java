@@ -3,6 +3,7 @@ package com.zhiyixingnan.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.zhiyixingnan.controller.utils.JsonResult;
 import com.zhiyixingnan.service.IAdministratorService;
+import com.zhiyixingnan.service.ITeacherService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,6 +20,20 @@ import java.util.List;
 public class AccountManagementController {
 
   @Autowired private IAdministratorService iAdministratorService;
+  @Autowired private ITeacherService iTeacherService;
+
+  /**
+   * @author ZJ Description [教师]获取账户列表(账户管理) 无参 date 2022-11-13 16:48:50 16:48
+   * @param
+   */
+  @RequestMapping(value = "/teacherGetAccountList", method = RequestMethod.POST)
+  public JsonResult teacherGetAccountList() {
+    List<Object> list = iTeacherService.teacherGetAccountList();
+    if (list == null) {
+      return JsonResult.failed("查找失败");
+    }
+    return JsonResult.success(list, "查找成功");
+  }
 
   /**
    * @author ZJ Description [管理员]获取用户列表(账户管理) date 2022-11-12 00:04:14 0:04

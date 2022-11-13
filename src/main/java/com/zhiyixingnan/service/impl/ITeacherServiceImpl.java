@@ -2,19 +2,27 @@ package com.zhiyixingnan.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zhiyixingnan.dao.StudentDao;
 import com.zhiyixingnan.dao.TeacherDao;
+import com.zhiyixingnan.dao.TutorDao;
 import com.zhiyixingnan.domain.Student;
 import com.zhiyixingnan.domain.Teacher;
+import com.zhiyixingnan.domain.Tutor;
 import com.zhiyixingnan.service.ITeacherService;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
     implements ITeacherService {
 
   @Autowired private TeacherDao teacherDao;
+  @Autowired private StudentDao studentDao;
+  @Autowired private TutorDao tutorDao;
 
   @Override
   public Boolean login(String name, String password) {
@@ -33,7 +41,7 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
   public Boolean isExistTeacher(String id, String password) {
     LambdaQueryWrapper<Teacher> lqw = new LambdaQueryWrapper<>();
     lqw.eq(Teacher::getDeleted, 0)
-            .and(i -> i.eq(Teacher::getId, id).eq(Teacher::getPassword, password));
+        .and(i -> i.eq(Teacher::getId, id).eq(Teacher::getPassword, password));
     if (teacherDao.selectOne(lqw) == null) {
       return false;
     }
@@ -58,5 +66,24 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
     teacher.setPassword(password);
     teacherDao.updateById(teacher);
     return true;
+  }
+
+  @Override
+  public List<Object> teacherGetAccountList() {
+    List<Student> students =
+        studentDao.selectList(new LambdaQueryWrapper<Student>().eq(Student::getDeleted, 0));
+    List<Tutor> tutors = tutorDao.selectList(null);
+    ArrayList<Object> objects = new ArrayList<>();
+    for (Student student : students) {
+      objects.add(student);
+    }
+    for (Tutor tutor : tutors) {
+      objects.add(tutor);
+    }
+
+    if (objects.isEmpty()) {
+      return null;
+    }
+    return objects;
   }
 }

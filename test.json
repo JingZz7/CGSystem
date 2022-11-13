@@ -81,6 +81,9 @@
     "题目名称 String": "problemName"
   },
 
+  "[管理员]获取用户列表(账户管理) POST": "不需要传参",
+  "/accountManagement/teacherGetAccountList": {},
+
 
   "[管理员]获取用户列表(账户管理) POST": "不需要传参",
   "/accountManagement/getList": {},
