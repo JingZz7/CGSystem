@@ -101,5 +101,11 @@
     "密码 String": "password",
     "邮箱 String": "email",
     "电话 String": "phone"
+  },
+
+  "[管理员]批量重置密码(账户管理) PUT": "json数据包含ids数组和password",
+  "/accountManagement/bulkResetPasswords": {
+    "工号的数组 List": "ids",
+    "密码 String": "password"
   }
 }

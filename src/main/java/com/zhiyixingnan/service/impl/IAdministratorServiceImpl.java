@@ -176,4 +176,30 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
 
     return false;
   }
+
+  @Override
+  public Boolean bulkResetPasswords(List<String> ids, String password) {
+    for (String id : ids) {
+      if (studentDao.selectOne(new LambdaQueryWrapper<Student>().eq(Student::getId, id)) != null) {
+        Student student =
+            studentDao.selectOne(new LambdaQueryWrapper<Student>().eq(Student::getId, id));
+        student.setPassword(password);
+        studentDao.updateById(student);
+      }
+
+      if (teacherDao.selectOne(new LambdaQueryWrapper<Teacher>().eq(Teacher::getId, id)) != null) {
+        Teacher teacher =
+            teacherDao.selectOne(new LambdaQueryWrapper<Teacher>().eq(Teacher::getId, id));
+        teacher.setPassword(password);
+        teacherDao.updateById(teacher);
+      }
+
+      if (tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id)) != null) {
+        Tutor tutor = tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id));
+        tutor.setPassword(password);
+        tutorDao.updateById(tutor);
+      }
+    }
+    return true;
+  }
 }

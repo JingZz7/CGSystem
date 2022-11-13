@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
+
 @SpringBootTest
 public class IAdministratorServiceTest {
 
@@ -18,5 +20,15 @@ public class IAdministratorServiceTest {
   public void addAccountTest() {
     iAdministratorService.addAccount(
         "tutor", "202026010512", "zj", "123456", "xxx@qq.com", "123321123");
+  }
+
+  @Test
+  public void bulkResetPasswordsTest(){
+    ArrayList<String> strings = new ArrayList<>();
+    strings.add("202108030328");
+    strings.add("202108030329");
+    strings.add("T202026010512");
+    strings.add("202026010512");
+    iAdministratorService.bulkResetPasswords(strings,"123111321");
   }
 }

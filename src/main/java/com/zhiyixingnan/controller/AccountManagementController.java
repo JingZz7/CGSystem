@@ -1,5 +1,6 @@
 package com.zhiyixingnan.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.zhiyixingnan.controller.utils.JsonResult;
 import com.zhiyixingnan.service.IAdministratorService;
@@ -72,5 +73,20 @@ public class AccountManagementController {
       return JsonResult.success("添加成功");
     }
     return JsonResult.failed("添加失败");
+  }
+
+  /**
+   * @author ZJ Description [管理员]批量重置密码(账户管理) date 2022-11-13 10:00:24 10:00
+   * @param jsonObject
+   */
+  @RequestMapping(value = "/bulkResetPasswords", method = RequestMethod.PUT)
+  public JsonResult bulkResetPasswords(@RequestBody JSONObject jsonObject) {
+    List<String> ids = jsonObject.getJSONArray("ids").toJavaList(String.class);
+    Boolean flag = iAdministratorService.bulkResetPasswords(ids, jsonObject.getString("password"));
+
+    if (flag) {
+      return JsonResult.success("修改成功");
+    }
+    return JsonResult.failed("修改失败");
   }
 }
