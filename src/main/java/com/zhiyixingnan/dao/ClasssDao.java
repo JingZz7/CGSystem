@@ -5,5 +5,4 @@ import com.zhiyixingnan.domain.Classs;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface ClasssDao extends BaseMapper<Classs> {
-}
+public interface ClasssDao extends BaseMapper<Classs> {}

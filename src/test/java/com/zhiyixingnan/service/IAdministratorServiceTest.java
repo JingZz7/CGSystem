@@ -1,15 +1,8 @@
 package com.zhiyixingnan.service;
 
-import com.zhiyixingnan.domain.Student;
-import org.apache.commons.exec.CommandLine;
-import org.apache.commons.exec.DefaultExecutor;
-import org.apache.commons.exec.PumpStreamHandler;
-import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.web.bind.annotation.PutMapping;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -60,13 +53,13 @@ public class IAdministratorServiceTest {
   }
 
   @Test
-  public void pyTest(){
+  public void pyTest() {
     System.out.println("Start");
     // python脚本的绝对路径，在windows中用"\\"分隔，在Linux中用"/"分隔
     String pyPath = "C:\\Users\\曾靖\\Desktop\\hello.py";
 
     // 传入python脚本的参数为”111“
-    String[] args1 = new String[]{"python", pyPath, "111"};
+    String[] args1 = new String[] {"python", pyPath, "111"};
 
     try {
       // 执行Python文件，并传入参数

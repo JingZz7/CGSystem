@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import java.math.BigInteger;
 
 @TableName("t_administrator")
 @AllArgsConstructor

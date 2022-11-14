@@ -5,5 +5,4 @@ import com.zhiyixingnan.domain.Administrator;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface AdministratorDao extends BaseMapper<Administrator> {
-}
+public interface AdministratorDao extends BaseMapper<Administrator> {}

@@ -1,7 +1,6 @@
 package com.zhiyixingnan.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.zhiyixingnan.domain.ModelOutputKScore;
 import com.zhiyixingnan.domain.RecommendProblem;
 import org.apache.ibatis.annotations.Mapper;
 

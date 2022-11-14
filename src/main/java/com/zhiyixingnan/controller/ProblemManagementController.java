@@ -1,7 +1,6 @@
 package com.zhiyixingnan.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.zhiyixingnan.controller.utils.JsonResult;
 import com.zhiyixingnan.domain.Problem;
 import com.zhiyixingnan.service.IProblemService;

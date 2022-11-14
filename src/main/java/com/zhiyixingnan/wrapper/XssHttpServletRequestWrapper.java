@@ -1,18 +1,11 @@
 package com.zhiyixingnan.wrapper;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import javax.servlet.ReadListener;
-import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
-import org.springframework.util.StreamUtils;
 import org.springframework.util.StringUtils;
 
 /** 防止sql注入,xss攻击 前端可以对输入信息做预处理，后端也可以做处理。 */

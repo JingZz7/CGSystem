@@ -7,5 +7,5 @@ public interface ITutorService extends IService<Tutor> {
 
   public Boolean login(String name, String password);
 
-  public Boolean isExistTutor(String id,String password);
+  public Boolean isExistTutor(String id, String password);
 }

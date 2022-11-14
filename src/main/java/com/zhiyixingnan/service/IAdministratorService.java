@@ -2,7 +2,6 @@ package com.zhiyixingnan.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhiyixingnan.domain.Administrator;
-
 import java.util.List;
 
 public interface IAdministratorService extends IService<Administrator> {
