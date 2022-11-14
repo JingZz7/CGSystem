@@ -3,10 +3,12 @@ package com.easyknowharddo.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.easyknowharddo.dao.CommentStudentDao;
+import com.easyknowharddo.dao.ProblemDao;
 import com.easyknowharddo.dao.StudentDao;
 import com.easyknowharddo.dao.TeacherDao;
 import com.easyknowharddo.dao.TutorDao;
 import com.easyknowharddo.domain.CommentStudent;
+import com.easyknowharddo.domain.Problem;
 import com.easyknowharddo.domain.Student;
 import com.easyknowharddo.domain.Teacher;
 import com.easyknowharddo.domain.Tutor;
@@ -25,6 +27,7 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
   @Autowired private TeacherDao teacherDao;
   @Autowired private StudentDao studentDao;
   @Autowired private TutorDao tutorDao;
+  @Autowired private ProblemDao problemDao;
   @Autowired private CommentStudentDao commentStudentDao;
 
   /**
@@ -222,5 +225,27 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
       list.add(map);
     }
     return list;
+  }
+
+  /**
+   * @param problemId: * @return Boolean
+   * @author ZJ
+   * @description TODO [教师]删除题目(题库管理)
+   * @date 2022/11/14 23:34
+   */
+  @Override
+  public Boolean deleteProblem(String problemId) {
+    if (problemDao.selectOne(
+            new LambdaQueryWrapper<Problem>()
+                .eq(Problem::getId, problemId)
+                .eq(Problem::getDeleted, 0))
+        == null) {
+      return false;
+    }
+    Problem problem =
+        problemDao.selectOne(new LambdaQueryWrapper<Problem>().eq(Problem::getId, problemId));
+    problem.setDeleted(1);
+    problemDao.updateById(problem);
+    return true;
   }
 }

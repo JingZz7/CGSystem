@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.easyknowharddo.controller.utils.JsonResult;
 import com.easyknowharddo.domain.Problem;
 import com.easyknowharddo.service.IProblemService;
+import com.easyknowharddo.service.ITeacherService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,6 +21,7 @@ import java.util.List;
 public class ProblemManagementController {
 
   @Autowired private IProblemService iProblemService;
+  @Autowired private ITeacherService iTeacherService;
 
   /**
    * @author ZJ Description [教师]获取题目列表(题库管理) 无参 date 2022-11-11 18:07:17 18:07
@@ -56,5 +58,20 @@ public class ProblemManagementController {
     }
 
     return JsonResult.success(list, "查找成功");
+  }
+
+  /**
+   * @param jsonObject: * @return JsonResult
+   * @author ZJ
+   * @description TODO [教师]删除题目(题库管理)
+   * @date 2022/11/14 23:49
+   */
+  @RequestMapping(value = "/deleteProblem", method = RequestMethod.DELETE)
+  public JsonResult deleteProblem(@RequestBody JSONObject jsonObject) {
+    Boolean flag = iTeacherService.deleteProblem(jsonObject.getString("problemId"));
+    if (flag) {
+      return JsonResult.success("删除成功");
+    }
+    return JsonResult.failed("删除失败");
   }
 }

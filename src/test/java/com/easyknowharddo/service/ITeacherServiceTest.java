@@ -1,5 +1,6 @@
 package com.easyknowharddo.service;
 
+import com.easyknowharddo.dao.ProblemDao;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,5 +31,10 @@ public class ITeacherServiceTest {
   public void teacherViewReviewTest() {
     List<HashMap<String, String>> hashMaps = iTeacherService.teacherViewReview("1");
     System.out.println(hashMaps);
+  }
+
+  @Test
+  public void deleteProblemTest() {
+    iTeacherService.deleteProblem("4");
   }
 }

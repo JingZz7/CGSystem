@@ -13,11 +13,11 @@ public class IProblemServiceTest {
   @Test
   public void addProblemTest() {
     Problem problem = new Problem();
-    problem.setId("3");
-    problem.setKnowledgePointId("1");
-    problem.setName("铺地毯");
-    problem.setDifficulty('1');
-    problem.setLabel("数组");
+    problem.setId("4");
+    problem.setKnowledgePointId("2");
+    problem.setName("方格取数");
+    problem.setDifficulty('3');
+    problem.setLabel("动态规划");
     problem.setDeleted(0);
     System.out.println(iProblemService.save(problem));
   }

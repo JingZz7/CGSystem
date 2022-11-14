@@ -88,6 +88,11 @@
     "题目名称 String": "problemName"
   },
 
+  "[教师]删除题目(题库管理) DELETE": "json数据包含problemId",
+  "/problemManagement/deleteProblem": {
+    "题号 String": "problemId"
+  },
+
   "[教师]获取用户列表(账户管理) POST": "不需要传参",
   "/accountManagement/teacherGetAccountList": {},
 

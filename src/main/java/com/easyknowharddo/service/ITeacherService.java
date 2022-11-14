@@ -73,4 +73,12 @@ public interface ITeacherService extends IService<Teacher> {
    * @date 2022/11/14 20:58
    */
   public List<HashMap<String, String>> teacherViewReview(String problemId);
+
+  /**
+   * @param problemId: * @return Boolean
+   * @author ZJ
+   * @description TODO [教师]删除题目(题库管理)
+   * @date 2022/11/14 23:34
+   */
+  public Boolean deleteProblem(String problemId);
 }
