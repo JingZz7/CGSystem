@@ -67,6 +67,13 @@
     "需要删除id的集合 List": "ids"
   },
 
+  "[学生]评论 POST": "json数据包含studentId、problemId、description",
+  "/problem/studentComment": {
+    "学号 String": "studentId",
+    "题号 String": "problemId",
+    "评论信息 String": "description"
+  },
+
 
   "[教师]获取题目列表(题库管理) POST": "不需要传参",
   "/problemManagement/getProblemList": {},

@@ -7,6 +7,7 @@ import com.zhiyixingnan.domain.Problem;
 import com.zhiyixingnan.service.IFavoriteService;
 import com.zhiyixingnan.service.IProblemDescriptionService;
 import com.zhiyixingnan.service.IProblemService;
+import com.zhiyixingnan.service.IStudentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -26,6 +27,7 @@ public class ProblemController {
   @Autowired private IProblemService iProblemService;
   @Autowired private IProblemDescriptionService iProblemDescriptionService;
   @Autowired private IFavoriteService iFavoriteService;
+  @Autowired private IStudentService iStudentService;
 
   /**
    * @author ZJ Description [学生]获取题目列表(刷题推荐) 无参 date 2022-11-09 16:44:13 16:44
@@ -130,5 +132,24 @@ public class ProblemController {
     }
 
     return JsonResult.success(problems, "查找成功");
+  }
+
+  /**
+   * @author ZJ Description [学生]评论 json数据包含studentId、problemId、description date 2022-11-14 13:21:05
+   *     13:21
+   * @param jsonObject
+   */
+  @RequestMapping(value = "/studentComment", method = RequestMethod.POST)
+  public JsonResult studentComment(@RequestBody JSONObject jsonObject) {
+    Boolean flag =
+        iStudentService.studentComment(
+            jsonObject.getString("studentId"),
+            jsonObject.getString("problemId"),
+            jsonObject.getString("description"));
+
+    if (flag) {
+      return JsonResult.success("评论成功");
+    }
+    return JsonResult.failed("评论失败");
   }
 }
