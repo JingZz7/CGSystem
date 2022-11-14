@@ -76,7 +76,7 @@ public class ProblemManagementController {
   }
 
   /**
-   * @param jsonObject:  * @return JsonResult
+   * @param jsonObject: * @return JsonResult
    * @author ZJ
    * @description TODO [教师]批量删除题目(题目管理) json数据包含ids
    * @date 2022/11/15 0:11
@@ -89,5 +89,17 @@ public class ProblemManagementController {
       return JsonResult.success("删除成功");
     }
     return JsonResult.failed("删除失败");
+  }
+
+  /**
+   * @param jsonObject: * @return JsonResult
+   * @author ZJ
+   * @description TODO [教师]根据难度查询(题库管理) json数据包含difficulty
+   * @date 2022/11/15 0:24
+   */
+  @RequestMapping(value = "/getListByDifficulty", method = RequestMethod.POST)
+  public JsonResult getListByDifficulty(@RequestBody JSONObject jsonObject) {
+    return JsonResult.success(
+        iTeacherService.getListByDifficulty(jsonObject.getString("difficulty")), "查询成功");
   }
 }

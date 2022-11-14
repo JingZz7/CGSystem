@@ -88,12 +88,17 @@
     "题目名称 String": "problemName"
   },
 
+  "[教师]根据难度查询(题库管理) POST": "json数据包含difficulty",
+  "/problemManagement/getListByDifficulty": {
+    "难度 String": "difficulty"
+  },
+
   "[教师]删除题目(题库管理) DELETE": "json数据包含problemId",
   "/problemManagement/deleteProblem": {
     "题号 String": "problemId"
   },
 
-  "[教师]批量删除题目(题目管理) DELETE": "json数据包含ids",
+  "[教师]批量删除题目(题库管理) DELETE": "json数据包含ids",
   "/problemManagement/bulkDeleteProblem":{
     "题号的数组 List": "ids"
   },

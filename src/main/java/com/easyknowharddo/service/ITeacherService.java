@@ -1,6 +1,7 @@
 package com.easyknowharddo.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.easyknowharddo.domain.Problem;
 import com.easyknowharddo.domain.Teacher;
 import java.util.HashMap;
 import java.util.List;
@@ -89,4 +90,12 @@ public interface ITeacherService extends IService<Teacher> {
    * @date 2022/11/14 23:55
    */
   public Boolean bulkDeleteProblem(List<String> ids);
+
+  /**
+   * @param difficulty: * @return List<Problem>
+   * @author ZJ
+   * @description TODO [教师]根据难度查询(题库管理)
+   * @date 2022/11/15 0:17
+   */
+  public List<Problem> getListByDifficulty(String difficulty);
 }

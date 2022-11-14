@@ -268,4 +268,21 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
     }
     return true;
   }
+
+  /**
+   * @param difficulty: * @return List<Problem>
+   * @author ZJ
+   * @description TODO [教师]根据难度查询(题库管理)
+   * @date 2022/11/15 0:17
+   */
+  @Override
+  public List<Problem> getListByDifficulty(String difficulty) {
+    if (!difficulty.equals("all")) {
+      return problemDao.selectList(
+          new LambdaQueryWrapper<Problem>()
+              .eq(Problem::getDifficulty, difficulty)
+              .eq(Problem::getDeleted, 0));
+    }
+    return problemDao.selectList(new LambdaQueryWrapper<Problem>().eq(Problem::getDeleted, 0));
+  }
 }
