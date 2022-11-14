@@ -16,6 +16,10 @@ import com.zhiyixingnan.service.IStudentService;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -119,6 +123,10 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
     commentStudent.setStudentId(studentId);
     commentStudent.setProblemId(problemId);
     commentStudent.setDescription(description);
+    DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    java.util.Date date = new Date();
+    String dateTime = df.format(date);
+    commentStudent.setDateTime(dateTime);
     commentStudentDao.insert(commentStudent);
     return true;
   }

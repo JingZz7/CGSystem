@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import java.util.Date;
 
 @TableName("t_comment_student")
 public class CommentStudent {
@@ -20,33 +21,10 @@ public class CommentStudent {
   @TableField("problem_id")
   private String problemId;
 
+  @TableField("date_time")
+  private String dateTime;
+
   public CommentStudent() {}
-
-  public CommentStudent(
-      String PKCommentStudentId, String description, String studentId, String problemId) {
-    this.PKCommentStudentId = PKCommentStudentId;
-    this.description = description;
-    StudentId = studentId;
-    this.problemId = problemId;
-  }
-
-  @Override
-  public String toString() {
-    return "CommentStudent{"
-        + "PKCommentStudentId='"
-        + PKCommentStudentId
-        + '\''
-        + ", description='"
-        + description
-        + '\''
-        + ", StudentId='"
-        + StudentId
-        + '\''
-        + ", problemId='"
-        + problemId
-        + '\''
-        + '}';
-  }
 
   public String getPKCommentStudentId() {
     return PKCommentStudentId;
@@ -78,5 +56,47 @@ public class CommentStudent {
 
   public void setProblemId(String problemId) {
     this.problemId = problemId;
+  }
+
+  public String getDateTime() {
+    return dateTime;
+  }
+
+  public void setDateTime(String dateTime) {
+    this.dateTime = dateTime;
+  }
+
+  public CommentStudent(
+      String PKCommentStudentId,
+      String description,
+      String studentId,
+      String problemId,
+      String dateTime) {
+    this.PKCommentStudentId = PKCommentStudentId;
+    this.description = description;
+    StudentId = studentId;
+    this.problemId = problemId;
+    this.dateTime = dateTime;
+  }
+
+  @Override
+  public String toString() {
+    return "CommentStudent{"
+        + "PKCommentStudentId='"
+        + PKCommentStudentId
+        + '\''
+        + ", description='"
+        + description
+        + '\''
+        + ", StudentId='"
+        + StudentId
+        + '\''
+        + ", problemId='"
+        + problemId
+        + '\''
+        + ", dateTime='"
+        + dateTime
+        + '\''
+        + '}';
   }
 }
