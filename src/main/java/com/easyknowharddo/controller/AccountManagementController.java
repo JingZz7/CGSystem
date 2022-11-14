@@ -64,6 +64,21 @@ public class AccountManagementController {
   }
 
   /**
+   * @param jsonObject: * @return JsonResult
+   * @author ZJ
+   * @description TODO [教师]删除账户(账户管理) json数据包含id
+   * @date 2022/11/15 0:42
+   */
+  @RequestMapping(value = "/teacherDeleteAccount", method = RequestMethod.DELETE)
+  public JsonResult teacherDeleteAccount(@RequestBody JSONObject jsonObject) {
+    Boolean flag = iTeacherService.deleteAccount(jsonObject.getString("id"));
+    if (flag) {
+      return JsonResult.success("删除成功");
+    }
+    return JsonResult.failed("删除失败");
+  }
+
+  /**
    * @author ZJ Description [管理员]获取用户列表(账户管理) date 2022-11-12 00:04:14 0:04
    * @param
    */

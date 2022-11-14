@@ -116,6 +116,11 @@
     "姓名 String": "name"
   },
 
+  "[教师]删除账户(账户管理) DELETE": "json数据包含id",
+  "/accountManagement/teacherDeleteAccount": {
+    "工号/学号 String": "id"
+  },
+
   "[教师]查看评论(查看评论) POST": "json数据包含problemId",
   "/review/teacherViewReview": {
     "题号 String": "problemId"

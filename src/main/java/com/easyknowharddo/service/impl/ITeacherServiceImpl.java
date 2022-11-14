@@ -183,6 +183,31 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
   }
 
   /**
+   * @param id: * @return Boolean
+   * @author ZJ
+   * @description TODO [教师]删除账户(账户管理)
+   * @date 2022/11/15 0:33
+   */
+  @Override
+  public Boolean deleteAccount(String id) {
+    if (studentDao.selectOne(
+                new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted, 0))
+            == null
+        && tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id)) == null) {
+      return false;
+    }
+    if (studentDao.selectOne(new LambdaQueryWrapper<Student>().eq(Student::getId, id)) != null) {
+      Student student =
+          studentDao.selectOne(new LambdaQueryWrapper<Student>().eq(Student::getId, id));
+      student.setDeleted(1);
+      studentDao.updateById(student);
+      return true;
+    }
+    tutorDao.delete(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id));
+    return true;
+  }
+
+  /**
    * @param problemId: * @return List<HashMap<String,String>>
    * @author ZJ
    * @description TODO [教师]查看评论(查看评论)

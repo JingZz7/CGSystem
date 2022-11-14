@@ -68,6 +68,14 @@ public interface ITeacherService extends IService<Teacher> {
   public List<Object> teacherGetAccountByName(String name);
 
   /**
+   * @param id:  * @return Boolean
+   * @author ZJ
+   * @description TODO [教师]删除账户(账户管理)
+   * @date 2022/11/15 0:33
+   */
+  public Boolean deleteAccount(String id);
+
+  /**
    * @param problemId: * @return List<HashMap<String,String>>
    * @author ZJ
    * @description TODO [教师]查看评论(查看评论)
