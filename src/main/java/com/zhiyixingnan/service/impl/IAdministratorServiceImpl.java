@@ -101,7 +101,23 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
 
     ArrayList<Object> objects = new ArrayList<>();
 
-    if (type.equals("student")) {
+    if (type.equals("all")) {
+      List<Student> students =
+          studentDao.selectList(new LambdaQueryWrapper<Student>().eq(Student::getDeleted, 0));
+      List<Teacher> teachers =
+          teacherDao.selectList(new LambdaQueryWrapper<Teacher>().eq(Teacher::getDeleted, 0));
+      List<Tutor> tutors = tutorDao.selectList(null);
+      for (Student student : students) {
+        objects.add(student);
+      }
+      for (Teacher teacher : teachers) {
+        objects.add(teacher);
+      }
+      for (Tutor tutor : tutors) {
+        objects.add(tutor);
+      }
+      return objects;
+    } else if (type.equals("student")) {
       List<Student> students =
           studentDao.selectList(new LambdaQueryWrapper<Student>().eq(Student::getDeleted, 0));
       for (Student student : students) {

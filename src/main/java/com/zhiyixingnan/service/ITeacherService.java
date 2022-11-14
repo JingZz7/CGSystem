@@ -3,6 +3,7 @@ package com.zhiyixingnan.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhiyixingnan.domain.Teacher;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface ITeacherService extends IService<Teacher> {
@@ -20,4 +21,6 @@ public interface ITeacherService extends IService<Teacher> {
   public List<Object> teacherGetAccountById(String id);
 
   public List<Object> teacherGetAccountByName(String name);
+
+  public List<HashMap<String, String>> teacherViewReview(String problemId);
 }

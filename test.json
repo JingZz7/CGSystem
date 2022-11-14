@@ -101,6 +101,11 @@
     "姓名 String": "name"
   },
 
+  "[教师]查看评论(查看评论) POST": "json数据包含problemId",
+  "/review/teacherViewReview": {
+    "题号 String": "problemId"
+  },
+
 
   "[管理员]获取用户列表(账户管理) POST": "不需要传参",
   "/accountManagement/getList": {},

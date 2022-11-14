@@ -2,9 +2,11 @@ package com.zhiyixingnan.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zhiyixingnan.dao.CommentStudentDao;
 import com.zhiyixingnan.dao.StudentDao;
 import com.zhiyixingnan.dao.TeacherDao;
 import com.zhiyixingnan.dao.TutorDao;
+import com.zhiyixingnan.domain.CommentStudent;
 import com.zhiyixingnan.domain.Student;
 import com.zhiyixingnan.domain.Teacher;
 import com.zhiyixingnan.domain.Tutor;
@@ -14,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -23,6 +26,7 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
   @Autowired private TeacherDao teacherDao;
   @Autowired private StudentDao studentDao;
   @Autowired private TutorDao tutorDao;
+  @Autowired private CommentStudentDao commentStudentDao;
 
   @Override
   public Boolean login(String name, String password) {
@@ -134,5 +138,37 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
       return null;
     }
     return objects;
+  }
+
+  @Override
+  public List<HashMap<String, String>> teacherViewReview(String problemId) {
+
+    if (commentStudentDao.selectList(
+            new LambdaQueryWrapper<CommentStudent>().eq(CommentStudent::getProblemId, problemId))
+        == null) {
+      return null;
+    }
+
+    List<CommentStudent> commentStudents =
+        commentStudentDao.selectList(
+            new LambdaQueryWrapper<CommentStudent>().eq(CommentStudent::getProblemId, problemId));
+
+    ArrayList<HashMap<String, String>> list = new ArrayList<>();
+
+    for (CommentStudent commentStudent : commentStudents) {
+      /** 这里一定要创建一个新的HashMap，使用同一个map对象加入list后会被覆盖 */
+      HashMap<String, String> map = new HashMap<>();
+      String name =
+          studentDao
+              .selectOne(
+                  new LambdaQueryWrapper<Student>()
+                      .eq(Student::getId, commentStudent.getStudentId())
+                      .eq(Student::getDeleted, 0))
+              .getName();
+      map.put("name", name);
+      map.put("description", commentStudent.getDescription());
+      list.add(map);
+    }
+    return list;
   }
 }

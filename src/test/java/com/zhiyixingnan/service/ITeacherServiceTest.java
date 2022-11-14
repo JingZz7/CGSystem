@@ -4,6 +4,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.HashMap;
+import java.util.List;
+
 @SpringBootTest
 public class ITeacherServiceTest {
 
@@ -22,5 +25,11 @@ public class ITeacherServiceTest {
   @Test
   public void teacherGetAccountByNameTest() {
     System.out.println(iTeacherService.teacherGetAccountByName("李"));
+  }
+
+  @Test
+  public void teacherViewReviewTest() {
+    List<HashMap<String, String>> hashMaps = iTeacherService.teacherViewReview("1");
+    System.out.println(hashMaps);
   }
 }
