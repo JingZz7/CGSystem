@@ -98,6 +98,11 @@
   "[管理员]获取用户列表(账户管理) POST": "不需要传参",
   "/accountManagement/getList": {},
 
+  "[管理员]分类查找(账户管理) POST": "json数据包含type",
+  "/accountManagement/getAccountByType": {
+    "类型 String": "type"
+  },
+
   "[管理员]编辑账户(账户管理) PUT": "json数据包含id、password、email、phone",
   "/accountManagement/editAccount": {
     "学号/工号 String": "id",

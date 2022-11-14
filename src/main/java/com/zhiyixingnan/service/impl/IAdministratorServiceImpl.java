@@ -97,6 +97,35 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
   }
 
   @Override
+  public List<Object> getAccountByType(String type) {
+
+    ArrayList<Object> objects = new ArrayList<>();
+
+    if (type.equals("student")) {
+      List<Student> students =
+          studentDao.selectList(new LambdaQueryWrapper<Student>().eq(Student::getDeleted, 0));
+      for (Student student : students) {
+        objects.add(student);
+      }
+      return objects;
+    } else if (type.equals("teacher")) {
+      List<Teacher> teachers =
+          teacherDao.selectList(new LambdaQueryWrapper<Teacher>().eq(Teacher::getDeleted, 0));
+      for (Teacher teacher : teachers) {
+        objects.add(teacher);
+      }
+      return objects;
+    } else if (type.equals("tutor")) {
+      List<Tutor> tutors = tutorDao.selectList(null);
+      for (Tutor tutor : tutors) {
+        objects.add(tutor);
+      }
+      return objects;
+    }
+    return null;
+  }
+
+  @Override
   public Boolean editAccount(String id, String password, String email, String phone) {
 
     LambdaQueryWrapper<Student> lqw1 = new LambdaQueryWrapper<Student>().eq(Student::getId, id);

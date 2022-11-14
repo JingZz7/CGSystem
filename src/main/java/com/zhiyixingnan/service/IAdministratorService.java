@@ -17,6 +17,8 @@ public interface IAdministratorService extends IService<Administrator> {
 
   public List<Object> getList();
 
+  public List<Object> getAccountByType(String type);
+
   public Boolean editAccount(String id, String password, String email, String phone);
 
   public Boolean addAccount(

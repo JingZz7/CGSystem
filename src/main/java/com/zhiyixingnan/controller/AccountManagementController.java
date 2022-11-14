@@ -77,6 +77,20 @@ public class AccountManagementController {
   }
 
   /**
+   * @author ZJ Description [管理员]分类查找(账户管理) json数据包含type date 2022-11-14 10:31:33 10:31
+   * @param jsonObject
+   */
+  @RequestMapping(value = "/getAccountByType", method = RequestMethod.POST)
+  public JsonResult getAccountByType(@RequestBody JSONObject jsonObject) {
+    List<Object> type = iAdministratorService.getAccountByType(jsonObject.getString("type"));
+
+    if (type.isEmpty()) {
+      return JsonResult.failed("查找失败");
+    }
+    return JsonResult.success(type, "查找成功");
+  }
+
+  /**
    * @author ZJ Description [管理员]编辑账户(账户管理) json数据中包含id、password、email、phone date 2022-11-12
    *     15:45:02 15:45
    * @param jsonObject
