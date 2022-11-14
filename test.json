@@ -93,6 +93,11 @@
     "题号 String": "problemId"
   },
 
+  "[教师]批量删除题目(题目管理) DELETE": "json数据包含ids",
+  "/problemManagement/bulkDeleteProblem":{
+    "题号的数组 List": "ids"
+  },
+
   "[教师]获取用户列表(账户管理) POST": "不需要传参",
   "/accountManagement/teacherGetAccountList": {},
 

@@ -4,6 +4,9 @@ import com.easyknowharddo.dao.ProblemDao;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.web.bind.annotation.PutMapping;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,5 +39,14 @@ public class ITeacherServiceTest {
   @Test
   public void deleteProblemTest() {
     iTeacherService.deleteProblem("4");
+  }
+
+  @Test
+  public void bulkDeleteProblemTest() {
+    ArrayList<String> list = new ArrayList<>();
+    list.add("1");
+    list.add("2");
+    list.add("3");
+    iTeacherService.bulkDeleteProblem(list);
   }
 }

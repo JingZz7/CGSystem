@@ -81,4 +81,12 @@ public interface ITeacherService extends IService<Teacher> {
    * @date 2022/11/14 23:34
    */
   public Boolean deleteProblem(String problemId);
+
+  /**
+   * @param ids: * @return Boolean
+   * @author ZJ
+   * @description TODO [教师]批量删除题目(题目管理)
+   * @date 2022/11/14 23:55
+   */
+  public Boolean bulkDeleteProblem(List<String> ids);
 }

@@ -42,11 +42,9 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
     LambdaQueryWrapper<Teacher> lambdaQueryWrapper = new LambdaQueryWrapper<>();
     lambdaQueryWrapper.eq(Strings.isNotEmpty(name), Teacher::getName, name);
     Teacher teacher = teacherDao.selectOne(lambdaQueryWrapper);
-
     if (teacher == null) {
       return false;
     }
-
     return password.equals(teacher.getPassword());
   }
 
@@ -146,7 +144,6 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
     if (tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id)) != null) {
       objects.add(tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id)));
     }
-
     if (objects.isEmpty()) {
       return null;
     }
@@ -162,7 +159,6 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
   @Override
   public List<Object> teacherGetAccountByName(String name) {
     ArrayList<Object> objects = new ArrayList<>();
-
     List<Student> students =
         studentDao.selectList(
             new LambdaQueryWrapper<Student>()
@@ -173,7 +169,6 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
         objects.add(student);
       }
     }
-
     List<Tutor> tutors =
         tutorDao.selectList(new LambdaQueryWrapper<Tutor>().like(Tutor::getName, name));
     if (!tutors.isEmpty()) {
@@ -181,7 +176,6 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
         objects.add(tutor);
       }
     }
-
     if (objects.isEmpty()) {
       return null;
     }
@@ -208,7 +202,6 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
             new LambdaQueryWrapper<CommentStudent>().eq(CommentStudent::getProblemId, problemId));
 
     ArrayList<HashMap<String, String>> list = new ArrayList<>();
-
     for (CommentStudent commentStudent : commentStudents) {
       /** 这里一定要创建一个新的HashMap，使用同一个map对象加入list后会被覆盖 */
       HashMap<String, String> map = new HashMap<>();
@@ -246,6 +239,33 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
         problemDao.selectOne(new LambdaQueryWrapper<Problem>().eq(Problem::getId, problemId));
     problem.setDeleted(1);
     problemDao.updateById(problem);
+    return true;
+  }
+
+  /**
+   * @param ids: * @return Boolean
+   * @author ZJ
+   * @description TODO [教师]批量删除题目(题目管理)
+   * @date 2022/11/14 23:55
+   */
+  @Override
+  public Boolean bulkDeleteProblem(List<String> ids) {
+    if (ids.isEmpty()) {
+      return false;
+    }
+    for (String problemId : ids) {
+      if (problemDao.selectOne(
+              new LambdaQueryWrapper<Problem>()
+                  .eq(Problem::getId, problemId)
+                  .eq(Problem::getDeleted, 0))
+          == null) {
+        continue;
+      }
+      Problem problem =
+          problemDao.selectOne(new LambdaQueryWrapper<Problem>().eq(Problem::getId, problemId));
+      problem.setDeleted(1);
+      problemDao.updateById(problem);
+    }
     return true;
   }
 }

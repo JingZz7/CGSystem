@@ -63,12 +63,28 @@ public class ProblemManagementController {
   /**
    * @param jsonObject: * @return JsonResult
    * @author ZJ
-   * @description TODO [教师]删除题目(题库管理)
+   * @description TODO [教师]删除题目(题库管理) json数据包含problemId
    * @date 2022/11/14 23:49
    */
   @RequestMapping(value = "/deleteProblem", method = RequestMethod.DELETE)
   public JsonResult deleteProblem(@RequestBody JSONObject jsonObject) {
     Boolean flag = iTeacherService.deleteProblem(jsonObject.getString("problemId"));
+    if (flag) {
+      return JsonResult.success("删除成功");
+    }
+    return JsonResult.failed("删除失败");
+  }
+
+  /**
+   * @param jsonObject:  * @return JsonResult
+   * @author ZJ
+   * @description TODO [教师]批量删除题目(题目管理) json数据包含ids
+   * @date 2022/11/15 0:11
+   */
+  @RequestMapping(value = "/bulkDeleteProblem", method = RequestMethod.DELETE)
+  public JsonResult bulkDeleteProblem(@RequestBody JSONObject jsonObject) {
+    Boolean flag =
+        iTeacherService.bulkDeleteProblem(jsonObject.getJSONArray("ids").toJavaList(String.class));
     if (flag) {
       return JsonResult.success("删除成功");
     }
