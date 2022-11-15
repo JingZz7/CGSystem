@@ -20,7 +20,7 @@ public class IFavoriteServiceTest {
 
   @Test
   public void getFavoriteProblemListTest() {
-    System.out.println(iFavoriteService.getFavoriteProblemList("202026010512"));
+    iFavoriteService.getFavoriteProblemList("202026010512", 1, 5);
   }
 
   @Test

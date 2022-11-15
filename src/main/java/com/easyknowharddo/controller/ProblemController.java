@@ -33,7 +33,7 @@ public class ProblemController {
   /**
    * @param jsonObject: a * return JsonResult
    * @author ZJ
-   * @description TODO [学生]获取题目列表
+   * @description TODO [学生]获取题目列表(刷题推荐)
    * @date 2022/11/15 20:54
    */
   @RequestMapping(value = "/getProblemList", method = RequestMethod.POST)
@@ -50,16 +50,26 @@ public class ProblemController {
   }
 
   /**
-   * @author ZJ Description [学生]获取题目列表(收藏夹) 传入数据为学号 date 2022-11-11 15:34:00 15:34
-   * @param jsonObject
+   * @param jsonObject: * @return JsonResult
+   * @author ZJ
+   * @description TODO [学生]获取题目列表(收藏夹) json数据包含studentId、currentPage、pageSize
+   * @date 2022/11/15 22:31
    */
   @RequestMapping(value = "/getFavoriteProblemList", method = RequestMethod.POST)
   public JsonResult getFavoriteProblemList(@RequestBody JSONObject jsonObject) {
-    List<Problem> list = iFavoriteService.getFavoriteProblemList(jsonObject.getString("studentId"));
-    if (list == null) {
-      return JsonResult.failed("获取失败,此学生收藏夹无题目");
+    IPage<Problem> page =
+        iFavoriteService.getFavoriteProblemList(
+            jsonObject.getString("studentId"),
+            jsonObject.getInteger("currentPage"),
+            jsonObject.getInteger("pageSize"));
+    if (jsonObject.getInteger("currentPage") > page.getPages()) {
+      page =
+          iFavoriteService.getFavoriteProblemList(
+              jsonObject.getString("studentId"),
+              jsonObject.getInteger("currentPage"),
+              jsonObject.getInteger("pageSize"));
     }
-    return JsonResult.success(list, "获取成功");
+    return JsonResult.success(page.getRecords(), "获取成功");
   }
 
   /**

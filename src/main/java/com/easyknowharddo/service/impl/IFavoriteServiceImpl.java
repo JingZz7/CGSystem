@@ -1,6 +1,8 @@
 package com.easyknowharddo.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.easyknowharddo.dao.FavoriteDao;
 import com.easyknowharddo.dao.ProblemDao;
@@ -21,29 +23,52 @@ public class IFavoriteServiceImpl extends ServiceImpl<FavoriteDao, Favorite>
   @Autowired private ProblemDao problemDao;
 
   /**
-   * @param studentId: * @return List<Problem>
+   * @param studentId: * @return IPage<Problem>
    * @author ZJ
    * @description TODO [学生]获取题目列表(收藏夹)
-   * @date 2022/11/14 20:43
+   * @date 2022/11/15 22:16
    */
   @Override
-  public List<Problem> getFavoriteProblemList(String studentId) {
+  public IPage<Problem> getFavoriteProblemList(String studentId, int currentPage, int pageSize) {
     LambdaQueryWrapper<Favorite> favoriteLambdaQueryWrapper =
         new LambdaQueryWrapper<Favorite>().eq(Favorite::getStudentId, studentId);
     List<Favorite> list = favoriteDao.selectList(favoriteLambdaQueryWrapper);
     List<String> orders = list.stream().map(Favorite::getProblemId).collect(Collectors.toList());
-    List<Problem> problemList = new ArrayList<>();
+    ArrayList<Problem> problems = new ArrayList<>();
+    IPage page = new Page(currentPage, pageSize);
     for (String order : orders) {
-      LambdaQueryWrapper<Problem> problemLambdaQueryWrapper =
-          new LambdaQueryWrapper<Problem>().eq(Problem::getId, order).eq(Problem::getDeleted, 0);
-      if (problemDao.selectOne(problemLambdaQueryWrapper) != null) {
-        problemList.add(problemDao.selectOne(problemLambdaQueryWrapper));
+      if (problemDao.selectOne(
+              new LambdaQueryWrapper<Problem>()
+                  .eq(Problem::getId, order)
+                  .eq(Problem::getDeleted, 0))
+          != null) {
+        problems.add(
+            problemDao.selectOne(
+                new LambdaQueryWrapper<Problem>()
+                    .eq(Problem::getId, order)
+                    .eq(Problem::getDeleted, 0)));
       }
     }
-    if (problemList == null) {
-      return null;
-    }
-    return problemList;
+    page.setRecords(problems);
+    return page;
+    //    LambdaQueryWrapper<Favorite> favoriteLambdaQueryWrapper =
+    //        new LambdaQueryWrapper<Favorite>().eq(Favorite::getStudentId, studentId);
+    //    List<Favorite> list = favoriteDao.selectList(favoriteLambdaQueryWrapper);
+    //    List<String> orders =
+    // list.stream().map(Favorite::getProblemId).collect(Collectors.toList());
+    //    List<Problem> problemList = new ArrayList<>();
+    //    for (String order : orders) {
+    //      LambdaQueryWrapper<Problem> problemLambdaQueryWrapper =
+    //          new LambdaQueryWrapper<Problem>().eq(Problem::getId, order).eq(Problem::getDeleted,
+    // 0);
+    //      if (problemDao.selectOne(problemLambdaQueryWrapper) != null) {
+    //        problemList.add(problemDao.selectOne(problemLambdaQueryWrapper));
+    //      }
+    //    }
+    //    if (problemList == null) {
+    //      return null;
+    //    }
+    //    return problemList;
   }
 
   /**

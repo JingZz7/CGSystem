@@ -25,9 +25,11 @@
     "显示条数 Integer": "pageSize"
   },
 
-  "[学生]获取题目列表(收藏夹) POST": "传入学号studentId即可",
+  "[学生]获取题目列表(收藏夹) POST": "json数据包含studentId、currentPage、pageSize",
   "/problem/getFavoriteProblemList": {
-    "学号 String": "studentId"
+    "学号 String": "studentId",
+    "当前页码 Integer": "currentPage",
+    "显示条数 Integer": "pageSize"
   },
 
   "[学生]根据id查询问题(刷题推荐) POST": "传入题号problemId即可",
