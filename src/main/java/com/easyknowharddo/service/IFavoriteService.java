@@ -11,12 +11,12 @@ import java.util.List;
 public interface IFavoriteService extends IService<Favorite> {
 
   /**
-   * @param studentId: * @return IPage<Problem>
+   * @param studentId: * @return PageInfo<Problem>
    * @author ZJ
    * @description TODO [学生]获取题目列表(收藏夹)
    * @date 2022/11/15 22:16
    */
-  public IPage<Problem> getFavoriteProblemList(String studentId, int currentPage, int pageSize);
+  public PageInfo<Problem> getFavoriteProblemList(String studentId, int currentPage, int pageSize);
 
   /**
    * @param studentId:

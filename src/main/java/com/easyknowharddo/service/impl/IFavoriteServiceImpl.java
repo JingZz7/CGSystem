@@ -26,19 +26,18 @@ public class IFavoriteServiceImpl extends ServiceImpl<FavoriteDao, Favorite>
   @Autowired private ProblemDao problemDao;
 
   /**
-   * @param studentId: * @return IPage<Problem>
+   * @param studentId: * @return PageInfo<Problem>
    * @author ZJ
    * @description TODO [学生]获取题目列表(收藏夹)
    * @date 2022/11/15 22:16
    */
   @Override
-  public IPage<Problem> getFavoriteProblemList(String studentId, int currentPage, int pageSize) {
+  public PageInfo<Problem> getFavoriteProblemList(String studentId, int currentPage, int pageSize) {
     LambdaQueryWrapper<Favorite> favoriteLambdaQueryWrapper =
         new LambdaQueryWrapper<Favorite>().eq(Favorite::getStudentId, studentId);
     List<Favorite> list = favoriteDao.selectList(favoriteLambdaQueryWrapper);
     List<String> orders = list.stream().map(Favorite::getProblemId).collect(Collectors.toList());
     ArrayList<Problem> problems = new ArrayList<>();
-    IPage page = new Page(currentPage, pageSize);
     for (String order : orders) {
       if (problemDao.selectOne(
               new LambdaQueryWrapper<Problem>()
@@ -52,8 +51,19 @@ public class IFavoriteServiceImpl extends ServiceImpl<FavoriteDao, Favorite>
                     .eq(Problem::getDeleted, 0)));
       }
     }
-    page.setRecords(problems);
-    return page;
+    PageHelper.startPage(currentPage, pageSize);
+    int pageStart = currentPage == 1 ? 0 : (currentPage - 1) * pageSize;
+    int pageEnd =
+        problems.size() < pageSize * currentPage ? problems.size() : pageSize * currentPage;
+    List<Problem> pageResult = new LinkedList<>();
+    if (problems.size() > pageStart) {
+      pageResult = problems.subList(pageStart, pageEnd);
+    } else {
+      int i = problems.size() / pageSize;
+      pageResult = problems.subList(i * pageSize, pageEnd);
+    }
+    PageInfo<Problem> pageInfo = new PageInfo<>(pageResult);
+    return pageInfo;
     //    LambdaQueryWrapper<Favorite> favoriteLambdaQueryWrapper =
     //        new LambdaQueryWrapper<Favorite>().eq(Favorite::getStudentId, studentId);
     //    List<Favorite> list = favoriteDao.selectList(favoriteLambdaQueryWrapper);

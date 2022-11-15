@@ -9,6 +9,7 @@ import com.easyknowharddo.service.IFavoriteService;
 import com.easyknowharddo.service.IProblemDescriptionService;
 import com.easyknowharddo.service.IProblemService;
 import com.easyknowharddo.service.IStudentService;
+import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -57,7 +58,7 @@ public class ProblemController {
    */
   @RequestMapping(value = "/getFavoriteProblemList", method = RequestMethod.POST)
   public JsonResult getFavoriteProblemList(@RequestBody JSONObject jsonObject) {
-    IPage<Problem> page =
+    PageInfo<Problem> page =
         iFavoriteService.getFavoriteProblemList(
             jsonObject.getString("studentId"),
             jsonObject.getInteger("currentPage"),
@@ -69,7 +70,7 @@ public class ProblemController {
               jsonObject.getInteger("currentPage"),
               jsonObject.getInteger("pageSize"));
     }
-    return JsonResult.success(page.getRecords(), "获取成功");
+    return JsonResult.success(page.getList(), "获取成功");
   }
 
   /**
