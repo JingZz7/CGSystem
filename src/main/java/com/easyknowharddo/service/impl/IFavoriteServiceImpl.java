@@ -9,9 +9,12 @@ import com.easyknowharddo.dao.ProblemDao;
 import com.easyknowharddo.domain.Favorite;
 import com.easyknowharddo.domain.Problem;
 import com.easyknowharddo.service.IFavoriteService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -115,40 +118,77 @@ public class IFavoriteServiceImpl extends ServiceImpl<FavoriteDao, Favorite>
 
   /**
    * @param studentId:
-   * @param problemName: * @return List<Problem>
+   * @param problemName:
+   * @param currentPage:
+   * @param pageSize: a * @return PageInfo<Problem>
    * @author ZJ
    * @description TODO [学生]根据名称查询问题(收藏夹)
-   * @date 2022/11/14 20:46
+   * @date 2022/11/15 23:16
    */
   @Override
-  public List<Problem> getProblemByName(String studentId, String problemName) {
-    LambdaQueryWrapper<Favorite> favoriteLambdaQueryWrapper =
-        new LambdaQueryWrapper<Favorite>().eq(Favorite::getStudentId, studentId);
-    List<Favorite> favorites = favoriteDao.selectList(favoriteLambdaQueryWrapper);
-    List<Problem> problems = new ArrayList<>();
-
+  public PageInfo<Problem> getProblemByName(
+      String studentId, String problemName, int currentPage, int pageSize) {
+    List<Favorite> favorites =
+        favoriteDao.selectList(
+            new LambdaQueryWrapper<Favorite>().eq(Favorite::getStudentId, studentId));
+    ArrayList<Problem> problems = new ArrayList<>();
     for (Favorite favorite : favorites) {
-      LambdaQueryWrapper<Problem> problemLambdaQueryWrapper =
-          new LambdaQueryWrapper<Problem>().eq(Problem::getId, favorite.getProblemId());
-      problems.add(problemDao.selectOne(problemLambdaQueryWrapper));
-    }
-
-    List<Problem> resultProblems = new ArrayList<>();
-
-    for (Problem problem : problems) {
-      LambdaQueryWrapper<Problem> lambdaQueryWrapper =
-          new LambdaQueryWrapper<Problem>()
-              .eq(Problem::getId, problem.getId())
-              .like(Problem::getName, problemName);
-      if (problemDao.selectOne(lambdaQueryWrapper) != null) {
-        resultProblems.add(problemDao.selectOne(lambdaQueryWrapper));
+      if (problemDao.selectOne(
+              new LambdaQueryWrapper<Problem>()
+                  .eq(Problem::getId, favorite.getProblemId())
+                  .eq(Problem::getDeleted, 0)
+                  .like(Problem::getName, problemName))
+          != null) {
+        problems.add(
+            problemDao.selectOne(
+                new LambdaQueryWrapper<Problem>()
+                    .eq(Problem::getId, favorite.getProblemId())
+                    .eq(Problem::getDeleted, 0)
+                    .like(Problem::getName, problemName)));
       }
     }
-
-    if (resultProblems == null) {
-      return null;
+    // 实现list分页
+    PageHelper.startPage(currentPage, pageSize);
+    int pageStart = currentPage == 1 ? 0 : (currentPage - 1) * pageSize;
+    int pageEnd =
+        problems.size() < pageSize * currentPage ? problems.size() : pageSize * currentPage;
+    List<Problem> pageResult = new LinkedList<>();
+    if (problems.size() > pageStart) {
+      pageResult = problems.subList(pageStart, pageEnd);
+    } else {
+      int i = problems.size() / pageSize;
+      pageResult = problems.subList(i * pageSize, pageEnd);
     }
-    return resultProblems;
+    PageInfo<Problem> pageInfo = new PageInfo<>(pageResult);
+    return pageInfo;
+
+    //    LambdaQueryWrapper<Favorite> favoriteLambdaQueryWrapper =
+    //        new LambdaQueryWrapper<Favorite>().eq(Favorite::getStudentId, studentId);
+    //    List<Favorite> favorites = favoriteDao.selectList(favoriteLambdaQueryWrapper);
+    //    List<Problem> problems = new ArrayList<>();
+    //
+    //    for (Favorite favorite : favorites) {
+    //      LambdaQueryWrapper<Problem> problemLambdaQueryWrapper =
+    //          new LambdaQueryWrapper<Problem>().eq(Problem::getId, favorite.getProblemId());
+    //      problems.add(problemDao.selectOne(problemLambdaQueryWrapper));
+    //    }
+    //
+    //    List<Problem> resultProblems = new ArrayList<>();
+    //
+    //    for (Problem problem : problems) {
+    //      LambdaQueryWrapper<Problem> lambdaQueryWrapper =
+    //          new LambdaQueryWrapper<Problem>()
+    //              .eq(Problem::getId, problem.getId())
+    //              .like(Problem::getName, problemName);
+    //      if (problemDao.selectOne(lambdaQueryWrapper) != null) {
+    //        resultProblems.add(problemDao.selectOne(lambdaQueryWrapper));
+    //      }
+    //    }
+    //
+    //    if (resultProblems == null) {
+    //      return null;
+    //    }
+    //    return resultProblems;
   }
 
   /**

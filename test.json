@@ -54,10 +54,12 @@
     "显示条数 Integer": "pageSize"
   },
 
-  "[学生]根据名称查询问题(收藏夹) POST": "json数据包含studentId和problemName",
+  "[学生]根据名称查询问题(收藏夹) POST": "json数据包含studentId、problemName、currentPage、pageSize",
   "/recommend/getProblemByName": {
     "学号 String": "studentId",
-    "题目名称 String": "problemName"
+    "题目名称 String": "problemName",
+    "当前页码 Integer": "currentPage",
+    "显示条数 Integer": "pageSize"
   },
 
   "[学生]收藏题目 POST": "json数据包含studentId字段和problemId字段",

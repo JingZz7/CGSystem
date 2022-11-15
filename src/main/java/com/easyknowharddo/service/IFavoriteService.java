@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.easyknowharddo.domain.Favorite;
 import com.easyknowharddo.domain.Problem;
+import com.github.pagehelper.PageInfo;
+
 import java.util.List;
 
 public interface IFavoriteService extends IService<Favorite> {
@@ -30,12 +32,15 @@ public interface IFavoriteService extends IService<Favorite> {
 
   /**
    * @param studentId:
-   * @param problemName: * @return List<Problem>
+   * @param problemName:
+   * @param currentPage:
+   * @param pageSize: a * @return PageInfo<Problem>
    * @author ZJ
    * @description TODO [学生]根据名称查询问题(收藏夹)
-   * @date 2022/11/14 20:46
+   * @date 2022/11/15 23:16
    */
-  public List<Problem> getProblemByName(String studentId, String problemName);
+  public PageInfo<Problem> getProblemByName(
+      String studentId, String problemName, int currentPage, int pageSize);
 
   /**
    * @param studentId:

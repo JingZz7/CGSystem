@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.easyknowharddo.controller.utils.JsonResult;
 import com.easyknowharddo.domain.Problem;
 import com.easyknowharddo.service.IFavoriteService;
+import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -59,18 +60,36 @@ public class RecommendController {
   }
 
   /**
-   * @author ZJ Description [学生]根据名称查询问题(收藏夹) json数据包含studentId和problemName date 2022-11-11 16:56:34
-   *     16:56
-   * @param jsonObject
+   * @param jsonObject: * @return JsonResult
+   * @author ZJ
+   * @description TODO [学生]根据名称查询问题(收藏夹) json数据包含studentId、problemName、currentPage、pageSize
+   * @date 2022/11/15 23:25
    */
   @RequestMapping(value = "/getProblemByName", method = RequestMethod.POST)
   public JsonResult getProblemByName(@RequestBody JSONObject jsonObject) {
-    List<Problem> problems =
+
+    PageInfo<Problem> page =
         iFavoriteService.getProblemByName(
-            jsonObject.getString("studentId"), jsonObject.getString("problemName"));
-    if (problems == null) {
-      return JsonResult.failed("查找失败");
+            jsonObject.getString("studentId"),
+            jsonObject.getString("problemName"),
+            jsonObject.getInteger("currentPage"),
+            jsonObject.getInteger("pageSize"));
+    if (jsonObject.getInteger("currentPage") > page.getPages()) {
+      page =
+          iFavoriteService.getProblemByName(
+              jsonObject.getString("studentId"),
+              jsonObject.getString("problemName"),
+              jsonObject.getInteger("currentPage"),
+              jsonObject.getInteger("pageSize"));
     }
-    return JsonResult.success(problems, "查找成功");
+    return JsonResult.success(page.getList(), "获取成功");
+
+    //    List<Problem> problems =
+    //        iFavoriteService.getProblemByName(
+    //            jsonObject.getString("studentId"), jsonObject.getString("problemName"));
+    //    if (problems == null) {
+    //      return JsonResult.failed("查找失败");
+    //    }
+    //    return JsonResult.success(problems, "查找成功");
   }
 }

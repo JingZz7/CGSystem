@@ -25,6 +25,6 @@ public class IFavoriteServiceTest {
 
   @Test
   public void getProblemByNameTest() {
-    iFavoriteService.getProblemByName("202026010512", "回文");
+//    iFavoriteService.getProblemByName("202026010512", "回文");
   }
 }
