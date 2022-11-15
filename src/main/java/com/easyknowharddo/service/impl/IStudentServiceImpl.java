@@ -197,12 +197,39 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
     return page;
   }
 
+  /**
+   * @param problemId:
+   * @param currentPage:
+   * @param pageSize: * @return IPage<Problem>
+   * @author ZJ
+   * @description TODO [学生]根据id查询问题(刷题推荐)
+   * @date 2022/11/15 22:37
+   */
   @Override
   public IPage<Problem> getProblemById(String problemId, int currentPage, int pageSize) {
     IPage page = new Page(currentPage, pageSize);
     problemDao.selectPage(
         page,
         new LambdaQueryWrapper<Problem>().eq(Problem::getId, problemId).eq(Problem::getDeleted, 0));
+    return page;
+  }
+
+  /**
+   * @param difficulty:
+   * @param currentPage:
+   * @param pageSize: a * @return IPage<Problem>
+   * @author ZJ
+   * @description TODO [学生]根据难度查询(刷题推荐)
+   * @date 2022/11/15 22:44
+   */
+  @Override
+  public IPage<Problem> getProblemsByDifficulty(String difficulty, int currentPage, int pageSize) {
+    IPage page = new Page(currentPage, pageSize);
+    problemDao.selectPage(
+        page,
+        new LambdaQueryWrapper<Problem>()
+            .eq(Problem::getDifficulty, difficulty)
+            .eq(Problem::getDeleted, 0));
     return page;
   }
 

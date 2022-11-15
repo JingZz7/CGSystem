@@ -29,12 +29,4 @@ public interface IProblemService extends IService<Problem> {
    * @date 2022/11/14 20:51
    */
   public List<Problem> getProblemListByName(String problemName);
-
-  /**
-   * @param difficulty: * @return List<Problem>
-   * @author ZJ
-   * @description TODO 根据难度查找
-   * @date 2022/11/14 20:51
-   */
-  public List<Problem> getProblemsByDifficulty(String difficulty);
 }

@@ -39,9 +39,11 @@
     "显示条数 Integer": "pageSize"
   },
 
-  "[学生]根据难度查询(刷题推荐) POST": "json数据包含difficulty",
+  "[学生]根据难度查询(刷题推荐) POST": "json数据包含problemId、currentPage、pageSize",
   "/problem/getProblemsByDifficulty": {
-    "难度 String": "difficulty"
+    "难度 String": "difficulty",
+    "当前页码 Integer": "currentPage",
+    "显示条数 Integer": "pageSize"
   },
 
   "[学生]根据id查询问题(收藏夹) POST": "json数据包含studentId和problemId",

@@ -68,32 +68,4 @@ public class IProblemServiceImpl extends ServiceImpl<ProblemDao, Problem>
     }
     return problems;
   }
-
-  /**
-   * @param difficulty: * @return List<Problem>
-   * @author ZJ
-   * @description TODO 根据难度查找
-   * @date 2022/11/14 20:51
-   */
-  @Override
-  public List<Problem> getProblemsByDifficulty(String difficulty) {
-    if (!difficulty.equals("all")) {
-      //      int diff = Integer.parseInt(difficulty);
-      LambdaQueryWrapper<Problem> lambdaQueryWrapper =
-          new LambdaQueryWrapper<Problem>()
-              .eq(Problem::getDifficulty, difficulty)
-              .eq(Problem::getDeleted, 0);
-      List<Problem> problems = problemDao.selectList(lambdaQueryWrapper);
-      if (problems == null) {
-        return null;
-      }
-      return problems;
-    }
-    List<Problem> problems =
-        problemDao.selectList(new LambdaQueryWrapper<Problem>().eq(Problem::getDeleted, 0));
-    if (problems == null) {
-      return null;
-    }
-    return problems;
-  }
 }
