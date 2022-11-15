@@ -103,6 +103,14 @@
     "题号的数组 List": "ids"
   },
 
+  "[教师]编辑题目(题库管理) PUT": "json数据包含id、name、difficulty、label",
+  "/problemManagement/editProblem": {
+    "题号 String": "id",
+    "名字 String": "name",
+    "难度 String": "difficulty",
+    "标签 String": "label"
+  },
+
   "[教师]获取用户列表(账户管理) POST": "不需要传参",
   "/accountManagement/teacherGetAccountList": {},
 

@@ -78,7 +78,7 @@ public class ProblemManagementController {
   /**
    * @param jsonObject: * @return JsonResult
    * @author ZJ
-   * @description TODO [教师]批量删除题目(题目管理) json数据包含ids
+   * @description TODO [教师]批量删除题目(题库管理) json数据包含ids
    * @date 2022/11/15 0:11
    */
   @RequestMapping(value = "/bulkDeleteProblem", method = RequestMethod.DELETE)
@@ -101,5 +101,25 @@ public class ProblemManagementController {
   public JsonResult getListByDifficulty(@RequestBody JSONObject jsonObject) {
     return JsonResult.success(
         iTeacherService.getListByDifficulty(jsonObject.getString("difficulty")), "查询成功");
+  }
+
+  /**
+   * @param jsonObject:  * @return JsonResult
+   * @author ZJ
+   * @description TODO [教师]编辑题目(题库管理) json数据包含id、name、difficulty、label
+   * @date 2022/11/15 17:19
+   */
+  @RequestMapping(value = "/editProblem", method = RequestMethod.PUT)
+  public JsonResult editProblem(@RequestBody JSONObject jsonObject) {
+    Boolean flag =
+        iTeacherService.editProblem(
+            jsonObject.getString("id"),
+            jsonObject.getString("name"),
+            jsonObject.getString("difficulty"),
+            jsonObject.getString("label"));
+    if (flag) {
+      return JsonResult.success("编辑成功");
+    }
+    return JsonResult.failed("编辑失败");
   }
 }

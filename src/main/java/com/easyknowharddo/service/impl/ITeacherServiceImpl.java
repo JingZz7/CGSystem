@@ -420,4 +420,30 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
     }
     return problemDao.selectList(new LambdaQueryWrapper<Problem>().eq(Problem::getDeleted, 0));
   }
+
+  /**
+   * @param id:
+   * @param name:
+   * @param difficulty:
+   * @param label: * @return Boolean
+   * @author ZJ
+   * @description TODO [教师]编辑题目(题库管理)
+   * @date 2022/11/15 17:03
+   */
+  @Override
+  public Boolean editProblem(String id, String name, String difficulty, String label) {
+    if (problemDao.selectOne(
+            new LambdaQueryWrapper<Problem>().eq(Problem::getId, id).eq(Problem::getDeleted, 0))
+        == null) {
+      return false;
+    }
+    Problem problem =
+        problemDao.selectOne(
+            new LambdaQueryWrapper<Problem>().eq(Problem::getId, id).eq(Problem::getDeleted, 0));
+    problem.setLabel(label);
+    problem.setDifficulty(difficulty.charAt(0));
+    problem.setName(name);
+    problemDao.updateById(problem);
+    return true;
+  }
 }

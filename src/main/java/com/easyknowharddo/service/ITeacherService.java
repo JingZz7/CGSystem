@@ -126,7 +126,7 @@ public interface ITeacherService extends IService<Teacher> {
   /**
    * @param ids: * @return Boolean
    * @author ZJ
-   * @description TODO [教师]批量删除题目(题目管理)
+   * @description TODO [教师]批量删除题目(题库管理)
    * @date 2022/11/14 23:55
    */
   public Boolean bulkDeleteProblem(List<String> ids);
@@ -138,4 +138,15 @@ public interface ITeacherService extends IService<Teacher> {
    * @date 2022/11/15 0:17
    */
   public List<Problem> getListByDifficulty(String difficulty);
+
+  /**
+   * @param id:
+   * @param name:
+   * @param difficulty:
+   * @param label: * @return Boolean
+   * @author ZJ
+   * @description TODO [教师]编辑题目(题库管理)
+   * @date 2022/11/15 17:03
+   */
+  public Boolean editProblem(String id, String name, String difficulty, String label);
 }
