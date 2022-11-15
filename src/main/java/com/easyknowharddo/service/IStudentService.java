@@ -92,4 +92,14 @@ public interface IStudentService extends IService<Student> {
    * @date 2022/11/15 20:53
    */
   public IPage<Problem> getProblemList(int currentPage, int pageSize);
+
+  /**
+   * @param problemId:
+   * @param currentPage:
+   * @param pageSize: * @return IPage<Problem>
+   * @author ZJ
+   * @description TODO [学生]根据id查询问题(刷题推荐)
+   * @date 2022/11/15 22:37
+   */
+  public IPage<Problem> getProblemById(String problemId, int currentPage, int pageSize);
 }

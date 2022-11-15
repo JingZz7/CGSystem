@@ -120,24 +120,26 @@ public class ProblemController {
   }
 
   /**
-   * @author ZJ Description [学生]根据id查询问题(刷题推荐) date 2022-11-09 21:09:21 21:09
-   * @param jsonObject
+   * @param jsonObject:  * @return JsonResult
+   * @author ZJ
+   * @description TODO [学生]根据id查询问题(刷题推荐) problemId、currentPage、pageSize
+   * @date 2022/11/15 22:41
    */
   @RequestMapping(value = "/getProblemById", method = RequestMethod.POST)
   public JsonResult getProblemById(@RequestBody JSONObject jsonObject) {
-    Problem problem =
-        iProblemService.getOne(
-            new LambdaQueryWrapper<Problem>()
-                .eq(Problem::getId, jsonObject.getString("problemId")));
-
-    List<Problem> problems = new ArrayList<>();
-
-    problems.add(problem);
-
-    if (problems == null) {
-      return JsonResult.failed("查找失败");
+    IPage<Problem> page =
+        iStudentService.getProblemById(
+            jsonObject.getString("problemId"),
+            jsonObject.getInteger("currentPage"),
+            jsonObject.getInteger("pageSize"));
+    if (jsonObject.getInteger("currentPage") > page.getPages()) {
+      page =
+          iStudentService.getProblemById(
+              jsonObject.getString("problemId"),
+              jsonObject.getInteger("currentPage"),
+              jsonObject.getInteger("pageSize"));
     }
-    return JsonResult.success(problems, "查找成功");
+    return JsonResult.success(page.getRecords(), "获取成功");
   }
 
   /**

@@ -197,6 +197,15 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
     return page;
   }
 
+  @Override
+  public IPage<Problem> getProblemById(String problemId, int currentPage, int pageSize) {
+    IPage page = new Page(currentPage, pageSize);
+    problemDao.selectPage(
+        page,
+        new LambdaQueryWrapper<Problem>().eq(Problem::getId, problemId).eq(Problem::getDeleted, 0));
+    return page;
+  }
+
   /**
    * @param name: * @return List<Student>
    * @author ZJ
