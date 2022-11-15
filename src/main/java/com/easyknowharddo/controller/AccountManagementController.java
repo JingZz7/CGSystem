@@ -79,6 +79,23 @@ public class AccountManagementController {
   }
 
   /**
+   * @param jsonObject:  * @return JsonResult
+   * @author ZJ
+   * @description TODO [教师]批量删除账户(账户管理) json数据包含ids的数组
+   * @date 2022/11/15 16:13
+   */
+  @RequestMapping(value = "/teacherBulkDeleteAccount", method = RequestMethod.DELETE)
+  public JsonResult teacherBulkDeleteAccount(@RequestBody JSONObject jsonObject) {
+    Boolean flag =
+        iTeacherService.teacherBulkDeleteAccount(
+            jsonObject.getJSONArray("ids").toJavaList(String.class));
+    if (flag) {
+      return JsonResult.success("删除成功");
+    }
+    return JsonResult.failed("删除失败");
+  }
+
+  /**
    * @author ZJ Description [管理员]获取用户列表(账户管理) date 2022-11-12 00:04:14 0:04
    * @param
    */

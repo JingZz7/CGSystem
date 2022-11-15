@@ -106,7 +106,7 @@
   "[教师]获取用户列表(账户管理) POST": "不需要传参",
   "/accountManagement/teacherGetAccountList": {},
 
-  "[教师]根据工号查询(账户管理) POST": "json数据包含id",
+  "[教师]根据id查询(账户管理) POST": "json数据包含id",
   "/accountManagement/teacherGetAccountById": {
     "工号 String": "id"
   },
@@ -119,6 +119,11 @@
   "[教师]删除账户(账户管理) DELETE": "json数据包含id",
   "/accountManagement/teacherDeleteAccount": {
     "工号/学号 String": "id"
+  },
+
+  "[教师]批量删除账户(账户管理) DELETE": "json数据包含ids的数组",
+  "/accountManagement/teacherBulkDeleteAccount":{
+    "工号的数组 List": "ids"
   },
 
   "[教师]查看评论(查看评论) POST": "json数据包含problemId",
