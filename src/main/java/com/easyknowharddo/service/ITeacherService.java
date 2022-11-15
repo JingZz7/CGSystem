@@ -116,6 +116,14 @@ public interface ITeacherService extends IService<Teacher> {
   public List<HashMap<String, String>> teacherViewReview(String problemId);
 
   /**
+   * @param : a * return List<HashMap<String,String>>
+   * @author ZJ
+   * @description TODO [教师]获取评论列表(查看评论)
+   * @date 2022/11/15 20:13
+   */
+  public List<HashMap<String, String>> teacherGetReviewList();
+
+  /**
    * @param problemId: * @return Boolean
    * @author ZJ
    * @description TODO [教师]删除题目(题库管理)

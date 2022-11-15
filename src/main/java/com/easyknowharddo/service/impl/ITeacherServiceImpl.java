@@ -356,6 +356,36 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
   }
 
   /**
+   * @param : a * return List<HashMap<String,String>>
+   * @author ZJ
+   * @description TODO [教师]获取评论列表(查看评论)
+   * @date 2022/11/15 20:13
+   */
+  @Override
+  public List<HashMap<String, String>> teacherGetReviewList() {
+    ArrayList<HashMap<String, String>> objects = new ArrayList<>();
+    List<CommentStudent> commentStudents = commentStudentDao.selectList(null);
+    for (CommentStudent commentStudent : commentStudents) {
+      HashMap<String, String> map = new HashMap<>();
+      String problemId = commentStudent.getProblemId();
+      map.put("dateTime", commentStudent.getDateTime());
+      map.put("problemId", problemId);
+      map.put("studentId", commentStudent.getStudentId());
+      Problem problem =
+          problemDao.selectOne(
+              new LambdaQueryWrapper<Problem>()
+                  .eq(Problem::getId, problemId)
+                  .eq(Problem::getDeleted, 0));
+      map.put("name", problem.getName());
+      map.put("difficulty", String.valueOf(problem.getDifficulty()));
+      map.put("chapter", problem.getKnowledgePointId());
+      map.put("label", problem.getLabel());
+      objects.add(map);
+    }
+    return objects;
+  }
+
+  /**
    * @param problemId: * @return Boolean
    * @author ZJ
    * @description TODO [教师]删除题目(题库管理)
