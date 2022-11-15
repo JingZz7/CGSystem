@@ -84,6 +84,14 @@ public interface ITeacherService extends IService<Teacher> {
   public Boolean teacherBulkDeleteAccount(List<String> ids);
 
   /**
+   * @param id:  * @return Boolean
+   * @author ZJ
+   * @description TODO [教师]重置密码(账户管理)
+   * @date 2022/11/15 16:18
+   */
+  public Boolean teacherResetPassword(String id);
+
+  /**
    * @param problemId: * @return List<HashMap<String,String>>
    * @author ZJ
    * @description TODO [教师]查看评论(查看评论)

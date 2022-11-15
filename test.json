@@ -126,6 +126,11 @@
     "工号的数组 List": "ids"
   },
 
+  "[教师]重置密码(账户管理) PUT": "json数据包含id",
+  "/accountManagement/teacherResetPassword": {
+    "学号/工号 String": "id"
+  },
+
   "[教师]查看评论(查看评论) POST": "json数据包含problemId",
   "/review/teacherViewReview": {
     "题号 String": "problemId"

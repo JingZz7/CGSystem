@@ -79,7 +79,7 @@ public class AccountManagementController {
   }
 
   /**
-   * @param jsonObject:  * @return JsonResult
+   * @param jsonObject: * @return JsonResult
    * @author ZJ
    * @description TODO [教师]批量删除账户(账户管理) json数据包含ids的数组
    * @date 2022/11/15 16:13
@@ -93,6 +93,21 @@ public class AccountManagementController {
       return JsonResult.success("删除成功");
     }
     return JsonResult.failed("删除失败");
+  }
+
+  /**
+   * @param jsonObject: * @return JsonResult
+   * @author ZJ
+   * @description TODO [教师]重置密码(账户管理) json数据包含id
+   * @date 2022/11/15 16:30
+   */
+  @RequestMapping(value = "/teacherResetPassword", method = RequestMethod.PUT)
+  public JsonResult teacherResetPassword(@RequestBody JSONObject jsonObject) {
+    Boolean flag = iTeacherService.teacherResetPassword(jsonObject.getString("id"));
+    if (flag) {
+      return JsonResult.success("重置成功");
+    }
+    return JsonResult.failed("重置失败");
   }
 
   /**
