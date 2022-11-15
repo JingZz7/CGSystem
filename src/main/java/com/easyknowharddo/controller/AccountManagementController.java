@@ -50,6 +50,18 @@ public class AccountManagementController {
   }
 
   /**
+   * @param jsonObject: * @return JsonResult
+   * @author ZJ
+   * @description TODO [教师]根据类型查询(账户管理) json数据包含type类型
+   * @date 2022/11/15 16:51
+   */
+  @RequestMapping(value = "/teacherGetAccountByType", method = RequestMethod.POST)
+  public JsonResult teacherGetAccountByType(@RequestBody JSONObject jsonObject) {
+    return JsonResult.success(
+        iTeacherService.teacherGetAccountByType(jsonObject.getString("type")), "查找成功");
+  }
+
+  /**
    * @author ZJ Description [教师]根据姓名查询(账户管理) json包含name date 2022-11-13 17:15:15 17:15
    * @param jsonObject
    */

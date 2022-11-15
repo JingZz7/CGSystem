@@ -116,6 +116,11 @@
     "姓名 String": "name"
   },
 
+  "[教师]根据类型查询(账户管理) POST": "json数据包含type",
+  "/accountManagement/teacherGetAccountByType": {
+    "类型 String": "type"
+  },
+
   "[教师]删除账户(账户管理) DELETE": "json数据包含id",
   "/accountManagement/teacherDeleteAccount": {
     "工号/学号 String": "id"
