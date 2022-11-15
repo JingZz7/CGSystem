@@ -2,6 +2,7 @@ package com.easyknowharddo.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.easyknowharddo.domain.Problem;
 import com.easyknowharddo.domain.Student;
 import java.util.List;
 
@@ -82,4 +83,13 @@ public interface IStudentService extends IService<Student> {
    * @date 2022/11/14 20:52
    */
   public Boolean studentComment(String studentId, String problemId, String description);
+
+  /**
+   * @param currentPage:
+   * @param pageSize: * @return IPage<Problem>
+   * @author ZJ
+   * @description TODO [学生]获取题目列表
+   * @date 2022/11/15 20:53
+   */
+  public IPage<Problem> getProblemList(int currentPage, int pageSize);
 }

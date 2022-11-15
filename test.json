@@ -19,8 +19,11 @@
     "密码 String": "password"
   },
 
-  "[学生]获取题目列表(刷题推荐) POST": "不需要传参",
-  "/problem/getProblemList": {},
+  "[学生]获取题目列表(刷题推荐) POST": "json数据包含currentPage、pageSize",
+  "/problem/getProblemList": {
+    "当前页码 Integer": "currentPage",
+    "显示条数 Integer": "pageSize"
+  },
 
   "[学生]获取题目列表(收藏夹) POST": "传入学号studentId即可",
   "/problem/getFavoriteProblemList": {

@@ -2,6 +2,7 @@ package com.easyknowharddo.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.easyknowharddo.controller.utils.JsonResult;
 import com.easyknowharddo.domain.Problem;
 import com.easyknowharddo.service.IFavoriteService;
@@ -30,12 +31,22 @@ public class ProblemController {
   @Autowired private IStudentService iStudentService;
 
   /**
-   * @author ZJ Description [学生]获取题目列表(刷题推荐) 无参 date 2022-11-09 16:44:13 16:44
-   * @param
+   * @param jsonObject: a * return JsonResult
+   * @author ZJ
+   * @description TODO [学生]获取题目列表
+   * @date 2022/11/15 20:54
    */
   @RequestMapping(value = "/getProblemList", method = RequestMethod.POST)
-  public JsonResult getProblemList() {
-    return JsonResult.success(iProblemService.list());
+  public JsonResult getProblemList(@RequestBody JSONObject jsonObject) {
+    IPage<Problem> page =
+        iStudentService.getProblemList(
+            jsonObject.getInteger("currentPage"), jsonObject.getInteger("pageSize"));
+    if (jsonObject.getInteger("currentPage") > page.getPages()) {
+      page =
+          iStudentService.getProblemList(
+              jsonObject.getInteger("currentPage"), jsonObject.getInteger("pageSize"));
+    }
+    return JsonResult.success(page.getRecords(), "获取成功");
   }
 
   /**

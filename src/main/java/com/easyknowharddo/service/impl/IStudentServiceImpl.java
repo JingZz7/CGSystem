@@ -150,7 +150,7 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
   /**
    * @param studentId:
    * @param problemId:
-   * @param description:  * @return Boolean
+   * @param description: * @return Boolean
    * @author ZJ
    * @description TODO [学生]评论
    * @date 2022/11/14 20:52
@@ -184,7 +184,21 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
   }
 
   /**
-   * @param name:  * @return List<Student>
+   * @param currentPage:
+   * @param pageSize: * @return IPage<Problem>
+   * @author ZJ
+   * @description TODO [学生]获取题目列表
+   * @date 2022/11/15 20:53
+   */
+  @Override
+  public IPage<Problem> getProblemList(int currentPage, int pageSize) {
+    IPage page = new Page(currentPage, pageSize);
+    problemDao.selectPage(page, new LambdaQueryWrapper<Problem>().eq(Problem::getDeleted, 0));
+    return page;
+  }
+
+  /**
+   * @param name: * @return List<Student>
    * @author ZJ
    * @description TODO 测试
    * @date 2022/11/14 20:53
