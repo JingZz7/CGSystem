@@ -73,27 +73,44 @@ public class IFavoriteServiceImpl extends ServiceImpl<FavoriteDao, Favorite>
 
   /**
    * @param studentId:
-   * @param problemId: * @return List<Problem>
+   * @param problemId:
+   * @param currentPage:
+   * @param pageSize: * @return IPage<Problem>
    * @author ZJ
    * @description TODO [学生]根据id查询问题(收藏夹)
-   * @date 2022/11/14 20:44
+   * @date 2022/11/15 22:55
    */
   @Override
-  public List<Problem> getProblemById(String studentId, String problemId) {
-    LambdaQueryWrapper<Favorite> favoriteLambdaQueryWrapper =
-        new LambdaQueryWrapper<Favorite>()
-            .eq(Favorite::getStudentId, studentId)
-            .eq(Favorite::getProblemId, problemId);
-    Favorite favorite = favoriteDao.selectOne(favoriteLambdaQueryWrapper);
-    if (favorite != null) {
-      LambdaQueryWrapper<Problem> problemLambdaQueryWrapper =
-          new LambdaQueryWrapper<Problem>().eq(Problem::getId, favorite.getProblemId());
-      Problem problem = problemDao.selectOne(problemLambdaQueryWrapper);
-      List<Problem> problems = new ArrayList<>();
-      problems.add(problem);
-      return problems;
-    }
-    return null;
+  public IPage<Problem> getProblemById(
+      String studentId, String problemId, int currentPage, int pageSize) {
+
+    IPage page = new Page(currentPage, pageSize);
+    Favorite favorite =
+        favoriteDao.selectOne(
+            new LambdaQueryWrapper<Favorite>()
+                .eq(Favorite::getProblemId, problemId)
+                .eq(Favorite::getStudentId, studentId));
+    problemDao.selectPage(
+        page,
+        new LambdaQueryWrapper<Problem>()
+            .eq(Problem::getId, favorite.getProblemId())
+            .eq(Problem::getDeleted, 0));
+    return page;
+
+    //    LambdaQueryWrapper<Favorite> favoriteLambdaQueryWrapper =
+    //        new LambdaQueryWrapper<Favorite>()
+    //            .eq(Favorite::getStudentId, studentId)
+    //            .eq(Favorite::getProblemId, problemId);
+    //    Favorite favorite = favoriteDao.selectOne(favoriteLambdaQueryWrapper);
+    //    if (favorite != null) {
+    //      LambdaQueryWrapper<Problem> problemLambdaQueryWrapper =
+    //          new LambdaQueryWrapper<Problem>().eq(Problem::getId, favorite.getProblemId());
+    //      Problem problem = problemDao.selectOne(problemLambdaQueryWrapper);
+    //      List<Problem> problems = new ArrayList<>();
+    //      problems.add(problem);
+    //      return problems;
+    //    }
+    //    return null;
   }
 
   /**

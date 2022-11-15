@@ -1,6 +1,7 @@
 package com.easyknowharddo.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.easyknowharddo.controller.utils.JsonResult;
 import com.easyknowharddo.domain.Problem;
 import com.easyknowharddo.service.IFavoriteService;
@@ -22,21 +23,39 @@ public class RecommendController {
   @Autowired private IFavoriteService iFavoriteService;
 
   /**
-   * @author ZJ Description [学生]根据id查询问题(收藏夹) json数据包含studentId和problemId date 2022-11-11 16:23:38
-   *     16:23
-   * @param jsonObject
+   * @param jsonObject: * @return JsonResult
+   * @author ZJ
+   * @description TODO [学生]根据id查询问题(收藏夹) json数据包含studentId、problemId、currentPage、pageSize
+   * @date 2022/11/15 23:05
    */
   @RequestMapping(value = "/getProblemById", method = RequestMethod.POST)
   public JsonResult getProblemById(@RequestBody JSONObject jsonObject) {
-    List<Problem> problem =
+
+    IPage<Problem> page =
         iFavoriteService.getProblemById(
-            jsonObject.getString("studentId"), jsonObject.getString("problemId"));
-
-    if (problem == null) {
-      return JsonResult.failed("查找失败");
+            jsonObject.getString("studentId"),
+            jsonObject.getString("problemId"),
+            jsonObject.getInteger("currentPage"),
+            jsonObject.getInteger("pageSize"));
+    if (jsonObject.getInteger("currentPage") > page.getPages()) {
+      page =
+          iFavoriteService.getProblemById(
+              jsonObject.getString("studentId"),
+              jsonObject.getString("problemId"),
+              jsonObject.getInteger("currentPage"),
+              jsonObject.getInteger("pageSize"));
     }
+    return JsonResult.success(page.getRecords(), "获取成功");
 
-    return JsonResult.success(problem, "查找成功");
+    //    List<Problem> problem =
+    //        iFavoriteService.getProblemById(
+    //            jsonObject.getString("studentId"), jsonObject.getString("problemId"));
+    //
+    //    if (problem == null) {
+    //      return JsonResult.failed("查找失败");
+    //    }
+    //
+    //    return JsonResult.success(problem, "查找成功");
   }
 
   /**
