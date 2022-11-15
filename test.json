@@ -131,6 +131,11 @@
     "学号/工号 String": "id"
   },
 
+  "[教师]批量重置密码(账户管理) PUT": "json数据包含ids的数组",
+  "/accountManagement/teacherBulkResetPassword": {
+    "工号的数组 String": "ids"
+  },
+
   "[教师]查看评论(查看评论) POST": "json数据包含problemId",
   "/review/teacherViewReview": {
     "题号 String": "problemId"

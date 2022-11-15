@@ -84,12 +84,20 @@ public interface ITeacherService extends IService<Teacher> {
   public Boolean teacherBulkDeleteAccount(List<String> ids);
 
   /**
-   * @param id:  * @return Boolean
+   * @param id: * @return Boolean
    * @author ZJ
    * @description TODO [教师]重置密码(账户管理)
    * @date 2022/11/15 16:18
    */
   public Boolean teacherResetPassword(String id);
+
+  /**
+   * @param ids: * @return Boolean
+   * @author ZJ
+   * @description TODO [教师]批量重置密码(账户管理)
+   * @date 2022/11/15 16:34
+   */
+  public Boolean teacherBulkResetPassword(List<String> ids);
 
   /**
    * @param problemId: * @return List<HashMap<String,String>>

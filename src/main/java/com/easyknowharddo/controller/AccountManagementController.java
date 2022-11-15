@@ -111,6 +111,23 @@ public class AccountManagementController {
   }
 
   /**
+   * @param jsonObject: * @return JsonResult
+   * @author ZJ
+   * @description TODO [教师]批量重置密码(账户管理) json数据包含ids数组
+   * @date 2022/11/15 16:38
+   */
+  @RequestMapping(value = "/teacherBulkResetPassword", method = RequestMethod.PUT)
+  public JsonResult teacherBulkResetPassword(@RequestBody JSONObject jsonObject) {
+    Boolean flag =
+        iTeacherService.teacherBulkResetPassword(
+            jsonObject.getJSONArray("ids").toJavaList(String.class));
+    if (flag) {
+      return JsonResult.success("重置成功");
+    }
+    return JsonResult.failed("重置失败");
+  }
+
+  /**
    * @author ZJ Description [管理员]获取用户列表(账户管理) date 2022-11-12 00:04:14 0:04
    * @param
    */

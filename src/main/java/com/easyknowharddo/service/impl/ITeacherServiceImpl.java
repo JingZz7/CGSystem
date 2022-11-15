@@ -262,6 +262,36 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
   }
 
   /**
+   * @param ids: * @return Boolean
+   * @author ZJ
+   * @description TODO [教师]批量重置密码(账户管理)
+   * @date 2022/11/15 16:34
+   */
+  @Override
+  public Boolean teacherBulkResetPassword(List<String> ids) {
+    for (String id : ids) {
+      if (studentDao.selectOne(
+              new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted, 0))
+          != null) {
+        Student student =
+            studentDao.selectOne(
+                new LambdaQueryWrapper<Student>()
+                    .eq(Student::getId, id)
+                    .eq(Student::getDeleted, 0));
+        student.setPassword("123456");
+        studentDao.updateById(student);
+      } else if (tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id)) != null) {
+        Tutor tutor = tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id));
+        tutor.setPassword("123456");
+        tutorDao.updateById(tutor);
+      } else {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /**
    * @param problemId: * @return List<HashMap<String,String>>
    * @author ZJ
    * @description TODO [教师]查看评论(查看评论)
