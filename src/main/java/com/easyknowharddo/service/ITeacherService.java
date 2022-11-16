@@ -47,12 +47,13 @@ public interface ITeacherService extends IService<Teacher> {
   public Boolean updatePasswordByPhone(String phone, String password);
 
   /**
-   * @param : * @return List<Object>
+   * @param currentPage:
+   * @param pageSize: a * @return PageInfo<Object>
    * @author ZJ
    * @description TODO [教师]获取账户列表(账户管理)
-   * @date 2022/11/14 20:56
+   * @date 2022/11/16 17:13
    */
-  public List<Object> teacherGetAccountList();
+  public PageInfo<Object> teacherGetAccountList(int currentPage, int pageSize);
 
   /**
    * @param id: * @return List<Object>
@@ -154,7 +155,7 @@ public interface ITeacherService extends IService<Teacher> {
   /**
    * @param difficulty:
    * @param currentPage:
-   * @param pageSize:  * @return PageInfo<Problem>
+   * @param pageSize: * @return PageInfo<Problem>
    * @author ZJ
    * @description TODO [教师]根据难度查询(题库管理)
    * @date 2022/11/16 17:03

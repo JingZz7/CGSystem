@@ -133,8 +133,11 @@
     "标签 String": "label"
   },
 
-  "[教师]获取用户列表(账户管理) POST": "不需要传参",
-  "/accountManagement/teacherGetAccountList": {},
+  "[教师]获取账户列表(账户管理) POST": "json数据包含currentPage、pageSize",
+  "/accountManagement/teacherGetAccountList": {
+    "当前页码 Integer": "currentPage",
+    "显示条数 Integer": "pageSize"
+  },
 
   "[教师]根据id查询(账户管理) POST": "json数据包含id",
   "/accountManagement/teacherGetAccountById": {

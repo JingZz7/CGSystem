@@ -17,7 +17,7 @@ public class ITeacherServiceTest {
 
   @Test
   public void teacherGetAccountListTest() {
-    System.out.println(iTeacherService.teacherGetAccountList());
+//    System.out.println(iTeacherService.teacherGetAccountList());
   }
 
   @Test

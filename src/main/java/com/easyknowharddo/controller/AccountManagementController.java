@@ -23,16 +23,19 @@ public class AccountManagementController {
   @Autowired private ITeacherService iTeacherService;
 
   /**
-   * @author ZJ Description [教师]获取账户列表(账户管理) 无参 date 2022-11-13 16:48:50 16:48
-   * @param
+   * @param jsonObject: * @return JsonResult
+   * @author ZJ
+   * @description TODO [教师]获取账户列表(账户管理) json数据包含currentPage、pageSize
+   * @date 2022/11/16 17:19
    */
   @RequestMapping(value = "/teacherGetAccountList", method = RequestMethod.POST)
-  public JsonResult teacherGetAccountList() {
-    List<Object> list = iTeacherService.teacherGetAccountList();
-    if (list == null) {
-      return JsonResult.failed("查找失败");
-    }
-    return JsonResult.success(list, "查找成功");
+  public JsonResult teacherGetAccountList(@RequestBody JSONObject jsonObject) {
+    return JsonResult.success(
+        iTeacherService
+            .teacherGetAccountList(
+                jsonObject.getInteger("currentPage"), jsonObject.getInteger("pageSize"))
+            .getList(),
+        "获取成功");
   }
 
   /**
