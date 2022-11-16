@@ -88,8 +88,11 @@
   },
 
 
-  "[教师]获取题目列表(题库管理) POST": "不需要传参",
-  "/problemManagement/getProblemList": {},
+  "[教师]获取题目列表(题库管理) POST": "json数据包含currentPage、pageSize",
+  "/problemManagement/getProblemList": {
+    "当前页码 Integer": "currentPage",
+    "显示条数 Integer": "pageSize"
+  },
 
   "[教师]根据id查询问题(题库管理) POST": "传入题号problemId即可",
   "/problemManagement/getProblemById": {

@@ -1,6 +1,8 @@
 package com.easyknowharddo.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.easyknowharddo.dao.CommentStudentDao;
 import com.easyknowharddo.dao.ProblemDao;
@@ -383,6 +385,20 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
       objects.add(map);
     }
     return objects;
+  }
+
+  /**
+   * @param currentPage:
+   * @param pageSize: a * @return IPage<Problem>
+   * @author ZJ
+   * @description TODO [教师]获取题目列表(题库管理)
+   * @date 2022/11/16 16:20
+   */
+  @Override
+  public IPage<Problem> getProblemList(int currentPage, int pageSize) {
+    IPage page = new Page(currentPage, pageSize);
+    problemDao.selectPage(page, new LambdaQueryWrapper<Problem>().eq(Problem::getDeleted, 0));
+    return page;
   }
 
   /**

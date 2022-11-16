@@ -1,5 +1,6 @@
 package com.easyknowharddo.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.easyknowharddo.domain.Problem;
 import com.easyknowharddo.domain.Teacher;
@@ -122,6 +123,15 @@ public interface ITeacherService extends IService<Teacher> {
    * @date 2022/11/15 20:13
    */
   public List<HashMap<String, String>> teacherGetReviewList();
+
+  /**
+   * @param currentPage:
+   * @param pageSize: a * @return IPage<Problem>
+   * @author ZJ
+   * @description TODO [教师]获取题目列表(题库管理)
+   * @date 2022/11/16 16:20
+   */
+  public IPage<Problem> getProblemList(int currentPage, int pageSize);
 
   /**
    * @param problemId: * @return Boolean

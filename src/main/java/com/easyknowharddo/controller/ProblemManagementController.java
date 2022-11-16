@@ -1,6 +1,7 @@
 package com.easyknowharddo.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.easyknowharddo.controller.utils.JsonResult;
 import com.easyknowharddo.domain.Problem;
 import com.easyknowharddo.service.IProblemService;
@@ -24,12 +25,22 @@ public class ProblemManagementController {
   @Autowired private ITeacherService iTeacherService;
 
   /**
-   * @author ZJ Description [教师]获取题目列表(题库管理) 无参 date 2022-11-11 18:07:17 18:07
-   * @param
+   * @param jsonObject: * @return JsonResult
+   * @author ZJ
+   * @description TODO [教师]获取题目列表(题库管理) json数据包含currentPage、pageSize
+   * @date 2022/11/16 16:25
    */
   @RequestMapping(value = "/getProblemList", method = RequestMethod.POST)
-  public JsonResult getProblemList() {
-    return JsonResult.success(iProblemService.list());
+  public JsonResult getProblemList(@RequestBody JSONObject jsonObject) {
+    IPage<Problem> page =
+        iTeacherService.getProblemList(
+            jsonObject.getInteger("currentPage"), jsonObject.getInteger("pageSize"));
+    if (jsonObject.getInteger("currentPage") > page.getPages()) {
+      page =
+          iTeacherService.getProblemList(
+              jsonObject.getInteger("currentPage"), jsonObject.getInteger("pageSize"));
+    }
+    return JsonResult.success(page.getRecords(), "获取成功");
   }
 
   /**
@@ -104,7 +115,7 @@ public class ProblemManagementController {
   }
 
   /**
-   * @param jsonObject:  * @return JsonResult
+   * @param jsonObject: * @return JsonResult
    * @author ZJ
    * @description TODO [教师]编辑题目(题库管理) json数据包含id、name、difficulty、label
    * @date 2022/11/15 17:19
@@ -124,5 +135,4 @@ public class ProblemManagementController {
   }
 }
 
-
-//2977452 300892
+// 2977452 300892
