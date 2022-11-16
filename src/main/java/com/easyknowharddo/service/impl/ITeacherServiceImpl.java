@@ -174,13 +174,15 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
   }
 
   /**
-   * @param name: * @return List<Object>
+   * @param name:
+   * @param currentPage:
+   * @param pageSize: * @return PageInfo<Object>
    * @author ZJ
    * @description TODO [教师]根据姓名查询(账户管理)
-   * @date 2022/11/14 20:57
+   * @date 2022/11/16 17:27
    */
   @Override
-  public List<Object> teacherGetAccountByName(String name) {
+  public PageInfo<Object> teacherGetAccountByName(String name, int currentPage, int pageSize) {
     ArrayList<Object> objects = new ArrayList<>();
     List<Student> students =
         studentDao.selectList(
@@ -199,10 +201,18 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
         objects.add(tutor);
       }
     }
-    if (objects.isEmpty()) {
-      return null;
+    PageHelper.startPage(currentPage, pageSize);
+    int pageStart = currentPage == 1 ? 0 : (currentPage - 1) * pageSize;
+    int pageEnd = objects.size() < pageSize * currentPage ? objects.size() : pageSize * currentPage;
+    List<Object> pageResult = new LinkedList<>();
+    if (objects.size() > pageStart) {
+      pageResult = objects.subList(pageStart, pageEnd);
+    } else {
+      int i = objects.size() / pageSize;
+      pageResult = objects.subList(i * pageSize, pageEnd);
     }
-    return objects;
+    PageInfo<Object> pageInfo = new PageInfo<>(pageResult);
+    return pageInfo;
   }
 
   /**
