@@ -22,7 +22,7 @@ public class ITeacherServiceTest {
 
   @Test
   public void teacherGetAccountByIdTest() {
-    System.out.println(iTeacherService.teacherGetAccountById("202026010512"));
+//    System.out.println(iTeacherService.teacherGetAccountById("202026010512"));
   }
 
   @Test

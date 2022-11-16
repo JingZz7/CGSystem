@@ -139,13 +139,15 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
   }
 
   /**
-   * @param id: * @return List<Object>
+   * @param id:
+   * @param currentPage:
+   * @param pageSize: a * @retrn PageInfo<Object>
    * @author ZJ
    * @description TODO [教师]根据工号查询(账户管理)
-   * @date 2022/11/14 20:57
+   * @date 2022/11/16 17:22
    */
   @Override
-  public List<Object> teacherGetAccountById(String id) {
+  public PageInfo<Object> teacherGetAccountById(String id, int currentPage, int pageSize) {
     ArrayList<Object> objects = new ArrayList<>();
     if (studentDao.selectOne(
             new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted, 0))
@@ -157,10 +159,18 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
     if (tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id)) != null) {
       objects.add(tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id)));
     }
-    if (objects.isEmpty()) {
-      return null;
+    PageHelper.startPage(currentPage, pageSize);
+    int pageStart = currentPage == 1 ? 0 : (currentPage - 1) * pageSize;
+    int pageEnd = objects.size() < pageSize * currentPage ? objects.size() : pageSize * currentPage;
+    List<Object> pageResult = new LinkedList<>();
+    if (objects.size() > pageStart) {
+      pageResult = objects.subList(pageStart, pageEnd);
+    } else {
+      int i = objects.size() / pageSize;
+      pageResult = objects.subList(i * pageSize, pageEnd);
     }
-    return objects;
+    PageInfo<Object> pageInfo = new PageInfo<>(pageResult);
+    return pageInfo;
   }
 
   /**

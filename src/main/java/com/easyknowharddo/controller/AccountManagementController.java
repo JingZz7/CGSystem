@@ -39,17 +39,21 @@ public class AccountManagementController {
   }
 
   /**
-   * @author ZJ Description [教师]根据工号查询(账户管理) json数据包含id date 2022-11-13 17:01:55 17:01
-   * @param jsonObject
+   * @param jsonObject: * @return JsonResult
+   * @author ZJ
+   * @description TODO [教师]根据工号查询(账户管理) json数据包含id、currentPage、pageSize
+   * @date 2022/11/16 17:25
    */
   @RequestMapping(value = "/teacherGetAccountById", method = RequestMethod.POST)
   public JsonResult teacherGetAccountById(@RequestBody JSONObject jsonObject) {
-    List<Object> list = iTeacherService.teacherGetAccountById(jsonObject.getString("id"));
-
-    if (list == null) {
-      return JsonResult.failed("查找失败");
-    }
-    return JsonResult.success(list, "查找成功");
+    return JsonResult.success(
+        iTeacherService
+            .teacherGetAccountById(
+                jsonObject.getString("id"),
+                jsonObject.getInteger("currentPage"),
+                jsonObject.getInteger("pageSize"))
+            .getList(),
+        "获取成功");
   }
 
   /**

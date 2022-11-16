@@ -139,9 +139,11 @@
     "显示条数 Integer": "pageSize"
   },
 
-  "[教师]根据id查询(账户管理) POST": "json数据包含id",
+  "[教师]根据id查询(账户管理) POST": "json数据包含id、currentPage、pageSize",
   "/accountManagement/teacherGetAccountById": {
-    "工号 String": "id"
+    "工号 String": "id",
+    "当前页码 Integer": "currentPage",
+    "显示条数 Integer": "pageSize"
   },
 
   "[教师]根据姓名查询(账户管理) POST": "json数据包含name",
