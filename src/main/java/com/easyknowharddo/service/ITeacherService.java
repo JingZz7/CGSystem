@@ -128,10 +128,10 @@ public interface ITeacherService extends IService<Teacher> {
 
   /**
    * @param currentPage:
-   * @param pageSize: a * @return IPage<Problem>
+   * @param pageSize:  * @return PageInfo<Problem>
    * @author ZJ
    * @description TODO [教师]获取题目列表(题库管理)
-   * @date 2022/11/16 16:20
+   * @date 2022/11/16 17:00
    */
   public PageInfo<Problem> getProblemList(int currentPage, int pageSize);
 

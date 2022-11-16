@@ -101,9 +101,11 @@
     "显示条数 Integer": "pageSize"
   },
 
-  "[教师]根据名称查询问题(题库管理) POST": "传入题目名称problemName即可",
+  "[教师]根据名称查询问题(题库管理) POST": "json数据包含problemName、currentPage、pageSize",
   "/problemManagement/getProblemListByName": {
-    "题目名称 String": "problemName"
+    "题目名称 String": "problemName",
+    "当前页码 Integer": "currentPage",
+    "显示条数 Integer": "pageSize"
   },
 
   "[教师]根据难度查询(题库管理) POST": "json数据包含difficulty",

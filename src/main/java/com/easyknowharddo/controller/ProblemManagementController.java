@@ -61,18 +61,19 @@ public class ProblemManagementController {
   }
 
   /**
-   * @author ZJ Description [教师]根据名称查询问题(题库管理) problemName即可 date 2022-11-11 18:16:45 18:16
-   * @param jsonObject
+   * @param jsonObject:  * @return JsonResult
+   * @author ZJ
+   * @description TODO [教师]根据名称查询问题(题库管理) json数据包含problemName、currentPage、pageSize
+   * @date 2022/11/16 16:55
    */
   @RequestMapping(value = "/getProblemListByName", method = RequestMethod.POST)
   public JsonResult getProblemListByName(@RequestBody JSONObject jsonObject) {
-    List<Problem> list = iProblemService.getProblemListByName(jsonObject.getString("problemName"));
-
-    if (list == null) {
-      return JsonResult.failed("查找失败");
-    }
-
-    return JsonResult.success(list, "查找成功");
+    PageInfo<Problem> pageInfo =
+        iProblemService.getProblemListByName(
+            jsonObject.getString("problemName"),
+            jsonObject.getInteger("currentPage"),
+            jsonObject.getInteger("pageSize"));
+    return JsonResult.success(pageInfo.getList(), "获取成功");
   }
 
   /**

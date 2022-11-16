@@ -28,10 +28,12 @@ public interface IProblemService extends IService<Problem> {
   public PageInfo<Problem> getProblemById(String problemId, int currentPage, int pageSize);
 
   /**
-   * @param problemName: * @return List<Problem>
+   * @param problemName:
+   * @param currentPage:
+   * @param pageSize: * @return PageInfo<Problem>
    * @author ZJ
-   * @description TODO 根据名字查找
-   * @date 2022/11/14 20:51
+   * @description TODO [教师]根据名称查询问题(题库管理)
+   * @date 2022/11/16 16:53
    */
-  public List<Problem> getProblemListByName(String problemName);
+  public PageInfo<Problem> getProblemListByName(String problemName, int currentPage, int pageSize);
 }

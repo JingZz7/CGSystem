@@ -54,7 +54,7 @@ public class IProblemServiceImpl extends ServiceImpl<ProblemDao, Problem>
     PageHelper.startPage(currentPage, pageSize);
     int pageStart = currentPage == 1 ? 0 : (currentPage - 1) * pageSize;
     int pageEnd =
-            problems.size() < pageSize * currentPage ? problems.size() : pageSize * currentPage;
+        problems.size() < pageSize * currentPage ? problems.size() : pageSize * currentPage;
     List<Problem> pageResult = new LinkedList<>();
     if (problems.size() > pageStart) {
       pageResult = problems.subList(pageStart, pageEnd);
@@ -67,20 +67,30 @@ public class IProblemServiceImpl extends ServiceImpl<ProblemDao, Problem>
   }
 
   /**
-   * @param problemName: * @return List<Problem>
+   * @param problemName:
+   * @param currentPage:
+   * @param pageSize: * @return PageInfo<Problem>
    * @author ZJ
-   * @description TODO 根据名字查找
-   * @date 2022/11/14 20:51
+   * @description TODO [教师]根据名称查询问题(题库管理)
+   * @date 2022/11/16 16:53
    */
   @Override
-  public List<Problem> getProblemListByName(String problemName) {
+  public PageInfo<Problem> getProblemListByName(String problemName, int currentPage, int pageSize) {
     LambdaQueryWrapper<Problem> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-    lambdaQueryWrapper.like(Problem::getName, problemName);
+    lambdaQueryWrapper.eq(Problem::getDeleted, 0).like(Problem::getName, problemName);
     List<Problem> problems = problemDao.selectList(lambdaQueryWrapper);
-
-    if (problems == null) {
-      return null;
+    PageHelper.startPage(currentPage, pageSize);
+    int pageStart = currentPage == 1 ? 0 : (currentPage - 1) * pageSize;
+    int pageEnd =
+        problems.size() < pageSize * currentPage ? problems.size() : pageSize * currentPage;
+    List<Problem> pageResult = new LinkedList<>();
+    if (problems.size() > pageStart) {
+      pageResult = problems.subList(pageStart, pageEnd);
+    } else {
+      int i = problems.size() / pageSize;
+      pageResult = problems.subList(i * pageSize, pageEnd);
     }
-    return problems;
+    PageInfo<Problem> pageInfo = new PageInfo<>(pageResult);
+    return pageInfo;
   }
 }
