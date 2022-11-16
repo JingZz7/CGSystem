@@ -61,7 +61,7 @@ public class ProblemManagementController {
   }
 
   /**
-   * @param jsonObject:  * @return JsonResult
+   * @param jsonObject: * @return JsonResult
    * @author ZJ
    * @description TODO [教师]根据名称查询问题(题库管理) json数据包含problemName、currentPage、pageSize
    * @date 2022/11/16 16:55
@@ -110,13 +110,19 @@ public class ProblemManagementController {
   /**
    * @param jsonObject: * @return JsonResult
    * @author ZJ
-   * @description TODO [教师]根据难度查询(题库管理) json数据包含difficulty
+   * @description TODO [教师]根据难度查询(题库管理) json数据包含difficulty、currentPage、pageSize
    * @date 2022/11/15 0:24
    */
   @RequestMapping(value = "/getListByDifficulty", method = RequestMethod.POST)
   public JsonResult getListByDifficulty(@RequestBody JSONObject jsonObject) {
     return JsonResult.success(
-        iTeacherService.getListByDifficulty(jsonObject.getString("difficulty")), "查询成功");
+        iTeacherService
+            .getListByDifficulty(
+                jsonObject.getString("difficulty"),
+                jsonObject.getInteger("currentPage"),
+                jsonObject.getInteger("pageSize"))
+            .getList(),
+        "查询成功");
   }
 
   /**

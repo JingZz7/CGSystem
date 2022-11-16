@@ -108,9 +108,11 @@
     "显示条数 Integer": "pageSize"
   },
 
-  "[教师]根据难度查询(题库管理) POST": "json数据包含difficulty",
+  "[教师]根据难度查询(题库管理) POST": "json数据包含difficulty、currentPage、pageSize",
   "/problemManagement/getListByDifficulty": {
-    "难度 String": "difficulty"
+    "难度 String": "difficulty",
+    "当前页码 Integer": "currentPage",
+    "显示条数 Integer": "pageSize"
   },
 
   "[教师]删除题目(题库管理) DELETE": "json数据包含problemId",

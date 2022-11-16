@@ -128,7 +128,7 @@ public interface ITeacherService extends IService<Teacher> {
 
   /**
    * @param currentPage:
-   * @param pageSize:  * @return PageInfo<Problem>
+   * @param pageSize: * @return PageInfo<Problem>
    * @author ZJ
    * @description TODO [教师]获取题目列表(题库管理)
    * @date 2022/11/16 17:00
@@ -152,12 +152,14 @@ public interface ITeacherService extends IService<Teacher> {
   public Boolean bulkDeleteProblem(List<String> ids);
 
   /**
-   * @param difficulty: * @return List<Problem>
+   * @param difficulty:
+   * @param currentPage:
+   * @param pageSize:  * @return PageInfo<Problem>
    * @author ZJ
    * @description TODO [教师]根据难度查询(题库管理)
-   * @date 2022/11/15 0:17
+   * @date 2022/11/16 17:03
    */
-  public List<Problem> getListByDifficulty(String difficulty);
+  public PageInfo<Problem> getListByDifficulty(String difficulty, int currentPage, int pageSize);
 
   /**
    * @param id:
