@@ -94,9 +94,11 @@
     "显示条数 Integer": "pageSize"
   },
 
-  "[教师]根据id查询问题(题库管理) POST": "传入题号problemId即可",
+  "[教师]根据id查询问题(题库管理) POST": "json数据包含problemId、currentPage、pageSize",
   "/problemManagement/getProblemById": {
-    "题号 String": "problemId"
+    "题号 String": "problemId",
+    "当前页码 Integer": "currentPage",
+    "显示条数 Integer": "pageSize"
   },
 
   "[教师]根据名称查询问题(题库管理) POST": "传入题目名称problemName即可",

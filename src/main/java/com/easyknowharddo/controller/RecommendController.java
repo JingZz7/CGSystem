@@ -74,14 +74,14 @@ public class RecommendController {
             jsonObject.getString("problemName"),
             jsonObject.getInteger("currentPage"),
             jsonObject.getInteger("pageSize"));
-    if (jsonObject.getInteger("currentPage") > page.getPages()) {
-      page =
-          iFavoriteService.getProblemByName(
-              jsonObject.getString("studentId"),
-              jsonObject.getString("problemName"),
-              jsonObject.getInteger("currentPage"),
-              jsonObject.getInteger("pageSize"));
-    }
+//    if (jsonObject.getInteger("currentPage") > page.getPages()) {
+//      page =
+//          iFavoriteService.getProblemByName(
+//              jsonObject.getString("studentId"),
+//              jsonObject.getString("problemName"),
+//              jsonObject.getInteger("currentPage"),
+//              jsonObject.getInteger("pageSize"));
+//    }
     return JsonResult.success(page.getList(), "获取成功");
 
     //    List<Problem> problems =

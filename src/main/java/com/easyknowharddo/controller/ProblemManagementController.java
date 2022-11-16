@@ -6,6 +6,7 @@ import com.easyknowharddo.controller.utils.JsonResult;
 import com.easyknowharddo.domain.Problem;
 import com.easyknowharddo.service.IProblemService;
 import com.easyknowharddo.service.ITeacherService;
+import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -32,28 +33,31 @@ public class ProblemManagementController {
    */
   @RequestMapping(value = "/getProblemList", method = RequestMethod.POST)
   public JsonResult getProblemList(@RequestBody JSONObject jsonObject) {
-    IPage<Problem> page =
+    PageInfo<Problem> pageInfo =
         iTeacherService.getProblemList(
             jsonObject.getInteger("currentPage"), jsonObject.getInteger("pageSize"));
-    if (jsonObject.getInteger("currentPage") > page.getPages()) {
-      page =
-          iTeacherService.getProblemList(
-              jsonObject.getInteger("currentPage"), jsonObject.getInteger("pageSize"));
-    }
-    return JsonResult.success(page.getRecords(), "获取成功");
+    //    if (jsonObject.getInteger("currentPage") > pageInfo.getPages()) {
+    //      pageInfo =
+    //          iTeacherService.getProblemList(
+    //              jsonObject.getInteger("currentPage"), jsonObject.getInteger("pageSize"));
+    //    }
+    return JsonResult.success(pageInfo.getList(), "获取成功");
   }
 
   /**
-   * @author ZJ Description [教师]根据id查询问题(题库管理) date 2022-11-09 21:09:21 21:09
-   * @param jsonObject
+   * @param jsonObject: * @return JsonResult
+   * @author ZJ
+   * @description TODO [教师]根据id查询问题(题库管理) json数据包含problemId、currentPage、pageSize
+   * @date 2022/11/16 16:48
    */
   @RequestMapping(value = "/getProblemById", method = RequestMethod.POST)
   public JsonResult getProblemById(@RequestBody JSONObject jsonObject) {
-    List<Problem> problems = iProblemService.getProblemById(jsonObject.getString("problemId"));
-    if (problems.isEmpty()) {
-      return JsonResult.failed("查找失败");
-    }
-    return JsonResult.success(problems, "查找成功");
+    PageInfo<Problem> pageInfo =
+        iProblemService.getProblemById(
+            jsonObject.getString("problemId"),
+            jsonObject.getInteger("currentPage"),
+            jsonObject.getInteger("pageSize"));
+    return JsonResult.success(pageInfo.getList(), "获取成功");
   }
 
   /**

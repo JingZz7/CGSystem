@@ -63,13 +63,13 @@ public class ProblemController {
             jsonObject.getString("studentId"),
             jsonObject.getInteger("currentPage"),
             jsonObject.getInteger("pageSize"));
-    if (jsonObject.getInteger("currentPage") > page.getPages()) {
-      page =
-          iFavoriteService.getFavoriteProblemList(
-              jsonObject.getString("studentId"),
-              jsonObject.getInteger("currentPage"),
-              jsonObject.getInteger("pageSize"));
-    }
+//    if (jsonObject.getInteger("currentPage") > page.getPages()) {
+//      page =
+//          iFavoriteService.getFavoriteProblemList(
+//              jsonObject.getString("studentId"),
+//              jsonObject.getInteger("currentPage"),
+//              jsonObject.getInteger("pageSize"));
+//    }
     return JsonResult.success(page.getList(), "获取成功");
   }
 

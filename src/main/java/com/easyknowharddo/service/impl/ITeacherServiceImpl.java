@@ -15,11 +15,14 @@ import com.easyknowharddo.domain.Student;
 import com.easyknowharddo.domain.Teacher;
 import com.easyknowharddo.domain.Tutor;
 import com.easyknowharddo.service.ITeacherService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -395,10 +398,22 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
    * @date 2022/11/16 16:20
    */
   @Override
-  public IPage<Problem> getProblemList(int currentPage, int pageSize) {
-    IPage page = new Page(currentPage, pageSize);
-    problemDao.selectPage(page, new LambdaQueryWrapper<Problem>().eq(Problem::getDeleted, 0));
-    return page;
+  public PageInfo<Problem> getProblemList(int currentPage, int pageSize) {
+    List<Problem> problems =
+        problemDao.selectList(new LambdaQueryWrapper<Problem>().eq(Problem::getDeleted, 0));
+    PageHelper.startPage(currentPage, pageSize);
+    int pageStart = currentPage == 1 ? 0 : (currentPage - 1) * pageSize;
+    int pageEnd =
+        problems.size() < pageSize * currentPage ? problems.size() : pageSize * currentPage;
+    List<Problem> pageResult = new LinkedList<>();
+    if (problems.size() > pageStart) {
+      pageResult = problems.subList(pageStart, pageEnd);
+    } else {
+      int i = problems.size() / pageSize;
+      pageResult = problems.subList(i * pageSize, pageEnd);
+    }
+    PageInfo<Problem> pageInfo = new PageInfo<>(pageResult);
+    return pageInfo;
   }
 
   /**

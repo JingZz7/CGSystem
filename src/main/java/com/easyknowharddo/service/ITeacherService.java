@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.easyknowharddo.domain.Problem;
 import com.easyknowharddo.domain.Teacher;
+import com.github.pagehelper.PageInfo;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -131,7 +133,7 @@ public interface ITeacherService extends IService<Teacher> {
    * @description TODO [教师]获取题目列表(题库管理)
    * @date 2022/11/16 16:20
    */
-  public IPage<Problem> getProblemList(int currentPage, int pageSize);
+  public PageInfo<Problem> getProblemList(int currentPage, int pageSize);
 
   /**
    * @param problemId: * @return Boolean

@@ -5,9 +5,13 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.easyknowharddo.dao.ProblemDao;
 import com.easyknowharddo.domain.Problem;
 import com.easyknowharddo.service.IProblemService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -33,22 +37,33 @@ public class IProblemServiceImpl extends ServiceImpl<ProblemDao, Problem>
   }
 
   /**
-   * @param problemId: * @return List<Problem>
+   * @param problemId:
+   * @param currentPage:
+   * @param pageSize: * @return PageInfo<Problem>
    * @author ZJ
-   * @description TODO 根据id查找
-   * @date 2022/11/14 20:50
+   * @description TODO [教师]根据id查询问题(题库管理)
+   * @date 2022/11/16 16:45
    */
   @Override
-  public List<Problem> getProblemById(String problemId) {
+  public PageInfo<Problem> getProblemById(String problemId, int currentPage, int pageSize) {
     List<Problem> problems =
         problemDao.selectList(
             new LambdaQueryWrapper<Problem>()
                 .eq(Problem::getId, problemId)
                 .eq(Problem::getDeleted, 0));
-    if (problems.isEmpty()) {
-      return null;
+    PageHelper.startPage(currentPage, pageSize);
+    int pageStart = currentPage == 1 ? 0 : (currentPage - 1) * pageSize;
+    int pageEnd =
+            problems.size() < pageSize * currentPage ? problems.size() : pageSize * currentPage;
+    List<Problem> pageResult = new LinkedList<>();
+    if (problems.size() > pageStart) {
+      pageResult = problems.subList(pageStart, pageEnd);
+    } else {
+      int i = problems.size() / pageSize;
+      pageResult = problems.subList(i * pageSize, pageEnd);
     }
-    return problems;
+    PageInfo<Problem> pageInfo = new PageInfo<>(pageResult);
+    return pageInfo;
   }
 
   /**
