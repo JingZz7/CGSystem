@@ -2,6 +2,8 @@ package com.easyknowharddo.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.easyknowharddo.domain.Administrator;
+import com.github.pagehelper.PageInfo;
+
 import java.util.List;
 
 public interface IAdministratorService extends IService<Administrator> {
@@ -42,20 +44,23 @@ public interface IAdministratorService extends IService<Administrator> {
   public Boolean updatePasswordByPhone(String phone, String password);
 
   /**
-   * @param : * @return List<Object>
+   * @param currentPage:
+   * @param pageSize:  * @return PageInfo<Object>
    * @author ZJ
    * @description TODO [管理员]获取用户列表(账户管理)
-   * @date 2022/11/14 20:34
+   * @date 2022/11/17 11:13
    */
-  public List<Object> getList();
+  public PageInfo<Object> administratorGetAccountList(int currentPage, int pageSize);
 
   /**
-   * @param type: * @return List<Object>
+   * @param type:
+   * @param currentPage:
+   * @param pageSize: a * @return PageInfo<?>
    * @author ZJ
    * @description TODO [管理员]分类查找(账户管理)
-   * @date 2022/11/14 20:36
+   * @date 2022/11/17 11:20
    */
-  public List<Object> getAccountByType(String type);
+  public PageInfo<?> getAccountByType(String type, int currentPage, int pageSize);
 
   /**
    * @param id:

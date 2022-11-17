@@ -194,12 +194,17 @@
   },
 
 
-  "[管理员]获取用户列表(账户管理) POST": "不需要传参",
-  "/accountManagement/getList": {},
+  "[管理员]获取用户列表(账户管理) POST": "json数据包含currentPage、pageSize",
+  "/accountManagement/administratorGetAccountList": {
+    "当前页码 Integer": "currentPage",
+    "显示条数 Integer": "pageSize"
+  },
 
-  "[管理员]分类查找(账户管理) POST": "json数据包含type",
+  "[管理员]分类查找(账户管理) POST": "json数据包含type、currentPage、pageSize",
   "/accountManagement/getAccountByType": {
-    "类型 String": "type"
+    "类型 String": "type",
+    "当前页码 Integer": "currentPage",
+    "显示条数 Integer": "pageSize"
   },
 
   "[管理员]编辑账户(账户管理) PUT": "json数据包含id、password、email、phone",

@@ -157,30 +157,37 @@ public class AccountManagementController {
   }
 
   /**
-   * @author ZJ Description [管理员]获取用户列表(账户管理) date 2022-11-12 00:04:14 0:04
-   * @param
+   * @param jsonObject: * @return JsonResult
+   * @author ZJ
+   * @description TODO [管理员]获取用户列表(账户管理) json数据包含currentPage、pageSize
+   * @date 2022/11/17 11:19
    */
-  @RequestMapping(value = "/getList", method = RequestMethod.POST)
-  public JsonResult getList() {
-    List<Object> list = iAdministratorService.getList();
-    if (list == null) {
-      return JsonResult.failed("查找失败");
-    }
-    return JsonResult.success(list, "查找成功");
+  @RequestMapping(value = "/administratorGetAccountList", method = RequestMethod.POST)
+  public JsonResult administratorGetAccountList(@RequestBody JSONObject jsonObject) {
+    return JsonResult.success(
+        iAdministratorService
+            .administratorGetAccountList(
+                jsonObject.getInteger("currentPage"), jsonObject.getInteger("pageSize"))
+            .getList(),
+        "获取成功");
   }
 
   /**
-   * @author ZJ Description [管理员]分类查找(账户管理) json数据包含type date 2022-11-14 10:31:33 10:31
-   * @param jsonObject
+   * @param jsonObject: * @return JsonResult
+   * @author ZJ
+   * @description TODO [管理员]分类查找(账户管理) json数据包含type、currentPage、pageSize
+   * @date 2022/11/17 11:28
    */
   @RequestMapping(value = "/getAccountByType", method = RequestMethod.POST)
   public JsonResult getAccountByType(@RequestBody JSONObject jsonObject) {
-    List<Object> type = iAdministratorService.getAccountByType(jsonObject.getString("type"));
-
-    if (type.isEmpty()) {
-      return JsonResult.failed("查找失败");
-    }
-    return JsonResult.success(type, "查找成功");
+    return JsonResult.success(
+        iAdministratorService
+            .getAccountByType(
+                jsonObject.getString("type"),
+                jsonObject.getInteger("currentPage"),
+                jsonObject.getInteger("pageSize"))
+            .getList(),
+        "获取成功");
   }
 
   /**
