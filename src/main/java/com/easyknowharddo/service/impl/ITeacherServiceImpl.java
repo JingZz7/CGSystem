@@ -426,13 +426,14 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
   }
 
   /**
-   * @param : a * return List<HashMap<String,String>>
+   * @param currentPage:
+   * @param pageSize: a * @return PageInfo<HashMap<String,String>>
    * @author ZJ
    * @description TODO [教师]获取评论列表(查看评论)
-   * @date 2022/11/15 20:13
+   * @date 2022/11/17 10:39
    */
   @Override
-  public List<HashMap<String, String>> teacherGetReviewList() {
+  public PageInfo<HashMap<String, String>> teacherGetReviewList(int currentPage, int pageSize) {
     ArrayList<HashMap<String, String>> objects = new ArrayList<>();
     List<CommentStudent> commentStudents = commentStudentDao.selectList(null);
     for (CommentStudent commentStudent : commentStudents) {
@@ -452,7 +453,18 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
       map.put("label", problem.getLabel());
       objects.add(map);
     }
-    return objects;
+    PageHelper.startPage(currentPage, pageSize);
+    int pageStart = currentPage == 1 ? 0 : (currentPage - 1) * pageSize;
+    int pageEnd = objects.size() < pageSize * currentPage ? objects.size() : pageSize * currentPage;
+    List<HashMap<String, String>> pageResult = new LinkedList<>();
+    if (objects.size() > pageStart) {
+      pageResult = objects.subList(pageStart, pageEnd);
+    } else {
+      int i = objects.size() / pageSize;
+      pageResult = objects.subList(i * pageSize, pageEnd);
+    }
+    PageInfo<HashMap<String, String>> pageInfo = new PageInfo<>(pageResult);
+    return pageInfo;
   }
 
   /**

@@ -26,12 +26,17 @@ public class ReviewController {
   /**
    * @param : * @return JsonResult
    * @author ZJ
-   * @description TODO [教师]获取评论列表(查看评论) 无参
+   * @description TODO [教师]获取评论列表(查看评论) json数据包含currentPage、pageSize
    * @date 2022/11/15 20:21
    */
   @RequestMapping(value = "teacherGetReviewList", method = RequestMethod.POST)
-  public JsonResult teacherGetReviewList() {
-    return JsonResult.success(iTeacherService.teacherGetReviewList(), "获取成功");
+  public JsonResult teacherGetReviewList(@RequestBody JSONObject jsonObject) {
+    return JsonResult.success(
+        iTeacherService
+            .teacherGetReviewList(
+                jsonObject.getInteger("currentPage"), jsonObject.getInteger("pageSize"))
+            .getList(),
+        "获取成功");
   }
 
   /**

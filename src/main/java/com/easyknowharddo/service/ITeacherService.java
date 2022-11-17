@@ -126,12 +126,13 @@ public interface ITeacherService extends IService<Teacher> {
   public List<HashMap<String, String>> teacherViewReview(String problemId);
 
   /**
-   * @param : a * return List<HashMap<String,String>>
+   * @param currentPage:
+   * @param pageSize: a * @return PageInfo<HashMap<String,String>>
    * @author ZJ
    * @description TODO [教师]获取评论列表(查看评论)
-   * @date 2022/11/15 20:13
+   * @date 2022/11/17 10:39
    */
-  public List<HashMap<String, String>> teacherGetReviewList();
+  public PageInfo<HashMap<String, String>> teacherGetReviewList(int currentPage, int pageSize);
 
   /**
    * @param currentPage:

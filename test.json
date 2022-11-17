@@ -180,8 +180,11 @@
     "工号的数组 String": "ids"
   },
 
-  "[教师]获取评论列表(查看评论) POST": "无参",
-  "/review/teacherGetReviewList": {},
+  "[教师]获取评论列表(查看评论) POST": "json数据包含currentPage、pageSize",
+  "/review/teacherGetReviewList": {
+    "当前页码 Integer": "currentPage",
+    "显示条数 Integer": "pageSize"
+  },
 
   "[教师]查看评论(查看评论) POST": "json数据包含problemId",
   "/review/teacherViewReview": {
