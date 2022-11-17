@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.easyknowharddo.dao.ProblemDao;
 import com.easyknowharddo.domain.Problem;
 import com.easyknowharddo.service.IProblemService;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.logging.log4j.util.Strings;
@@ -51,18 +52,20 @@ public class IProblemServiceImpl extends ServiceImpl<ProblemDao, Problem>
             new LambdaQueryWrapper<Problem>()
                 .eq(Problem::getId, problemId)
                 .eq(Problem::getDeleted, 0));
-    PageHelper.startPage(currentPage, pageSize);
-    int pageStart = currentPage == 1 ? 0 : (currentPage - 1) * pageSize;
-    int pageEnd =
-        problems.size() < pageSize * currentPage ? problems.size() : pageSize * currentPage;
-    List<Problem> pageResult = new LinkedList<>();
-    if (problems.size() > pageStart) {
-      pageResult = problems.subList(pageStart, pageEnd);
-    } else {
-      int i = problems.size() / pageSize;
-      pageResult = problems.subList(i * pageSize, pageEnd);
+    int total = problems.size();
+    if (total > pageSize) {
+      int toIndex = pageSize * currentPage;
+      if (toIndex > total) {
+        toIndex = total;
+      }
+      problems = problems.subList(pageSize * (currentPage - 1), toIndex);
     }
-    PageInfo<Problem> pageInfo = new PageInfo<>(pageResult);
+    com.github.pagehelper.Page<Problem> page = new Page<>(currentPage, pageSize);
+    page.addAll(problems);
+    page.setPages((total + pageSize - 1) / pageSize);
+    page.setTotal(total);
+
+    PageInfo<Problem> pageInfo = new PageInfo<>(page);
     return pageInfo;
   }
 
@@ -79,18 +82,20 @@ public class IProblemServiceImpl extends ServiceImpl<ProblemDao, Problem>
     LambdaQueryWrapper<Problem> lambdaQueryWrapper = new LambdaQueryWrapper<>();
     lambdaQueryWrapper.eq(Problem::getDeleted, 0).like(Problem::getName, problemName);
     List<Problem> problems = problemDao.selectList(lambdaQueryWrapper);
-    PageHelper.startPage(currentPage, pageSize);
-    int pageStart = currentPage == 1 ? 0 : (currentPage - 1) * pageSize;
-    int pageEnd =
-        problems.size() < pageSize * currentPage ? problems.size() : pageSize * currentPage;
-    List<Problem> pageResult = new LinkedList<>();
-    if (problems.size() > pageStart) {
-      pageResult = problems.subList(pageStart, pageEnd);
-    } else {
-      int i = problems.size() / pageSize;
-      pageResult = problems.subList(i * pageSize, pageEnd);
+    int total = problems.size();
+    if (total > pageSize) {
+      int toIndex = pageSize * currentPage;
+      if (toIndex > total) {
+        toIndex = total;
+      }
+      problems = problems.subList(pageSize * (currentPage - 1), toIndex);
     }
-    PageInfo<Problem> pageInfo = new PageInfo<>(pageResult);
+    com.github.pagehelper.Page<Problem> page = new Page<>(currentPage, pageSize);
+    page.addAll(problems);
+    page.setPages((total + pageSize - 1) / pageSize);
+    page.setTotal(total);
+
+    PageInfo<Problem> pageInfo = new PageInfo<>(page);
     return pageInfo;
   }
 }

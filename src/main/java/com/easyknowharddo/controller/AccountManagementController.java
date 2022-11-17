@@ -30,11 +30,15 @@ public class AccountManagementController {
    */
   @RequestMapping(value = "/teacherGetAccountList", method = RequestMethod.POST)
   public JsonResult teacherGetAccountList(@RequestBody JSONObject jsonObject) {
-    return JsonResult.success(
+    return JsonResult.successes(
         iTeacherService
             .teacherGetAccountList(
                 jsonObject.getInteger("currentPage"), jsonObject.getInteger("pageSize"))
             .getList(),
+        iTeacherService
+            .teacherGetAccountList(
+                jsonObject.getInteger("currentPage"), jsonObject.getInteger("pageSize"))
+            .getTotal(),
         "获取成功");
   }
 
@@ -46,13 +50,19 @@ public class AccountManagementController {
    */
   @RequestMapping(value = "/teacherGetAccountById", method = RequestMethod.POST)
   public JsonResult teacherGetAccountById(@RequestBody JSONObject jsonObject) {
-    return JsonResult.success(
+    return JsonResult.successes(
         iTeacherService
             .teacherGetAccountById(
                 jsonObject.getString("id"),
                 jsonObject.getInteger("currentPage"),
                 jsonObject.getInteger("pageSize"))
             .getList(),
+        iTeacherService
+            .teacherGetAccountById(
+                jsonObject.getString("id"),
+                jsonObject.getInteger("currentPage"),
+                jsonObject.getInteger("pageSize"))
+            .getTotal(),
         "获取成功");
   }
 
@@ -64,13 +74,19 @@ public class AccountManagementController {
    */
   @RequestMapping(value = "/teacherGetAccountByType", method = RequestMethod.POST)
   public JsonResult teacherGetAccountByType(@RequestBody JSONObject jsonObject) {
-    return JsonResult.success(
+    return JsonResult.successes(
         iTeacherService
             .teacherGetAccountByType(
                 jsonObject.getString("type"),
                 jsonObject.getInteger("currentPage"),
                 jsonObject.getInteger("pageSize"))
             .getList(),
+        iTeacherService
+            .teacherGetAccountByType(
+                jsonObject.getString("type"),
+                jsonObject.getInteger("currentPage"),
+                jsonObject.getInteger("pageSize"))
+            .getTotal(),
         "查找成功");
   }
 
@@ -82,13 +98,19 @@ public class AccountManagementController {
    */
   @RequestMapping(value = "/teacherGetAccountByName", method = RequestMethod.POST)
   public JsonResult teacherGetAccountByName(@RequestBody JSONObject jsonObject) {
-    return JsonResult.success(
+    return JsonResult.successes(
         iTeacherService
             .teacherGetAccountByName(
                 jsonObject.getString("name"),
                 jsonObject.getInteger("currentPage"),
                 jsonObject.getInteger("pageSize"))
             .getList(),
+        iTeacherService
+            .teacherGetAccountByName(
+                jsonObject.getString("name"),
+                jsonObject.getInteger("currentPage"),
+                jsonObject.getInteger("pageSize"))
+            .getTotal(),
         "获取成功");
   }
 
@@ -164,11 +186,15 @@ public class AccountManagementController {
    */
   @RequestMapping(value = "/administratorGetAccountList", method = RequestMethod.POST)
   public JsonResult administratorGetAccountList(@RequestBody JSONObject jsonObject) {
-    return JsonResult.success(
+    return JsonResult.successes(
         iAdministratorService
             .administratorGetAccountList(
                 jsonObject.getInteger("currentPage"), jsonObject.getInteger("pageSize"))
             .getList(),
+        iAdministratorService
+            .administratorGetAccountList(
+                jsonObject.getInteger("currentPage"), jsonObject.getInteger("pageSize"))
+            .getTotal(),
         "获取成功");
   }
 
@@ -180,13 +206,19 @@ public class AccountManagementController {
    */
   @RequestMapping(value = "/getAccountByType", method = RequestMethod.POST)
   public JsonResult getAccountByType(@RequestBody JSONObject jsonObject) {
-    return JsonResult.success(
+    return JsonResult.successes(
         iAdministratorService
             .getAccountByType(
                 jsonObject.getString("type"),
                 jsonObject.getInteger("currentPage"),
                 jsonObject.getInteger("pageSize"))
             .getList(),
+        iAdministratorService
+            .getAccountByType(
+                jsonObject.getString("type"),
+                jsonObject.getInteger("currentPage"),
+                jsonObject.getInteger("pageSize"))
+            .getTotal(),
         "获取成功");
   }
 

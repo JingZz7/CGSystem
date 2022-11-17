@@ -39,15 +39,14 @@ public class ProblemController {
    */
   @RequestMapping(value = "/getProblemList", method = RequestMethod.POST)
   public JsonResult getProblemList(@RequestBody JSONObject jsonObject) {
-    IPage<Problem> page =
-        iStudentService.getProblemList(
-            jsonObject.getInteger("currentPage"), jsonObject.getInteger("pageSize"));
-    if (jsonObject.getInteger("currentPage") > page.getPages()) {
-      page =
-          iStudentService.getProblemList(
-              jsonObject.getInteger("currentPage"), jsonObject.getInteger("pageSize"));
-    }
-    return JsonResult.success(page.getRecords(), "获取成功");
+    return JsonResult.successes(
+        iStudentService
+            .getProblemList(jsonObject.getInteger("currentPage"), jsonObject.getInteger("pageSize"))
+            .getList(),
+        iStudentService
+            .getProblemList(jsonObject.getInteger("currentPage"), jsonObject.getInteger("pageSize"))
+            .getTotal(),
+        "获取成功");
   }
 
   /**
@@ -63,14 +62,7 @@ public class ProblemController {
             jsonObject.getString("studentId"),
             jsonObject.getInteger("currentPage"),
             jsonObject.getInteger("pageSize"));
-//    if (jsonObject.getInteger("currentPage") > page.getPages()) {
-//      page =
-//          iFavoriteService.getFavoriteProblemList(
-//              jsonObject.getString("studentId"),
-//              jsonObject.getInteger("currentPage"),
-//              jsonObject.getInteger("pageSize"));
-//    }
-    return JsonResult.success(page.getList(), "获取成功");
+    return JsonResult.successes(page.getList(), page.getTotal(), "获取成功");
   }
 
   /**
@@ -128,19 +120,20 @@ public class ProblemController {
    */
   @RequestMapping(value = "/getProblemById", method = RequestMethod.POST)
   public JsonResult getProblemById(@RequestBody JSONObject jsonObject) {
-    IPage<Problem> page =
-        iStudentService.getProblemById(
-            jsonObject.getString("problemId"),
-            jsonObject.getInteger("currentPage"),
-            jsonObject.getInteger("pageSize"));
-    if (jsonObject.getInteger("currentPage") > page.getPages()) {
-      page =
-          iStudentService.getProblemById(
-              jsonObject.getString("problemId"),
-              jsonObject.getInteger("currentPage"),
-              jsonObject.getInteger("pageSize"));
-    }
-    return JsonResult.success(page.getRecords(), "获取成功");
+    return JsonResult.successes(
+        iStudentService
+            .getProblemById(
+                jsonObject.getString("problemId"),
+                jsonObject.getInteger("currentPage"),
+                jsonObject.getInteger("pageSize"))
+            .getList(),
+        iStudentService
+            .getProblemById(
+                jsonObject.getString("problemId"),
+                jsonObject.getInteger("currentPage"),
+                jsonObject.getInteger("pageSize"))
+            .getTotal(),
+        "获取成功");
   }
 
   /**
@@ -151,28 +144,20 @@ public class ProblemController {
    */
   @RequestMapping(value = "/getProblemsByDifficulty", method = RequestMethod.POST)
   public JsonResult getProblemsByDifficulty(@RequestBody JSONObject jsonObject) {
-
-    IPage<Problem> page =
-        iStudentService.getProblemsByDifficulty(
-            jsonObject.getString("difficulty"),
-            jsonObject.getInteger("currentPage"),
-            jsonObject.getInteger("pageSize"));
-    if (jsonObject.getInteger("currentPage") > page.getPages()) {
-      page =
-          iStudentService.getProblemsByDifficulty(
-              jsonObject.getString("difficulty"),
-              jsonObject.getInteger("currentPage"),
-              jsonObject.getInteger("pageSize"));
-    }
-    return JsonResult.success(page.getRecords(), "获取成功");
-
-    //    List<Problem> problems =
-    //        iProblemService.getProblemsByDifficulty(jsonObject.getString("difficulty"));
-    //    if (problems == null) {
-    //      return JsonResult.failed("查找失败");
-    //    }
-    //
-    //    return JsonResult.success(problems, "查找成功");
+    return JsonResult.successes(
+        iStudentService
+            .getProblemsByDifficulty(
+                jsonObject.getString("difficulty"),
+                jsonObject.getInteger("currentPage"),
+                jsonObject.getInteger("pageSize"))
+            .getList(),
+        iStudentService
+            .getProblemsByDifficulty(
+                jsonObject.getString("difficulty"),
+                jsonObject.getInteger("currentPage"),
+                jsonObject.getInteger("pageSize"))
+            .getTotal(),
+        "获取成功");
   }
 
   /**

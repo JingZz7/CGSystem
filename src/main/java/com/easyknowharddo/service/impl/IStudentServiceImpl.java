@@ -13,12 +13,18 @@ import com.easyknowharddo.domain.CommentStudent;
 import com.easyknowharddo.domain.Problem;
 import com.easyknowharddo.domain.Student;
 import com.easyknowharddo.service.IStudentService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.apache.logging.log4j.util.Strings;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -191,27 +197,57 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
    * @date 2022/11/15 20:53
    */
   @Override
-  public IPage<Problem> getProblemList(int currentPage, int pageSize) {
-    IPage page = new Page(currentPage, pageSize);
-    problemDao.selectPage(page, new LambdaQueryWrapper<Problem>().eq(Problem::getDeleted, 0));
-    return page;
+  public PageInfo<Problem> getProblemList(int currentPage, int pageSize) {
+    PageHelper.startPage(currentPage, pageSize);
+    List<Problem> problems =
+        problemDao.selectList(new LambdaQueryWrapper<Problem>().eq(Problem::getDeleted, 0));
+    PageInfo<Problem> page = new PageInfo<>(problems);
+    int pageStart = currentPage == 1 ? 0 : (currentPage - 1) * pageSize;
+    int pageEnd =
+        problems.size() < pageSize * currentPage ? problems.size() : pageSize * currentPage;
+    List<Problem> pageResult = new LinkedList<>();
+    if (problems.size() > pageStart) {
+      pageResult = problems.subList(pageStart, pageEnd);
+    } else {
+      int i = problems.size() / pageSize;
+      pageResult = problems.subList(i * pageSize, pageEnd);
+    }
+    PageInfo pageInfo = new PageInfo(pageResult);
+    BeanUtils.copyProperties(page, pageInfo);
+    return pageInfo;
   }
 
   /**
    * @param problemId:
    * @param currentPage:
-   * @param pageSize: * @return IPage<Problem>
+   * @param pageSize: * @return PageInfo<Problem>
    * @author ZJ
    * @description TODO [学生]根据id查询问题(刷题推荐)
    * @date 2022/11/15 22:37
    */
   @Override
-  public IPage<Problem> getProblemById(String problemId, int currentPage, int pageSize) {
-    IPage page = new Page(currentPage, pageSize);
-    problemDao.selectPage(
-        page,
-        new LambdaQueryWrapper<Problem>().eq(Problem::getId, problemId).eq(Problem::getDeleted, 0));
-    return page;
+  public PageInfo<Problem> getProblemById(String problemId, int currentPage, int pageSize) {
+    List<Problem> problems =
+        problemDao.selectList(
+            new LambdaQueryWrapper<Problem>()
+                .eq(Problem::getId, problemId)
+                .eq(Problem::getDeleted, 0));
+    int total = problems.size();
+    if (total > pageSize) {
+      int toIndex = pageSize * currentPage;
+      if (toIndex > total) {
+        toIndex = total;
+      }
+      problems = problems.subList(pageSize * (currentPage - 1), toIndex);
+    }
+    com.github.pagehelper.Page<Problem> page =
+        new com.github.pagehelper.Page<>(currentPage, pageSize);
+    page.addAll(problems);
+    page.setPages((total + pageSize - 1) / pageSize);
+    page.setTotal(total);
+
+    PageInfo<Problem> pageInfo = new PageInfo<>(page);
+    return pageInfo;
   }
 
   /**
@@ -223,14 +259,29 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
    * @date 2022/11/15 22:44
    */
   @Override
-  public IPage<Problem> getProblemsByDifficulty(String difficulty, int currentPage, int pageSize) {
-    IPage page = new Page(currentPage, pageSize);
-    problemDao.selectPage(
-        page,
-        new LambdaQueryWrapper<Problem>()
-            .eq(Problem::getDifficulty, difficulty)
-            .eq(Problem::getDeleted, 0));
-    return page;
+  public PageInfo<Problem> getProblemsByDifficulty(
+      String difficulty, int currentPage, int pageSize) {
+    List<Problem> problems =
+        problemDao.selectList(
+            new LambdaQueryWrapper<Problem>()
+                .eq(Problem::getDifficulty, difficulty)
+                .eq(Problem::getDeleted, 0));
+    int total = problems.size();
+    if (total > pageSize) {
+      int toIndex = pageSize * currentPage;
+      if (toIndex > total) {
+        toIndex = total;
+      }
+      problems = problems.subList(pageSize * (currentPage - 1), toIndex);
+    }
+    com.github.pagehelper.Page<Problem> page =
+        new com.github.pagehelper.Page<>(currentPage, pageSize);
+    page.addAll(problems);
+    page.setPages((total + pageSize - 1) / pageSize);
+    page.setTotal(total);
+
+    PageInfo<Problem> pageInfo = new PageInfo<>(page);
+    return pageInfo;
   }
 
   /**

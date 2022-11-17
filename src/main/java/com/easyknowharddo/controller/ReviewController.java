@@ -31,11 +31,15 @@ public class ReviewController {
    */
   @RequestMapping(value = "teacherGetReviewList", method = RequestMethod.POST)
   public JsonResult teacherGetReviewList(@RequestBody JSONObject jsonObject) {
-    return JsonResult.success(
+    return JsonResult.successes(
         iTeacherService
             .teacherGetReviewList(
                 jsonObject.getInteger("currentPage"), jsonObject.getInteger("pageSize"))
             .getList(),
+        iTeacherService
+            .teacherGetReviewList(
+                jsonObject.getInteger("currentPage"), jsonObject.getInteger("pageSize"))
+            .getTotal(),
         "获取成功");
   }
 
@@ -47,13 +51,19 @@ public class ReviewController {
    */
   @RequestMapping(value = "/teacherViewReview", method = RequestMethod.POST)
   public JsonResult teacherViewReview(@RequestBody JSONObject jsonObject) {
-    return JsonResult.success(
+    return JsonResult.successes(
         iTeacherService
             .teacherViewReview(
                 jsonObject.getString("problemId"),
                 jsonObject.getInteger("currentPage"),
                 jsonObject.getInteger("pageSize"))
             .getList(),
+        iTeacherService
+            .teacherViewReview(
+                jsonObject.getString("problemId"),
+                jsonObject.getInteger("currentPage"),
+                jsonObject.getInteger("pageSize"))
+            .getTotal(),
         "获取成功");
   }
 }

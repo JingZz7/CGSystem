@@ -22,12 +22,12 @@ public interface IFavoriteService extends IService<Favorite> {
    * @param studentId:
    * @param problemId:
    * @param currentPage:
-   * @param pageSize:  * @return IPage<Problem>
+   * @param pageSize:  * @return PageInfo<Problem>
    * @author ZJ
    * @description TODO [学生]根据id查询问题(收藏夹)
    * @date 2022/11/15 22:55
    */
-  public IPage<Problem> getProblemById(
+  public PageInfo<Problem> getProblemById(
       String studentId, String problemId, int currentPage, int pageSize);
 
   /**

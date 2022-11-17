@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.easyknowharddo.domain.Problem;
 import com.easyknowharddo.domain.Student;
+import com.github.pagehelper.PageInfo;
+
 import java.util.List;
 
 public interface IStudentService extends IService<Student> {
@@ -86,30 +88,31 @@ public interface IStudentService extends IService<Student> {
 
   /**
    * @param currentPage:
-   * @param pageSize: * @return IPage<Problem>
+   * @param pageSize: * @return PageInfo<Problem>
    * @author ZJ
    * @description TODO [学生]获取题目列表
    * @date 2022/11/15 20:53
    */
-  public IPage<Problem> getProblemList(int currentPage, int pageSize);
+  public PageInfo<Problem> getProblemList(int currentPage, int pageSize);
 
   /**
    * @param problemId:
    * @param currentPage:
-   * @param pageSize: * @return IPage<Problem>
+   * @param pageSize: * @return PageInfo<Problem>
    * @author ZJ
    * @description TODO [学生]根据id查询问题(刷题推荐)
    * @date 2022/11/15 22:37
    */
-  public IPage<Problem> getProblemById(String problemId, int currentPage, int pageSize);
+  public PageInfo<Problem> getProblemById(String problemId, int currentPage, int pageSize);
 
   /**
    * @param difficulty:
    * @param currentPage:
-   * @param pageSize: a * @return IPage<Problem>
+   * @param pageSize: a * @return PageInfo<Problem>
    * @author ZJ
    * @description TODO [学生]根据难度查询(刷题推荐)
    * @date 2022/11/15 22:44
    */
-  public IPage<Problem> getProblemsByDifficulty(String difficulty, int currentPage, int pageSize);
+  public PageInfo<Problem> getProblemsByDifficulty(
+      String difficulty, int currentPage, int pageSize);
 }

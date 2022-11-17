@@ -31,22 +31,22 @@ public class RecommendController {
    */
   @RequestMapping(value = "/getProblemById", method = RequestMethod.POST)
   public JsonResult getProblemById(@RequestBody JSONObject jsonObject) {
-
-    IPage<Problem> page =
-        iFavoriteService.getProblemById(
-            jsonObject.getString("studentId"),
-            jsonObject.getString("problemId"),
-            jsonObject.getInteger("currentPage"),
-            jsonObject.getInteger("pageSize"));
-    if (jsonObject.getInteger("currentPage") > page.getPages()) {
-      page =
-          iFavoriteService.getProblemById(
-              jsonObject.getString("studentId"),
-              jsonObject.getString("problemId"),
-              jsonObject.getInteger("currentPage"),
-              jsonObject.getInteger("pageSize"));
-    }
-    return JsonResult.success(page.getRecords(), "获取成功");
+    return JsonResult.successes(
+        iFavoriteService
+            .getProblemById(
+                jsonObject.getString("studentId"),
+                jsonObject.getString("problemId"),
+                jsonObject.getInteger("currentPage"),
+                jsonObject.getInteger("pageSize"))
+            .getList(),
+        iFavoriteService
+            .getProblemById(
+                jsonObject.getString("studentId"),
+                jsonObject.getString("problemId"),
+                jsonObject.getInteger("currentPage"),
+                jsonObject.getInteger("pageSize"))
+            .getTotal(),
+        "获取成功");
 
     //    List<Problem> problem =
     //        iFavoriteService.getProblemById(
@@ -67,22 +67,22 @@ public class RecommendController {
    */
   @RequestMapping(value = "/getProblemByName", method = RequestMethod.POST)
   public JsonResult getProblemByName(@RequestBody JSONObject jsonObject) {
-
-    PageInfo<Problem> page =
-        iFavoriteService.getProblemByName(
-            jsonObject.getString("studentId"),
-            jsonObject.getString("problemName"),
-            jsonObject.getInteger("currentPage"),
-            jsonObject.getInteger("pageSize"));
-//    if (jsonObject.getInteger("currentPage") > page.getPages()) {
-//      page =
-//          iFavoriteService.getProblemByName(
-//              jsonObject.getString("studentId"),
-//              jsonObject.getString("problemName"),
-//              jsonObject.getInteger("currentPage"),
-//              jsonObject.getInteger("pageSize"));
-//    }
-    return JsonResult.success(page.getList(), "获取成功");
+    return JsonResult.successes(
+        iFavoriteService
+            .getProblemByName(
+                jsonObject.getString("studentId"),
+                jsonObject.getString("problemName"),
+                jsonObject.getInteger("currentPage"),
+                jsonObject.getInteger("pageSize"))
+            .getList(),
+        iFavoriteService
+            .getProblemByName(
+                jsonObject.getString("studentId"),
+                jsonObject.getString("problemName"),
+                jsonObject.getInteger("currentPage"),
+                jsonObject.getInteger("pageSize"))
+            .getTotal(),
+        "获取成功");
 
     //    List<Problem> problems =
     //        iFavoriteService.getProblemByName(

@@ -58,7 +58,7 @@ public interface ITeacherService extends IService<Teacher> {
   /**
    * @param id:
    * @param currentPage:
-   * @param pageSize: a * @retrn PageInfo<Object>
+   * @param pageSize: a * @return PageInfo<Object>
    * @author ZJ
    * @description TODO [教师]根据工号查询(账户管理)
    * @date 2022/11/16 17:22
@@ -68,7 +68,7 @@ public interface ITeacherService extends IService<Teacher> {
   /**
    * @param name:
    * @param currentPage:
-   * @param pageSize:  * @return PageInfo<Object>
+   * @param pageSize: * @return PageInfo<Object>
    * @author ZJ
    * @description TODO [教师]根据姓名查询(账户管理)
    * @date 2022/11/16 17:27
@@ -78,7 +78,7 @@ public interface ITeacherService extends IService<Teacher> {
   /**
    * @param type:
    * @param currentPage:
-   * @param pageSize:  * @return PageInfo<?>
+   * @param pageSize: * @return PageInfo<?>
    * @author ZJ
    * @description TODO [教师]根据类型查询(账户管理)
    * @date 2022/11/17 10:17
@@ -123,7 +123,8 @@ public interface ITeacherService extends IService<Teacher> {
    * @description TODO [教师]查看评论(查看评论)
    * @date 2022/11/14 20:58
    */
-  public PageInfo<HashMap<String, String>> teacherViewReview(String problemId,int currentPage, int pageSize);
+  public PageInfo<HashMap<String, String>> teacherViewReview(
+      String problemId, int currentPage, int pageSize);
 
   /**
    * @param currentPage:

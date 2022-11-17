@@ -2,7 +2,6 @@ package com.easyknowharddo.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.easyknowharddo.dao.CommentStudentDao;
 import com.easyknowharddo.dao.ProblemDao;
@@ -15,6 +14,7 @@ import com.easyknowharddo.domain.Student;
 import com.easyknowharddo.domain.Teacher;
 import com.easyknowharddo.domain.Tutor;
 import com.easyknowharddo.service.ITeacherService;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.logging.log4j.util.Strings;
@@ -117,24 +117,27 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
     List<Student> students =
         studentDao.selectList(new LambdaQueryWrapper<Student>().eq(Student::getDeleted, 0));
     List<Tutor> tutors = tutorDao.selectList(null);
-    ArrayList<Object> objects = new ArrayList<>();
+    List<Object> objects = new ArrayList<>();
     for (Student student : students) {
       objects.add(student);
     }
     for (Tutor tutor : tutors) {
       objects.add(tutor);
     }
-    PageHelper.startPage(currentPage, pageSize);
-    int pageStart = currentPage == 1 ? 0 : (currentPage - 1) * pageSize;
-    int pageEnd = objects.size() < pageSize * currentPage ? objects.size() : pageSize * currentPage;
-    List<Object> pageResult = new LinkedList<>();
-    if (objects.size() > pageStart) {
-      pageResult = objects.subList(pageStart, pageEnd);
-    } else {
-      int i = objects.size() / pageSize;
-      pageResult = objects.subList(i * pageSize, pageEnd);
+    int total = objects.size();
+    if (total > pageSize) {
+      int toIndex = pageSize * currentPage;
+      if (toIndex > total) {
+        toIndex = total;
+      }
+      objects = objects.subList(pageSize * (currentPage - 1), toIndex);
     }
-    PageInfo<Object> pageInfo = new PageInfo<>(pageResult);
+    com.github.pagehelper.Page<Object> page = new Page<>(currentPage, pageSize);
+    page.addAll(objects);
+    page.setPages((total + pageSize - 1) / pageSize);
+    page.setTotal(total);
+
+    PageInfo<Object> pageInfo = new PageInfo<>(page);
     return pageInfo;
   }
 
@@ -148,7 +151,7 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
    */
   @Override
   public PageInfo<Object> teacherGetAccountById(String id, int currentPage, int pageSize) {
-    ArrayList<Object> objects = new ArrayList<>();
+    List<Object> objects = new ArrayList<>();
     if (studentDao.selectOne(
             new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted, 0))
         != null) {
@@ -159,17 +162,20 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
     if (tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id)) != null) {
       objects.add(tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id)));
     }
-    PageHelper.startPage(currentPage, pageSize);
-    int pageStart = currentPage == 1 ? 0 : (currentPage - 1) * pageSize;
-    int pageEnd = objects.size() < pageSize * currentPage ? objects.size() : pageSize * currentPage;
-    List<Object> pageResult = new LinkedList<>();
-    if (objects.size() > pageStart) {
-      pageResult = objects.subList(pageStart, pageEnd);
-    } else {
-      int i = objects.size() / pageSize;
-      pageResult = objects.subList(i * pageSize, pageEnd);
+    int total = objects.size();
+    if (total > pageSize) {
+      int toIndex = pageSize * currentPage;
+      if (toIndex > total) {
+        toIndex = total;
+      }
+      objects = objects.subList(pageSize * (currentPage - 1), toIndex);
     }
-    PageInfo<Object> pageInfo = new PageInfo<>(pageResult);
+    com.github.pagehelper.Page<Object> page = new Page<>(currentPage, pageSize);
+    page.addAll(objects);
+    page.setPages((total + pageSize - 1) / pageSize);
+    page.setTotal(total);
+
+    PageInfo<Object> pageInfo = new PageInfo<>(page);
     return pageInfo;
   }
 
@@ -183,7 +189,7 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
    */
   @Override
   public PageInfo<Object> teacherGetAccountByName(String name, int currentPage, int pageSize) {
-    ArrayList<Object> objects = new ArrayList<>();
+    List<Object> objects = new ArrayList<>();
     List<Student> students =
         studentDao.selectList(
             new LambdaQueryWrapper<Student>()
@@ -201,17 +207,20 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
         objects.add(tutor);
       }
     }
-    PageHelper.startPage(currentPage, pageSize);
-    int pageStart = currentPage == 1 ? 0 : (currentPage - 1) * pageSize;
-    int pageEnd = objects.size() < pageSize * currentPage ? objects.size() : pageSize * currentPage;
-    List<Object> pageResult = new LinkedList<>();
-    if (objects.size() > pageStart) {
-      pageResult = objects.subList(pageStart, pageEnd);
-    } else {
-      int i = objects.size() / pageSize;
-      pageResult = objects.subList(i * pageSize, pageEnd);
+    int total = objects.size();
+    if (total > pageSize) {
+      int toIndex = pageSize * currentPage;
+      if (toIndex > total) {
+        toIndex = total;
+      }
+      objects = objects.subList(pageSize * (currentPage - 1), toIndex);
     }
-    PageInfo<Object> pageInfo = new PageInfo<>(pageResult);
+    com.github.pagehelper.Page<Object> page = new Page<>(currentPage, pageSize);
+    page.addAll(objects);
+    page.setPages((total + pageSize - 1) / pageSize);
+    page.setTotal(total);
+
+    PageInfo<Object> pageInfo = new PageInfo<>(page);
     return pageInfo;
   }
 
@@ -225,37 +234,43 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
    */
   @Override
   public PageInfo<?> teacherGetAccountByType(String type, int currentPage, int pageSize) {
-    int pageStart = currentPage == 1 ? 0 : (currentPage - 1) * pageSize;
     if (type.equals("student")) {
-      PageHelper.startPage(currentPage, pageSize);
       List<Student> students =
           studentDao.selectList(new LambdaQueryWrapper<Student>().eq(Student::getDeleted, 0));
-      int pageEnd =
-          students.size() < pageSize * currentPage ? students.size() : pageSize * currentPage;
-      List<Student> pageResult = new LinkedList<>();
-      if (students.size() > pageStart) {
-        pageResult = students.subList(pageStart, pageEnd);
-      } else {
-        int i = students.size() / pageSize;
-        pageResult = students.subList(i * pageSize, pageEnd);
+      int total = students.size();
+      if (total > pageSize) {
+        int toIndex = pageSize * currentPage;
+        if (toIndex > total) {
+          toIndex = total;
+        }
+        students = students.subList(pageSize * (currentPage - 1), toIndex);
       }
-      PageInfo<Student> pageInfo = new PageInfo<>(pageResult);
+      com.github.pagehelper.Page<Student> page = new Page<>(currentPage, pageSize);
+      page.addAll(students);
+      page.setPages((total + pageSize - 1) / pageSize);
+      page.setTotal(total);
+
+      PageInfo<Student> pageInfo = new PageInfo<>(page);
       return pageInfo;
     } else if (type.equals("tutor")) {
-      PageHelper.startPage(currentPage, pageSize);
       List<Tutor> tutors = tutorDao.selectList(null);
-      int pageEnd = tutors.size() < pageSize * currentPage ? tutors.size() : pageSize * currentPage;
-      List<Tutor> pageResult = new LinkedList<>();
-      if (tutors.size() > pageStart) {
-        pageResult = tutors.subList(pageStart, pageEnd);
-      } else {
-        int i = tutors.size() / pageSize;
-        pageResult = tutors.subList(i * pageSize, pageEnd);
+      int total = tutors.size();
+      if (total > pageSize) {
+        int toIndex = pageSize * currentPage;
+        if (toIndex > total) {
+          toIndex = total;
+        }
+        tutors = tutors.subList(pageSize * (currentPage - 1), toIndex);
       }
-      PageInfo<Tutor> pageInfo = new PageInfo<>(pageResult);
+      com.github.pagehelper.Page<Tutor> page = new Page<>(currentPage, pageSize);
+      page.addAll(tutors);
+      page.setPages((total + pageSize - 1) / pageSize);
+      page.setTotal(total);
+
+      PageInfo<Tutor> pageInfo = new PageInfo<>(page);
       return pageInfo;
     }
-    ArrayList<Object> objects = new ArrayList<>();
+    List<Object> objects = new ArrayList<>();
     List<Student> students =
         studentDao.selectList(new LambdaQueryWrapper<Student>().eq(Student::getDeleted, 0));
     List<Tutor> tutors = tutorDao.selectList(null);
@@ -265,16 +280,20 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
     for (Tutor tutor : tutors) {
       objects.add(tutor);
     }
-    PageHelper.startPage(currentPage, pageSize);
-    int pageEnd = objects.size() < pageSize * currentPage ? objects.size() : pageSize * currentPage;
-    List<Object> pageResult = new LinkedList<>();
-    if (objects.size() > pageStart) {
-      pageResult = objects.subList(pageStart, pageEnd);
-    } else {
-      int i = objects.size() / pageSize;
-      pageResult = objects.subList(i * pageSize, pageEnd);
+    int total = objects.size();
+    if (total > pageSize) {
+      int toIndex = pageSize * currentPage;
+      if (toIndex > total) {
+        toIndex = total;
+      }
+      objects = objects.subList(pageSize * (currentPage - 1), toIndex);
     }
-    PageInfo<Object> pageInfo = new PageInfo<>(pageResult);
+    com.github.pagehelper.Page<Object> page = new Page<>(currentPage, pageSize);
+    page.addAll(objects);
+    page.setPages((total + pageSize - 1) / pageSize);
+    page.setTotal(total);
+
+    PageInfo<Object> pageInfo = new PageInfo<>(page);
     return pageInfo;
   }
 
@@ -413,17 +432,20 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
       map.put("dataTime", commentStudent.getDateTime());
       list.add(map);
     }
-    PageHelper.startPage(currentPage, pageSize);
-    int pageStart = currentPage == 1 ? 0 : (currentPage - 1) * pageSize;
-    int pageEnd = list.size() < pageSize * currentPage ? list.size() : pageSize * currentPage;
-    List<HashMap<String, String>> pageResult = new LinkedList<>();
-    if (list.size() > pageStart) {
-      pageResult = list.subList(pageStart, pageEnd);
-    } else {
-      int i = list.size() / pageSize;
-      pageResult = list.subList(i * pageSize, pageEnd);
+    int total = list.size();
+    if (total > pageSize) {
+      int toIndex = pageSize * currentPage;
+      if (toIndex > total) {
+        toIndex = total;
+      }
+      list = list.subList(pageSize * (currentPage - 1), toIndex);
     }
-    PageInfo<HashMap<String, String>> pageInfo = new PageInfo<>(pageResult);
+    com.github.pagehelper.Page<HashMap<String, String>> page = new Page<>(currentPage, pageSize);
+    page.addAll(list);
+    page.setPages((total + pageSize - 1) / pageSize);
+    page.setTotal(total);
+
+    PageInfo<HashMap<String, String>> pageInfo = new PageInfo<>(page);
     return pageInfo;
   }
 
@@ -436,7 +458,7 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
    */
   @Override
   public PageInfo<HashMap<String, String>> teacherGetReviewList(int currentPage, int pageSize) {
-    ArrayList<HashMap<String, String>> objects = new ArrayList<>();
+    List<HashMap<String, String>> objects = new ArrayList<>();
     List<CommentStudent> commentStudents = commentStudentDao.selectList(null);
     for (CommentStudent commentStudent : commentStudents) {
       HashMap<String, String> map = new HashMap<>();
@@ -455,17 +477,20 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
       map.put("label", problem.getLabel());
       objects.add(map);
     }
-    PageHelper.startPage(currentPage, pageSize);
-    int pageStart = currentPage == 1 ? 0 : (currentPage - 1) * pageSize;
-    int pageEnd = objects.size() < pageSize * currentPage ? objects.size() : pageSize * currentPage;
-    List<HashMap<String, String>> pageResult = new LinkedList<>();
-    if (objects.size() > pageStart) {
-      pageResult = objects.subList(pageStart, pageEnd);
-    } else {
-      int i = objects.size() / pageSize;
-      pageResult = objects.subList(i * pageSize, pageEnd);
+    int total = objects.size();
+    if (total > pageSize) {
+      int toIndex = pageSize * currentPage;
+      if (toIndex > total) {
+        toIndex = total;
+      }
+      objects = objects.subList(pageSize * (currentPage - 1), toIndex);
     }
-    PageInfo<HashMap<String, String>> pageInfo = new PageInfo<>(pageResult);
+    com.github.pagehelper.Page<HashMap<String, String>> page = new Page<>(currentPage, pageSize);
+    page.addAll(objects);
+    page.setPages((total + pageSize - 1) / pageSize);
+    page.setTotal(total);
+
+    PageInfo<HashMap<String, String>> pageInfo = new PageInfo<>(page);
     return pageInfo;
   }
 
@@ -480,18 +505,20 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
   public PageInfo<Problem> getProblemList(int currentPage, int pageSize) {
     List<Problem> problems =
         problemDao.selectList(new LambdaQueryWrapper<Problem>().eq(Problem::getDeleted, 0));
-    PageHelper.startPage(currentPage, pageSize);
-    int pageStart = currentPage == 1 ? 0 : (currentPage - 1) * pageSize;
-    int pageEnd =
-        problems.size() < pageSize * currentPage ? problems.size() : pageSize * currentPage;
-    List<Problem> pageResult = new LinkedList<>();
-    if (problems.size() > pageStart) {
-      pageResult = problems.subList(pageStart, pageEnd);
-    } else {
-      int i = problems.size() / pageSize;
-      pageResult = problems.subList(i * pageSize, pageEnd);
+    int total = problems.size();
+    if (total > pageSize) {
+      int toIndex = pageSize * currentPage;
+      if (toIndex > total) {
+        toIndex = total;
+      }
+      problems = problems.subList(pageSize * (currentPage - 1), toIndex);
     }
-    PageInfo<Problem> pageInfo = new PageInfo<>(pageResult);
+    com.github.pagehelper.Page<Problem> page = new Page<>(currentPage, pageSize);
+    page.addAll(problems);
+    page.setPages((total + pageSize - 1) / pageSize);
+    page.setTotal(total);
+
+    PageInfo<Problem> pageInfo = new PageInfo<>(page);
     return pageInfo;
   }
 
@@ -560,34 +587,38 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
               new LambdaQueryWrapper<Problem>()
                   .eq(Problem::getDifficulty, difficulty)
                   .eq(Problem::getDeleted, 0));
-      PageHelper.startPage(currentPage, pageSize);
-      int pageStart = currentPage == 1 ? 0 : (currentPage - 1) * pageSize;
-      int pageEnd =
-          problems.size() < pageSize * currentPage ? problems.size() : pageSize * currentPage;
-      List<Problem> pageResult = new LinkedList<>();
-      if (problems.size() > pageStart) {
-        pageResult = problems.subList(pageStart, pageEnd);
-      } else {
-        int i = problems.size() / pageSize;
-        pageResult = problems.subList(i * pageSize, pageEnd);
+      int total = problems.size();
+      if (total > pageSize) {
+        int toIndex = pageSize * currentPage;
+        if (toIndex > total) {
+          toIndex = total;
+        }
+        problems = problems.subList(pageSize * (currentPage - 1), toIndex);
       }
-      PageInfo<Problem> pageInfo = new PageInfo<>(pageResult);
+      com.github.pagehelper.Page<Problem> page = new Page<>(currentPage, pageSize);
+      page.addAll(problems);
+      page.setPages((total + pageSize - 1) / pageSize);
+      page.setTotal(total);
+
+      PageInfo<Problem> pageInfo = new PageInfo<>(page);
       return pageInfo;
     }
     List<Problem> problems =
         problemDao.selectList(new LambdaQueryWrapper<Problem>().eq(Problem::getDeleted, 0));
-    PageHelper.startPage(currentPage, pageSize);
-    int pageStart = currentPage == 1 ? 0 : (currentPage - 1) * pageSize;
-    int pageEnd =
-        problems.size() < pageSize * currentPage ? problems.size() : pageSize * currentPage;
-    List<Problem> pageResult = new LinkedList<>();
-    if (problems.size() > pageStart) {
-      pageResult = problems.subList(pageStart, pageEnd);
-    } else {
-      int i = problems.size() / pageSize;
-      pageResult = problems.subList(i * pageSize, pageEnd);
+    int total = problems.size();
+    if (total > pageSize) {
+      int toIndex = pageSize * currentPage;
+      if (toIndex > total) {
+        toIndex = total;
+      }
+      problems = problems.subList(pageSize * (currentPage - 1), toIndex);
     }
-    PageInfo<Problem> pageInfo = new PageInfo<>(pageResult);
+    com.github.pagehelper.Page<Problem> page = new Page<>(currentPage, pageSize);
+    page.addAll(problems);
+    page.setPages((total + pageSize - 1) / pageSize);
+    page.setTotal(total);
+
+    PageInfo<Problem> pageInfo = new PageInfo<>(page);
     return pageInfo;
   }
 

@@ -19,34 +19,34 @@
     "密码 String": "password"
   },
 
-  "[学生]获取题目列表(刷题推荐) POST": "json数据包含currentPage、pageSize",
+  "[学生]获取题目列表(刷题推荐) x POST": "json数据包含currentPage、pageSize",
   "/problem/getProblemList": {
     "当前页码 Integer": "currentPage",
     "显示条数 Integer": "pageSize"
   },
 
-  "[学生]获取题目列表(收藏夹) POST": "json数据包含studentId、currentPage、pageSize",
+  "[学生]获取题目列表(收藏夹) x POST": "json数据包含studentId、currentPage、pageSize",
   "/problem/getFavoriteProblemList": {
     "学号 String": "studentId",
     "当前页码 Integer": "currentPage",
     "显示条数 Integer": "pageSize"
   },
 
-  "[学生]根据id查询问题(刷题推荐) POST": "problemId、currentPage、pageSize",
+  "[学生]根据id查询问题(刷题推荐) x POST": "problemId、currentPage、pageSize",
   "/problem/getProblemById": {
     "题号 String": "problemId",
     "当前页码 Integer": "currentPage",
     "显示条数 Integer": "pageSize"
   },
 
-  "[学生]根据难度查询(刷题推荐) POST": "json数据包含problemId、currentPage、pageSize",
+  "[学生]根据难度查询(刷题推荐) x POST": "json数据包含problemId、currentPage、pageSize",
   "/problem/getProblemsByDifficulty": {
     "难度 String": "difficulty",
     "当前页码 Integer": "currentPage",
     "显示条数 Integer": "pageSize"
   },
 
-  "[学生]根据id查询问题(收藏夹) POST": "json数据包含studentId、problemId、currentPage、pageSize",
+  "[学生]根据id查询问题(收藏夹) x POST": "json数据包含studentId、problemId、currentPage、pageSize",
   "/recommend/getProblemById": {
     "学号 String": "studentId",
     "题号 String": "problemId",
@@ -54,7 +54,7 @@
     "显示条数 Integer": "pageSize"
   },
 
-  "[学生]根据名称查询问题(收藏夹) POST": "json数据包含studentId、problemName、currentPage、pageSize",
+  "[学生]根据名称查询问题(收藏夹) x POST": "json数据包含studentId、problemName、currentPage、pageSize",
   "/recommend/getProblemByName": {
     "学号 String": "studentId",
     "题目名称 String": "problemName",
@@ -88,27 +88,27 @@
   },
 
 
-  "[教师]获取题目列表(题库管理) POST": "json数据包含currentPage、pageSize",
+  "[教师]获取题目列表(题库管理) x POST": "json数据包含currentPage、pageSize",
   "/problemManagement/getProblemList": {
     "当前页码 Integer": "currentPage",
     "显示条数 Integer": "pageSize"
   },
 
-  "[教师]根据id查询问题(题库管理) POST": "json数据包含problemId、currentPage、pageSize",
+  "[教师]根据id查询问题(题库管理) x POST": "json数据包含problemId、currentPage、pageSize",
   "/problemManagement/getProblemById": {
     "题号 String": "problemId",
     "当前页码 Integer": "currentPage",
     "显示条数 Integer": "pageSize"
   },
 
-  "[教师]根据名称查询问题(题库管理) POST": "json数据包含problemName、currentPage、pageSize",
+  "[教师]根据名称查询问题(题库管理) x POST": "json数据包含problemName、currentPage、pageSize",
   "/problemManagement/getProblemListByName": {
     "题目名称 String": "problemName",
     "当前页码 Integer": "currentPage",
     "显示条数 Integer": "pageSize"
   },
 
-  "[教师]根据难度查询(题库管理) POST": "json数据包含difficulty、currentPage、pageSize",
+  "[教师]根据难度查询(题库管理) x POST": "json数据包含difficulty、currentPage、pageSize",
   "/problemManagement/getListByDifficulty": {
     "难度 String": "difficulty",
     "当前页码 Integer": "currentPage",
@@ -133,27 +133,27 @@
     "标签 String": "label"
   },
 
-  "[教师]获取账户列表(账户管理) POST": "json数据包含currentPage、pageSize",
+  "[教师]获取账户列表(账户管理) x POST": "json数据包含currentPage、pageSize",
   "/accountManagement/teacherGetAccountList": {
     "当前页码 Integer": "currentPage",
     "显示条数 Integer": "pageSize"
   },
 
-  "[教师]根据id查询(账户管理) POST": "json数据包含id、currentPage、pageSize",
+  "[教师]根据id查询(账户管理) x POST": "json数据包含id、currentPage、pageSize",
   "/accountManagement/teacherGetAccountById": {
     "工号 String": "id",
     "当前页码 Integer": "currentPage",
     "显示条数 Integer": "pageSize"
   },
 
-  "[教师]根据姓名查询(账户管理) POST": "json数据包含name、currentPage、pageSize",
+  "[教师]根据姓名查询(账户管理) x POST": "json数据包含name、currentPage、pageSize",
   "/accountManagement/teacherGetAccountByName": {
     "姓名 String": "name",
     "当前页码 Integer": "currentPage",
     "显示条数 Integer": "pageSize"
   },
 
-  "[教师]根据类型查询(账户管理) POST": "json数据包含type、currentPage、pageSize",
+  "[教师]根据类型查询(账户管理) x POST": "json数据包含type、currentPage、pageSize",
   "/accountManagement/teacherGetAccountByType": {
     "类型 String": "type",
     "当前页码 Integer": "currentPage",
@@ -180,13 +180,13 @@
     "工号的数组 String": "ids"
   },
 
-  "[教师]获取评论列表(查看评论) POST": "json数据包含currentPage、pageSize",
+  "[教师]获取评论列表(查看评论) x POST": "json数据包含currentPage、pageSize",
   "/review/teacherGetReviewList": {
     "当前页码 Integer": "currentPage",
     "显示条数 Integer": "pageSize"
   },
 
-  "[教师]查看评论(查看评论) POST": "json数据包含problemId、currentPage、pageSize",
+  "[教师]查看评论(查看评论) x POST": "json数据包含problemId、currentPage、pageSize",
   "/review/teacherViewReview": {
     "题号 String": "problemId",
     "当前页码 Integer": "currentPage",
@@ -194,13 +194,13 @@
   },
 
 
-  "[管理员]获取用户列表(账户管理) POST": "json数据包含currentPage、pageSize",
+  "[管理员]获取用户列表(账户管理) x POST": "json数据包含currentPage、pageSize",
   "/accountManagement/administratorGetAccountList": {
     "当前页码 Integer": "currentPage",
     "显示条数 Integer": "pageSize"
   },
 
-  "[管理员]分类查找(账户管理) POST": "json数据包含type、currentPage、pageSize",
+  "[管理员]分类查找(账户管理) x POST": "json数据包含type、currentPage、pageSize",
   "/accountManagement/getAccountByType": {
     "类型 String": "type",
     "当前页码 Integer": "currentPage",

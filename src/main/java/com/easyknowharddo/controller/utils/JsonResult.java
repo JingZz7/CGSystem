@@ -8,6 +8,7 @@ public class JsonResult<T> {
   private long code;
   private String message;
   private T data;
+  private T total;
 
   protected JsonResult() {}
 
@@ -15,6 +16,13 @@ public class JsonResult<T> {
     this.code = code;
     this.message = message;
     this.data = data;
+  }
+
+  public JsonResult(long code, String message, T data, T total) {
+    this.code = code;
+    this.message = message;
+    this.data = data;
+    this.total = total;
   }
 
   /**
@@ -34,6 +42,10 @@ public class JsonResult<T> {
    */
   public static <T> JsonResult<T> success(T data, String message) {
     return new JsonResult<T>(ResultCode.SUCCESS.getCode(), message, data);
+  }
+
+  public static <T> JsonResult<T> successes(T data, T total, String message) {
+    return new JsonResult<T>(ResultCode.SUCCESS.getCode(), message, data, total);
   }
 
   /**
@@ -107,5 +119,13 @@ public class JsonResult<T> {
 
   public void setData(T data) {
     this.data = data;
+  }
+
+  public T getTotal() {
+    return total;
+  }
+
+  public void setTotal(T total) {
+    this.total = total;
   }
 }
