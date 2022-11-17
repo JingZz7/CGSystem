@@ -76,12 +76,14 @@ public interface ITeacherService extends IService<Teacher> {
   public PageInfo<Object> teacherGetAccountByName(String name, int currentPage, int pageSize);
 
   /**
-   * @param type: * @return List<Object>
+   * @param type:
+   * @param currentPage:
+   * @param pageSize:  * @return PageInfo<?>
    * @author ZJ
    * @description TODO [教师]根据类型查询(账户管理)
-   * @date 2022/11/15 16:43
+   * @date 2022/11/17 10:17
    */
-  public List<?> teacherGetAccountByType(String type);
+  public PageInfo<?> teacherGetAccountByType(String type, int currentPage, int pageSize);
 
   /**
    * @param id: * @return Boolean

@@ -59,13 +59,19 @@ public class AccountManagementController {
   /**
    * @param jsonObject: * @return JsonResult
    * @author ZJ
-   * @description TODO [教师]根据类型查询(账户管理) json数据包含type类型
-   * @date 2022/11/15 16:51
+   * @description TODO [教师]根据类型查询(账户管理) json数据包含type、currentPage、pageSize
+   * @date 2022/11/17 10:26
    */
   @RequestMapping(value = "/teacherGetAccountByType", method = RequestMethod.POST)
   public JsonResult teacherGetAccountByType(@RequestBody JSONObject jsonObject) {
     return JsonResult.success(
-        iTeacherService.teacherGetAccountByType(jsonObject.getString("type")), "查找成功");
+        iTeacherService
+            .teacherGetAccountByType(
+                jsonObject.getString("type"),
+                jsonObject.getInteger("currentPage"),
+                jsonObject.getInteger("pageSize"))
+            .getList(),
+        "查找成功");
   }
 
   /**

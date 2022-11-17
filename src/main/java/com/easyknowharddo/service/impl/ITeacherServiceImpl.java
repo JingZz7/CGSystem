@@ -216,19 +216,46 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
   }
 
   /**
-   * @param type: * @return List<Object>
+   * @param type:
+   * @param currentPage:
+   * @param pageSize: * @return PageInfo<?>
    * @author ZJ
    * @description TODO [教师]根据类型查询(账户管理)
-   * @date 2022/11/15 16:43
+   * @date 2022/11/17 10:17
    */
   @Override
-  public List<?> teacherGetAccountByType(String type) {
-    ArrayList<Object> objects = new ArrayList<>();
+  public PageInfo<?> teacherGetAccountByType(String type, int currentPage, int pageSize) {
+    int pageStart = currentPage == 1 ? 0 : (currentPage - 1) * pageSize;
     if (type.equals("student")) {
-      return studentDao.selectList(new LambdaQueryWrapper<Student>().eq(Student::getDeleted, 0));
+      PageHelper.startPage(currentPage, pageSize);
+      List<Student> students =
+          studentDao.selectList(new LambdaQueryWrapper<Student>().eq(Student::getDeleted, 0));
+      int pageEnd =
+          students.size() < pageSize * currentPage ? students.size() : pageSize * currentPage;
+      List<Student> pageResult = new LinkedList<>();
+      if (students.size() > pageStart) {
+        pageResult = students.subList(pageStart, pageEnd);
+      } else {
+        int i = students.size() / pageSize;
+        pageResult = students.subList(i * pageSize, pageEnd);
+      }
+      PageInfo<Student> pageInfo = new PageInfo<>(pageResult);
+      return pageInfo;
     } else if (type.equals("tutor")) {
-      return tutorDao.selectList(null);
+      PageHelper.startPage(currentPage, pageSize);
+      List<Tutor> tutors = tutorDao.selectList(null);
+      int pageEnd = tutors.size() < pageSize * currentPage ? tutors.size() : pageSize * currentPage;
+      List<Tutor> pageResult = new LinkedList<>();
+      if (tutors.size() > pageStart) {
+        pageResult = tutors.subList(pageStart, pageEnd);
+      } else {
+        int i = tutors.size() / pageSize;
+        pageResult = tutors.subList(i * pageSize, pageEnd);
+      }
+      PageInfo<Tutor> pageInfo = new PageInfo<>(pageResult);
+      return pageInfo;
     }
+    ArrayList<Object> objects = new ArrayList<>();
     List<Student> students =
         studentDao.selectList(new LambdaQueryWrapper<Student>().eq(Student::getDeleted, 0));
     List<Tutor> tutors = tutorDao.selectList(null);
@@ -238,7 +265,17 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
     for (Tutor tutor : tutors) {
       objects.add(tutor);
     }
-    return objects;
+    PageHelper.startPage(currentPage, pageSize);
+    int pageEnd = objects.size() < pageSize * currentPage ? objects.size() : pageSize * currentPage;
+    List<Object> pageResult = new LinkedList<>();
+    if (objects.size() > pageStart) {
+      pageResult = objects.subList(pageStart, pageEnd);
+    } else {
+      int i = objects.size() / pageSize;
+      pageResult = objects.subList(i * pageSize, pageEnd);
+    }
+    PageInfo<Object> pageInfo = new PageInfo<>(pageResult);
+    return pageInfo;
   }
 
   /**
