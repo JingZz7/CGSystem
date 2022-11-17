@@ -118,12 +118,12 @@ public interface ITeacherService extends IService<Teacher> {
   public Boolean teacherBulkResetPassword(List<String> ids);
 
   /**
-   * @param problemId: * @return List<HashMap<String,String>>
+   * @param problemId: * @return PageInfo<HashMap<String,String>>
    * @author ZJ
    * @description TODO [教师]查看评论(查看评论)
    * @date 2022/11/14 20:58
    */
-  public List<HashMap<String, String>> teacherViewReview(String problemId);
+  public PageInfo<HashMap<String, String>> teacherViewReview(String problemId,int currentPage, int pageSize);
 
   /**
    * @param currentPage:

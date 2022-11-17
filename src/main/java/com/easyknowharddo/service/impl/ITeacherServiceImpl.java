@@ -388,41 +388,43 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
   }
 
   /**
-   * @param problemId: * @return List<HashMap<String,String>>
+   * @param problemId: * @return PageInfo<HashMap<String,String>>
    * @author ZJ
    * @description TODO [教师]查看评论(查看评论)
    * @date 2022/11/14 20:58
    */
   @Override
-  public List<HashMap<String, String>> teacherViewReview(String problemId) {
-
-    if (commentStudentDao.selectList(
-            new LambdaQueryWrapper<CommentStudent>().eq(CommentStudent::getProblemId, problemId))
-        == null) {
-      return null;
-    }
-
+  public PageInfo<HashMap<String, String>> teacherViewReview(
+      String problemId, int currentPage, int pageSize) {
     List<CommentStudent> commentStudents =
         commentStudentDao.selectList(
             new LambdaQueryWrapper<CommentStudent>().eq(CommentStudent::getProblemId, problemId));
-
-    ArrayList<HashMap<String, String>> list = new ArrayList<>();
+    List<HashMap<String, String>> list = new ArrayList<>();
     for (CommentStudent commentStudent : commentStudents) {
-      /** 这里一定要创建一个新的HashMap，使用同一个map对象加入list后会被覆盖 */
       HashMap<String, String> map = new HashMap<>();
-      String name =
+      map.put(
+          "studentName",
           studentDao
               .selectOne(
                   new LambdaQueryWrapper<Student>()
-                      .eq(Student::getId, commentStudent.getStudentId())
-                      .eq(Student::getDeleted, 0))
-              .getName();
-      map.put("name", name);
+                      .eq(Student::getId, commentStudent.getStudentId()))
+              .getName());
       map.put("description", commentStudent.getDescription());
-      map.put("time", commentStudent.getDateTime());
+      map.put("dataTime", commentStudent.getDateTime());
       list.add(map);
     }
-    return list;
+    PageHelper.startPage(currentPage, pageSize);
+    int pageStart = currentPage == 1 ? 0 : (currentPage - 1) * pageSize;
+    int pageEnd = list.size() < pageSize * currentPage ? list.size() : pageSize * currentPage;
+    List<HashMap<String, String>> pageResult = new LinkedList<>();
+    if (list.size() > pageStart) {
+      pageResult = list.subList(pageStart, pageEnd);
+    } else {
+      int i = list.size() / pageSize;
+      pageResult = list.subList(i * pageSize, pageEnd);
+    }
+    PageInfo<HashMap<String, String>> pageInfo = new PageInfo<>(pageResult);
+    return pageInfo;
   }
 
   /**

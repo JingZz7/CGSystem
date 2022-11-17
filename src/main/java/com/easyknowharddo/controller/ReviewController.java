@@ -40,17 +40,20 @@ public class ReviewController {
   }
 
   /**
-   * @author ZJ Description [教师]查看评论(查看评论) json数据包含problemId date 2022-11-14 14:22:47 14:22
-   * @param jsonObject
+   * @param jsonObject: * @return JsonResult
+   * @author ZJ
+   * @description TODO [教师]查看评论(查看评论) json数据包含problemId、currentPage、pageSize
+   * @date 2022/11/17 11:10
    */
   @RequestMapping(value = "/teacherViewReview", method = RequestMethod.POST)
   public JsonResult teacherViewReview(@RequestBody JSONObject jsonObject) {
-    List<HashMap<String, String>> list =
-        iTeacherService.teacherViewReview(jsonObject.getString("problemId"));
-
-    if (list.isEmpty()) {
-      return JsonResult.failed("无评论，查找失败");
-    }
-    return JsonResult.success(list, "查找成功");
+    return JsonResult.success(
+        iTeacherService
+            .teacherViewReview(
+                jsonObject.getString("problemId"),
+                jsonObject.getInteger("currentPage"),
+                jsonObject.getInteger("pageSize"))
+            .getList(),
+        "获取成功");
   }
 }
