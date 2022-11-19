@@ -261,11 +261,31 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
   @Override
   public PageInfo<Problem> getProblemsByDifficulty(
       String difficulty, int currentPage, int pageSize) {
+    if (!difficulty.equals("all")) {
+      List<Problem> problems =
+          problemDao.selectList(
+              new LambdaQueryWrapper<Problem>()
+                  .eq(Problem::getDifficulty, difficulty)
+                  .eq(Problem::getDeleted, 0));
+      int total = problems.size();
+      if (total > pageSize) {
+        int toIndex = pageSize * currentPage;
+        if (toIndex > total) {
+          toIndex = total;
+        }
+        problems = problems.subList(pageSize * (currentPage - 1), toIndex);
+      }
+      com.github.pagehelper.Page<Problem> page =
+          new com.github.pagehelper.Page<>(currentPage, pageSize);
+      page.addAll(problems);
+      page.setPages((total + pageSize - 1) / pageSize);
+      page.setTotal(total);
+
+      PageInfo<Problem> pageInfo = new PageInfo<>(page);
+      return pageInfo;
+    }
     List<Problem> problems =
-        problemDao.selectList(
-            new LambdaQueryWrapper<Problem>()
-                .eq(Problem::getDifficulty, difficulty)
-                .eq(Problem::getDeleted, 0));
+        problemDao.selectList(new LambdaQueryWrapper<Problem>().eq(Problem::getDeleted, 0));
     int total = problems.size();
     if (total > pageSize) {
       int toIndex = pageSize * currentPage;
