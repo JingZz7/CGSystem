@@ -45,7 +45,7 @@ public interface IAdministratorService extends IService<Administrator> {
 
   /**
    * @param currentPage:
-   * @param pageSize:  * @return PageInfo<Object>
+   * @param pageSize: * @return PageInfo<Object>
    * @author ZJ
    * @description TODO [管理员]获取用户列表(账户管理)
    * @date 2022/11/17 11:13
@@ -110,4 +110,12 @@ public interface IAdministratorService extends IService<Administrator> {
    * @date 2022/11/14 20:41
    */
   public Boolean bulkDeleteAccount(List<String> ids);
+
+  /**
+   * @param id: * @return PageInfo<?>
+   * @author ZJ
+   * @description TODO [管理员]根据id查询账号(账户管理)
+   * @date 2022/11/20 22:17
+   */
+  public PageInfo<?> getAccountById(String id, int currentPage, int pageSize);
 }

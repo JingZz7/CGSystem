@@ -486,7 +486,7 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
       map.put("id", commentStudent.getPkCommentStudentId());
       map.put("problemId", problemId);
       map.put(
-          "problemName",
+          "name",
           problemDao
               .selectOne(new LambdaQueryWrapper<Problem>().eq(Problem::getId, problemId))
               .getName());

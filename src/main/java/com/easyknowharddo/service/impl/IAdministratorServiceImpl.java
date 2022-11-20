@@ -487,4 +487,82 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
     }
     return true;
   }
+
+  /**
+   * @param id: * @return PageInfo<?>
+   * @author ZJ
+   * @description TODO [管理员]根据id查询账号(账户管理)
+   * @date 2022/11/20 22:17
+   */
+  @Override
+  public PageInfo<?> getAccountById(String id, int currentPage, int pageSize) {
+    if (studentDao.selectOne(
+            new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted, 0))
+        != null) {
+      List<Student> students =
+          studentDao.selectList(
+              new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted, 0));
+
+      int total = students.size();
+      if (total > pageSize) {
+        int toIndex = pageSize * currentPage;
+        if (toIndex > total) {
+          toIndex = total;
+        }
+        students = students.subList(pageSize * (currentPage - 1), toIndex);
+      }
+      com.github.pagehelper.Page<Student> page = new Page<>(currentPage, pageSize);
+      page.addAll(students);
+      page.setPages((total + pageSize - 1) / pageSize);
+      page.setTotal(total);
+
+      PageInfo<Student> pageInfo = new PageInfo<>(page);
+      return pageInfo;
+    }
+
+    if (teacherDao.selectOne(
+            new LambdaQueryWrapper<Teacher>().eq(Teacher::getId, id).eq(Teacher::getDeleted, 0))
+        != null) {
+      List<Teacher> teachers =
+          teacherDao.selectList(
+              new LambdaQueryWrapper<Teacher>().eq(Teacher::getId, id).eq(Teacher::getDeleted, 0));
+      int total = teachers.size();
+      if (total > pageSize) {
+        int toIndex = pageSize * currentPage;
+        if (toIndex > total) {
+          toIndex = total;
+        }
+        teachers = teachers.subList(pageSize * (currentPage - 1), toIndex);
+      }
+      com.github.pagehelper.Page<Teacher> page = new Page<>(currentPage, pageSize);
+      page.addAll(teachers);
+      page.setPages((total + pageSize - 1) / pageSize);
+      page.setTotal(total);
+
+      PageInfo<Teacher> pageInfo = new PageInfo<>(page);
+      return pageInfo;
+    }
+
+    if (tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id)) != null) {
+      List<Tutor> tutors =
+          tutorDao.selectList(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id));
+      int total = tutors.size();
+      if (total > pageSize) {
+        int toIndex = pageSize * currentPage;
+        if (toIndex > total) {
+          toIndex = total;
+        }
+        tutors = tutors.subList(pageSize * (currentPage - 1), toIndex);
+      }
+      com.github.pagehelper.Page<Tutor> page = new Page<>(currentPage, pageSize);
+      page.addAll(tutors);
+      page.setPages((total + pageSize - 1) / pageSize);
+      page.setTotal(total);
+
+      PageInfo<Tutor> pageInfo = new PageInfo<>(page);
+      return pageInfo;
+    }
+
+    return new PageInfo<List<?>>(new ArrayList<>());
+  }
 }

@@ -327,4 +327,28 @@ public class AccountManagementController {
     }
     return JsonResult.failed("删除失败");
   }
+
+  /**
+   * @param jsonObject: a * return JsonResult
+   * @author ZJ
+   * @description TODO [管理员]根据id查询账号(账户管理) json数据包含id、currentPage、pageSize
+   * @date 2022/11/20 22:25
+   */
+  @RequestMapping(value = "/getAccountById", method = RequestMethod.POST)
+  public JsonResult getAccountById(@RequestBody JSONObject jsonObject) {
+    return JsonResult.successes(
+        iAdministratorService
+            .getAccountById(
+                jsonObject.getString("id"),
+                jsonObject.getInteger("currentPage"),
+                jsonObject.getInteger("pageSize"))
+            .getList(),
+        iAdministratorService
+            .getAccountById(
+                jsonObject.getString("id"),
+                jsonObject.getInteger("currentPage"),
+                jsonObject.getInteger("pageSize"))
+            .getTotal(),
+        "获取成功");
+  }
 }

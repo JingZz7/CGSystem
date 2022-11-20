@@ -262,5 +262,12 @@
   "[管理员]批量删除账户(账户管理) DELETE": "json数据包含ids数组",
   "/accountManagement/bulkDeleteAccount": {
     "工号的数组 List": "ids"
+  },
+
+  "[管理员]根据id查询账号(账户管理) POST": "json数据包含id、currentPage、pageSize",
+  "/accountManagement/getAccountById": {
+    "工号/学号 String": "id",
+    "当前页码 Integer": "currentPage",
+    "显示条数 Integer": "pageSize"
   }
 }
