@@ -244,25 +244,25 @@ public class AccountManagementController {
         "获取成功");
   }
 
-  /**
-   * @author ZJ Description [管理员]编辑账户(账户管理) json数据中包含id、password、email、phone date 2022-11-12
-   *     15:45:02 15:45
-   * @param jsonObject
-   */
-  @RequestMapping(value = "/editAccount", method = RequestMethod.PUT)
-  public JsonResult editAccount(@RequestBody JSONObject jsonObject) {
-    Boolean flag =
-        iAdministratorService.editAccount(
-            jsonObject.getString("id"),
-            jsonObject.getString("password"),
-            jsonObject.getString("email"),
-            jsonObject.getString("phone"));
-
-    if (flag) {
-      return JsonResult.success("修改成功");
-    }
-    return JsonResult.failed("修改失败");
-  }
+//  /**
+//   * @author ZJ Description [管理员]编辑账户(账户管理) json数据中包含id、password、email、phone date 2022-11-12
+//   *     15:45:02 15:45
+//   * @param jsonObject
+//   */
+//  @RequestMapping(value = "/editAccount", method = RequestMethod.PUT)
+//  public JsonResult editAccount(@RequestBody JSONObject jsonObject) {
+//    Boolean flag =
+//        iAdministratorService.editAccount(
+//            jsonObject.getString("id"),
+//            jsonObject.getString("password"),
+//            jsonObject.getString("email"),
+//            jsonObject.getString("phone"));
+//
+//    if (flag) {
+//      return JsonResult.success("修改成功");
+//    }
+//    return JsonResult.failed("修改失败");
+//  }
 
   /**
    * @author ZJ Description [管理员]添加账户(账户管理) json数据包含type、id、name、password、email、phone date
@@ -283,6 +283,21 @@ public class AccountManagementController {
       return JsonResult.success("添加成功");
     }
     return JsonResult.failed("添加失败");
+  }
+
+  /**
+   * @param jsonObject: a * return JsonResult
+   * @author ZJ
+   * @description TODO [管理员]重置密码(账户管理) json数据包含id
+   * @date 2022/11/20 23:50
+   */
+  @RequestMapping(value = "/resetPasswords", method = RequestMethod.PUT)
+  public JsonResult resetPasswords(@RequestBody JSONObject jsonObject) {
+    Boolean flag = iAdministratorService.resetPassword(jsonObject.getString("id"));
+    if (flag) {
+      return JsonResult.success("重置成功");
+    }
+    return JsonResult.failed("重置失败");
   }
 
   /**

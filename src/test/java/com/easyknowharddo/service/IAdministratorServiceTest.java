@@ -18,7 +18,7 @@ public class IAdministratorServiceTest {
 
   @Test
   public void editAccountTest() {
-    iAdministratorService.editAccount("201810040106", "111111", "xxx@gmail.com", "123456789");
+//    iAdministratorService.editAccount("201810040106", "111111", "xxx@gmail.com", "123456789");
   }
 
   @Test

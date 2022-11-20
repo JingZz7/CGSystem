@@ -244,13 +244,15 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
    * @param id:
    * @param password:
    * @param email:
-   * @param phone: * @return Boolean
+   * @param phone:
+   * @param className: * @return Boolean
    * @author ZJ
    * @description TODO [管理员]编辑账户(账户管理)
-   * @date 2022/11/14 20:39
+   * @date 2022/11/21 0:01
    */
   @Override
-  public Boolean editAccount(String id, String password, String email, String phone) {
+  public Boolean editAccount(
+      String id, String password, String email, String phone, String className) {
 
     LambdaQueryWrapper<Student> lambdaQueryWrapper1 =
         new LambdaQueryWrapper<Student>().eq(Student::getId, id);
@@ -378,6 +380,41 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
       return true;
     }
 
+    return false;
+  }
+
+  /**
+   * @param id: a * return Boolean
+   * @author ZJ
+   * @description TODO [管理员]重置密码(账户管理)
+   * @date 2022/11/20 23:50
+   */
+  @Override
+  public Boolean resetPassword(String id) {
+    if (studentDao.selectOne(
+            new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted, 0))
+        != null) {
+      Student student =
+          studentDao.selectOne(
+              new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted, 0));
+      student.setPassword("123456");
+      studentDao.updateById(student);
+      return true;
+    } else if (teacherDao.selectOne(
+            new LambdaQueryWrapper<Teacher>().eq(Teacher::getId, id).eq(Teacher::getDeleted, 0))
+        != null) {
+      Teacher teacher =
+          teacherDao.selectOne(
+              new LambdaQueryWrapper<Teacher>().eq(Teacher::getId, id).eq(Teacher::getDeleted, 0));
+      teacher.setPassword("123456");
+      teacherDao.updateById(teacher);
+      return true;
+    } else if (tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id)) != null) {
+      Tutor tutor = tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id));
+      tutor.setPassword("123456");
+      tutorDao.updateById(tutor);
+      return true;
+    }
     return false;
   }
 

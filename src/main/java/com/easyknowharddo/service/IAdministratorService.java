@@ -66,12 +66,14 @@ public interface IAdministratorService extends IService<Administrator> {
    * @param id:
    * @param password:
    * @param email:
-   * @param phone: * @return Boolean
+   * @param phone:
+   * @param className:  * @return Boolean
    * @author ZJ
    * @description TODO [管理员]编辑账户(账户管理)
-   * @date 2022/11/14 20:39
+   * @date 2022/11/21 0:01
    */
-  public Boolean editAccount(String id, String password, String email, String phone);
+  public Boolean editAccount(
+      String id, String password, String email, String phone, String className);
 
   /**
    * @param type:
@@ -86,6 +88,14 @@ public interface IAdministratorService extends IService<Administrator> {
    */
   public Boolean addAccount(
       String type, String id, String name, String password, String email, String phone);
+
+  /**
+   * @param id: a * return Boolean
+   * @author ZJ
+   * @description TODO [管理员]重置密码(账户管理)
+   * @date 2022/11/20 23:50
+   */
+  public Boolean resetPassword(String id);
 
   /**
    * @param ids: * @return Boolean

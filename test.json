@@ -253,6 +253,11 @@
     "工号 String": "id"
   },
 
+  "[管理员]重置密码(账户管理) PUT": "json数据包含id",
+  "/accountManagement/resetPasswords": {
+    "工号/学号 String": "id"
+  },
+
   "[管理员]批量重置密码(账户管理) PUT": "json数据包含ids数组和password",
   "/accountManagement/bulkResetPasswords": {
     "工号的数组 List": "ids",
