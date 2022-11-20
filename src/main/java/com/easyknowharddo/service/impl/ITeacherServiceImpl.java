@@ -415,21 +415,33 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
   @Override
   public PageInfo<HashMap<String, String>> teacherGetReviewByProblemId(
       String problemId, int currentPage, int pageSize) {
+
     List<CommentStudent> commentStudents =
         commentStudentDao.selectList(
             new LambdaQueryWrapper<CommentStudent>().eq(CommentStudent::getProblemId, problemId));
     List<HashMap<String, String>> list = new ArrayList<>();
     for (CommentStudent commentStudent : commentStudents) {
       HashMap<String, String> map = new HashMap<>();
+      map.put("id", commentStudent.getPkCommentStudentId());
+      map.put("problemId", problemId);
       map.put(
-          "studentName",
-          studentDao
-              .selectOne(
-                  new LambdaQueryWrapper<Student>()
-                      .eq(Student::getId, commentStudent.getStudentId()))
+          "problemName",
+          problemDao
+              .selectOne(new LambdaQueryWrapper<Problem>().eq(Problem::getId, problemId))
               .getName());
-      map.put("description", commentStudent.getDescription());
-      map.put("dataTime", commentStudent.getDateTime());
+      map.put("studentId", commentStudent.getStudentId());
+      map.put(
+          "difficulty",
+          String.valueOf(
+              problemDao
+                  .selectOne(new LambdaQueryWrapper<Problem>().eq(Problem::getId, problemId))
+                  .getDifficulty()));
+      map.put(
+          "label",
+          problemDao
+              .selectOne(new LambdaQueryWrapper<Problem>().eq(Problem::getId, problemId))
+              .getLabel());
+      map.put("dateTime", commentStudent.getDateTime());
       list.add(map);
     }
     int total = list.size();
@@ -447,6 +459,41 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
 
     PageInfo<HashMap<String, String>> pageInfo = new PageInfo<>(page);
     return pageInfo;
+
+    //    List<CommentStudent> commentStudents =
+    //        commentStudentDao.selectList(
+    //            new LambdaQueryWrapper<CommentStudent>().eq(CommentStudent::getProblemId,
+    // problemId));
+    //    List<HashMap<String, String>> list = new ArrayList<>();
+    //    for (CommentStudent commentStudent : commentStudents) {
+    //      HashMap<String, String> map = new HashMap<>();
+    //      map.put(
+    //          "studentName",
+    //          studentDao
+    //              .selectOne(
+    //                  new LambdaQueryWrapper<Student>()
+    //                      .eq(Student::getId, commentStudent.getStudentId()))
+    //              .getName());
+    //      map.put("description", commentStudent.getDescription());
+    //      map.put("dataTime", commentStudent.getDateTime());
+    //      list.add(map);
+    //    }
+    //    int total = list.size();
+    //    if (total > pageSize) {
+    //      int toIndex = pageSize * currentPage;
+    //      if (toIndex > total) {
+    //        toIndex = total;
+    //      }
+    //      list = list.subList(pageSize * (currentPage - 1), toIndex);
+    //    }
+    //    com.github.pagehelper.Page<HashMap<String, String>> page = new Page<>(currentPage,
+    // pageSize);
+    //    page.addAll(list);
+    //    page.setPages((total + pageSize - 1) / pageSize);
+    //    page.setTotal(total);
+    //
+    //    PageInfo<HashMap<String, String>> pageInfo = new PageInfo<>(page);
+    //    return pageInfo;
   }
 
   /**

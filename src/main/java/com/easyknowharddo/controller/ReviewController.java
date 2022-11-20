@@ -49,8 +49,8 @@ public class ReviewController {
    * @description TODO [教师]根据问题id搜索评论(查看评论) json数据包含problemId、currentPage、pageSize
    * @date 2022/11/17 11:10
    */
-  @RequestMapping(value = "/teacherViewReview", method = RequestMethod.POST)
-  public JsonResult teacherViewReview(@RequestBody JSONObject jsonObject) {
+  @RequestMapping(value = "/teacherGetReviewByProblemId", method = RequestMethod.POST)
+  public JsonResult teacherGetReviewByProblemId(@RequestBody JSONObject jsonObject) {
     return JsonResult.successes(
         iTeacherService
             .teacherGetReviewByProblemId(
