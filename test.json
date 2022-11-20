@@ -230,12 +230,13 @@
     "显示条数 Integer": "pageSize"
   },
 
-  "[管理员]编辑账户(账户管理) PUT": "json数据包含id、password、email、phone",
+  "[管理员]编辑账户(账户管理) PUT": "json数据中包含id、password、email、phone、className",
   "/accountManagement/editAccount": {
     "学号/工号 String": "id",
     "密码 String": "password",
     "邮箱 String": "email",
-    "电话 String": "phone"
+    "电话 String": "phone",
+    "班级名 String": "className"
   },
 
   "[管理员]添加账户(账户管理) POST": "json数据包含type、id、name、password、email、phone",
