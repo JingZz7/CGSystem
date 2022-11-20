@@ -133,6 +133,14 @@
     "标签 String": "label"
   },
 
+  "[教师]添加题目(题库管理) POST": "json数据包含id、name、label、difficulty",
+  "/problemManagement/addProblem": {
+    "题号 String": "id",
+    "名字 String": "name",
+    "难度 String": "difficulty",
+    "标签 String": "label"
+  },
+
   "[教师]获取账户列表(账户管理) x POST": "json数据包含currentPage、pageSize",
   "/accountManagement/teacherGetAccountList": {
     "当前页码 Integer": "currentPage",

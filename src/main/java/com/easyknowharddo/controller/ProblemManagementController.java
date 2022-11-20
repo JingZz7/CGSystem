@@ -165,6 +165,26 @@ public class ProblemManagementController {
     }
     return JsonResult.failed("编辑失败");
   }
+
+  /**
+   * @param jsonObject: * @return JsonResult
+   * @author ZJ
+   * @description TODO [教师]添加题目(题库管理) json数据包含id、name、label、difficulty
+   * @date 2022/11/20 21:21
+   */
+  @RequestMapping(value = "/addProblem", method = RequestMethod.POST)
+  public JsonResult addProblem(@RequestBody JSONObject jsonObject) {
+    Boolean flag =
+        iTeacherService.addProblem(
+            jsonObject.getString("id"),
+            jsonObject.getString("name"),
+            jsonObject.getString("label"),
+            jsonObject.getString("difficulty"));
+    if (flag) {
+      return JsonResult.success("添加成功");
+    }
+    return JsonResult.failed("添加失败");
+  }
 }
 
 // 2977452 300892

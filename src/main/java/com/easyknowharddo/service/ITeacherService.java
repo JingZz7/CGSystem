@@ -136,7 +136,7 @@ public interface ITeacherService extends IService<Teacher> {
   public PageInfo<HashMap<String, String>> teacherGetReviewList(int currentPage, int pageSize);
 
   /**
-   * @param id:  * @return PageInfo<HashMap<String,String>>
+   * @param id: * @return PageInfo<HashMap<String,String>>
    * @author ZJ
    * @description TODO [教师]查看具体评论信息(查看评论)
    * @date 2022/11/20 20:29
@@ -188,4 +188,15 @@ public interface ITeacherService extends IService<Teacher> {
    * @date 2022/11/15 17:03
    */
   public Boolean editProblem(String id, String name, String difficulty, String label);
+
+  /**
+   * @param id:
+   * @param name:
+   * @param label:
+   * @param difficulty:  * @return Boolean
+   * @author ZJ
+   * @description TODO [教师]添加题目
+   * @date 2022/11/20 21:06
+   */
+  public Boolean addProblem(String id, String name, String label, String difficulty);
 }

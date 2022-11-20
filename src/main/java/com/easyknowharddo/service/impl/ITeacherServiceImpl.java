@@ -713,4 +713,48 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
     problemDao.updateById(problem);
     return true;
   }
+
+  /**
+   * @param id:
+   * @param name:
+   * @param label:
+   * @param difficulty: * @return Boolean
+   * @author ZJ
+   * @description TODO [教师]添加题目
+   * @date 2022/11/20 21:06
+   */
+  @Override
+  public Boolean addProblem(String id, String name, String label, String difficulty) {
+    if (problemDao.selectOne(
+            new LambdaQueryWrapper<Problem>().eq(Problem::getId, id).eq(Problem::getDeleted, 0))
+        != null) {
+      return false;
+    }
+    if (difficulty.length() > 1) {
+      return false;
+    }
+    if (problemDao.selectOne(
+            new LambdaQueryWrapper<Problem>().eq(Problem::getId, id).eq(Problem::getDeleted, 1))
+        != null) {
+      Problem problem =
+          problemDao.selectOne(
+              new LambdaQueryWrapper<Problem>().eq(Problem::getId, id).eq(Problem::getDeleted, 1));
+      problem.setName(name);
+      problem.setLabel(label);
+      problem.setDifficulty(difficulty.charAt(0));
+      problem.setKnowledgePointId("x");
+      problem.setDeleted(0);
+      problemDao.updateById(problem);
+      return true;
+    }
+    Problem problem = new Problem();
+    problem.setId(id);
+    problem.setDeleted(0);
+    problem.setName(name);
+    problem.setLabel(label);
+    problem.setDifficulty(difficulty.charAt(0));
+    problem.setKnowledgePointId("x");
+    problemDao.insert(problem);
+    return true;
+  }
 }
