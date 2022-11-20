@@ -463,6 +463,7 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
     for (CommentStudent commentStudent : commentStudents) {
       HashMap<String, String> map = new HashMap<>();
       String problemId = commentStudent.getProblemId();
+      map.put("id", commentStudent.getPkCommentStudentId());
       map.put("dateTime", commentStudent.getDateTime());
       map.put("problemId", problemId);
       map.put("studentId", commentStudent.getStudentId());
