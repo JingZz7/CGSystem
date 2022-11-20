@@ -118,4 +118,14 @@ public interface IAdministratorService extends IService<Administrator> {
    * @date 2022/11/20 22:17
    */
   public PageInfo<?> getAccountById(String id, int currentPage, int pageSize);
+
+  /**
+   * @param name:
+   * @param currentPage:
+   * @param pageSize: a * @return PageInfo<?>
+   * @author ZJ
+   * @description TODO [管理员]根据姓名查询账号(账户管理)
+   * @date 2022/11/20 22:39
+   */
+  public PageInfo<?> getAccountByName(String name, int currentPage, int pageSize);
 }

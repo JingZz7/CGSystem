@@ -269,5 +269,12 @@
     "工号/学号 String": "id",
     "当前页码 Integer": "currentPage",
     "显示条数 Integer": "pageSize"
+  },
+
+  "[管理员]根据姓名查询账号(账户管理) POST": "json数据包含name、currentPage、pageSize",
+  "/accountManagement/getAccountByName": {
+    "姓名 String": "name",
+    "当前页码 Integer": "currentPage",
+    "显示条数 Integer": "pageSize"
   }
 }

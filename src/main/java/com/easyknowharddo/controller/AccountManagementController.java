@@ -351,4 +351,28 @@ public class AccountManagementController {
             .getTotal(),
         "获取成功");
   }
+
+  /**
+   * @param jsonObject: a * return JsonResult
+   * @author ZJ
+   * @description TODO [管理员]根据姓名查询账号(账户管理) json数据包含name、currentPage、pageSize
+   * @date 2022/11/20 22:38
+   */
+  @RequestMapping(value = "/getAccountByName", method = RequestMethod.POST)
+  public JsonResult getAccountByName(@RequestBody JSONObject jsonObject) {
+    return JsonResult.successes(
+        iAdministratorService
+            .getAccountByName(
+                jsonObject.getString("name"),
+                jsonObject.getInteger("currentPage"),
+                jsonObject.getInteger("pageSize"))
+            .getList(),
+        iAdministratorService
+            .getAccountByName(
+                jsonObject.getString("name"),
+                jsonObject.getInteger("currentPage"),
+                jsonObject.getInteger("pageSize"))
+            .getTotal(),
+        "获取成功");
+  }
 }

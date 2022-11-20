@@ -565,4 +565,79 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
 
     return new PageInfo<List<?>>(new ArrayList<>());
   }
+
+  /**
+   * @param name:
+   * @param currentPage:
+   * @param pageSize: a * @return PageInfo<?>
+   * @author ZJ
+   * @description TODO [管理员]根据姓名查询账号(账户管理)
+   * @date 2022/11/20 22:39
+   */
+  @Override
+  public PageInfo<?> getAccountByName(String name, int currentPage, int pageSize) {
+
+    List<Object> objects = new ArrayList<>();
+
+    if (studentDao.selectList(
+            new LambdaQueryWrapper<Student>()
+                .eq(Student::getDeleted, 0)
+                .like(Student::getName, name))
+        != null) {
+      List<Student> students =
+          studentDao.selectList(
+              new LambdaQueryWrapper<Student>()
+                  .eq(Student::getDeleted, 0)
+                  .like(Student::getName, name));
+
+      for (Student student : students) {
+        objects.add(student);
+      }
+    }
+
+    if (teacherDao.selectList(
+            new LambdaQueryWrapper<Teacher>()
+                .eq(Teacher::getDeleted, 0)
+                .like(Teacher::getName, name))
+        != null) {
+      List<Teacher> teachers =
+          teacherDao.selectList(
+              new LambdaQueryWrapper<Teacher>()
+                  .eq(Teacher::getDeleted, 0)
+                  .like(Teacher::getName, name));
+
+      for (Teacher teacher : teachers) {
+        objects.add(teacher);
+      }
+    }
+
+    if (tutorDao.selectList(new LambdaQueryWrapper<Tutor>().like(Tutor::getName, name)) != null) {
+      List<Tutor> tutors =
+          tutorDao.selectList(new LambdaQueryWrapper<Tutor>().like(Tutor::getName, name));
+
+      for (Tutor tutor : tutors) {
+        objects.add(tutor);
+      }
+    }
+
+    if (!objects.isEmpty()) {
+      int total = objects.size();
+      if (total > pageSize) {
+        int toIndex = pageSize * currentPage;
+        if (toIndex > total) {
+          toIndex = total;
+        }
+        objects = objects.subList(pageSize * (currentPage - 1), toIndex);
+      }
+      com.github.pagehelper.Page<Object> page = new Page<>(currentPage, pageSize);
+      page.addAll(objects);
+      page.setPages((total + pageSize - 1) / pageSize);
+      page.setTotal(total);
+
+      PageInfo<Object> pageInfo = new PageInfo<>(page);
+      return pageInfo;
+    }
+
+    return new PageInfo<List<?>>(new ArrayList<>());
+  }
 }
