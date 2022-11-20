@@ -168,6 +168,16 @@
     "显示条数 Integer": "pageSize"
   },
 
+  "[教师]添加账户(账户管理) POST": "json数据包含type、id、name、password、email、phone",
+  "/accountManagement/teacherAddAccount": {
+    "类型 String": "type",
+    "学号/工号 String": "id",
+    "名字 String": "name",
+    "密码 String": "password",
+    "邮箱 String": "email",
+    "电话 String": "phone"
+  },
+
   "[教师]删除账户(账户管理) DELETE": "json数据包含id",
   "/accountManagement/teacherDeleteAccount": {
     "工号/学号 String": "id"

@@ -86,6 +86,20 @@ public interface ITeacherService extends IService<Teacher> {
   public PageInfo<?> teacherGetAccountByType(String type, int currentPage, int pageSize);
 
   /**
+   * @param type:
+   * @param id:
+   * @param name:
+   * @param password:
+   * @param email:
+   * @param phone:  * @return Boolean
+   * @author ZJ
+   * @description TODO TODO [教师]添加账户(账户管理)
+   * @date 2022/11/20 21:28
+   */
+  public Boolean teacherAddAccount(
+      String type, String id, String name, String password, String email, String phone);
+
+  /**
    * @param id: * @return Boolean
    * @author ZJ
    * @description TODO [教师]删除账户(账户管理)
@@ -193,7 +207,7 @@ public interface ITeacherService extends IService<Teacher> {
    * @param id:
    * @param name:
    * @param label:
-   * @param difficulty:  * @return Boolean
+   * @param difficulty: * @return Boolean
    * @author ZJ
    * @description TODO [教师]添加题目
    * @date 2022/11/20 21:06

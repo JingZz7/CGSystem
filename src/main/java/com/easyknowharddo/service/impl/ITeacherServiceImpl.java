@@ -298,6 +298,67 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
   }
 
   /**
+   * @param type:
+   * @param id:
+   * @param name:
+   * @param password:
+   * @param email:
+   * @param phone: * @return Boolean
+   * @author ZJ
+   * @description TODO TODO [教师]添加账户(账户管理)
+   * @date 2022/11/20 21:28
+   */
+  @Override
+  public Boolean teacherAddAccount(
+      String type, String id, String name, String password, String email, String phone) {
+    if (studentDao.selectOne(
+                new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted, 0))
+            != null
+        || tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id)) != null) {
+      return false;
+    }
+
+    if (type.equals("student")) {
+      if (studentDao.selectOne(
+              new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted, 1))
+          != null) {
+        Student student =
+            studentDao.selectOne(
+                new LambdaQueryWrapper<Student>()
+                    .eq(Student::getId, id)
+                    .eq(Student::getDeleted, 1));
+        student.setName(name);
+        student.setPassword(password);
+        student.setEmail(email);
+        student.setPhone(phone);
+        student.setDeleted(0);
+        studentDao.updateById(student);
+        return true;
+      }
+      Student student = new Student();
+      student.setId(id);
+      student.setName(name);
+      student.setPassword(password);
+      student.setEmail(email);
+      student.setPhone(phone);
+      student.setDeleted(0);
+      student.setClassId("未分配");
+      studentDao.insert(student);
+      return true;
+    } else if (type.equals("tutor")) {
+      Tutor tutor = new Tutor();
+      tutor.setId(id);
+      tutor.setName(name);
+      tutor.setPassword(password);
+      tutor.setEmail(email);
+      tutor.setPhone(phone);
+      tutorDao.insert(tutor);
+      return true;
+    }
+    return false;
+  }
+
+  /**
    * @param id: * @return Boolean
    * @author ZJ
    * @description TODO [教师]删除账户(账户管理)

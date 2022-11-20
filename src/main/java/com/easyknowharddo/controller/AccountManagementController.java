@@ -115,6 +115,28 @@ public class AccountManagementController {
   }
 
   /**
+   * @param jsonObject: a * @return JsonResult
+   * @author ZJ
+   * @description TODO [教师]添加账户(账户管理) json数据包含type、id、name、password、email、phone
+   * @date 2022/11/20 21:26
+   */
+  @RequestMapping(value = "/teacherAddAccount", method = RequestMethod.POST)
+  public JsonResult teacherAddAccount(@RequestBody JSONObject jsonObject) {
+    Boolean flag =
+        iTeacherService.teacherAddAccount(
+            jsonObject.getString("type"),
+            jsonObject.getString("id"),
+            jsonObject.getString("name"),
+            jsonObject.getString("password"),
+            jsonObject.getString("email"),
+            jsonObject.getString("phone"));
+    if (flag) {
+      return JsonResult.success("添加成功");
+    }
+    return JsonResult.failed("添加失败");
+  }
+
+  /**
    * @param jsonObject: * @return JsonResult
    * @author ZJ
    * @description TODO [教师]删除账户(账户管理) json数据包含id
