@@ -3,10 +3,12 @@ package com.easyknowharddo.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.easyknowharddo.dao.AdministratorDao;
+import com.easyknowharddo.dao.ClassesDao;
 import com.easyknowharddo.dao.StudentDao;
 import com.easyknowharddo.dao.TeacherDao;
 import com.easyknowharddo.dao.TutorDao;
 import com.easyknowharddo.domain.Administrator;
+import com.easyknowharddo.domain.Classes;
 import com.easyknowharddo.domain.Student;
 import com.easyknowharddo.domain.Teacher;
 import com.easyknowharddo.domain.Tutor;
@@ -30,6 +32,7 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
   @Autowired private StudentDao studentDao;
   @Autowired private TeacherDao teacherDao;
   @Autowired private TutorDao tutorDao;
+  @Autowired private ClassesDao classesDao;
 
   /**
    * @param name:
@@ -269,6 +272,13 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
       student.setPassword(password);
       student.setEmail(email);
       student.setPhone(phone);
+      student.setClassId(
+          classesDao
+              .selectOne(
+                  new LambdaQueryWrapper<Classes>()
+                      .eq(Classes::getName, className)
+                      .eq(Classes::getDeleted, 0))
+              .getId());
       studentDao.updateById(student);
       return true;
     } else if (teacher != null) {

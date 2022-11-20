@@ -17,12 +17,33 @@ public class Classes {
   @TableField("name")
   private String name;
 
+  @TableField("deleted")
+  private int deleted;
+
   public Classes() {}
 
-  public Classes(String pkClassId, String id, String name) {
+  public Classes(String pkClassId, String id, String name, int deleted) {
     this.pkClassId = pkClassId;
     this.id = id;
     this.name = name;
+    this.deleted = deleted;
+  }
+
+  @Override
+  public String toString() {
+    return "Classes{"
+        + "pkClassId='"
+        + pkClassId
+        + '\''
+        + ", id='"
+        + id
+        + '\''
+        + ", name='"
+        + name
+        + '\''
+        + ", deleted="
+        + deleted
+        + '}';
   }
 
   public String getPkClassId() {
@@ -49,18 +70,11 @@ public class Classes {
     this.name = name;
   }
 
-  @Override
-  public String toString() {
-    return "Classes{"
-        + "pkClassId='"
-        + pkClassId
-        + '\''
-        + ", id='"
-        + id
-        + '\''
-        + ", name='"
-        + name
-        + '\''
-        + '}';
+  public int getDeleted() {
+    return deleted;
+  }
+
+  public void setDeleted(int deleted) {
+    this.deleted = deleted;
   }
 }

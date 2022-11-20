@@ -244,25 +244,27 @@ public class AccountManagementController {
         "获取成功");
   }
 
-//  /**
-//   * @author ZJ Description [管理员]编辑账户(账户管理) json数据中包含id、password、email、phone date 2022-11-12
-//   *     15:45:02 15:45
-//   * @param jsonObject
-//   */
-//  @RequestMapping(value = "/editAccount", method = RequestMethod.PUT)
-//  public JsonResult editAccount(@RequestBody JSONObject jsonObject) {
-//    Boolean flag =
-//        iAdministratorService.editAccount(
-//            jsonObject.getString("id"),
-//            jsonObject.getString("password"),
-//            jsonObject.getString("email"),
-//            jsonObject.getString("phone"));
-//
-//    if (flag) {
-//      return JsonResult.success("修改成功");
-//    }
-//    return JsonResult.failed("修改失败");
-//  }
+  /**
+   * @param jsonObject: * @return JsonResult
+   * @author ZJ
+   * @description TODO [管理员]编辑账户(账户管理) json数据中包含id、password、email、phone、className
+   * @date 2022/11/21 0:08
+   */
+  @RequestMapping(value = "/editAccount", method = RequestMethod.PUT)
+  public JsonResult editAccount(@RequestBody JSONObject jsonObject) {
+    Boolean flag =
+        iAdministratorService.editAccount(
+            jsonObject.getString("id"),
+            jsonObject.getString("password"),
+            jsonObject.getString("email"),
+            jsonObject.getString("phone"),
+            jsonObject.getString("className"));
+
+    if (flag) {
+      return JsonResult.success("修改成功");
+    }
+    return JsonResult.failed("修改失败");
+  }
 
   /**
    * @author ZJ Description [管理员]添加账户(账户管理) json数据包含type、id、name、password、email、phone date
