@@ -186,11 +186,16 @@
     "显示条数 Integer": "pageSize"
   },
 
-  "[教师]查看评论(查看评论) x POST": "json数据包含problemId、currentPage、pageSize",
-  "/review/teacherViewReview": {
+  "[教师]根据问题id搜索评论(查看评论) x POST": "json数据包含problemId、currentPage、pageSize",
+  "/review/teacherGetReviewByProblemId": {
     "题号 String": "problemId",
     "当前页码 Integer": "currentPage",
     "显示条数 Integer": "pageSize"
+  },
+
+  "[教师]查看具体评论信息(查看评论) x POST": "json数据包含评论的id",
+  "/review/teacherViewDetailReview": {
+    "评论号 String": "id"
   },
 
 

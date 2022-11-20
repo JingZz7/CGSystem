@@ -409,11 +409,11 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
   /**
    * @param problemId: * @return PageInfo<HashMap<String,String>>
    * @author ZJ
-   * @description TODO [教师]查看评论(查看评论)
+   * @description TODO [教师]根据问题id搜索评论(查看评论)
    * @date 2022/11/14 20:58
    */
   @Override
-  public PageInfo<HashMap<String, String>> teacherViewReview(
+  public PageInfo<HashMap<String, String>> teacherGetReviewByProblemId(
       String problemId, int currentPage, int pageSize) {
     List<CommentStudent> commentStudents =
         commentStudentDao.selectList(
@@ -493,6 +493,24 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
 
     PageInfo<HashMap<String, String>> pageInfo = new PageInfo<>(page);
     return pageInfo;
+  }
+
+  /**
+   * @param id: * @return List<HashMap<String,String>>
+   * @author ZJ
+   * @description TODO [教师]查看具体评论信息(查看评论)
+   * @date 2022/11/20 20:29
+   */
+  @Override
+  public List<HashMap<String, String>> teacherViewDetailReview(String id) {
+    CommentStudent commentStudent =
+        commentStudentDao.selectOne(
+            new LambdaQueryWrapper<CommentStudent>().eq(CommentStudent::getPkCommentStudentId, id));
+    HashMap<String, String> map = new HashMap<>();
+    map.put("description", commentStudent.getDescription());
+    List<HashMap<String, String>> list = new ArrayList<>();
+    list.add(map);
+    return list;
   }
 
   /**

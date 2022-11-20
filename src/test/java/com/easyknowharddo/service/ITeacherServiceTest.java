@@ -33,7 +33,7 @@ public class ITeacherServiceTest {
 
   @Test
   public void teacherViewReviewTest() {
-    PageInfo<HashMap<String, String>> pageInfo = iTeacherService.teacherViewReview("1", 1, 2);
+    PageInfo<HashMap<String, String>> pageInfo = iTeacherService.teacherGetReviewByProblemId("1", 1, 2);
     System.out.println(pageInfo);
   }
 

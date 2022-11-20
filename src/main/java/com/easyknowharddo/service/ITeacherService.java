@@ -120,20 +120,28 @@ public interface ITeacherService extends IService<Teacher> {
   /**
    * @param problemId: * @return PageInfo<HashMap<String,String>>
    * @author ZJ
-   * @description TODO [教师]查看评论(查看评论)
+   * @description TODO [教师]根据问题id搜索评论(查看评论)
    * @date 2022/11/14 20:58
    */
-  public PageInfo<HashMap<String, String>> teacherViewReview(
+  public PageInfo<HashMap<String, String>> teacherGetReviewByProblemId(
       String problemId, int currentPage, int pageSize);
 
   /**
    * @param currentPage:
-   * @param pageSize: a * @return PageInfo<HashMap<String,String>>
+   * @param pageSize: a * @return List<HashMap<String,String>>
    * @author ZJ
    * @description TODO [教师]获取评论列表(查看评论)
    * @date 2022/11/17 10:39
    */
   public PageInfo<HashMap<String, String>> teacherGetReviewList(int currentPage, int pageSize);
+
+  /**
+   * @param id:  * @return PageInfo<HashMap<String,String>>
+   * @author ZJ
+   * @description TODO [教师]查看具体评论信息(查看评论)
+   * @date 2022/11/20 20:29
+   */
+  public List<HashMap<String, String>> teacherViewDetailReview(String id);
 
   /**
    * @param currentPage:
