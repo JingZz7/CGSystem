@@ -119,7 +119,7 @@ public class LoginController {
   }
 
   /**
-   * @param jsonObject:  * @return JsonResult
+   * @param jsonObject: * @return JsonResult
    * @author ZJ
    * @description TODO 忘记密码 json数据包含id、password
    * @date 2022/11/21 20:05

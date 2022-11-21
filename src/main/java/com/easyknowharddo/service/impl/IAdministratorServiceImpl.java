@@ -106,13 +106,13 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
 
   /**
    * @param currentPage:
-   * @param pageSize: * @return PageInfo<Object>
+   * @param pageSize: * @return Object
    * @author ZJ
    * @description TODO [管理员]获取用户列表(账户管理)
    * @date 2022/11/17 11:13
    */
   @Override
-  public PageInfo<Object> administratorGetAccountList(int currentPage, int pageSize) {
+  public Object administratorGetAccountList(int currentPage, int pageSize) {
     List<Student> students =
         studentDao.selectList(
             new LambdaQueryWrapper<Student>().eq(Student::getDeleted, 0)); // deleted为1的表示已被逻辑删除了
@@ -120,31 +120,47 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
         teacherDao.selectList(
             new LambdaQueryWrapper<Teacher>().eq(Teacher::getDeleted, 0)); // deleted为1的表示已被逻辑删除了
     List<Tutor> tutors = tutorDao.selectList(null);
-    List<Object> objects = new ArrayList<>();
+    List<HashMap<String, String>> list = new ArrayList<>();
     for (Student student : students) {
-      objects.add(student);
+      HashMap<String, String> map = new HashMap<>();
+      map.put("pkStudentId", student.getPkStudentId());
+      map.put("type", "student");
+      map.put("id", student.getId());
+      map.put("name", student.getName());
+      map.put(
+          "className",
+          classesDao
+              .selectOne(
+                  new LambdaQueryWrapper<Classes>()
+                      .eq(Classes::getId, student.getClassId())
+                      .eq(Classes::getDeleted, 0))
+              .getName());
+      map.put("phone", student.getPhone());
+      map.put("email", student.getEmail());
+      list.add(map);
     }
     for (Teacher teacher : teachers) {
-      objects.add(teacher);
+      HashMap<String, String> map = new HashMap<>();
+      map.put("pkStudentId", teacher.getPkTeacherId());
+      map.put("type", "teacher");
+      map.put("id", teacher.getId());
+      map.put("name", teacher.getName());
+      map.put("phone", teacher.getPhone());
+      map.put("email", teacher.getEmail());
+      list.add(map);
     }
     for (Tutor tutor : tutors) {
-      objects.add(tutor);
+      HashMap<String, String> map = new HashMap<>();
+      map.put("pkStudentId", tutor.getPkTutorId());
+      map.put("type", "tutor");
+      map.put("id", tutor.getId());
+      map.put("name", tutor.getName());
+      map.put("phone", tutor.getPhone());
+      map.put("email", tutor.getEmail());
+      list.add(map);
     }
-    int total = objects.size();
-    if (total > pageSize) {
-      int toIndex = pageSize * currentPage;
-      if (toIndex > total) {
-        toIndex = total;
-      }
-      objects = objects.subList(pageSize * (currentPage - 1), toIndex);
-    }
-    com.github.pagehelper.Page<Object> page = new Page<>(currentPage, pageSize);
-    page.addAll(objects);
-    page.setPages((total + pageSize - 1) / pageSize);
-    page.setTotal(total);
 
-    PageInfo<Object> pageInfo = new PageInfo<>(page);
-    return pageInfo;
+    return list;
   }
 
   /**

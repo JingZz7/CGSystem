@@ -45,12 +45,12 @@ public interface IAdministratorService extends IService<Administrator> {
 
   /**
    * @param currentPage:
-   * @param pageSize: * @return PageInfo<Object>
+   * @param pageSize: * @return Object
    * @author ZJ
    * @description TODO [管理员]获取用户列表(账户管理)
    * @date 2022/11/17 11:13
    */
-  public PageInfo<Object> administratorGetAccountList(int currentPage, int pageSize);
+  public Object  administratorGetAccountList(int currentPage, int pageSize);
 
   /**
    * @param type:

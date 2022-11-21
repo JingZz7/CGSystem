@@ -83,4 +83,9 @@ public class IAdministratorServiceTest {
 
     System.out.println("End");
   }
+
+  @Test
+  public void administratorGetAccountListTest(){
+    System.out.println(iAdministratorService.administratorGetAccountList(1, 10));
+  }
 }

@@ -208,15 +208,9 @@ public class AccountManagementController {
    */
   @RequestMapping(value = "/administratorGetAccountList", method = RequestMethod.POST)
   public JsonResult administratorGetAccountList(@RequestBody JSONObject jsonObject) {
-    return JsonResult.successes(
-        iAdministratorService
-            .administratorGetAccountList(
-                jsonObject.getInteger("currentPage"), jsonObject.getInteger("pageSize"))
-            .getList(),
-        iAdministratorService
-            .administratorGetAccountList(
-                jsonObject.getInteger("currentPage"), jsonObject.getInteger("pageSize"))
-            .getTotal(),
+    return JsonResult.success(
+        iAdministratorService.administratorGetAccountList(
+            jsonObject.getInteger("currentPage"), jsonObject.getInteger("pageSize")),
         "获取成功");
   }
 
