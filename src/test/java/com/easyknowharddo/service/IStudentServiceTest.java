@@ -5,9 +5,17 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.HashMap;
+import java.util.List;
+
 @SpringBootTest
 public class IStudentServiceTest {
   @Autowired private IStudentService iStudentService;
+
+  @Test
+  public void getCaptchaByIdTest() {
+    System.out.println(iStudentService.getCaptchaById("201810040106"));
+  }
 
   @Test
   public void saveTest() {

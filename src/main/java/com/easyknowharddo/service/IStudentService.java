@@ -6,6 +6,7 @@ import com.easyknowharddo.domain.Problem;
 import com.easyknowharddo.domain.Student;
 import com.github.pagehelper.PageInfo;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface IStudentService extends IService<Student> {
@@ -115,4 +116,12 @@ public interface IStudentService extends IService<Student> {
    */
   public PageInfo<Problem> getProblemsByDifficulty(
       String difficulty, int currentPage, int pageSize);
+
+  /**
+   * @param id: * @return String
+   * @author ZJ
+   * @description TODO 获取随机验证码(忘记密码)
+   * @date 2022/11/21 14:36
+   */
+  public String getCaptchaById(String id);
 }

@@ -7,6 +7,10 @@
     "密码 String": "password"
   },
 
+  "获取随机验证码(忘记密码) POST": "json数据包含id",
+  "/login/getCaptchaById": {
+    "学号 String": "id"
+  },
 
   "忘记密码 POST": "json数据包含phone字段",
   "/login/forgotPassword": {

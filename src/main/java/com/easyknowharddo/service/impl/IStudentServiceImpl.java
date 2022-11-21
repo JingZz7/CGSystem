@@ -4,15 +4,23 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.easyknowharddo.dao.AdministratorDao;
 import com.easyknowharddo.dao.ClassesDao;
 import com.easyknowharddo.dao.CommentStudentDao;
 import com.easyknowharddo.dao.ProblemDao;
 import com.easyknowharddo.dao.StudentDao;
+import com.easyknowharddo.dao.TeacherDao;
+import com.easyknowharddo.dao.TutorDao;
+import com.easyknowharddo.domain.Administrator;
 import com.easyknowharddo.domain.Classes;
 import com.easyknowharddo.domain.CommentStudent;
 import com.easyknowharddo.domain.Problem;
 import com.easyknowharddo.domain.Student;
+import com.easyknowharddo.domain.Teacher;
+import com.easyknowharddo.domain.Tutor;
 import com.easyknowharddo.service.IStudentService;
+import com.easyknowharddo.utils.GetCaptcha;
+import com.easyknowharddo.utils.MailUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.logging.log4j.util.Strings;
@@ -22,6 +30,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -33,6 +43,9 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
 
   @Autowired private ClassesDao classesDao;
   @Autowired private StudentDao studentDao;
+  @Autowired private TeacherDao teacherDao;
+  @Autowired private TutorDao tutorDao;
+  @Autowired private AdministratorDao administratorDao;
   @Autowired private ProblemDao problemDao;
   @Autowired private CommentStudentDao commentStudentDao;
 
@@ -302,6 +315,80 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
 
     PageInfo<Problem> pageInfo = new PageInfo<>(page);
     return pageInfo;
+  }
+
+  /**
+   * @param id: * @return String
+   * @author ZJ
+   * @description TODO 获取随机验证码(忘记密码)
+   * @date 2022/11/21 14:36
+   */
+  @Override
+  public String getCaptchaById(String id) {
+
+    if (studentDao.selectOne(
+                new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted, 0))
+            == null
+        && teacherDao.selectOne(
+                new LambdaQueryWrapper<Teacher>().eq(Teacher::getId, id).eq(Teacher::getDeleted, 0))
+            == null
+        && tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id)) == null
+        && administratorDao.selectOne(
+                new LambdaQueryWrapper<Administrator>().eq(Administrator::getId, id))
+            == null) {
+      return "学号错误";
+    }
+
+    String code = new GetCaptcha().getCode(6);
+
+        if (studentDao.selectOne(
+                new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted,
+     0))
+            != null) {
+          new MailUtils()
+              .sendMail(
+                  studentDao
+                      .selectOne(
+                          new LambdaQueryWrapper<Student>()
+                              .eq(Student::getId, id)
+                              .eq(Student::getDeleted, 0))
+                      .getEmail(),
+                  "验证码为：" + code,
+                  "CGSystem验证码");
+        } else if (teacherDao.selectOne(
+                new LambdaQueryWrapper<Teacher>().eq(Teacher::getId, id).eq(Teacher::getDeleted,
+     0))
+            != null) {
+          new MailUtils()
+              .sendMail(
+                  teacherDao
+                      .selectOne(
+                          new LambdaQueryWrapper<Teacher>()
+                              .eq(Teacher::getId, id)
+                              .eq(Teacher::getDeleted, 0))
+                      .getEmail(),
+                  "验证码为：" + code,
+                  "CGSystem验证码");
+        } else if (tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id)) !=
+     null) {
+          new MailUtils()
+              .sendMail(
+                  tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId,
+     id)).getEmail(),
+                  "验证码为：" + code,
+                  "CGSystem验证码");
+        } else {
+          new MailUtils()
+              .sendMail(
+                  administratorDao
+                      .selectOne(new LambdaQueryWrapper<Administrator>().eq(Administrator::getId,
+     id))
+                      .getEmail(),
+                  "验证码为：" + code,
+                  "CGSystem验证码");
+        }
+
+    return code;
   }
 
   /**

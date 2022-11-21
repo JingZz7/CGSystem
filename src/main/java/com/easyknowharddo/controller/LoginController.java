@@ -105,6 +105,20 @@ public class LoginController {
   }
 
   /**
+   * @param jsonObject: a * return JsonResult
+   * @author ZJ
+   * @description TODO 获取随机验证码(忘记密码) json数据包含id
+   * @date 2022/11/21 14:57
+   */
+  @RequestMapping(value = "/getCaptchaById", method = RequestMethod.POST)
+  public JsonResult getCaptchaById(@RequestBody JSONObject jsonObject) {
+    if (iStudentService.getCaptchaById(jsonObject.getString("id")).equals("学号错误")) {
+      return JsonResult.failed(iStudentService.getCaptchaById(jsonObject.getString("id")));
+    }
+    return JsonResult.success(iStudentService.getCaptchaById(jsonObject.getString("id")));
+  }
+
+  /**
    * @author ZJ Description 忘记密码 date jsonObject数据包含"phone"字段即可 2022-11-07 18:04:21 18:04
    * @param jsonObject
    */

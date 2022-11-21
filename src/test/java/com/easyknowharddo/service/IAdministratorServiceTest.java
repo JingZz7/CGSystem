@@ -1,5 +1,6 @@
 package com.easyknowharddo.service;
 
+import com.easyknowharddo.utils.GetCaptcha;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,7 +19,8 @@ public class IAdministratorServiceTest {
 
   @Test
   public void editAccountTest() {
-//    iAdministratorService.editAccount("201810040106", "111111", "xxx@gmail.com", "123456789");
+    //    iAdministratorService.editAccount("201810040106", "111111", "xxx@gmail.com", "123456789");
+    System.out.println(new GetCaptcha().getCode(6));
   }
 
   @Test
@@ -34,7 +36,7 @@ public class IAdministratorServiceTest {
     strings.add("202108030329");
     strings.add("T202026010512");
     strings.add("202026010512");
-//    iAdministratorService.bulkResetPasswords(strings, "123111321");
+    //    iAdministratorService.bulkResetPasswords(strings, "123111321");
   }
 
   @Test
