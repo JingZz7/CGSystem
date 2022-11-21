@@ -119,17 +119,20 @@ public class LoginController {
   }
 
   /**
-   * @author ZJ Description 忘记密码 date jsonObject数据包含"phone"字段即可 2022-11-07 18:04:21 18:04
-   * @param jsonObject
+   * @param jsonObject:  * @return JsonResult
+   * @author ZJ
+   * @description TODO 忘记密码 json数据包含id、password
+   * @date 2022/11/21 20:05
    */
-  @RequestMapping(value = "/forgotPassword", method = RequestMethod.POST)
+  @RequestMapping(value = "/forgotPassword", method = RequestMethod.PUT)
   public JsonResult forgotPassword(@RequestBody JSONObject jsonObject) {
-    if (!iStudentService.isStudentPhone(jsonObject.getString("phone"))
-        && !iTeacherService.isTeacherPhone(jsonObject.getString("phone"))
-        && !iAdministratorService.isAdministratorPhone(jsonObject.getString("phone"))) {
-      return JsonResult.validateFailed("手机号不存在");
+    Boolean flag =
+        iStudentService.forgotPassword(
+            jsonObject.getString("id"), jsonObject.getString("password"));
+    if (flag) {
+      return JsonResult.success("修改成功");
     }
-    return JsonResult.success("手机号存在");
+    return JsonResult.failed("修改失败");
   }
 
   /**

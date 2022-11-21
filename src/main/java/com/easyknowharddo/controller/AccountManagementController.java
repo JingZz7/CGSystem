@@ -267,7 +267,7 @@ public class AccountManagementController {
   }
 
   /**
-   * @author ZJ Description [管理员]添加账户(账户管理) json数据包含type、id、name、password、email、phone date
+   * @author ZJ Description [管理员]添加账户(账户管理) json数据包含type、id、name、password、email、phone date、className
    *     2022-11-12 16:28:51 16:28
    * @param jsonObject
    */
@@ -280,7 +280,8 @@ public class AccountManagementController {
             jsonObject.getString("name"),
             jsonObject.getString("password"),
             jsonObject.getString("email"),
-            jsonObject.getString("phone"));
+            jsonObject.getString("phone"),
+            jsonObject.getString("className"));
     if (flag) {
       return JsonResult.success("添加成功");
     }

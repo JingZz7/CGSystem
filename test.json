@@ -12,16 +12,17 @@
     "学号 String": "id"
   },
 
-  "忘记密码 POST": "json数据包含phone字段",
+  "忘记密码 PUT": "json数据包含id、password",
   "/login/forgotPassword": {
-    "电话 String": "phone"
-  },
-
-  "修改密码 POST": "json数据包含phone字段和password字段",
-  "/login/modifyPassword": {
-    "电话 String": "phone",
+    "工号/学号 String": "id",
     "密码 String": "password"
   },
+
+//  "修改密码 POST": "json数据包含phone字段和password字段",
+//  "/login/modifyPassword": {
+//    "电话 String": "phone",
+//    "密码 String": "password"
+//  },
 
   "[学生]获取题目列表(刷题推荐) x POST": "json数据包含currentPage、pageSize",
   "/problem/getProblemList": {
@@ -243,14 +244,15 @@
     "班级名 String": "className"
   },
 
-  "[管理员]添加账户(账户管理) POST": "json数据包含type、id、name、password、email、phone",
+  "[管理员]添加账户(账户管理) POST": "json数据包含type、id、name、password、email、phone date、className",
   "/accountManagement/addAccount": {
     "类型 String": "type",
     "学号/工号 String": "id",
     "名字 String": "name",
     "密码 String": "password",
     "邮箱 String": "email",
-    "电话 String": "phone"
+    "电话 String": "phone",
+    "班级名 String": "className"
   },
 
   "[管理员]删除账号(账户管理) DELETE": "json数据包含id",

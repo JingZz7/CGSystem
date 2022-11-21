@@ -341,54 +341,104 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
 
     String code = new GetCaptcha().getCode(6);
 
-        if (studentDao.selectOne(
-                new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted,
-     0))
-            != null) {
-          new MailUtils()
-              .sendMail(
-                  studentDao
-                      .selectOne(
-                          new LambdaQueryWrapper<Student>()
-                              .eq(Student::getId, id)
-                              .eq(Student::getDeleted, 0))
-                      .getEmail(),
-                  "验证码为：" + code,
-                  "CGSystem验证码");
-        } else if (teacherDao.selectOne(
-                new LambdaQueryWrapper<Teacher>().eq(Teacher::getId, id).eq(Teacher::getDeleted,
-     0))
-            != null) {
-          new MailUtils()
-              .sendMail(
-                  teacherDao
-                      .selectOne(
-                          new LambdaQueryWrapper<Teacher>()
-                              .eq(Teacher::getId, id)
-                              .eq(Teacher::getDeleted, 0))
-                      .getEmail(),
-                  "验证码为：" + code,
-                  "CGSystem验证码");
-        } else if (tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id)) !=
-     null) {
-          new MailUtils()
-              .sendMail(
-                  tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId,
-     id)).getEmail(),
-                  "验证码为：" + code,
-                  "CGSystem验证码");
-        } else {
-          new MailUtils()
-              .sendMail(
-                  administratorDao
-                      .selectOne(new LambdaQueryWrapper<Administrator>().eq(Administrator::getId,
-     id))
-                      .getEmail(),
-                  "验证码为：" + code,
-                  "CGSystem验证码");
-        }
+    if (studentDao.selectOne(
+            new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted, 0))
+        != null) {
+      new MailUtils()
+          .sendMail(
+              studentDao
+                  .selectOne(
+                      new LambdaQueryWrapper<Student>()
+                          .eq(Student::getId, id)
+                          .eq(Student::getDeleted, 0))
+                  .getEmail(),
+              "验证码为：" + code,
+              "CGSystem验证码");
+    } else if (teacherDao.selectOne(
+            new LambdaQueryWrapper<Teacher>().eq(Teacher::getId, id).eq(Teacher::getDeleted, 0))
+        != null) {
+      new MailUtils()
+          .sendMail(
+              teacherDao
+                  .selectOne(
+                      new LambdaQueryWrapper<Teacher>()
+                          .eq(Teacher::getId, id)
+                          .eq(Teacher::getDeleted, 0))
+                  .getEmail(),
+              "验证码为：" + code,
+              "CGSystem验证码");
+    } else if (tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id)) != null) {
+      new MailUtils()
+          .sendMail(
+              tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id)).getEmail(),
+              "验证码为：" + code,
+              "CGSystem验证码");
+    } else {
+      new MailUtils()
+          .sendMail(
+              administratorDao
+                  .selectOne(new LambdaQueryWrapper<Administrator>().eq(Administrator::getId, id))
+                  .getEmail(),
+              "验证码为：" + code,
+              "CGSystem验证码");
+    }
 
     return code;
+  }
+
+  /**
+   * @param id:
+   * @param password: a * @return Boolean
+   * @author ZJ
+   * @description TODO 忘记密码
+   * @date 2022/11/21 16:48
+   */
+  @Override
+  public Boolean forgotPassword(String id, String password) {
+    if (studentDao.selectOne(
+                new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted, 0))
+            == null
+        && teacherDao.selectOne(
+                new LambdaQueryWrapper<Teacher>().eq(Teacher::getId, id).eq(Teacher::getDeleted, 0))
+            == null
+        && tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id)) == null
+        && administratorDao.selectOne(
+                new LambdaQueryWrapper<Administrator>().eq(Administrator::getId, id))
+            == null) {
+      return false;
+    }
+
+    if (studentDao.selectOne(
+            new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted, 0))
+        != null) {
+      Student student =
+          studentDao.selectOne(
+              new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted, 0));
+      student.setPassword(password);
+      studentDao.updateById(student);
+      return true;
+    } else if (teacherDao.selectOne(
+            new LambdaQueryWrapper<Teacher>().eq(Teacher::getId, id).eq(Teacher::getDeleted, 0))
+        != null) {
+      Teacher teacher =
+          teacherDao.selectOne(
+              new LambdaQueryWrapper<Teacher>().eq(Teacher::getId, id).eq(Teacher::getDeleted, 0));
+      teacher.setPassword(password);
+      teacherDao.updateById(teacher);
+      return true;
+    } else if (tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id)) != null) {
+      Tutor tutor = tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id));
+      tutor.setPassword(password);
+      tutorDao.updateById(tutor);
+      return true;
+    } else {
+      Administrator administrator =
+          administratorDao.selectOne(
+              new LambdaQueryWrapper<Administrator>().eq(Administrator::getId, id));
+      administrator.setPassword(password);
+      administratorDao.updateById(administrator);
+      return true;
+    }
   }
 
   /**

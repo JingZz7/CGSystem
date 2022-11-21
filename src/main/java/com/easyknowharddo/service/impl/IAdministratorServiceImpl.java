@@ -303,14 +303,21 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
    * @param name:
    * @param password:
    * @param email:
-   * @param phone: * @return Boolean
+   * @param phone:
+   * @param className: a * @return Boolean
    * @author ZJ
    * @description TODO [管理员]添加账户(账户管理)
-   * @date 2022/11/14 20:39
+   * @date 2022/11/21 17:01
    */
   @Override
   public Boolean addAccount(
-      String type, String id, String name, String password, String email, String phone) {
+      String type,
+      String id,
+      String name,
+      String password,
+      String email,
+      String phone,
+      String className) {
 
     if (studentDao.selectOne(
                 new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted, 0))
@@ -337,6 +344,10 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
         student.setEmail(email);
         student.setPhone(phone);
         student.setDeleted(0);
+        student.setClassId(
+            classesDao
+                .selectOne(new LambdaQueryWrapper<Classes>().eq(Classes::getName, className))
+                .getId());
         studentDao.updateById(student);
         return true;
       }
@@ -348,7 +359,10 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
       student.setEmail(email);
       student.setPhone(phone);
       student.setDeleted(0);
-      student.setClassId("未分配");
+      student.setClassId(
+          classesDao
+              .selectOne(new LambdaQueryWrapper<Classes>().eq(Classes::getName, className))
+              .getId());
       studentDao.insert(student);
       return true;
     } else if (type.equals("teacher")) {

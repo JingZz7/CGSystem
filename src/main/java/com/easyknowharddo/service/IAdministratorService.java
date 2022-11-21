@@ -81,13 +81,20 @@ public interface IAdministratorService extends IService<Administrator> {
    * @param name:
    * @param password:
    * @param email:
-   * @param phone: * @return Boolean
+   * @param phone:
+   * @param className: a * @return Boolean
    * @author ZJ
    * @description TODO [管理员]添加账户(账户管理)
-   * @date 2022/11/14 20:39
+   * @date 2022/11/21 17:01
    */
   public Boolean addAccount(
-      String type, String id, String name, String password, String email, String phone);
+      String type,
+      String id,
+      String name,
+      String password,
+      String email,
+      String phone,
+      String className);
 
   /**
    * @param id: a * return Boolean

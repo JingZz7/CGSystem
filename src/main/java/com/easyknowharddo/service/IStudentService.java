@@ -124,4 +124,13 @@ public interface IStudentService extends IService<Student> {
    * @date 2022/11/21 14:36
    */
   public String getCaptchaById(String id);
+
+  /**
+   * @param id:
+   * @param password: a * @return Boolean
+   * @author ZJ
+   * @description TODO 忘记密码
+   * @date 2022/11/21 16:48
+   */
+  public Boolean forgotPassword(String id, String password);
 }
