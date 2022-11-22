@@ -989,73 +989,62 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
   }
 
   /**
-   * @param id: * @return List<HashMap<String,String>>
+   * @param id: * @return List<Object>
    * @author ZJ
    * @description TODO [教师]获取学生知识点成绩扇形图
    * @date 2022/11/22 21:58
    */
   @Override
-  public List<HashMap<String, String>> getKnowledgePointGrade(String id) {
+  public List<Object> getKnowledgePointGrade(String id) {
     List<ModelOutputKnowledge> modelOutputKnowledges =
         modelOutputKnowledgeDao.selectList(
             new LambdaQueryWrapper<ModelOutputKnowledge>()
                 .eq(ModelOutputKnowledge::getStudentId, id));
-    ArrayList<HashMap<String, String>> list = new ArrayList<>();
+    List<Object> list = new ArrayList<>();
     for (ModelOutputKnowledge modelOutputKnowledge : modelOutputKnowledges) {
-      HashMap<String, String> map = new HashMap<>();
+      HashMap<Object, Object> map = new HashMap<>();
       if (modelOutputKnowledge.getKnowledgePointId().equals("1")) {
-        map.put(
-            "value", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)).toString());
+        map.put("value", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
         map.put("name", "继承");
         list.add(map);
       } else if (modelOutputKnowledge.getKnowledgePointId().equals("2")) {
-        map.put(
-            "value", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)).toString());
+        map.put("value", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
         map.put("name", "构造函数");
         list.add(map);
       } else if (modelOutputKnowledge.getKnowledgePointId().equals("3")) {
-        map.put(
-            "value", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)).toString());
+        map.put("value", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
         map.put("name", "类与对象");
         list.add(map);
       } else if (modelOutputKnowledge.getKnowledgePointId().equals("4")) {
-        map.put(
-            "value", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)).toString());
+        map.put("value", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
         map.put("name", "结构体");
         list.add(map);
       } else if (modelOutputKnowledge.getKnowledgePointId().equals("5")) {
-        map.put(
-            "value", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)).toString());
+        map.put("value", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
         map.put("name", "指针");
         list.add(map);
       } else if (modelOutputKnowledge.getKnowledgePointId().equals("6")) {
-        map.put(
-            "value", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)).toString());
+        map.put("value", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
         map.put("name", "函数");
         list.add(map);
       } else if (modelOutputKnowledge.getKnowledgePointId().equals("7")) {
-        map.put(
-            "value", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)).toString());
+        map.put("value", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
         map.put("name", "字符串");
         list.add(map);
       } else if (modelOutputKnowledge.getKnowledgePointId().equals("8")) {
-        map.put(
-            "value", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)).toString());
+        map.put("value", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
         map.put("name", "数组");
         list.add(map);
       } else if (modelOutputKnowledge.getKnowledgePointId().equals("9")) {
-        map.put(
-            "value", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)).toString());
+        map.put("value", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
         map.put("name", "循环");
         list.add(map);
       } else if (modelOutputKnowledge.getKnowledgePointId().equals("10")) {
-        map.put(
-            "value", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)).toString());
+        map.put("value", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
         map.put("name", "控制结构");
         list.add(map);
       } else if (modelOutputKnowledge.getKnowledgePointId().equals("11")) {
-        map.put(
-            "value", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)).toString());
+        map.put("value", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
         map.put("name", "语言基础");
         list.add(map);
       }

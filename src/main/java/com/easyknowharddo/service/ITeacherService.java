@@ -232,10 +232,11 @@ public interface ITeacherService extends IService<Teacher> {
   public List<Integer> gradeDistributionByClass(String className);
 
   /**
-   * @param id:  * @return List<HashMap<String,String>>
+   * @param id: * @return List<Object>
    * @author ZJ
    * @description TODO [教师]获取学生知识点成绩扇形图
    * @date 2022/11/22 21:58
    */
-  public List<HashMap<String, String>> getKnowledgePointGrade(String id);
+  public List<Object> getKnowledgePointGrade(
+      String id);
 }
