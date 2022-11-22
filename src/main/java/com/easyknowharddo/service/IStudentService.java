@@ -6,6 +6,7 @@ import com.easyknowharddo.domain.Problem;
 import com.easyknowharddo.domain.Student;
 import com.github.pagehelper.PageInfo;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 
@@ -144,4 +145,12 @@ public interface IStudentService extends IService<Student> {
    * @date 2022/11/21 16:48
    */
   public Boolean forgotPassword(String id, String password);
+
+  /**
+   * @param id:  * @return BigDecimal
+   * @author ZJ
+   * @description TODO [学生]获取期末成绩预测
+   * @date 2022/11/22 22:43
+   */
+  public BigDecimal getFinalForecast(String id);
 }

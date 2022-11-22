@@ -8,6 +8,7 @@ import com.easyknowharddo.dao.AdministratorDao;
 import com.easyknowharddo.dao.ClassesDao;
 import com.easyknowharddo.dao.CommentStudentDao;
 import com.easyknowharddo.dao.ModelOutputKnowledgeDao;
+import com.easyknowharddo.dao.ModelOutputScoreDao;
 import com.easyknowharddo.dao.ProblemDao;
 import com.easyknowharddo.dao.StudentDao;
 import com.easyknowharddo.dao.TeacherDao;
@@ -16,6 +17,7 @@ import com.easyknowharddo.domain.Administrator;
 import com.easyknowharddo.domain.Classes;
 import com.easyknowharddo.domain.CommentStudent;
 import com.easyknowharddo.domain.ModelOutputKnowledge;
+import com.easyknowharddo.domain.ModelOutputScore;
 import com.easyknowharddo.domain.Problem;
 import com.easyknowharddo.domain.Student;
 import com.easyknowharddo.domain.Teacher;
@@ -54,6 +56,7 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
   @Autowired private AdministratorDao administratorDao;
   @Autowired private ProblemDao problemDao;
   @Autowired private CommentStudentDao commentStudentDao;
+  @Autowired private ModelOutputScoreDao modelOutputScoreDao;
   @Autowired private ModelOutputKnowledgeDao modelOutputKnowledgeDao;
 
   /**
@@ -523,6 +526,20 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
       administratorDao.updateById(administrator);
       return true;
     }
+  }
+
+  /**
+   * @param id: * @return BigDecimal
+   * @author ZJ
+   * @description TODO [学生]获取期末成绩预测
+   * @date 2022/11/22 22:43
+   */
+  @Override
+  public BigDecimal getFinalForecast(String id) {
+    return modelOutputScoreDao
+        .selectOne(
+            new LambdaQueryWrapper<ModelOutputScore>().eq(ModelOutputScore::getStudentId, id))
+        .getExamScore();
   }
 
   /**

@@ -309,5 +309,10 @@
   "[教师]获取学生知识点成绩扇形图 POST" : "json数据包含id",
   "/grade/getKnowledgePointGrade": {
     "学号 String": "id"
+  },
+
+  "[学生]获取期末成绩预测 POST" : "json数据包含id",
+  "/grade/getFinalForecast": {
+    "学号 String": "id"
   }
 }
