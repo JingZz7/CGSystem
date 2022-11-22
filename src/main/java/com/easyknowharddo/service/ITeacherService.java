@@ -6,6 +6,7 @@ import com.easyknowharddo.domain.Problem;
 import com.easyknowharddo.domain.Teacher;
 import com.github.pagehelper.PageInfo;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 
@@ -91,7 +92,7 @@ public interface ITeacherService extends IService<Teacher> {
    * @param name:
    * @param password:
    * @param email:
-   * @param phone:  * @return Boolean
+   * @param phone: * @return Boolean
    * @author ZJ
    * @description TODO TODO [教师]添加账户(账户管理)
    * @date 2022/11/20 21:28
@@ -215,7 +216,7 @@ public interface ITeacherService extends IService<Teacher> {
   public Boolean addProblem(String id, String name, String label, String difficulty);
 
   /**
-   * @param :  * @return List<Integer>
+   * @param : * @return List<Integer>
    * @author ZJ
    * @description TODO [教师]获取成绩分布
    * @date 2022/11/22 17:34
@@ -223,10 +224,18 @@ public interface ITeacherService extends IService<Teacher> {
   public List<Integer> gradeDistribution();
 
   /**
-   * @param className:  * @return List<Integer>
+   * @param className: * @return List<Integer>
    * @author ZJ
    * @description TODO [教师]根据班级获取成绩分布
    * @date 2022/11/22 21:30
    */
   public List<Integer> gradeDistributionByClass(String className);
+
+  /**
+   * @param id:  * @return List<HashMap<String,String>>
+   * @author ZJ
+   * @description TODO [教师]获取学生知识点成绩扇形图
+   * @date 2022/11/22 21:58
+   */
+  public List<HashMap<String, String>> getKnowledgePointGrade(String id);
 }

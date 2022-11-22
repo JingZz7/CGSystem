@@ -41,4 +41,16 @@ public class GradeController {
     return JsonResult.success(
         iTeacherService.gradeDistributionByClass(jsonObject.getString("className")), "获取成功");
   }
+
+  /**
+   * @param jsonObject: a * return JsonResult
+   * @author ZJ
+   * @description TODO [教师]获取学生知识点成绩扇形图 json数据包含id
+   * @date 2022/11/22 22:16
+   */
+  @RequestMapping(value = "/getKnowledgePointGrade", method = RequestMethod.POST)
+  public JsonResult getKnowledgePointGrade(@RequestBody JSONObject jsonObject) {
+    return JsonResult.success(
+        iTeacherService.getKnowledgePointGrade(jsonObject.getString("id")), "获取成功");
+  }
 }

@@ -304,5 +304,10 @@
   "[教师]根据班级获取成绩分布 POST" : "json数据包含className",
   "/grade/gradeDistributionByClass": {
     "班级名 String": "className"
+  },
+
+  "[教师]获取学生知识点成绩扇形图 POST" : "json数据包含id",
+  "/grade/getKnowledgePointGrade": {
+    "学号 String": "id"
   }
 }
