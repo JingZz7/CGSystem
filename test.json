@@ -296,5 +296,8 @@
     "姓名 String": "name",
     "当前页码 Integer": "currentPage",
     "显示条数 Integer": "pageSize"
-  }
+  },
+
+  "[教师]获取成绩分布": "无参",
+  "/grade/gradeDistribution": {}
 }

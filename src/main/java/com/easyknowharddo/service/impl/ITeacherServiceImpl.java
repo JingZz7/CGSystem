@@ -1,28 +1,29 @@
 package com.easyknowharddo.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.easyknowharddo.dao.CommentStudentDao;
+import com.easyknowharddo.dao.ModelOutputScoreDao;
 import com.easyknowharddo.dao.ProblemDao;
 import com.easyknowharddo.dao.StudentDao;
 import com.easyknowharddo.dao.TeacherDao;
 import com.easyknowharddo.dao.TutorDao;
 import com.easyknowharddo.domain.CommentStudent;
+import com.easyknowharddo.domain.ModelOutputScore;
 import com.easyknowharddo.domain.Problem;
 import com.easyknowharddo.domain.Student;
 import com.easyknowharddo.domain.Teacher;
 import com.easyknowharddo.domain.Tutor;
 import com.easyknowharddo.service.ITeacherService;
 import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -34,6 +35,7 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
   @Autowired private TutorDao tutorDao;
   @Autowired private ProblemDao problemDao;
   @Autowired private CommentStudentDao commentStudentDao;
+  @Autowired private ModelOutputScoreDao modelOutputScoreDao;
 
   /**
    * @param name:
@@ -817,5 +819,66 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
     problem.setKnowledgePointId("x");
     problemDao.insert(problem);
     return true;
+  }
+
+  @Override
+  public List<Integer> gradeDistribution() {
+    List<ModelOutputScore> modelOutputScores = modelOutputScoreDao.selectList(null);
+    int total1 = 0;
+    int total2 = 0;
+    int total3 = 0;
+    int total4 = 0;
+    int total5 = 0;
+    int total6 = 0;
+    int total7 = 0;
+    int total8 = 0;
+    int total9 = 0;
+    int total10 = 0;
+    for (ModelOutputScore modelOutputScore : modelOutputScores) {
+      if (modelOutputScore.getExamScore().compareTo(new BigDecimal("0")) == 1
+          && modelOutputScore.getExamScore().compareTo(new BigDecimal("10")) == -1) {
+        total1++;
+      } else if (modelOutputScore.getExamScore().compareTo(new BigDecimal("10")) == 1
+          && modelOutputScore.getExamScore().compareTo(new BigDecimal("20")) == -1) {
+        total2++;
+      } else if (modelOutputScore.getExamScore().compareTo(new BigDecimal("20")) == 1
+          && modelOutputScore.getExamScore().compareTo(new BigDecimal("30")) == -1) {
+        total3++;
+      } else if (modelOutputScore.getExamScore().compareTo(new BigDecimal("30")) == 1
+          && modelOutputScore.getExamScore().compareTo(new BigDecimal("40")) == -1) {
+        total4++;
+      } else if (modelOutputScore.getExamScore().compareTo(new BigDecimal("40")) == 1
+          && modelOutputScore.getExamScore().compareTo(new BigDecimal("50")) == -1) {
+        total5++;
+      } else if (modelOutputScore.getExamScore().compareTo(new BigDecimal("50")) == 1
+          && modelOutputScore.getExamScore().compareTo(new BigDecimal("60")) == -1) {
+        total6++;
+      } else if (modelOutputScore.getExamScore().compareTo(new BigDecimal("60")) == 1
+          && modelOutputScore.getExamScore().compareTo(new BigDecimal("70")) == -1) {
+        total7++;
+      } else if (modelOutputScore.getExamScore().compareTo(new BigDecimal("70")) == 1
+          && modelOutputScore.getExamScore().compareTo(new BigDecimal("80")) == -1) {
+        total8++;
+      } else if (modelOutputScore.getExamScore().compareTo(new BigDecimal("80")) == 1
+          && modelOutputScore.getExamScore().compareTo(new BigDecimal("90")) == -1) {
+        total9++;
+      } else {
+        total10++;
+      }
+    }
+
+    List<Integer> list = new ArrayList<>();
+    list.add(total1);
+    list.add(total2);
+    list.add(total3);
+    list.add(total4);
+    list.add(total5);
+    list.add(total6);
+    list.add(total7);
+    list.add(total8);
+    list.add(total9);
+    list.add(total10);
+
+    return list;
   }
 }

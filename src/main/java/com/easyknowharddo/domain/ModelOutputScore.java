@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.math.BigDecimal;
 
 @TableName("t_model_output_score")
-public class ModelOutputKScore {
+public class ModelOutputScore {
 
   @TableId(value = "pk_model_output_score_id", type = IdType.ASSIGN_ID)
   private String pkModelOutputScore;
@@ -18,7 +18,7 @@ public class ModelOutputKScore {
   @TableField("exam_score")
   private BigDecimal examScore;
 
-  public ModelOutputKScore() {}
+  public ModelOutputScore() {}
 
   @Override
   public String toString() {
@@ -58,7 +58,7 @@ public class ModelOutputKScore {
     this.examScore = examScore;
   }
 
-  public ModelOutputKScore(String pkModelOutputScore, String studentId, BigDecimal examScore) {
+  public ModelOutputScore(String pkModelOutputScore, String studentId, BigDecimal examScore) {
     this.pkModelOutputScore = pkModelOutputScore;
     this.studentId = studentId;
     this.examScore = examScore;
