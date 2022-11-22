@@ -117,15 +117,16 @@ public interface IStudentService extends IService<Student> {
   public PageInfo<Problem> getProblemById(String problemId, int currentPage, int pageSize);
 
   /**
+   * @param id:
    * @param difficulty:
    * @param currentPage:
-   * @param pageSize: a * @return PageInfo<Problem>
+   * @param pageSize: a * @return Object
    * @author ZJ
    * @description TODO [学生]根据难度查询(刷题推荐)
    * @date 2022/11/15 22:44
    */
-  public PageInfo<Problem> getProblemsByDifficulty(
-      String difficulty, int currentPage, int pageSize);
+  public Object getProblemsByDifficulty(
+      String id, String difficulty, int currentPage, int pageSize);
 
   /**
    * @param id: * @return String

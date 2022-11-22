@@ -317,57 +317,88 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
   }
 
   /**
+   * @param id:
    * @param difficulty:
    * @param currentPage:
-   * @param pageSize: a * @return IPage<Problem>
+   * @param pageSize: a * @return Object
    * @author ZJ
    * @description TODO [学生]根据难度查询(刷题推荐)
    * @date 2022/11/15 22:44
    */
   @Override
-  public PageInfo<Problem> getProblemsByDifficulty(
-      String difficulty, int currentPage, int pageSize) {
+  public Object getProblemsByDifficulty(
+      String id, String difficulty, int currentPage, int pageSize) {
     if (!difficulty.equals("all")) {
-      List<Problem> problems =
+
+      List<ModelOutputKnowledge> list =
+          modelOutputKnowledgeDao.selectList(
+              new LambdaQueryWrapper<ModelOutputKnowledge>()
+                  .eq(ModelOutputKnowledge::getStudentId, id));
+      HashMap<String, BigDecimal> map = new HashMap<>();
+      for (ModelOutputKnowledge modelOutputKnowledge : list) {
+        map.put(modelOutputKnowledge.getKnowledgePointId(), modelOutputKnowledge.getForecast());
+      }
+
+      List<String> arrayList = new ArrayList<>(); // 存放知识点id
+
+      for (Map.Entry<String, BigDecimal> vo : map.entrySet()) {
+        BigDecimal b = new BigDecimal("0.5");
+        if (vo.getValue().compareTo(b) == 1) { // forecast大于0.5
+          continue;
+        }
+        arrayList.add(vo.getKey());
+      }
+
+      List<Problem> problems = new ArrayList<>(); // 存放推荐题目
+      int len = arrayList.size();
+
+      for (int i = 0; i < len; ++i) {
+        List<Problem> problemList =
+            problemDao.selectList(
+                new LambdaQueryWrapper<Problem>()
+                    .eq(Problem::getKnowledgePointId, arrayList.get(i))
+                    .eq(Problem::getDifficulty, difficulty.charAt(0))
+                    .eq(Problem::getDeleted, 0)); // 第i个知识点的所有题目集合
+        for (Problem problem : problemList) {
+          problems.add(problem);
+        }
+      }
+      return problems;
+    }
+
+    List<ModelOutputKnowledge> list =
+        modelOutputKnowledgeDao.selectList(
+            new LambdaQueryWrapper<ModelOutputKnowledge>()
+                .eq(ModelOutputKnowledge::getStudentId, id));
+    HashMap<String, BigDecimal> map = new HashMap<>();
+    for (ModelOutputKnowledge modelOutputKnowledge : list) {
+      map.put(modelOutputKnowledge.getKnowledgePointId(), modelOutputKnowledge.getForecast());
+    }
+
+    List<String> arrayList = new ArrayList<>(); // 存放知识点id
+
+    for (Map.Entry<String, BigDecimal> vo : map.entrySet()) {
+      BigDecimal b = new BigDecimal("0.5");
+      if (vo.getValue().compareTo(b) == 1) { // forecast大于0.5
+        continue;
+      }
+      arrayList.add(vo.getKey());
+    }
+
+    List<Problem> problems = new ArrayList<>(); // 存放推荐题目
+    int len = arrayList.size();
+
+    for (int i = 0; i < len; ++i) {
+      List<Problem> problemList =
           problemDao.selectList(
               new LambdaQueryWrapper<Problem>()
-                  .eq(Problem::getDifficulty, difficulty)
-                  .eq(Problem::getDeleted, 0));
-      int total = problems.size();
-      if (total > pageSize) {
-        int toIndex = pageSize * currentPage;
-        if (toIndex > total) {
-          toIndex = total;
-        }
-        problems = problems.subList(pageSize * (currentPage - 1), toIndex);
+                  .eq(Problem::getKnowledgePointId, arrayList.get(i))
+                  .eq(Problem::getDeleted, 0)); // 第i个知识点的所有题目集合
+      for (Problem problem : problemList) {
+        problems.add(problem);
       }
-      com.github.pagehelper.Page<Problem> page =
-          new com.github.pagehelper.Page<>(currentPage, pageSize);
-      page.addAll(problems);
-      page.setPages((total + pageSize - 1) / pageSize);
-      page.setTotal(total);
-
-      PageInfo<Problem> pageInfo = new PageInfo<>(page);
-      return pageInfo;
     }
-    List<Problem> problems =
-        problemDao.selectList(new LambdaQueryWrapper<Problem>().eq(Problem::getDeleted, 0));
-    int total = problems.size();
-    if (total > pageSize) {
-      int toIndex = pageSize * currentPage;
-      if (toIndex > total) {
-        toIndex = total;
-      }
-      problems = problems.subList(pageSize * (currentPage - 1), toIndex);
-    }
-    com.github.pagehelper.Page<Problem> page =
-        new com.github.pagehelper.Page<>(currentPage, pageSize);
-    page.addAll(problems);
-    page.setPages((total + pageSize - 1) / pageSize);
-    page.setTotal(total);
-
-    PageInfo<Problem> pageInfo = new PageInfo<>(page);
-    return pageInfo;
+    return problems;
   }
 
   /**

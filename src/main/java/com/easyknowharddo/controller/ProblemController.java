@@ -155,24 +155,17 @@ public class ProblemController {
   /**
    * @param jsonObject: * @return JsonResult
    * @author ZJ
-   * @description TODO [学生]根据难度查询(刷题推荐) json数据包含problemId、currentPage、pageSize
+   * @description TODO [学生]根据难度查询(刷题推荐)aop分页增强 json数据包含id、difficulty、currentPage、pageSize
    * @date 2022/11/15 22:50
    */
   @RequestMapping(value = "/getProblemsByDifficulty", method = RequestMethod.POST)
   public JsonResult getProblemsByDifficulty(@RequestBody JSONObject jsonObject) {
-    return JsonResult.successes(
-        iStudentService
-            .getProblemsByDifficulty(
-                jsonObject.getString("difficulty"),
-                jsonObject.getInteger("currentPage"),
-                jsonObject.getInteger("pageSize"))
-            .getList(),
-        iStudentService
-            .getProblemsByDifficulty(
-                jsonObject.getString("difficulty"),
-                jsonObject.getInteger("currentPage"),
-                jsonObject.getInteger("pageSize"))
-            .getTotal(),
+    return JsonResult.success(
+        iStudentService.getProblemsByDifficulty(
+            jsonObject.getString("id"),
+            jsonObject.getString("difficulty"),
+            jsonObject.getInteger("currentPage"),
+            jsonObject.getInteger("pageSize")),
         "获取成功");
   }
 
