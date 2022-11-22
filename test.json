@@ -298,6 +298,11 @@
     "显示条数 Integer": "pageSize"
   },
 
-  "[教师]获取成绩分布": "无参",
-  "/grade/gradeDistribution": {}
+  "[教师]获取成绩分布 POST" : "无参",
+  "/grade/gradeDistribution": {},
+
+  "[教师]根据班级获取成绩分布 POST" : "json数据包含className",
+  "/grade/gradeDistributionByClass": {
+    "班级名 String": "className"
+  }
 }

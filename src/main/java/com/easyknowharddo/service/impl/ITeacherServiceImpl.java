@@ -20,7 +20,6 @@ import com.github.pagehelper.PageInfo;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -879,6 +878,110 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
     list.add(total9);
     list.add(total10);
 
+    return list;
+  }
+
+  /**
+   * @param className: * @return List<Integer>
+   * @author ZJ
+   * @description TODO [教师]根据班级获取成绩分布
+   * @date 2022/11/22 21:30
+   */
+  @Override
+  public List<Integer> gradeDistributionByClass(String className) {
+    int total1 = 0;
+    int total2 = 0;
+    int total3 = 0;
+    int total4 = 0;
+    int total5 = 0;
+    int total6 = 0;
+    int total7 = 0;
+    int total8 = 0;
+    int total9 = 0;
+    int total10 = 0;
+    List<Student> students = new ArrayList<>();
+    if (className.equals("通信一班")) {
+      students =
+          studentDao.selectList(
+              new LambdaQueryWrapper<Student>()
+                  .eq(Student::getClassId, "080301")
+                  .eq(Student::getDeleted, 0));
+    } else if (className.equals("通信二班")) {
+      students =
+          studentDao.selectList(
+              new LambdaQueryWrapper<Student>()
+                  .eq(Student::getClassId, "080302")
+                  .eq(Student::getDeleted, 0));
+    } else if (className.equals("通信三班")) {
+      students =
+          studentDao.selectList(
+              new LambdaQueryWrapper<Student>()
+                  .eq(Student::getClassId, "080303")
+                  .eq(Student::getDeleted, 0));
+    } else if (className.equals("通信四班")) {
+      students =
+          studentDao.selectList(
+              new LambdaQueryWrapper<Student>()
+                  .eq(Student::getClassId, "080304")
+                  .eq(Student::getDeleted, 0));
+    }
+
+    for (Student student : students) {
+      if (modelOutputScoreDao.selectOne(
+              new LambdaQueryWrapper<ModelOutputScore>()
+                  .eq(ModelOutputScore::getStudentId, student.getId()))
+          == null) {
+        continue;
+      }
+      BigDecimal examScore =
+          modelOutputScoreDao
+              .selectOne(
+                  new LambdaQueryWrapper<ModelOutputScore>()
+                      .eq(ModelOutputScore::getStudentId, student.getId()))
+              .getExamScore(); // student学生对应的成绩
+      if (examScore.compareTo(new BigDecimal("0")) == 1
+          && examScore.compareTo(new BigDecimal("10")) == -1) {
+        total1++;
+      } else if (examScore.compareTo(new BigDecimal("10")) == 1
+          && examScore.compareTo(new BigDecimal("20")) == -1) {
+        total2++;
+      } else if (examScore.compareTo(new BigDecimal("20")) == 1
+          && examScore.compareTo(new BigDecimal("30")) == -1) {
+        total3++;
+      } else if (examScore.compareTo(new BigDecimal("30")) == 1
+          && examScore.compareTo(new BigDecimal("40")) == -1) {
+        total4++;
+      } else if (examScore.compareTo(new BigDecimal("40")) == 1
+          && examScore.compareTo(new BigDecimal("50")) == -1) {
+        total5++;
+      } else if (examScore.compareTo(new BigDecimal("50")) == 1
+          && examScore.compareTo(new BigDecimal("60")) == -1) {
+        total6++;
+      } else if (examScore.compareTo(new BigDecimal("60")) == 1
+          && examScore.compareTo(new BigDecimal("70")) == -1) {
+        total7++;
+      } else if (examScore.compareTo(new BigDecimal("70")) == 1
+          && examScore.compareTo(new BigDecimal("80")) == -1) {
+        total8++;
+      } else if (examScore.compareTo(new BigDecimal("80")) == 1
+          && examScore.compareTo(new BigDecimal("90")) == -1) {
+        total9++;
+      } else {
+        total10++;
+      }
+    }
+
+    List<Integer> list = new ArrayList<>();
+    list.add(total1);
+    list.add(total2);
+    list.add(total3);
+    list.add(total4);
+    list.add(total5);
+    list.add(total6);
+    list.add(total7);
+    list.add(total8);
+    list.add(total9);
+    list.add(total10);
     return list;
   }
 }

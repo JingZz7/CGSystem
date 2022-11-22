@@ -221,4 +221,12 @@ public interface ITeacherService extends IService<Teacher> {
    * @date 2022/11/22 17:34
    */
   public List<Integer> gradeDistribution();
+
+  /**
+   * @param className:  * @return List<Integer>
+   * @author ZJ
+   * @description TODO [教师]根据班级获取成绩分布
+   * @date 2022/11/22 21:30
+   */
+  public List<Integer> gradeDistributionByClass(String className);
 }
