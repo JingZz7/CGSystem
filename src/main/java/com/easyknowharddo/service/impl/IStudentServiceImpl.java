@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.easyknowharddo.dao.AdministratorDao;
 import com.easyknowharddo.dao.ClassesDao;
 import com.easyknowharddo.dao.CommentStudentDao;
+import com.easyknowharddo.dao.ModelOutputKnowledgeDao;
 import com.easyknowharddo.dao.ProblemDao;
 import com.easyknowharddo.dao.StudentDao;
 import com.easyknowharddo.dao.TeacherDao;
@@ -14,6 +15,7 @@ import com.easyknowharddo.dao.TutorDao;
 import com.easyknowharddo.domain.Administrator;
 import com.easyknowharddo.domain.Classes;
 import com.easyknowharddo.domain.CommentStudent;
+import com.easyknowharddo.domain.ModelOutputKnowledge;
 import com.easyknowharddo.domain.Problem;
 import com.easyknowharddo.domain.Student;
 import com.easyknowharddo.domain.Teacher;
@@ -28,7 +30,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -36,6 +41,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
@@ -48,6 +54,7 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
   @Autowired private AdministratorDao administratorDao;
   @Autowired private ProblemDao problemDao;
   @Autowired private CommentStudentDao commentStudentDao;
+  @Autowired private ModelOutputKnowledgeDao modelOutputKnowledgeDao;
 
   /**
    * @param id:
@@ -228,6 +235,52 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
     PageInfo pageInfo = new PageInfo(pageResult);
     BeanUtils.copyProperties(page, pageInfo);
     return pageInfo;
+  }
+
+  /**
+   * @param id:
+   * @param currentPage:
+   * @param pageSize: * @return Object
+   * @author ZJ
+   * @description TODO [学生]获取题目列表(刷题推荐)
+   * @date 2022/11/22 16:04
+   */
+  @Override
+  public Object getProblemsList(String id, int currentPage, int pageSize) {
+    List<ModelOutputKnowledge> list =
+        modelOutputKnowledgeDao.selectList(
+            new LambdaQueryWrapper<ModelOutputKnowledge>()
+                .eq(ModelOutputKnowledge::getStudentId, id));
+    HashMap<String, BigDecimal> map = new HashMap<>();
+    for (ModelOutputKnowledge modelOutputKnowledge : list) {
+      map.put(modelOutputKnowledge.getKnowledgePointId(), modelOutputKnowledge.getForecast());
+    }
+
+    List<String> arrayList = new ArrayList<>(); // 存放知识点id
+
+    for (Map.Entry<String, BigDecimal> vo : map.entrySet()) {
+      BigDecimal b = new BigDecimal("0.5");
+      if (vo.getValue().compareTo(b) == 1) { // forecast大于0.5
+        continue;
+      }
+      arrayList.add(vo.getKey());
+    }
+
+    List<Problem> problems = new ArrayList<>(); // 存放推荐题目
+    int len = arrayList.size();
+
+    for (int i = 0; i < len; ++i) {
+      List<Problem> problemList =
+          problemDao.selectList(
+              new LambdaQueryWrapper<Problem>()
+                  .eq(Problem::getKnowledgePointId, arrayList.get(i))
+                  .eq(Problem::getDeleted, 0)); // 第i个知识点的所有题目集合
+      for (Problem problem : problemList) {
+        problems.add(problem);
+      }
+    }
+
+    return problems;
   }
 
   /**

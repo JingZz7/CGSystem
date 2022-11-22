@@ -50,6 +50,22 @@ public class ProblemController {
   }
 
   /**
+   * @param jsonObject: a * return JsonResult
+   * @author ZJ
+   * @description TODO [学生]获取题目列表(刷题推荐)aop分页增强 json数据包含id、currentPage、pageSize
+   * @date 2022/11/22 15:35
+   */
+  @RequestMapping(value = "/getProblemsList", method = RequestMethod.POST)
+  public JsonResult getProblemsList(@RequestBody JSONObject jsonObject) {
+    return JsonResult.success(
+        iStudentService.getProblemsList(
+            jsonObject.getString("id"),
+            jsonObject.getInteger("currentPage"),
+            jsonObject.getInteger("pageSize")),
+        "获取成功");
+  }
+
+  /**
    * @param jsonObject: * @return JsonResult
    * @author ZJ
    * @description TODO [学生]获取题目列表(收藏夹) json数据包含studentId、currentPage、pageSize

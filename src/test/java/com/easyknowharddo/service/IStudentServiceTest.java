@@ -49,4 +49,9 @@ public class IStudentServiceTest {
   public void isExistStudentTest() {
     System.out.println(iStudentService.isExistStudent("202126010446", "QkwGdoz6joliYE2g"));
   }
+
+  @Test
+  public void getProblemsListTest(){
+    iStudentService.getProblemsList("201810040108",1,1);
+  }
 }

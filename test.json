@@ -30,6 +30,13 @@
     "显示条数 Integer": "pageSize"
   },
 
+  "[学生]获取题目列表(刷题推荐)aop分页增强 POST": "json数据包含id、currentPage、pageSize",
+  "/problem/getProblemsList": {
+    "学号 String": "id",
+    "当前页码 Integer": "currentPage",
+    "显示条数 Integer": "pageSize"
+  },
+
   "[学生]获取题目列表(收藏夹) x POST": "json数据包含studentId、currentPage、pageSize",
   "/problem/getFavoriteProblemList": {
     "学号 String": "studentId",

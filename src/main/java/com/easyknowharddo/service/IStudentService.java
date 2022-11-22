@@ -97,6 +97,16 @@ public interface IStudentService extends IService<Student> {
   public PageInfo<Problem> getProblemList(int currentPage, int pageSize);
 
   /**
+   * @param id:
+   * @param currentPage:
+   * @param pageSize:  * @return Object
+   * @author ZJ
+   * @description TODO [学生]获取题目列表(刷题推荐)
+   * @date 2022/11/22 16:04
+   */
+  public Object getProblemsList(String id, int currentPage, int pageSize);
+
+  /**
    * @param problemId:
    * @param currentPage:
    * @param pageSize: * @return PageInfo<Problem>

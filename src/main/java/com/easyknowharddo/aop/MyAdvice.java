@@ -1,5 +1,6 @@
 package com.easyknowharddo.aop;
 
+import com.easyknowharddo.domain.Problem;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
@@ -8,7 +9,6 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
-
 import java.util.List;
 
 @Component
@@ -60,6 +60,52 @@ public class MyAdvice {
       page.setTotal(total);
 
       PageInfo<Object> pageInfo = new PageInfo<>(page);
+      return pageInfo;
+    }
+    return objects;
+  }
+
+  @Pointcut("execution(* com.easyknowharddo.service.IStudentService.getProblemsList(*,*,*))")
+  private void getProblemsListPt() {}
+
+  /**
+   * @param proceedingJoinPoint: * @return Object
+   * @author ZJ
+   * @description TODO [学生]获取题目列表(刷题推荐)分页增强
+   * @date 2022/11/22 16:05
+   */
+  @Around("MyAdvice.getProblemsListPt()")
+  public Object getProblemsListAdvice(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+    Object[] args = proceedingJoinPoint.getArgs();
+    Signature signature = proceedingJoinPoint.getSignature();
+    Object target = proceedingJoinPoint.getTarget();
+
+    // 方法[{}]开始执行
+    Object objects = proceedingJoinPoint.proceed();
+    // 方法[{}]执行结束
+
+    if (objects instanceof List) {
+      List objList = (List) objects;
+      int total = objList.size();
+      if (total > Integer.parseInt(args[2].toString())) {
+        int toIndex = Integer.parseInt(args[2].toString()) * Integer.parseInt(args[1].toString());
+        if (toIndex > total) {
+          toIndex = total;
+        }
+        objList =
+            objList.subList(
+                Integer.parseInt(args[2].toString()) * (Integer.parseInt(args[1].toString()) - 1),
+                toIndex);
+      }
+      com.github.pagehelper.Page<Problem> page =
+          new Page<>(Integer.parseInt(args[1].toString()), Integer.parseInt(args[2].toString()));
+      page.addAll(objList);
+      page.setPages(
+          (total + Integer.parseInt(args[2].toString()) - 1)
+              / Integer.parseInt(args[2].toString()));
+      page.setTotal(total);
+
+      PageInfo<Problem> pageInfo = new PageInfo<>(page);
       return pageInfo;
     }
     return objects;
