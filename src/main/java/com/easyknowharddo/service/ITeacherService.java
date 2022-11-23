@@ -1,12 +1,9 @@
 package com.easyknowharddo.service;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.easyknowharddo.domain.Problem;
 import com.easyknowharddo.domain.Teacher;
 import com.github.pagehelper.PageInfo;
-
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 
@@ -237,6 +234,5 @@ public interface ITeacherService extends IService<Teacher> {
    * @description TODO [教师]获取学生知识点成绩扇形图
    * @date 2022/11/22 21:58
    */
-  public List<Object> getKnowledgePointGrade(
-      String id);
+  public List<Object> getKnowledgePointGrade(String id);
 }

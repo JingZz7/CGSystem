@@ -21,7 +21,7 @@ public class MyAdvice {
   /**
    * @param proceedingJoinPoint: a * return Object
    * @author ZJ
-   * @description TODO [管理员]获取用户列表(账户管理)分页增强
+   * @description TODO [管理员]获取用户列表(账户管理)aop分页增强
    * @date 2022/11/21 22:18
    */
   @Around("MyAdvice.administratorGetAccountListPt()")
