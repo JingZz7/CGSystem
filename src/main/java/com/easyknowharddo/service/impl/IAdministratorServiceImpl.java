@@ -176,55 +176,94 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
     if (type.equals("student")) {
       List<Student> students =
           studentDao.selectList(new LambdaQueryWrapper<Student>().eq(Student::getDeleted, 0));
-      int total = students.size();
+      List<Object> list = new ArrayList<>();
+      for (Student student : students) {
+        HashMap<Object, Object> map = new HashMap<>();
+        map.put("pkStudentId", student.getPkStudentId());
+        map.put("id", student.getId());
+        map.put("name", student.getName());
+        map.put("password", student.getPassword());
+        map.put("phone", student.getPhone());
+        map.put("email", student.getEmail());
+        map.put("classId", student.getClassId());
+        map.put("deleted", student.getDeleted());
+        map.put("type", type);
+        list.add(map);
+      }
+      int total = list.size();
       if (total > pageSize) {
         int toIndex = pageSize * currentPage;
         if (toIndex > total) {
           toIndex = total;
         }
-        students = students.subList(pageSize * (currentPage - 1), toIndex);
+        list = list.subList(pageSize * (currentPage - 1), toIndex);
       }
-      com.github.pagehelper.Page<Student> page = new Page<>(currentPage, pageSize);
-      page.addAll(students);
+      com.github.pagehelper.Page<Object> page = new Page<>(currentPage, pageSize);
+      page.addAll(list);
       page.setPages((total + pageSize - 1) / pageSize);
       page.setTotal(total);
 
-      PageInfo<Student> pageInfo = new PageInfo<>(page);
+      PageInfo<Object> pageInfo = new PageInfo<>(page);
       return pageInfo;
     } else if (type.equals("teacher")) {
       List<Teacher> teachers =
           teacherDao.selectList(new LambdaQueryWrapper<Teacher>().eq(Teacher::getDeleted, 0));
-      int total = teachers.size();
+      List<Object> list = new ArrayList<>();
+      for (Teacher teacher : teachers) {
+        HashMap<Object, Object> map = new HashMap<>();
+        map.put("pkTeacherId", teacher.getPkTeacherId());
+        map.put("id", teacher.getId());
+        map.put("name", teacher.getName());
+        map.put("password", teacher.getPassword());
+        map.put("phone", teacher.getPhone());
+        map.put("email", teacher.getEmail());
+        map.put("deleted", teacher.getDeleted());
+        map.put("type", type);
+        list.add(map);
+      }
+      int total = list.size();
       if (total > pageSize) {
         int toIndex = pageSize * currentPage;
         if (toIndex > total) {
           toIndex = total;
         }
-        teachers = teachers.subList(pageSize * (currentPage - 1), toIndex);
+        list = list.subList(pageSize * (currentPage - 1), toIndex);
       }
-      com.github.pagehelper.Page<Teacher> page = new Page<>(currentPage, pageSize);
-      page.addAll(teachers);
+      com.github.pagehelper.Page<Object> page = new Page<>(currentPage, pageSize);
+      page.addAll(list);
       page.setPages((total + pageSize - 1) / pageSize);
       page.setTotal(total);
 
-      PageInfo<Teacher> pageInfo = new PageInfo<>(page);
+      PageInfo<Object> pageInfo = new PageInfo<>(page);
       return pageInfo;
     } else if (type.equals("tutor")) {
       List<Tutor> tutors = tutorDao.selectList(null);
-      int total = tutors.size();
+      List<Object> list = new ArrayList<>();
+      for (Tutor tutor : tutors) {
+        HashMap<Object, Object> map = new HashMap<>();
+        map.put("pkTutorId", tutor.getPkTutorId());
+        map.put("id", tutor.getId());
+        map.put("name", tutor.getName());
+        map.put("password", tutor.getPassword());
+        map.put("phone", tutor.getPhone());
+        map.put("email", tutor.getEmail());
+        map.put("type", type);
+        list.add(map);
+      }
+      int total = list.size();
       if (total > pageSize) {
         int toIndex = pageSize * currentPage;
         if (toIndex > total) {
           toIndex = total;
         }
-        tutors = tutors.subList(pageSize * (currentPage - 1), toIndex);
+        list = list.subList(pageSize * (currentPage - 1), toIndex);
       }
-      com.github.pagehelper.Page<Tutor> page = new Page<>(currentPage, pageSize);
-      page.addAll(tutors);
+      com.github.pagehelper.Page<Object> page = new Page<>(currentPage, pageSize);
+      page.addAll(list);
       page.setPages((total + pageSize - 1) / pageSize);
       page.setTotal(total);
 
-      PageInfo<Tutor> pageInfo = new PageInfo<>(page);
+      PageInfo<Object> pageInfo = new PageInfo<>(page);
       return pageInfo;
     }
     List<Object> objects = new ArrayList<>();
@@ -234,13 +273,40 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
         teacherDao.selectList(new LambdaQueryWrapper<Teacher>().eq(Teacher::getDeleted, 0));
     List<Tutor> tutors = tutorDao.selectList(null);
     for (Student student : students) {
-      objects.add(student);
+      HashMap<Object, Object> map = new HashMap<>();
+      map.put("pkStudentId", student.getPkStudentId());
+      map.put("id", student.getId());
+      map.put("name", student.getName());
+      map.put("password", student.getPassword());
+      map.put("phone", student.getPhone());
+      map.put("email", student.getEmail());
+      map.put("classId", student.getClassId());
+      map.put("deleted", student.getDeleted());
+      map.put("type", "student");
+      objects.add(map);
     }
     for (Teacher teacher : teachers) {
-      objects.add(teacher);
+      HashMap<Object, Object> map = new HashMap<>();
+      map.put("pkTeacherId", teacher.getPkTeacherId());
+      map.put("id", teacher.getId());
+      map.put("name", teacher.getName());
+      map.put("password", teacher.getPassword());
+      map.put("phone", teacher.getPhone());
+      map.put("email", teacher.getEmail());
+      map.put("deleted", teacher.getDeleted());
+      map.put("type", "teacher");
+      objects.add(map);
     }
     for (Tutor tutor : tutors) {
-      objects.add(tutor);
+      HashMap<Object, Object> map = new HashMap<>();
+      map.put("pkTutorId", tutor.getPkTutorId());
+      map.put("id", tutor.getId());
+      map.put("name", tutor.getName());
+      map.put("password", tutor.getPassword());
+      map.put("phone", tutor.getPhone());
+      map.put("email", tutor.getEmail());
+      map.put("type", "tutor");
+      objects.add(map);
     }
     int total = objects.size();
     if (total > pageSize) {
