@@ -70,6 +70,7 @@
             <artifactId>mail</artifactId>
             <version>1.4.7</version>
         </dependency>
+
         <dependency>
             <groupId>javax.activation</groupId>
             <artifactId>activation</artifactId>
