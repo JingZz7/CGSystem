@@ -89,7 +89,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
   }
 
   private String cleanXSS(String valueP) {
-    // You'll need to remove the spaces from the html entities below
+    // 您需要从下面的 html 实体中删除空格
     String value = valueP.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
     value = value.replaceAll("<", "& lt;").replaceAll(">", "& gt;");
     value = value.replaceAll("\\(", "& #40;").replaceAll("\\)", "& #41;");
@@ -101,6 +101,11 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
     return value;
   }
 
+  /**
+   * @param value:  * @return String
+   * @author ZJ
+   * @description TODO 过滤参数
+   */
   private String cleanSqlKeyWords(String value) {
     String paramValue = value;
     for (String keyword : notAllowedKeyWords) {
