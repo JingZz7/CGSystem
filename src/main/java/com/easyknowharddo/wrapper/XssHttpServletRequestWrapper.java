@@ -44,6 +44,11 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
     return cleanXSS(value);
   }
 
+  /**
+   * @param parameter: * @return String
+   * @author ZJ
+   * @description TODO 获取参数值
+   */
   @Override
   public String[] getParameterValues(String parameter) {
     String[] values = super.getParameterValues(parameter);
@@ -58,6 +63,11 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
     return encodedValues;
   }
 
+  /**
+   * @param : * @return Map<String,String>
+   * @author ZJ
+   * @description TODO 获取参数hashmap
+   */
   @Override
   public Map<String, String[]> getParameterMap() {
     Map<String, String[]> values = super.getParameterMap();
@@ -88,7 +98,13 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
     return cleanXSS(value);
   }
 
+  /**
+   * @param valueP: * @return String
+   * @author ZJ
+   * @description TODO 过滤xss
+   */
   private String cleanXSS(String valueP) {
+    // You'll need to remove the spaces from the html entities below
     // 您需要从下面的 html 实体中删除空格
     String value = valueP.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
     value = value.replaceAll("<", "& lt;").replaceAll(">", "& gt;");
@@ -102,7 +118,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
   }
 
   /**
-   * @param value:  * @return String
+   * @param value: * @return String
    * @author ZJ
    * @description TODO 过滤参数
    */
