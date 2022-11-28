@@ -46,32 +46,32 @@ public interface ITeacherService extends IService<Teacher> {
 
   /**
    * @param currentPage:
-   * @param pageSize: a * @return PageInfo<Object>
+   * @param pageSize: a * @return PageInfo<?>
    * @author ZJ
    * @description TODO [教师]获取账户列表(账户管理)
    * @date 2022/11/16 17:13
    */
-  public PageInfo<Object> teacherGetAccountList(int currentPage, int pageSize);
+  public PageInfo<?> teacherGetAccountList(int currentPage, int pageSize);
 
   /**
    * @param id:
    * @param currentPage:
-   * @param pageSize: a * @return PageInfo<Object>
+   * @param pageSize: a * @return PageInfo<?>
    * @author ZJ
    * @description TODO [教师]根据工号查询(账户管理)
    * @date 2022/11/16 17:22
    */
-  public PageInfo<Object> teacherGetAccountById(String id, int currentPage, int pageSize);
+  public PageInfo<?> teacherGetAccountById(String id, int currentPage, int pageSize);
 
   /**
    * @param name:
    * @param currentPage:
-   * @param pageSize: * @return PageInfo<Object>
+   * @param pageSize: * @return PageInfo<?>
    * @author ZJ
    * @description TODO [教师]根据姓名查询(账户管理)
    * @date 2022/11/16 17:27
    */
-  public PageInfo<Object> teacherGetAccountByName(String name, int currentPage, int pageSize);
+  public PageInfo<?> teacherGetAccountByName(String name, int currentPage, int pageSize);
 
   /**
    * @param type:

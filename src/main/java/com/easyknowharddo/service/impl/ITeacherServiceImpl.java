@@ -2,6 +2,7 @@ package com.easyknowharddo.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.easyknowharddo.dao.AdministratorDao;
 import com.easyknowharddo.dao.CommentStudentDao;
 import com.easyknowharddo.dao.ModelOutputKnowledgeDao;
 import com.easyknowharddo.dao.ModelOutputScoreDao;
@@ -9,6 +10,7 @@ import com.easyknowharddo.dao.ProblemDao;
 import com.easyknowharddo.dao.StudentDao;
 import com.easyknowharddo.dao.TeacherDao;
 import com.easyknowharddo.dao.TutorDao;
+import com.easyknowharddo.domain.Administrator;
 import com.easyknowharddo.domain.CommentStudent;
 import com.easyknowharddo.domain.ModelOutputKnowledge;
 import com.easyknowharddo.domain.ModelOutputScore;
@@ -17,6 +19,7 @@ import com.easyknowharddo.domain.Student;
 import com.easyknowharddo.domain.Teacher;
 import com.easyknowharddo.domain.Tutor;
 import com.easyknowharddo.service.ITeacherService;
+import com.easyknowharddo.service.utils.PageUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import org.apache.logging.log4j.util.Strings;
@@ -34,10 +37,78 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
   @Autowired private TeacherDao teacherDao;
   @Autowired private StudentDao studentDao;
   @Autowired private TutorDao tutorDao;
+  @Autowired private AdministratorDao administratorDao;
   @Autowired private ProblemDao problemDao;
   @Autowired private CommentStudentDao commentStudentDao;
   @Autowired private ModelOutputScoreDao modelOutputScoreDao;
   @Autowired private ModelOutputKnowledgeDao modelOutputKnowledgeDao;
+
+  /**
+   * @param id: * @return Student
+   * @author ZJ
+   * @description TODO 通过id查找单个学生，Deleted必须为0
+   * @date 2022/11/28 11:58
+   */
+  public Student selectOneStudentByIdAndDeleted0(String id) {
+    return studentDao.selectOne(
+        new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted, 0));
+  }
+
+  /**
+   * @param id: * @return Student
+   * @author ZJ
+   * @description TODO 通过id查找单个学生，Deleted必须为1
+   * @date 2022/11/28 13:30
+   */
+  public Student selectOneStudentByIdAndDeleted1(String id) {
+    return studentDao.selectOne(
+        new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted, 1));
+  }
+
+  /**
+   * @param id: * @return Teacher
+   * @author ZJ
+   * @description TODO 通过id查找单个教师，Deleted必须为0
+   * @date 2022/11/28 11:59
+   */
+  public Teacher selectOneTeacherByIdAndDeleted(String id) {
+    return teacherDao.selectOne(
+        new LambdaQueryWrapper<Teacher>().eq(Teacher::getId, id).eq(Teacher::getDeleted, 0));
+  }
+
+  /**
+   * @param id: * @return Tutor
+   * @author ZJ
+   * @description TODO 通过id查找单个助教
+   * @date 2022/11/28 12:01
+   */
+  public Tutor selectOneTutorById(String id) {
+    return tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id));
+  }
+
+  /**
+   * @param id: * @return Administrator
+   * @author ZJ
+   * @description TODO 通过id查找单个助教管理员
+   * @date 2022/11/28 12:02
+   */
+  public Administrator selectOneAdministratorById(String id) {
+    return administratorDao.selectOne(
+        new LambdaQueryWrapper<Administrator>().eq(Administrator::getId, id));
+  }
+
+  /**
+   * @param classId: a * @return List<Student>
+   * @author ZJ
+   * @description TODO 根据班级名查询该班学生
+   * @date 2022/11/28 13:42
+   */
+  public List<Student> selectStudentByClassName(String classId) {
+    return studentDao.selectList(
+        new LambdaQueryWrapper<Student>()
+            .eq(Student::getClassId, classId)
+            .eq(Student::getDeleted, 0));
+  }
 
   /**
    * @param name:
@@ -111,13 +182,13 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
 
   /**
    * @param currentPage:
-   * @param pageSize: a * @return PageInfo<Object>
+   * @param pageSize: a * @return PageInfo<?>
    * @author ZJ
    * @description TODO [教师]获取账户列表(账户管理)
    * @date 2022/11/16 17:13
    */
   @Override
-  public PageInfo<Object> teacherGetAccountList(int currentPage, int pageSize) {
+  public PageInfo<?> teacherGetAccountList(int currentPage, int pageSize) {
     List<Student> students =
         studentDao.selectList(new LambdaQueryWrapper<Student>().eq(Student::getDeleted, 0));
     List<Tutor> tutors = tutorDao.selectList(null);
@@ -128,71 +199,39 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
     for (Tutor tutor : tutors) {
       objects.add(tutor);
     }
-    int total = objects.size();
-    if (total > pageSize) {
-      int toIndex = pageSize * currentPage;
-      if (toIndex > total) {
-        toIndex = total;
-      }
-      objects = objects.subList(pageSize * (currentPage - 1), toIndex);
-    }
-    com.github.pagehelper.Page<Object> page = new Page<>(currentPage, pageSize);
-    page.addAll(objects);
-    page.setPages((total + pageSize - 1) / pageSize);
-    page.setTotal(total);
-
-    PageInfo<Object> pageInfo = new PageInfo<>(page);
-    return pageInfo;
+    return PageUtils.pageObject(objects, currentPage, pageSize);
   }
 
   /**
    * @param id:
    * @param currentPage:
-   * @param pageSize: a * @retrn PageInfo<Object>
+   * @param pageSize: a * @return PageInfo<?>
    * @author ZJ
    * @description TODO [教师]根据工号查询(账户管理)
    * @date 2022/11/16 17:22
    */
   @Override
-  public PageInfo<Object> teacherGetAccountById(String id, int currentPage, int pageSize) {
+  public PageInfo<?> teacherGetAccountById(String id, int currentPage, int pageSize) {
     List<Object> objects = new ArrayList<>();
-    if (studentDao.selectOne(
-            new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted, 0))
-        != null) {
-      objects.add(
-          studentDao.selectOne(
-              new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted, 0)));
+    if (selectOneStudentByIdAndDeleted0(id) != null) {
+      objects.add(selectOneStudentByIdAndDeleted0(id));
     }
-    if (tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id)) != null) {
-      objects.add(tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id)));
+    if (selectOneTutorById(id) != null) {
+      objects.add(selectOneTutorById(id));
     }
-    int total = objects.size();
-    if (total > pageSize) {
-      int toIndex = pageSize * currentPage;
-      if (toIndex > total) {
-        toIndex = total;
-      }
-      objects = objects.subList(pageSize * (currentPage - 1), toIndex);
-    }
-    com.github.pagehelper.Page<Object> page = new Page<>(currentPage, pageSize);
-    page.addAll(objects);
-    page.setPages((total + pageSize - 1) / pageSize);
-    page.setTotal(total);
-
-    PageInfo<Object> pageInfo = new PageInfo<>(page);
-    return pageInfo;
+    return PageUtils.pageObject(objects, currentPage, pageSize);
   }
 
   /**
    * @param name:
    * @param currentPage:
-   * @param pageSize: * @return PageInfo<Object>
+   * @param pageSize: * @return PageInfo<?>
    * @author ZJ
    * @description TODO [教师]根据姓名查询(账户管理)
    * @date 2022/11/16 17:27
    */
   @Override
-  public PageInfo<Object> teacherGetAccountByName(String name, int currentPage, int pageSize) {
+  public PageInfo<?> teacherGetAccountByName(String name, int currentPage, int pageSize) {
     List<Object> objects = new ArrayList<>();
     List<Student> students =
         studentDao.selectList(
@@ -211,21 +250,7 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
         objects.add(tutor);
       }
     }
-    int total = objects.size();
-    if (total > pageSize) {
-      int toIndex = pageSize * currentPage;
-      if (toIndex > total) {
-        toIndex = total;
-      }
-      objects = objects.subList(pageSize * (currentPage - 1), toIndex);
-    }
-    com.github.pagehelper.Page<Object> page = new Page<>(currentPage, pageSize);
-    page.addAll(objects);
-    page.setPages((total + pageSize - 1) / pageSize);
-    page.setTotal(total);
-
-    PageInfo<Object> pageInfo = new PageInfo<>(page);
-    return pageInfo;
+    return PageUtils.pageObject(objects, currentPage, pageSize);
   }
 
   /**
@@ -241,38 +266,10 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
     if (type.equals("student")) {
       List<Student> students =
           studentDao.selectList(new LambdaQueryWrapper<Student>().eq(Student::getDeleted, 0));
-      int total = students.size();
-      if (total > pageSize) {
-        int toIndex = pageSize * currentPage;
-        if (toIndex > total) {
-          toIndex = total;
-        }
-        students = students.subList(pageSize * (currentPage - 1), toIndex);
-      }
-      com.github.pagehelper.Page<Student> page = new Page<>(currentPage, pageSize);
-      page.addAll(students);
-      page.setPages((total + pageSize - 1) / pageSize);
-      page.setTotal(total);
-
-      PageInfo<Student> pageInfo = new PageInfo<>(page);
-      return pageInfo;
+      return PageUtils.pageStudent(students, currentPage, pageSize);
     } else if (type.equals("tutor")) {
       List<Tutor> tutors = tutorDao.selectList(null);
-      int total = tutors.size();
-      if (total > pageSize) {
-        int toIndex = pageSize * currentPage;
-        if (toIndex > total) {
-          toIndex = total;
-        }
-        tutors = tutors.subList(pageSize * (currentPage - 1), toIndex);
-      }
-      com.github.pagehelper.Page<Tutor> page = new Page<>(currentPage, pageSize);
-      page.addAll(tutors);
-      page.setPages((total + pageSize - 1) / pageSize);
-      page.setTotal(total);
-
-      PageInfo<Tutor> pageInfo = new PageInfo<>(page);
-      return pageInfo;
+      return PageUtils.pageTutor(tutors, currentPage, pageSize);
     }
     List<Object> objects = new ArrayList<>();
     List<Student> students =
@@ -284,21 +281,7 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
     for (Tutor tutor : tutors) {
       objects.add(tutor);
     }
-    int total = objects.size();
-    if (total > pageSize) {
-      int toIndex = pageSize * currentPage;
-      if (toIndex > total) {
-        toIndex = total;
-      }
-      objects = objects.subList(pageSize * (currentPage - 1), toIndex);
-    }
-    com.github.pagehelper.Page<Object> page = new Page<>(currentPage, pageSize);
-    page.addAll(objects);
-    page.setPages((total + pageSize - 1) / pageSize);
-    page.setTotal(total);
-
-    PageInfo<Object> pageInfo = new PageInfo<>(page);
-    return pageInfo;
+    return PageUtils.pageObject(objects, currentPage, pageSize);
   }
 
   /**
@@ -315,22 +298,12 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
   @Override
   public Boolean teacherAddAccount(
       String type, String id, String name, String password, String email, String phone) {
-    if (studentDao.selectOne(
-                new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted, 0))
-            != null
-        || tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id)) != null) {
+    if (selectOneStudentByIdAndDeleted0(id) != null || selectOneTutorById(id) != null) {
       return false;
     }
-
     if (type.equals("student")) {
-      if (studentDao.selectOne(
-              new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted, 1))
-          != null) {
-        Student student =
-            studentDao.selectOne(
-                new LambdaQueryWrapper<Student>()
-                    .eq(Student::getId, id)
-                    .eq(Student::getDeleted, 1));
+      if (selectOneStudentByIdAndDeleted1(id) != null) {
+        Student student = selectOneStudentByIdAndDeleted1(id);
         student.setName(name);
         student.setPassword(password);
         student.setEmail(email);
@@ -826,60 +799,44 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
   @Override
   public List<Integer> gradeDistribution() {
     List<ModelOutputScore> modelOutputScores = modelOutputScoreDao.selectList(null);
-    int total1 = 0;
-    int total2 = 0;
-    int total3 = 0;
-    int total4 = 0;
-    int total5 = 0;
-    int total6 = 0;
-    int total7 = 0;
-    int total8 = 0;
-    int total9 = 0;
-    int total10 = 0;
+    Integer[] i = new Integer[10];
     for (ModelOutputScore modelOutputScore : modelOutputScores) {
       if (modelOutputScore.getExamScore().compareTo(new BigDecimal("0")) == 1
           && modelOutputScore.getExamScore().compareTo(new BigDecimal("10")) == -1) {
-        total1++;
+        i[0]++;
       } else if (modelOutputScore.getExamScore().compareTo(new BigDecimal("10")) == 1
           && modelOutputScore.getExamScore().compareTo(new BigDecimal("20")) == -1) {
-        total2++;
+        i[1]++;
       } else if (modelOutputScore.getExamScore().compareTo(new BigDecimal("20")) == 1
           && modelOutputScore.getExamScore().compareTo(new BigDecimal("30")) == -1) {
-        total3++;
+        i[2]++;
       } else if (modelOutputScore.getExamScore().compareTo(new BigDecimal("30")) == 1
           && modelOutputScore.getExamScore().compareTo(new BigDecimal("40")) == -1) {
-        total4++;
+        i[3]++;
       } else if (modelOutputScore.getExamScore().compareTo(new BigDecimal("40")) == 1
           && modelOutputScore.getExamScore().compareTo(new BigDecimal("50")) == -1) {
-        total5++;
+        i[4]++;
       } else if (modelOutputScore.getExamScore().compareTo(new BigDecimal("50")) == 1
           && modelOutputScore.getExamScore().compareTo(new BigDecimal("60")) == -1) {
-        total6++;
+        i[5]++;
       } else if (modelOutputScore.getExamScore().compareTo(new BigDecimal("60")) == 1
           && modelOutputScore.getExamScore().compareTo(new BigDecimal("70")) == -1) {
-        total7++;
+        i[6]++;
       } else if (modelOutputScore.getExamScore().compareTo(new BigDecimal("70")) == 1
           && modelOutputScore.getExamScore().compareTo(new BigDecimal("80")) == -1) {
-        total8++;
+        i[7]++;
       } else if (modelOutputScore.getExamScore().compareTo(new BigDecimal("80")) == 1
           && modelOutputScore.getExamScore().compareTo(new BigDecimal("90")) == -1) {
-        total9++;
+        i[8]++;
       } else {
-        total10++;
+        i[9]++;
       }
     }
 
     List<Integer> list = new ArrayList<>();
-    list.add(total1);
-    list.add(total2);
-    list.add(total3);
-    list.add(total4);
-    list.add(total5);
-    list.add(total6);
-    list.add(total7);
-    list.add(total8);
-    list.add(total9);
-    list.add(total10);
+    for (Integer index : i) {
+      list.add(index);
+    }
 
     return list;
   }
@@ -892,41 +849,16 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
    */
   @Override
   public List<Integer> gradeDistributionByClass(String className) {
-    int total1 = 0;
-    int total2 = 0;
-    int total3 = 0;
-    int total4 = 0;
-    int total5 = 0;
-    int total6 = 0;
-    int total7 = 0;
-    int total8 = 0;
-    int total9 = 0;
-    int total10 = 0;
+    Integer[] i = new Integer[10];
     List<Student> students = new ArrayList<>();
     if (className.equals("通信一班")) {
-      students =
-          studentDao.selectList(
-              new LambdaQueryWrapper<Student>()
-                  .eq(Student::getClassId, "080301")
-                  .eq(Student::getDeleted, 0));
+      students = selectStudentByClassName("080301");
     } else if (className.equals("通信二班")) {
-      students =
-          studentDao.selectList(
-              new LambdaQueryWrapper<Student>()
-                  .eq(Student::getClassId, "080302")
-                  .eq(Student::getDeleted, 0));
+      students = selectStudentByClassName("080302");
     } else if (className.equals("通信三班")) {
-      students =
-          studentDao.selectList(
-              new LambdaQueryWrapper<Student>()
-                  .eq(Student::getClassId, "080303")
-                  .eq(Student::getDeleted, 0));
+      students = selectStudentByClassName("080303");
     } else if (className.equals("通信四班")) {
-      students =
-          studentDao.selectList(
-              new LambdaQueryWrapper<Student>()
-                  .eq(Student::getClassId, "080304")
-                  .eq(Student::getDeleted, 0));
+      students = selectStudentByClassName("080304");
     }
 
     for (Student student : students) {
@@ -944,47 +876,40 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
               .getExamScore(); // student学生对应的成绩
       if (examScore.compareTo(new BigDecimal("0")) == 1
           && examScore.compareTo(new BigDecimal("10")) == -1) {
-        total1++;
+        i[0]++;
       } else if (examScore.compareTo(new BigDecimal("10")) == 1
           && examScore.compareTo(new BigDecimal("20")) == -1) {
-        total2++;
+        i[1]++;
       } else if (examScore.compareTo(new BigDecimal("20")) == 1
           && examScore.compareTo(new BigDecimal("30")) == -1) {
-        total3++;
+        i[2]++;
       } else if (examScore.compareTo(new BigDecimal("30")) == 1
           && examScore.compareTo(new BigDecimal("40")) == -1) {
-        total4++;
+        i[3]++;
       } else if (examScore.compareTo(new BigDecimal("40")) == 1
           && examScore.compareTo(new BigDecimal("50")) == -1) {
-        total5++;
+        i[4]++;
       } else if (examScore.compareTo(new BigDecimal("50")) == 1
           && examScore.compareTo(new BigDecimal("60")) == -1) {
-        total6++;
+        i[5]++;
       } else if (examScore.compareTo(new BigDecimal("60")) == 1
           && examScore.compareTo(new BigDecimal("70")) == -1) {
-        total7++;
+        i[6]++;
       } else if (examScore.compareTo(new BigDecimal("70")) == 1
           && examScore.compareTo(new BigDecimal("80")) == -1) {
-        total8++;
+        i[7]++;
       } else if (examScore.compareTo(new BigDecimal("80")) == 1
           && examScore.compareTo(new BigDecimal("90")) == -1) {
-        total9++;
+        i[8]++;
       } else {
-        total10++;
+        i[9]++;
       }
     }
 
     List<Integer> list = new ArrayList<>();
-    list.add(total1);
-    list.add(total2);
-    list.add(total3);
-    list.add(total4);
-    list.add(total5);
-    list.add(total6);
-    list.add(total7);
-    list.add(total8);
-    list.add(total9);
-    list.add(total10);
+    for (Integer index : i) {
+      list.add(index);
+    }
     return list;
   }
 

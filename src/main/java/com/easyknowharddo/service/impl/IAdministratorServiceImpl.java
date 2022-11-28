@@ -9,21 +9,17 @@ import com.easyknowharddo.dao.TeacherDao;
 import com.easyknowharddo.dao.TutorDao;
 import com.easyknowharddo.domain.Administrator;
 import com.easyknowharddo.domain.Classes;
-import com.easyknowharddo.domain.Problem;
 import com.easyknowharddo.domain.Student;
 import com.easyknowharddo.domain.Teacher;
 import com.easyknowharddo.domain.Tutor;
 import com.easyknowharddo.service.IAdministratorService;
-import com.easyknowharddo.service.utils.pageUtils;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
+import com.easyknowharddo.service.utils.PageUtils;
 import com.github.pagehelper.PageInfo;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -248,7 +244,7 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
         map = getAccountByTypeStudent(map, student, type);
         list.add(map);
       }
-      return pageUtils.pageObject(list, currentPage, pageSize);
+      return PageUtils.pageObject(list, currentPage, pageSize);
     } else if (type.equals("teacher")) {
       List<Teacher> teachers =
           teacherDao.selectList(new LambdaQueryWrapper<Teacher>().eq(Teacher::getDeleted, 0));
@@ -258,7 +254,7 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
         map = getAccountByTypeTeacher(map, teacher, type);
         list.add(map);
       }
-      return pageUtils.pageObject(list, currentPage, pageSize);
+      return PageUtils.pageObject(list, currentPage, pageSize);
     } else if (type.equals("tutor")) {
       List<Tutor> tutors = tutorDao.selectList(null);
       List<Object> list = new ArrayList<>();
@@ -267,7 +263,7 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
         map = getAccountByTypeTutor(map, tutor, type);
         list.add(map);
       }
-      return pageUtils.pageObject(list, currentPage, pageSize);
+      return PageUtils.pageObject(list, currentPage, pageSize);
     }
     List<Object> objects = new ArrayList<>();
     List<Student> students =
@@ -290,7 +286,7 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
       map = getAccountByTypeTutor(map, tutor, type);
       objects.add(map);
     }
-    return pageUtils.pageObject(objects, currentPage, pageSize);
+    return PageUtils.pageObject(objects, currentPage, pageSize);
   }
 
   /**
@@ -614,7 +610,7 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
           studentDao.selectList(
               new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted, 0));
 
-      return pageUtils.pageStudent(students, currentPage, pageSize);
+      return PageUtils.pageStudent(students, currentPage, pageSize);
     }
 
     if (teacherDao.selectOne(
@@ -623,13 +619,13 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
       List<Teacher> teachers =
           teacherDao.selectList(
               new LambdaQueryWrapper<Teacher>().eq(Teacher::getId, id).eq(Teacher::getDeleted, 0));
-      return pageUtils.pageTeacher(teachers, currentPage, pageSize);
+      return PageUtils.pageTeacher(teachers, currentPage, pageSize);
     }
 
     if (tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id)) != null) {
       List<Tutor> tutors =
           tutorDao.selectList(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id));
-      return pageUtils.pageTutor(tutors, currentPage, pageSize);
+      return PageUtils.pageTutor(tutors, currentPage, pageSize);
     }
     // 返回一个空的List ?
     return new PageInfo<List<?>>(new ArrayList<>());
@@ -689,7 +685,7 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
     }
     // 不为空，开始分页操作
     if (!objects.isEmpty()) {
-      return pageUtils.pageObject(objects, currentPage, pageSize);
+      return PageUtils.pageObject(objects, currentPage, pageSize);
     }
     // 如果object为空，返回一个空List
     return new PageInfo<List<?>>(new ArrayList<>());

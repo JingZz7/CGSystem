@@ -8,7 +8,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import java.util.List;
 
-public class pageUtils {
+public class PageUtils {
 
   /**
    * @param list:

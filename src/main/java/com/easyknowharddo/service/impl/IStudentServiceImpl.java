@@ -23,7 +23,7 @@ import com.easyknowharddo.domain.Student;
 import com.easyknowharddo.domain.Teacher;
 import com.easyknowharddo.domain.Tutor;
 import com.easyknowharddo.service.IStudentService;
-import com.easyknowharddo.service.utils.pageUtils;
+import com.easyknowharddo.service.utils.PageUtils;
 import com.easyknowharddo.utils.GetCaptcha;
 import com.easyknowharddo.utils.MailUtils;
 import com.github.pagehelper.PageHelper;
@@ -31,14 +31,11 @@ import com.github.pagehelper.PageInfo;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.text.DateFormat;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -339,7 +336,7 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
             new LambdaQueryWrapper<Problem>()
                 .eq(Problem::getId, problemId)
                 .eq(Problem::getDeleted, 0));
-    return pageUtils.pageProblem(problems, currentPage, pageSize);
+    return PageUtils.pageProblem(problems, currentPage, pageSize);
   }
 
   /**
