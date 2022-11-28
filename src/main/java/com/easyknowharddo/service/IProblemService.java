@@ -20,20 +20,20 @@ public interface IProblemService extends IService<Problem> {
   /**
    * @param problemId:
    * @param currentPage:
-   * @param pageSize: * @return PageInfo<Problem>
+   * @param pageSize: * @return PageInfo<?>
    * @author ZJ
    * @description TODO [教师]根据id查询问题(题库管理)
    * @date 2022/11/16 16:45
    */
-  public PageInfo<Problem> getProblemById(String problemId, int currentPage, int pageSize);
+  public PageInfo<?> getProblemById(String problemId, int currentPage, int pageSize);
 
   /**
    * @param problemName:
    * @param currentPage:
-   * @param pageSize: * @return PageInfo<Problem>
+   * @param pageSize: * @return PageInfo<?>
    * @author ZJ
    * @description TODO [教师]根据名称查询问题(题库管理)
    * @date 2022/11/16 16:53
    */
-  public PageInfo<Problem> getProblemListByName(String problemName, int currentPage, int pageSize);
+  public PageInfo<?> getProblemListByName(String problemName, int currentPage, int pageSize);
 }
