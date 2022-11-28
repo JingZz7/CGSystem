@@ -110,12 +110,12 @@ public interface IStudentService extends IService<Student> {
   /**
    * @param problemId:
    * @param currentPage:
-   * @param pageSize: * @return PageInfo<Problem>
+   * @param pageSize: * @return PageInfo<?>
    * @author ZJ
    * @description TODO [学生]根据id查询问题(刷题推荐)
    * @date 2022/11/15 22:37
    */
-  public PageInfo<Problem> getProblemById(String problemId, int currentPage, int pageSize);
+  public PageInfo<?> getProblemById(String problemId, int currentPage, int pageSize);
 
   /**
    * @param id:

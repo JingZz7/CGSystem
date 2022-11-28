@@ -23,6 +23,7 @@ import com.easyknowharddo.domain.Student;
 import com.easyknowharddo.domain.Teacher;
 import com.easyknowharddo.domain.Tutor;
 import com.easyknowharddo.service.IStudentService;
+import com.easyknowharddo.service.utils.pageUtils;
 import com.easyknowharddo.utils.GetCaptcha;
 import com.easyknowharddo.utils.MailUtils;
 import com.github.pagehelper.PageHelper;
@@ -57,6 +58,49 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
   @Autowired private CommentStudentDao commentStudentDao;
   @Autowired private ModelOutputScoreDao modelOutputScoreDao;
   @Autowired private ModelOutputKnowledgeDao modelOutputKnowledgeDao;
+
+  /**
+   * @param id: * @return Student
+   * @author ZJ
+   * @description TODO 通过id查找单个学生，Deleted必须为0
+   * @date 2022/11/28 11:58
+   */
+  public Student selectOneStudentByIdAndDeleted(String id) {
+    return studentDao.selectOne(
+        new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted, 0));
+  }
+
+  /**
+   * @param id: * @return Teacher
+   * @author ZJ
+   * @description TODO 通过id查找单个教师，Deleted必须为0
+   * @date 2022/11/28 11:59
+   */
+  public Teacher selectOneTeacherByIdAndDeleted(String id) {
+    return teacherDao.selectOne(
+        new LambdaQueryWrapper<Teacher>().eq(Teacher::getId, id).eq(Teacher::getDeleted, 0));
+  }
+
+  /**
+   * @param id: * @return Tutor
+   * @author ZJ
+   * @description TODO 通过id查找单个助教
+   * @date 2022/11/28 12:01
+   */
+  public Tutor selectOneTutorById(String id) {
+    return tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id));
+  }
+
+  /**
+   * @param id: * @return Administrator
+   * @author ZJ
+   * @description TODO 通过id查找单个助教管理员
+   * @date 2022/11/28 12:02
+   */
+  public Administrator selectOneAdministratorById(String id) {
+    return administratorDao.selectOne(
+        new LambdaQueryWrapper<Administrator>().eq(Administrator::getId, id));
+  }
 
   /**
    * @param id:
@@ -185,12 +229,7 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
    */
   @Override
   public Boolean studentComment(String studentId, String problemId, String description) {
-
-    if (studentDao.selectOne(
-                new LambdaQueryWrapper<Student>()
-                    .eq(Student::getId, studentId)
-                    .eq(Student::getDeleted, 0))
-            == null
+    if (selectOneStudentByIdAndDeleted(studentId) == null
         || problemDao.selectOne(
                 new LambdaQueryWrapper<Problem>()
                     .eq(Problem::getId, problemId)
@@ -288,34 +327,19 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
   /**
    * @param problemId:
    * @param currentPage:
-   * @param pageSize: * @return PageInfo<Problem>
+   * @param pageSize: * @return PageInfo<?>
    * @author ZJ
    * @description TODO [学生]根据id查询问题(刷题推荐)
    * @date 2022/11/15 22:37
    */
   @Override
-  public PageInfo<Problem> getProblemById(String problemId, int currentPage, int pageSize) {
+  public PageInfo<?> getProblemById(String problemId, int currentPage, int pageSize) {
     List<Problem> problems =
         problemDao.selectList(
             new LambdaQueryWrapper<Problem>()
                 .eq(Problem::getId, problemId)
                 .eq(Problem::getDeleted, 0));
-    int total = problems.size();
-    if (total > pageSize) {
-      int toIndex = pageSize * currentPage;
-      if (toIndex > total) {
-        toIndex = total;
-      }
-      problems = problems.subList(pageSize * (currentPage - 1), toIndex);
-    }
-    com.github.pagehelper.Page<Problem> page =
-        new com.github.pagehelper.Page<>(currentPage, pageSize);
-    page.addAll(problems);
-    page.setPages((total + pageSize - 1) / pageSize);
-    page.setTotal(total);
-
-    PageInfo<Problem> pageInfo = new PageInfo<>(page);
-    return pageInfo;
+    return pageUtils.pageProblem(problems, currentPage, pageSize);
   }
 
   /**
@@ -331,7 +355,6 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
   public Object getProblemsByDifficulty(
       String id, String difficulty, int currentPage, int pageSize) {
     if (!difficulty.equals("all")) {
-
       List<ModelOutputKnowledge> list =
           modelOutputKnowledgeDao.selectList(
               new LambdaQueryWrapper<ModelOutputKnowledge>()
@@ -340,9 +363,7 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
       for (ModelOutputKnowledge modelOutputKnowledge : list) {
         map.put(modelOutputKnowledge.getKnowledgePointId(), modelOutputKnowledge.getForecast());
       }
-
       List<String> arrayList = new ArrayList<>(); // 存放知识点id
-
       for (Map.Entry<String, BigDecimal> vo : map.entrySet()) {
         BigDecimal b = new BigDecimal("0.5");
         if (vo.getValue().compareTo(b) == 1) { // forecast大于0.5
@@ -350,7 +371,6 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
         }
         arrayList.add(vo.getKey());
       }
-
       List<Problem> problems = new ArrayList<>(); // 存放推荐题目
       int len = arrayList.size();
 
@@ -367,7 +387,6 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
       }
       return problems;
     }
-
     List<ModelOutputKnowledge> list =
         modelOutputKnowledgeDao.selectList(
             new LambdaQueryWrapper<ModelOutputKnowledge>()
@@ -376,9 +395,7 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
     for (ModelOutputKnowledge modelOutputKnowledge : list) {
       map.put(modelOutputKnowledge.getKnowledgePointId(), modelOutputKnowledge.getForecast());
     }
-
     List<String> arrayList = new ArrayList<>(); // 存放知识点id
-
     for (Map.Entry<String, BigDecimal> vo : map.entrySet()) {
       BigDecimal b = new BigDecimal("0.5");
       if (vo.getValue().compareTo(b) == 1) { // forecast大于0.5
@@ -386,10 +403,8 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
       }
       arrayList.add(vo.getKey());
     }
-
     List<Problem> problems = new ArrayList<>(); // 存放推荐题目
     int len = arrayList.size();
-
     for (int i = 0; i < len; ++i) {
       List<Problem> problemList =
           problemDao.selectList(
@@ -412,61 +427,26 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
   @Override
   public String getCaptchaById(String id) {
 
-    if (studentDao.selectOne(
-                new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted, 0))
-            == null
-        && teacherDao.selectOne(
-                new LambdaQueryWrapper<Teacher>().eq(Teacher::getId, id).eq(Teacher::getDeleted, 0))
-            == null
-        && tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id)) == null
-        && administratorDao.selectOne(
-                new LambdaQueryWrapper<Administrator>().eq(Administrator::getId, id))
-            == null) {
+    if (selectOneStudentByIdAndDeleted(id) == null
+        && selectOneTeacherByIdAndDeleted(id) == null
+        && selectOneTutorById(id) == null
+        && selectOneAdministratorById(id) == null) {
       return "学号错误";
     }
 
     String code = new GetCaptcha().getCode(6);
 
-    if (studentDao.selectOne(
-            new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted, 0))
-        != null) {
+    if (selectOneStudentByIdAndDeleted(id) != null) {
       new MailUtils()
-          .sendMail(
-              studentDao
-                  .selectOne(
-                      new LambdaQueryWrapper<Student>()
-                          .eq(Student::getId, id)
-                          .eq(Student::getDeleted, 0))
-                  .getEmail(),
-              "验证码为：" + code,
-              "CGSystem验证码");
-    } else if (teacherDao.selectOne(
-            new LambdaQueryWrapper<Teacher>().eq(Teacher::getId, id).eq(Teacher::getDeleted, 0))
-        != null) {
+          .sendMail(selectOneStudentByIdAndDeleted(id).getEmail(), "验证码为：" + code, "CGSystem验证码");
+    } else if (selectOneTeacherByIdAndDeleted(id) != null) {
       new MailUtils()
-          .sendMail(
-              teacherDao
-                  .selectOne(
-                      new LambdaQueryWrapper<Teacher>()
-                          .eq(Teacher::getId, id)
-                          .eq(Teacher::getDeleted, 0))
-                  .getEmail(),
-              "验证码为：" + code,
-              "CGSystem验证码");
-    } else if (tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id)) != null) {
-      new MailUtils()
-          .sendMail(
-              tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id)).getEmail(),
-              "验证码为：" + code,
-              "CGSystem验证码");
+          .sendMail(selectOneTeacherByIdAndDeleted(id).getEmail(), "验证码为：" + code, "CGSystem验证码");
+    } else if (selectOneTutorById(id) != null) {
+      new MailUtils().sendMail(selectOneTutorById(id).getEmail(), "验证码为：" + code, "CGSystem验证码");
     } else {
       new MailUtils()
-          .sendMail(
-              administratorDao
-                  .selectOne(new LambdaQueryWrapper<Administrator>().eq(Administrator::getId, id))
-                  .getEmail(),
-              "验证码为：" + code,
-              "CGSystem验证码");
+          .sendMail(selectOneAdministratorById(id).getEmail(), "验证码为：" + code, "CGSystem验证码");
     }
 
     return code;
@@ -481,46 +461,30 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
    */
   @Override
   public Boolean forgotPassword(String id, String password) {
-    if (studentDao.selectOne(
-                new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted, 0))
-            == null
-        && teacherDao.selectOne(
-                new LambdaQueryWrapper<Teacher>().eq(Teacher::getId, id).eq(Teacher::getDeleted, 0))
-            == null
-        && tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id)) == null
-        && administratorDao.selectOne(
-                new LambdaQueryWrapper<Administrator>().eq(Administrator::getId, id))
-            == null) {
+    if (selectOneStudentByIdAndDeleted(id) == null
+        && selectOneTeacherByIdAndDeleted(id) == null
+        && selectOneTutorById(id) == null
+        && selectOneAdministratorById(id) == null) {
       return false;
     }
 
-    if (studentDao.selectOne(
-            new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted, 0))
-        != null) {
-      Student student =
-          studentDao.selectOne(
-              new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted, 0));
+    if (selectOneStudentByIdAndDeleted(id) != null) {
+      Student student = selectOneStudentByIdAndDeleted(id);
       student.setPassword(password);
       studentDao.updateById(student);
       return true;
-    } else if (teacherDao.selectOne(
-            new LambdaQueryWrapper<Teacher>().eq(Teacher::getId, id).eq(Teacher::getDeleted, 0))
-        != null) {
-      Teacher teacher =
-          teacherDao.selectOne(
-              new LambdaQueryWrapper<Teacher>().eq(Teacher::getId, id).eq(Teacher::getDeleted, 0));
+    } else if (selectOneTeacherByIdAndDeleted(id) != null) {
+      Teacher teacher = selectOneTeacherByIdAndDeleted(id);
       teacher.setPassword(password);
       teacherDao.updateById(teacher);
       return true;
-    } else if (tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id)) != null) {
-      Tutor tutor = tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id));
+    } else if (selectOneTutorById(id) != null) {
+      Tutor tutor = selectOneTutorById(id);
       tutor.setPassword(password);
       tutorDao.updateById(tutor);
       return true;
     } else {
-      Administrator administrator =
-          administratorDao.selectOne(
-              new LambdaQueryWrapper<Administrator>().eq(Administrator::getId, id));
+      Administrator administrator = selectOneAdministratorById(id);
       administrator.setPassword(password);
       administratorDao.updateById(administrator);
       return true;

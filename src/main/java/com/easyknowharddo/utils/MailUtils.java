@@ -47,7 +47,7 @@ public final class MailUtils {
       final Properties props = new Properties();
       props.put("mail.smtp.auth", "true");
       //            注意发送邮件的方法中，发送给谁的，发送给对应的app，※
-      //            要改成对应的app。扣扣的改成qq的，网易的要改成网易的。※
+      //            要改成对应的app。qq的改成qq的，网易的要改成网易的。※
       props.put("mail.smtp.host", "smtp.qq.com");
       //            props.put("mail.smtp.host", "smtp.163.com");
 
