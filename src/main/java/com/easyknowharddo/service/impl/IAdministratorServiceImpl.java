@@ -9,10 +9,12 @@ import com.easyknowharddo.dao.TeacherDao;
 import com.easyknowharddo.dao.TutorDao;
 import com.easyknowharddo.domain.Administrator;
 import com.easyknowharddo.domain.Classes;
+import com.easyknowharddo.domain.Problem;
 import com.easyknowharddo.domain.Student;
 import com.easyknowharddo.domain.Teacher;
 import com.easyknowharddo.domain.Tutor;
 import com.easyknowharddo.service.IAdministratorService;
+import com.easyknowharddo.service.utils.pageUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -33,6 +35,70 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
   @Autowired private TeacherDao teacherDao;
   @Autowired private TutorDao tutorDao;
   @Autowired private ClassesDao classesDao;
+
+
+  /**
+   * @param map:
+   * @param student:
+   * @param type: * @return HashMap<Object,Object>
+   * @author ZJ
+   * @description TODO 分页查找学生分类，仅仅为了减少单个函数代码量
+   * @date 2022/11/28 10:25
+   */
+  public HashMap<Object, Object> getAccountByTypeStudent(
+      HashMap<Object, Object> map, Student student, String type) {
+    map.put("pkStudentId", student.getPkStudentId());
+    map.put("id", student.getId());
+    map.put("name", student.getName());
+    map.put("password", student.getPassword());
+    map.put("phone", student.getPhone());
+    map.put("email", student.getEmail());
+    map.put("classId", student.getClassId());
+    map.put("deleted", student.getDeleted());
+    map.put("type", type);
+    return map;
+  }
+
+  /**
+   * @param map:
+   * @param teacher:
+   * @param type: * @return HashMap<Object,Object>
+   * @author ZJ
+   * @description TODO 分页查找教师分类，仅仅为了减少单个函数代码量
+   * @date 2022/11/28 10:26
+   */
+  public HashMap<Object, Object> getAccountByTypeTeacher(
+      HashMap<Object, Object> map, Teacher teacher, String type) {
+    map.put("pkTeacherId", teacher.getPkTeacherId());
+    map.put("id", teacher.getId());
+    map.put("name", teacher.getName());
+    map.put("password", teacher.getPassword());
+    map.put("phone", teacher.getPhone());
+    map.put("email", teacher.getEmail());
+    map.put("deleted", teacher.getDeleted());
+    map.put("type", type);
+    return map;
+  }
+
+  /**
+   * @param map:
+   * @param tutor:
+   * @param type: * @return HashMap<Object,Object>
+   * @author ZJ
+   * @description TODO 分页查找助教分类，仅仅为了减少单个函数代码量
+   * @date 2022/11/28 10:26
+   */
+  public HashMap<Object, Object> getAccountByTypeTutor(
+      HashMap<Object, Object> map, Tutor tutor, String type) {
+    map.put("pkTutorId", tutor.getPkTutorId());
+    map.put("id", tutor.getId());
+    map.put("name", tutor.getName());
+    map.put("password", tutor.getPassword());
+    map.put("phone", tutor.getPhone());
+    map.put("email", tutor.getEmail());
+    map.put("type", type);
+    return map;
+  }
 
   /**
    * @param name:
@@ -179,92 +245,29 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
       List<Object> list = new ArrayList<>();
       for (Student student : students) {
         HashMap<Object, Object> map = new HashMap<>();
-        map.put("pkStudentId", student.getPkStudentId());
-        map.put("id", student.getId());
-        map.put("name", student.getName());
-        map.put("password", student.getPassword());
-        map.put("phone", student.getPhone());
-        map.put("email", student.getEmail());
-        map.put("classId", student.getClassId());
-        map.put("deleted", student.getDeleted());
-        map.put("type", type);
+        map = getAccountByTypeStudent(map, student, type);
         list.add(map);
       }
-      int total = list.size();
-      if (total > pageSize) {
-        int toIndex = pageSize * currentPage;
-        if (toIndex > total) {
-          toIndex = total;
-        }
-        list = list.subList(pageSize * (currentPage - 1), toIndex);
-      }
-      com.github.pagehelper.Page<Object> page = new Page<>(currentPage, pageSize);
-      page.addAll(list);
-      page.setPages((total + pageSize - 1) / pageSize);
-      page.setTotal(total);
-
-      PageInfo<Object> pageInfo = new PageInfo<>(page);
-      return pageInfo;
+      return pageUtils.pageObject(list, currentPage, pageSize);
     } else if (type.equals("teacher")) {
       List<Teacher> teachers =
           teacherDao.selectList(new LambdaQueryWrapper<Teacher>().eq(Teacher::getDeleted, 0));
       List<Object> list = new ArrayList<>();
       for (Teacher teacher : teachers) {
         HashMap<Object, Object> map = new HashMap<>();
-        map.put("pkTeacherId", teacher.getPkTeacherId());
-        map.put("id", teacher.getId());
-        map.put("name", teacher.getName());
-        map.put("password", teacher.getPassword());
-        map.put("phone", teacher.getPhone());
-        map.put("email", teacher.getEmail());
-        map.put("deleted", teacher.getDeleted());
-        map.put("type", type);
+        map = getAccountByTypeTeacher(map, teacher, type);
         list.add(map);
       }
-      int total = list.size();
-      if (total > pageSize) {
-        int toIndex = pageSize * currentPage;
-        if (toIndex > total) {
-          toIndex = total;
-        }
-        list = list.subList(pageSize * (currentPage - 1), toIndex);
-      }
-      com.github.pagehelper.Page<Object> page = new Page<>(currentPage, pageSize);
-      page.addAll(list);
-      page.setPages((total + pageSize - 1) / pageSize);
-      page.setTotal(total);
-
-      PageInfo<Object> pageInfo = new PageInfo<>(page);
-      return pageInfo;
+      return pageUtils.pageObject(list, currentPage, pageSize);
     } else if (type.equals("tutor")) {
       List<Tutor> tutors = tutorDao.selectList(null);
       List<Object> list = new ArrayList<>();
       for (Tutor tutor : tutors) {
         HashMap<Object, Object> map = new HashMap<>();
-        map.put("pkTutorId", tutor.getPkTutorId());
-        map.put("id", tutor.getId());
-        map.put("name", tutor.getName());
-        map.put("password", tutor.getPassword());
-        map.put("phone", tutor.getPhone());
-        map.put("email", tutor.getEmail());
-        map.put("type", type);
+        map = getAccountByTypeTutor(map, tutor, type);
         list.add(map);
       }
-      int total = list.size();
-      if (total > pageSize) {
-        int toIndex = pageSize * currentPage;
-        if (toIndex > total) {
-          toIndex = total;
-        }
-        list = list.subList(pageSize * (currentPage - 1), toIndex);
-      }
-      com.github.pagehelper.Page<Object> page = new Page<>(currentPage, pageSize);
-      page.addAll(list);
-      page.setPages((total + pageSize - 1) / pageSize);
-      page.setTotal(total);
-
-      PageInfo<Object> pageInfo = new PageInfo<>(page);
-      return pageInfo;
+      return pageUtils.pageObject(list, currentPage, pageSize);
     }
     List<Object> objects = new ArrayList<>();
     List<Student> students =
@@ -274,55 +277,20 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
     List<Tutor> tutors = tutorDao.selectList(null);
     for (Student student : students) {
       HashMap<Object, Object> map = new HashMap<>();
-      map.put("pkStudentId", student.getPkStudentId());
-      map.put("id", student.getId());
-      map.put("name", student.getName());
-      map.put("password", student.getPassword());
-      map.put("phone", student.getPhone());
-      map.put("email", student.getEmail());
-      map.put("classId", student.getClassId());
-      map.put("deleted", student.getDeleted());
-      map.put("type", "student");
+      map = getAccountByTypeStudent(map, student, type);
       objects.add(map);
     }
     for (Teacher teacher : teachers) {
       HashMap<Object, Object> map = new HashMap<>();
-      map.put("pkTeacherId", teacher.getPkTeacherId());
-      map.put("id", teacher.getId());
-      map.put("name", teacher.getName());
-      map.put("password", teacher.getPassword());
-      map.put("phone", teacher.getPhone());
-      map.put("email", teacher.getEmail());
-      map.put("deleted", teacher.getDeleted());
-      map.put("type", "teacher");
+      map = getAccountByTypeTeacher(map, teacher, type);
       objects.add(map);
     }
     for (Tutor tutor : tutors) {
       HashMap<Object, Object> map = new HashMap<>();
-      map.put("pkTutorId", tutor.getPkTutorId());
-      map.put("id", tutor.getId());
-      map.put("name", tutor.getName());
-      map.put("password", tutor.getPassword());
-      map.put("phone", tutor.getPhone());
-      map.put("email", tutor.getEmail());
-      map.put("type", "tutor");
+      map = getAccountByTypeTutor(map, tutor, type);
       objects.add(map);
     }
-    int total = objects.size();
-    if (total > pageSize) {
-      int toIndex = pageSize * currentPage;
-      if (toIndex > total) {
-        toIndex = total;
-      }
-      objects = objects.subList(pageSize * (currentPage - 1), toIndex);
-    }
-    com.github.pagehelper.Page<Object> page = new Page<>(currentPage, pageSize);
-    page.addAll(objects);
-    page.setPages((total + pageSize - 1) / pageSize);
-    page.setTotal(total);
-
-    PageInfo<Object> pageInfo = new PageInfo<>(page);
-    return pageInfo;
+    return pageUtils.pageObject(objects, currentPage, pageSize);
   }
 
   /**
@@ -646,21 +614,7 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
           studentDao.selectList(
               new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted, 0));
 
-      int total = students.size();
-      if (total > pageSize) {
-        int toIndex = pageSize * currentPage;
-        if (toIndex > total) {
-          toIndex = total;
-        }
-        students = students.subList(pageSize * (currentPage - 1), toIndex);
-      }
-      com.github.pagehelper.Page<Student> page = new Page<>(currentPage, pageSize);
-      page.addAll(students);
-      page.setPages((total + pageSize - 1) / pageSize);
-      page.setTotal(total);
-
-      PageInfo<Student> pageInfo = new PageInfo<>(page);
-      return pageInfo;
+      return pageUtils.pageStudent(students, currentPage, pageSize);
     }
 
     if (teacherDao.selectOne(
@@ -669,43 +623,15 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
       List<Teacher> teachers =
           teacherDao.selectList(
               new LambdaQueryWrapper<Teacher>().eq(Teacher::getId, id).eq(Teacher::getDeleted, 0));
-      int total = teachers.size();
-      if (total > pageSize) {
-        int toIndex = pageSize * currentPage;
-        if (toIndex > total) {
-          toIndex = total;
-        }
-        teachers = teachers.subList(pageSize * (currentPage - 1), toIndex);
-      }
-      com.github.pagehelper.Page<Teacher> page = new Page<>(currentPage, pageSize);
-      page.addAll(teachers);
-      page.setPages((total + pageSize - 1) / pageSize);
-      page.setTotal(total);
-
-      PageInfo<Teacher> pageInfo = new PageInfo<>(page);
-      return pageInfo;
+      return pageUtils.pageTeacher(teachers, currentPage, pageSize);
     }
 
     if (tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id)) != null) {
       List<Tutor> tutors =
           tutorDao.selectList(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id));
-      int total = tutors.size();
-      if (total > pageSize) {
-        int toIndex = pageSize * currentPage;
-        if (toIndex > total) {
-          toIndex = total;
-        }
-        tutors = tutors.subList(pageSize * (currentPage - 1), toIndex);
-      }
-      com.github.pagehelper.Page<Tutor> page = new Page<>(currentPage, pageSize);
-      page.addAll(tutors);
-      page.setPages((total + pageSize - 1) / pageSize);
-      page.setTotal(total);
-
-      PageInfo<Tutor> pageInfo = new PageInfo<>(page);
-      return pageInfo;
+      return pageUtils.pageTutor(tutors, currentPage, pageSize);
     }
-
+    // 返回一个空的List ?
     return new PageInfo<List<?>>(new ArrayList<>());
   }
 
@@ -719,9 +645,9 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
    */
   @Override
   public PageInfo<?> getAccountByName(String name, int currentPage, int pageSize) {
-
+    // 模糊查询
     List<Object> objects = new ArrayList<>();
-
+    // 查找包含name的学生
     if (studentDao.selectList(
             new LambdaQueryWrapper<Student>()
                 .eq(Student::getDeleted, 0)
@@ -737,7 +663,7 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
         objects.add(student);
       }
     }
-
+    // 查询包含name的教师
     if (teacherDao.selectList(
             new LambdaQueryWrapper<Teacher>()
                 .eq(Teacher::getDeleted, 0)
@@ -753,34 +679,19 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
         objects.add(teacher);
       }
     }
-
+    // 查询包含name的助教
     if (tutorDao.selectList(new LambdaQueryWrapper<Tutor>().like(Tutor::getName, name)) != null) {
       List<Tutor> tutors =
           tutorDao.selectList(new LambdaQueryWrapper<Tutor>().like(Tutor::getName, name));
-
       for (Tutor tutor : tutors) {
         objects.add(tutor);
       }
     }
-
+    // 不为空，开始分页操作
     if (!objects.isEmpty()) {
-      int total = objects.size();
-      if (total > pageSize) {
-        int toIndex = pageSize * currentPage;
-        if (toIndex > total) {
-          toIndex = total;
-        }
-        objects = objects.subList(pageSize * (currentPage - 1), toIndex);
-      }
-      com.github.pagehelper.Page<Object> page = new Page<>(currentPage, pageSize);
-      page.addAll(objects);
-      page.setPages((total + pageSize - 1) / pageSize);
-      page.setTotal(total);
-
-      PageInfo<Object> pageInfo = new PageInfo<>(page);
-      return pageInfo;
+      return pageUtils.pageObject(objects, currentPage, pageSize);
     }
-
+    // 如果object为空，返回一个空List
     return new PageInfo<List<?>>(new ArrayList<>());
   }
 }
