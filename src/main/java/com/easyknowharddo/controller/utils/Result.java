@@ -9,15 +9,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Result {
 
-  private Boolean flag;
+    private Boolean flag;
 
-  private Object data;
+    private Object data;
 
-  public Result(Boolean flag) {
-    this.flag = flag;
-  }
+    public Result(Boolean flag) {
+        this.flag = flag;
+    }
 
-  public Result(Object data) {
-    this.data = data;
-  }
+    public Result(Object data) {
+        this.data = data;
+    }
 }

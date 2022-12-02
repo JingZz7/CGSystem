@@ -5,4 +5,5 @@ import com.easyknowharddo.domain.RecommendProblem;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface RecommendProblemDao extends BaseMapper<RecommendProblem> {}
+public interface RecommendProblemDao extends BaseMapper<RecommendProblem> {
+}

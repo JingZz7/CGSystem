@@ -5,4 +5,5 @@ import com.easyknowharddo.domain.KnowledgePoint;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface KnowledgePointDao extends BaseMapper<KnowledgePoint> {}
+public interface KnowledgePointDao extends BaseMapper<KnowledgePoint> {
+}

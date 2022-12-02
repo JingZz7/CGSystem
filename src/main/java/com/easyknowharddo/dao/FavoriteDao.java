@@ -5,4 +5,5 @@ import com.easyknowharddo.domain.Favorite;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface FavoriteDao extends BaseMapper<Favorite> {}
+public interface FavoriteDao extends BaseMapper<Favorite> {
+}

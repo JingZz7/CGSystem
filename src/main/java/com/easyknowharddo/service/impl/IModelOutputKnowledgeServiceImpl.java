@@ -8,5 +8,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class IModelOutputKnowledgeServiceImpl
-    extends ServiceImpl<ModelOutputKnowledgeDao, ModelOutputKnowledge>
-    implements IModelOutputKnowledgeService {}
+        extends ServiceImpl<ModelOutputKnowledgeDao, ModelOutputKnowledge>
+        implements IModelOutputKnowledgeService {
+}

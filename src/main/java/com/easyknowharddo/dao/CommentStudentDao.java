@@ -5,4 +5,5 @@ import com.easyknowharddo.domain.CommentStudent;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface CommentStudentDao extends BaseMapper<CommentStudent> {}
+public interface CommentStudentDao extends BaseMapper<CommentStudent> {
+}

@@ -9,7 +9,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @ServletComponentScan
 @EnableAspectJAutoProxy
 public class CgSystemApplication {
-  public static void main(String[] args) {
-    SpringApplication.run(CgSystemApplication.class, args);
-  }
+    public static void main(String[] args) {
+        SpringApplication.run(CgSystemApplication.class, args);
+    }
 }

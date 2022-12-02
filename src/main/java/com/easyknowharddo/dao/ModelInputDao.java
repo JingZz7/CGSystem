@@ -5,4 +5,5 @@ import com.easyknowharddo.domain.ModelInput;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface ModelInputDao extends BaseMapper<ModelInput> {}
+public interface ModelInputDao extends BaseMapper<ModelInput> {
+}
