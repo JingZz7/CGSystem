@@ -9,6 +9,7 @@
 Technology stack and middleware used：
 
 - SpringBoot 2.3.x.RELEASE
+- ~~SpringSecurity 5.3.x~~
 - MyBatis-Plus 3.4.x
 - MySQL 8.0.x
 - Druid 1.1.16
@@ -16,5 +17,7 @@ Technology stack and middleware used：
 - Element-ui ?
 
 **统一采用  ~~RESTful~~ 风格编码方式**
+
+前端代码[点击此处](https://gitee.com/jiajia212/cg)
 
 `Still in the back-end development stage`

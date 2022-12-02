@@ -62,7 +62,7 @@ public class LoginController {
     String token = null;
     Student user = iStudentService.getOne(wrapper);
     if (user != null) {
-      token = TokenUtil.sign(user);
+      token = TokenUtil.sign(user.getId());
     }
     // 将token放在响应头
     //        response.setHeader(JwtTokenUtil.AUTH_HEADER_KEY, JwtTokenUtil.TOKEN_PREFIX + token);

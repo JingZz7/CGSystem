@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.util.ArrayList;
 import java.util.List;
 
-/** 拦截器配置 */
+/** token拦截器配置 */
 @Configuration
 public class IntercepterConfig implements WebMvcConfigurer {
 
@@ -23,7 +23,7 @@ public class IntercepterConfig implements WebMvcConfigurer {
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
     List<String> excludePath = new ArrayList<>();
-    excludePath.add("/user_register"); // 注册
+//    excludePath.add("/register"); // 注册
     excludePath.add("/login/login"); // 登录
     excludePath.add("/logout"); // 登出
     excludePath.add("/static/**"); // 静态资源
