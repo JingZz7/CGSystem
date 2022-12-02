@@ -2,6 +2,7 @@ package com.easyknowharddo.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.easyknowharddo.controller.utils.JsonResult;
 import com.easyknowharddo.domain.Administrator;
 import com.easyknowharddo.domain.Student;
@@ -11,13 +12,17 @@ import com.easyknowharddo.service.IAdministratorService;
 import com.easyknowharddo.service.IStudentService;
 import com.easyknowharddo.service.ITeacherService;
 import com.easyknowharddo.service.ITutorService;
+import com.easyknowharddo.utils.TokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -38,6 +43,60 @@ public class LoginController {
     LambdaQueryWrapper<Student> lqw = new LambdaQueryWrapper<>();
     lqw.eq(Student::getId, "202026010512");
     return JsonResult.success(iStudentService.getOne(lqw));
+  }
+
+  /**
+   * @param obj: * @return JsonResult
+   * @author ZJ
+   * @description TODO token-test
+   * @date 2022/12/2 16:08
+   */
+  @RequestMapping(value = "/login", method = RequestMethod.POST)
+  public JsonResult login(@RequestBody JSONObject obj) {
+    System.out.println(obj);
+    //        String scope= JSONObject.parseObject(obj).getJSONObject("data").getString("scope");
+    QueryWrapper<Student> wrapper = new QueryWrapper<>();
+    obj.getString("password");
+    wrapper.eq("id", obj.getString("id")).eq("password", obj.getString("password"));
+
+    String token = null;
+    Student user = iStudentService.getOne(wrapper);
+    if (user != null) {
+      token = TokenUtil.sign(user);
+    }
+    // 将token放在响应头
+    //        response.setHeader(JwtTokenUtil.AUTH_HEADER_KEY, JwtTokenUtil.TOKEN_PREFIX + token);
+    if (token != null) {
+
+      return JsonResult.success(token, "student");
+    }
+    return JsonResult.failed("error");
+  }
+
+  /**
+   * @param token:
+   * @param obj: * @return JsonResult
+   * @author ZJ
+   * @description TODO token-test
+   * @date 2022/12/2 16:07
+   */
+  @RequestMapping(value = "/verify", method = RequestMethod.POST)
+  public JsonResult verify(@RequestHeader("token") String token, @RequestBody JSONObject obj) {
+    System.out.println(token);
+    System.out.println(token);
+    System.out.println(token);
+    System.out.println(token);
+    System.out.println(token);
+
+    System.out.println(obj.getString("token1"));
+    System.out.println(obj.getString("token1"));
+    System.out.println(obj.getString("token1"));
+    System.out.println(obj.getString("token1"));
+    List<String> list = TokenUtil.verify(obj.getString("token1"));
+    if (list.get(0).equals("true")) {
+      return JsonResult.success(list.get(1), "success");
+    }
+    return JsonResult.validateFailed("error");
   }
 
   /**
