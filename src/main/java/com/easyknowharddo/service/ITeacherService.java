@@ -5,6 +5,7 @@ import com.easyknowharddo.domain.Problem;
 import com.easyknowharddo.domain.Teacher;
 import com.github.pagehelper.PageInfo;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 
@@ -230,10 +231,28 @@ public interface ITeacherService extends IService<Teacher> {
     public List<Integer> gradeDistributionByClass(String className);
 
     /**
-     * @param id: * @return List<Object>
+     * @param id: * @return List<BigDecimal>
      * @author ZJ
      * @description TODO [教师]获取学生知识点成绩扇形图
      * @date 2022/11/22 21:58
      */
-    public List<Object> getKnowledgePointGrade(String id);
+    public List<BigDecimal> getKnowledgePointGrade(String id);
+
+    /**
+     * @param id:
+     * @return Boolean
+     * @author ZJ
+     * @description TODO [教师]是否存在
+     * @date 2022/12/3 19:03
+     */
+    public Boolean isTeacherExist(String id);
+
+    /**
+     * @param id:
+     * @return List<HashMap < String, String>>
+     * @author ZJ
+     * @description TODO [教师]展示个人信息(个人中心)
+     * @date 2022/12/3 19:05
+     */
+    public List<HashMap<String, String>> displayPersonalInformation(String id);
 }

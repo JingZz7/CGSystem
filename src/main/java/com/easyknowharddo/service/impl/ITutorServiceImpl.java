@@ -9,6 +9,10 @@ import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 @Service
 public class ITutorServiceImpl extends ServiceImpl<TutorDao, Tutor> implements ITutorService {
 
@@ -46,5 +50,41 @@ public class ITutorServiceImpl extends ServiceImpl<TutorDao, Tutor> implements I
         lambdaQueryWrapper.eq(Tutor::getId, id).eq(Tutor::getPassword, password);
         if (tutorDao.selectOne(lambdaQueryWrapper) == null) return false;
         return true;
+    }
+
+    /**
+     * @param id:
+     * @return Boolean
+     * @author ZJ
+     * @description TODO [助教]是否存在
+     * @date 2022/12/3 18:45
+     */
+    @Override
+    public Boolean isTutorExist(String id) {
+        if (tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id)) != null) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param id:
+     * @return List<HashMap < String, String>>
+     * @author ZJ
+     * @description TODO [助教]展示个人信息(个人中心)
+     * @date 2022/12/3 18:29
+     */
+    @Override
+    public List<HashMap<String, String>> displayPersonalInformation(String id) {
+        HashMap<String, String> map = new HashMap<>();
+        Tutor tutor =
+                tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id));
+        map.put("id", id);
+        map.put("name", tutor.getName());
+        map.put("email", tutor.getEmail());
+        map.put("phone", tutor.getPhone());
+        List<HashMap<String, String>> list = new ArrayList<>();
+        list.add(map);
+        return list;
     }
 }

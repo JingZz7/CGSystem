@@ -74,7 +74,8 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
      */
     public Student selectOneStudentByIdAndDeleted(String id) {
         return studentDao.selectOne(
-                new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted, 0));
+                new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted,
+                        0));
     }
 
     /**
@@ -85,7 +86,8 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
      */
     public Teacher selectOneTeacherByIdAndDeleted(String id) {
         return teacherDao.selectOne(
-                new LambdaQueryWrapper<Teacher>().eq(Teacher::getId, id).eq(Teacher::getDeleted, 0));
+                new LambdaQueryWrapper<Teacher>().eq(Teacher::getId, id).eq(Teacher::getDeleted,
+                        0));
     }
 
     /**
@@ -185,8 +187,7 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
         LambdaQueryWrapper<Student> lqw = new LambdaQueryWrapper<>();
         lqw.eq(Student::getDeleted, 0)
                 .and(i -> i.eq(Student::getId, id).eq(Student::getPassword, password));
-        if (studentDao.selectOne(lqw) == null) return false;
-        return true;
+        return studentDao.selectOne(lqw) != null;
     }
 
     /**
@@ -199,8 +200,7 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
     public Boolean isStudentPhone(String phone) {
         LambdaQueryWrapper<Student> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(Student::getPhone, phone);
-        if (studentDao.selectOne(lambdaQueryWrapper) == null) return false;
-        return true;
+        return studentDao.selectOne(lambdaQueryWrapper) != null;
     }
 
     /**
@@ -355,7 +355,8 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
                                     .eq(ModelOutputKnowledge::getStudentId, id));
             HashMap<String, BigDecimal> map = new HashMap<>();
             for (ModelOutputKnowledge modelOutputKnowledge : list)
-                map.put(modelOutputKnowledge.getKnowledgePointId(), modelOutputKnowledge.getForecast());
+                map.put(modelOutputKnowledge.getKnowledgePointId(),
+                        modelOutputKnowledge.getForecast());
             List<String> arrayList = new ArrayList<>(); // 存放知识点id
             for (Map.Entry<String, BigDecimal> vo : map.entrySet()) {
                 BigDecimal b = new BigDecimal("0.5");
@@ -421,14 +422,18 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
         String code = new GetCaptcha().getCode(6);
 
         if (selectOneStudentByIdAndDeleted(id) != null) new MailUtils()
-                .sendMail(selectOneStudentByIdAndDeleted(id).getEmail(), "验证码为：" + code, "CGSystem验证码");
+                .sendMail(selectOneStudentByIdAndDeleted(id).getEmail(), "验证码为：" + code,
+                        "CGSystem验证码");
         else if (selectOneTeacherByIdAndDeleted(id) != null) new MailUtils()
-                .sendMail(selectOneTeacherByIdAndDeleted(id).getEmail(), "验证码为：" + code, "CGSystem验证码");
+                .sendMail(selectOneTeacherByIdAndDeleted(id).getEmail(), "验证码为：" + code,
+                        "CGSystem验证码");
         else if (selectOneTutorById(id) != null)
-            new MailUtils().sendMail(selectOneTutorById(id).getEmail(), "验证码为：" + code, "CGSystem验证码");
+            new MailUtils().sendMail(selectOneTutorById(id).getEmail(), "验证码为：" + code, "CGSystem" +
+                    "验证码");
         else
             new MailUtils()
-                    .sendMail(selectOneAdministratorById(id).getEmail(), "验证码为：" + code, "CGSystem验证码");
+                    .sendMail(selectOneAdministratorById(id).getEmail(), "验证码为：" + code,
+                            "CGSystem验证码");
 
         return code;
     }
@@ -482,6 +487,45 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
                 .selectOne(
                         new LambdaQueryWrapper<ModelOutputScore>().eq(ModelOutputScore::getStudentId, id))
                 .getExamScore();
+    }
+
+    /**
+     * @param id:
+     * @return Boolean
+     * @author ZJ
+     * @description TODO [学生]是否存在
+     * @date 2022/12/3 18:45
+     */
+    @Override
+    public Boolean isStudentExist(String id) {
+        if (studentDao.selectOne(new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted, 0)) != null) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param id:
+     * @return List<HashMap < String, String>>
+     * @author ZJ
+     * @description TODO [学生]展示个人信息(个人中心)
+     * @date 2022/12/3 18:29
+     */
+    @Override
+    public List<HashMap<String, String>> displayPersonalInformation(String id) {
+        HashMap<String, String> map = new HashMap<>();
+        Student student =
+                studentDao.selectOne(new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted,
+                        0));
+        map.put("id", id);
+        map.put("name", student.getName());
+        map.put("class", classesDao.selectOne(new LambdaQueryWrapper<Classes>().eq(Classes::getId,
+                student.getClassId()).eq(Classes::getDeleted, 0)).getName());
+        map.put("email", student.getEmail());
+        map.put("phone", student.getPhone());
+        List<HashMap<String, String>> list = new ArrayList<>();
+        list.add(map);
+        return list;
     }
 
     /**

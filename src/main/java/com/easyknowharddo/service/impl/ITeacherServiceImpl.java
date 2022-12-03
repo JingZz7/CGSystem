@@ -28,6 +28,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -831,67 +832,127 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
     }
 
     /**
-     * @param id: * @return List<Object>
+     * @param id: * @return List<BigDecimal>
      * @author ZJ
      * @description TODO [教师]获取学生知识点成绩扇形图
      * @date 2022/11/22 21:58
      */
     @Override
-    public List<Object> getKnowledgePointGrade(String id) {
+    public List<BigDecimal> getKnowledgePointGrade(String id) {
         List<ModelOutputKnowledge> modelOutputKnowledges =
                 modelOutputKnowledgeDao.selectList(
                         new LambdaQueryWrapper<ModelOutputKnowledge>()
                                 .eq(ModelOutputKnowledge::getStudentId, id));
-        List<Object> list = new ArrayList<>();
+        List<HashMap<String, BigDecimal>> list = new ArrayList<>();
+        int[] index = new int[11];
+        int i = 0;
         for (ModelOutputKnowledge modelOutputKnowledge : modelOutputKnowledges) {
-            HashMap<Object, Object> map = new HashMap<>();
+            HashMap<String, BigDecimal> map = new HashMap<>();
             if (modelOutputKnowledge.getKnowledgePointId().equals("1")) {
-                map.put("value", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
-                map.put("name", "继承");
+                map.put("继承", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
                 list.add(map);
+                index[10] = i;
             } else if (modelOutputKnowledge.getKnowledgePointId().equals("2")) {
-                map.put("value", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
-                map.put("name", "构造函数");
+                map.put("构造函数", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
                 list.add(map);
+                index[9] = i;
             } else if (modelOutputKnowledge.getKnowledgePointId().equals("3")) {
-                map.put("value", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
-                map.put("name", "类与对象");
+                map.put("类与对象", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
                 list.add(map);
+                index[8] = i;
             } else if (modelOutputKnowledge.getKnowledgePointId().equals("4")) {
-                map.put("value", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
-                map.put("name", "结构体");
+                map.put("结构体", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
                 list.add(map);
+                index[7] = i;
             } else if (modelOutputKnowledge.getKnowledgePointId().equals("5")) {
-                map.put("value", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
-                map.put("name", "指针");
+                map.put("指针", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
                 list.add(map);
+                index[6] = i;
             } else if (modelOutputKnowledge.getKnowledgePointId().equals("6")) {
-                map.put("value", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
-                map.put("name", "函数");
+                map.put("函数", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
                 list.add(map);
+                index[5] = i;
             } else if (modelOutputKnowledge.getKnowledgePointId().equals("7")) {
-                map.put("value", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
-                map.put("name", "字符串");
+                map.put("字符串", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
                 list.add(map);
+                index[4] = i;
             } else if (modelOutputKnowledge.getKnowledgePointId().equals("8")) {
-                map.put("value", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
-                map.put("name", "数组");
+                map.put("数组", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
                 list.add(map);
+                index[3] = i;
             } else if (modelOutputKnowledge.getKnowledgePointId().equals("9")) {
-                map.put("value", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
-                map.put("name", "循环");
+                map.put("循环", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
                 list.add(map);
+                index[2] = i;
             } else if (modelOutputKnowledge.getKnowledgePointId().equals("10")) {
-                map.put("value", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
-                map.put("name", "控制结构");
+                map.put("控制结构", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
                 list.add(map);
+                index[1] = i;
             } else if (modelOutputKnowledge.getKnowledgePointId().equals("11")) {
-                map.put("value", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
-                map.put("name", "语言基础");
+                map.put("语言基础", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
+                index[0] = i;
                 list.add(map);
             }
+            ++i;
         }
 
+        return ITeacherServiceImpl.customSortList(list, index);
+    }
+
+    /**
+     * @param id:
+     * @return Boolean
+     * @author ZJ
+     * @description TODO [教师]是否存在
+     * @date 2022/12/3 19:03
+     */
+    @Override
+    public Boolean isTeacherExist(String id) {
+        if (teacherDao.selectOne(new LambdaQueryWrapper<Teacher>().eq(Teacher::getId, id).eq(Teacher::getDeleted, 0)) != null) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param id:
+     * @return List<HashMap < String, String>>
+     * @author ZJ
+     * @description TODO [教师]展示个人信息(个人中心)
+     * @date 2022/12/3 19:05
+     */
+    @Override
+    public List<HashMap<String, String>> displayPersonalInformation(String id) {
+        HashMap<String, String> map = new HashMap<>();
+        Teacher teacher =
+                teacherDao.selectOne(new LambdaQueryWrapper<Teacher>().eq(Teacher::getId, id).eq(Teacher::getDeleted,
+                        0));
+        map.put("id", id);
+        map.put("name", teacher.getName());
+        map.put("email", teacher.getEmail());
+        map.put("phone", teacher.getPhone());
+        List<HashMap<String, String>> list = new ArrayList<>();
+        list.add(map);
+        return list;
+    }
+
+    /**
+     * @param platformDataStatistics:
+     * @param index:
+     * @return List<BigDecimal>
+     * @author ZJ
+     * @description TODO 对扇形图排序，顺序为[语言基础、控制结构、循环、数组、字符串、函数、指针、结构体、类与对象、构造函数、继承]
+     * @date 2022/12/3 18:16
+     */
+    private static List<BigDecimal> customSortList(List<HashMap<String, BigDecimal>> platformDataStatistics,
+                                                   int[] index) {
+        List<BigDecimal> list = new ArrayList<BigDecimal>();
+        for (int i = 0; i < 11; ++i) {
+            Collection<BigDecimal> values = platformDataStatistics.get(index[i]).values();//获取一个Hashmap中的value数组
+            for (BigDecimal ii : values) {
+                list.add(ii);
+            }
+        }
         return list;
     }
 }

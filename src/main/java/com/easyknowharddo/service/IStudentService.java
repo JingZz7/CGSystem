@@ -7,6 +7,7 @@ import com.easyknowharddo.domain.Student;
 import com.github.pagehelper.PageInfo;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 
 public interface IStudentService extends IService<Student> {
@@ -152,4 +153,22 @@ public interface IStudentService extends IService<Student> {
      * @date 2022/11/22 22:43
      */
     public BigDecimal getFinalForecast(String id);
+
+    /**
+     * @param id:
+     * @return Boolean
+     * @author ZJ
+     * @description TODO [学生]是否存在
+     * @date 2022/12/3 18:45
+     */
+    public Boolean isStudentExist(String id);
+
+    /**
+     * @param id:
+     * @return List<HashMap < String, String>>
+     * @author ZJ
+     * @description TODO [学生]展示个人信息(个人中心)
+     * @date 2022/12/3 18:29
+     */
+    public List<HashMap<String, String>> displayPersonalInformation(String id);
 }

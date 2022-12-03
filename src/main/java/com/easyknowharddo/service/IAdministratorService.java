@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.easyknowharddo.domain.Administrator;
 import com.github.pagehelper.PageInfo;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface IAdministratorService extends IService<Administrator> {
@@ -145,4 +146,22 @@ public interface IAdministratorService extends IService<Administrator> {
      * @date 2022/11/20 22:39
      */
     public PageInfo<?> getAccountByName(String name, int currentPage, int pageSize);
+
+    /**
+     * @param id:
+     * @return Boolean
+     * @author ZJ
+     * @description TODO [管理员]是否存在
+     * @date 2022/12/3 18:45
+     */
+    public Boolean isAdministratorExist(String id);
+
+    /**
+     * @param id:
+     * @return List<HashMap < String, String>>
+     * @author ZJ
+     * @description TODO [管理员]展示个人信息(个人中心)
+     * @date 2022/12/3 18:29
+     */
+    public List<HashMap<String, String>> displayPersonalInformation(String id);
 }

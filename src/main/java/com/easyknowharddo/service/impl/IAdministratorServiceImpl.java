@@ -672,4 +672,40 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
         // 如果object为空，返回一个空List
         return new PageInfo<List<?>>(new ArrayList<>());
     }
+
+    /**
+     * @param id:
+     * @return Boolean
+     * @author ZJ
+     * @description TODO [学生]是否存在
+     * @date 2022/12/3 18:45
+     */
+    @Override
+    public Boolean isAdministratorExist(String id) {
+        if (administratorDao.selectOne(new LambdaQueryWrapper<Administrator>().eq(Administrator::getId, id)) != null) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param id:
+     * @return List<HashMap < String, String>>
+     * @author ZJ
+     * @description TODO [学生]展示个人信息(个人中心)
+     * @date 2022/12/3 18:29
+     */
+    @Override
+    public List<HashMap<String, String>> displayPersonalInformation(String id) {
+        HashMap<String, String> map = new HashMap<>();
+        Administrator administrator =
+                administratorDao.selectOne(new LambdaQueryWrapper<Administrator>().eq(Administrator::getId, id));
+        map.put("id", id);
+        map.put("name", administrator.getName());
+        map.put("email", administrator.getEmail());
+        map.put("phone", administrator.getPhone());
+        List<HashMap<String, String>> list = new ArrayList<>();
+        list.add(map);
+        return list;
+    }
 }

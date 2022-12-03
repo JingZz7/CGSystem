@@ -67,6 +67,10 @@ public class JsonResult<T> {
         return new JsonResult<T>(ResultCode.FAILED.getCode(), message, null);
     }
 
+    public static <T> JsonResult<T> failed(T data, String message) {
+        return new JsonResult<T>(ResultCode.SUCCESS.getCode(), message, data);
+    }
+
     /**
      * 失败返回结果
      */
