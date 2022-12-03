@@ -314,5 +314,10 @@
   "[学生]获取期末成绩预测 POST" : "json数据包含id",
   "/grade/getFinalForecast": {
     "学号 String": "id"
+  },
+
+  "展示个人信息(个人中心) POST": "json数据包含id",
+  "/personalCenter/displayPersonalInformation": {
+    "学号/工号 String": "id"
   }
 }
