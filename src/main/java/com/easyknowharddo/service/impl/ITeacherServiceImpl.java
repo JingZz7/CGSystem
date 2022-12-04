@@ -979,4 +979,26 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
         teacherDao.updateById(teacher);
         return true;
     }
+
+    /**
+     * @param id:
+     * @param password:
+     * @return Boolean
+     * @author ZJ
+     * @description TODO [教师]修改密码(个人中心)
+     * @date 2022/12/4 23:45
+     */
+    @Override
+    public Boolean modifyPasswordById(String id, String password) {
+        Boolean flag = isTeacherExist(id);
+        if (!flag) {
+            return false;
+        }
+        Teacher teacher =
+                teacherDao.selectOne(new LambdaQueryWrapper<Teacher>().eq(Teacher::getId, id).eq(Teacher::getDeleted,
+                        0));
+        teacher.setPassword(password);
+        teacherDao.updateById(teacher);
+        return true;
+    }
 }

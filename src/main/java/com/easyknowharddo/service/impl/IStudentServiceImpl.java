@@ -553,6 +553,28 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
     }
 
     /**
+     * @param id:
+     * @param password:
+     * @return Boolean
+     * @author ZJ
+     * @description TODO [学生]修改密码(个人中心)
+     * @date 2022/12/4 23:45
+     */
+    @Override
+    public Boolean modifyPasswordById(String id, String password) {
+        Boolean flag = isStudentExist(id);
+        if (!flag) {
+            return false;
+        }
+        Student student =
+                studentDao.selectOne(new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted,
+                        0));
+        student.setPassword(password);
+        studentDao.updateById(student);
+        return true;
+    }
+
+    /**
      * @param name: * @return List<Student>
      * @author ZJ
      * @description TODO 测试

@@ -731,4 +731,25 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
         administratorDao.updateById(administrator);
         return true;
     }
+
+    /**
+     * @param id:
+     * @param password:
+     * @return Boolean
+     * @author ZJ
+     * @description TODO [管理员]修改密码(个人中心)
+     * @date 2022/12/4 23:45
+     */
+    @Override
+    public Boolean modifyPasswordById(String id, String password) {
+        Boolean flag = isAdministratorExist(id);
+        if (!flag) {
+            return false;
+        }
+        Administrator administrator =
+                administratorDao.selectOne(new LambdaQueryWrapper<Administrator>().eq(Administrator::getId, id));
+        administrator.setPassword(password);
+        administratorDao.updateById(administrator);
+        return true;
+    }
 }

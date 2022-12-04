@@ -95,4 +95,27 @@ class PersonalCenterController {
         }
         return JsonResult.failed("error", "修改失败")
     }
+
+    /**
+     * @param null:
+     * @return null
+     * @author ZJ
+     * @description TODO 修改密码(个人中心)
+     * @date 2022/12/4 23:52
+     */
+    @RequestMapping(value = ["/modifyPasswordById"], method = [RequestMethod.PUT])
+    open fun modifyPasswordById(@RequestBody jsonObject: JSONObject): JsonResult<*>? {
+        val flagStudent =
+            iStudentService?.modifyPasswordById(jsonObject.getString("id"), jsonObject.getString("password"))
+        val flagTeacher =
+            iTeacherService?.modifyPasswordById(jsonObject.getString("id"), jsonObject.getString("password"))
+        val flagTutor =
+            iTutorService?.modifyPasswordById(jsonObject.getString("id"), jsonObject.getString("password"))
+        val flagAdministrator =
+            iAdministratorService?.modifyPasswordById(jsonObject.getString("id"), jsonObject.getString("password"))
+        if (flagStudent == true || flagTeacher == true || flagTutor == true || flagAdministrator == true) {
+            return JsonResult.success("success", "修改成功")
+        }
+        return JsonResult.failed("error", "修改失败")
+    }
 }

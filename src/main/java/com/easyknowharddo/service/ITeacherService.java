@@ -266,4 +266,14 @@ public interface ITeacherService extends IService<Teacher> {
      * @date 2022/12/4 23:32
      */
     public Boolean modifyPhoneAndEmailById(String id, String phone, String email);
+
+    /**
+     * @param id:
+     * @param password:
+     * @return Boolean
+     * @author ZJ
+     * @description TODO [教师]修改密码(个人中心)
+     * @date 2022/12/4 23:45
+     */
+    public Boolean modifyPasswordById(String id,String password);
 }

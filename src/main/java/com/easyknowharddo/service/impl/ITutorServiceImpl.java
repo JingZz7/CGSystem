@@ -110,4 +110,25 @@ public class ITutorServiceImpl extends ServiceImpl<TutorDao, Tutor> implements I
         tutorDao.updateById(tutor);
         return true;
     }
+
+    /**
+     * @param id:
+     * @param password:
+     * @return Boolean
+     * @author ZJ
+     * @description TODO [助教]修改密码(个人中心)
+     * @date 2022/12/4 23:45
+     */
+    @Override
+    public Boolean modifyPasswordById(String id, String password) {
+        Boolean flag = isTutorExist(id);
+        if (!flag) {
+            return false;
+        }
+        Tutor tutor =
+                tutorDao.selectOne(new LambdaQueryWrapper<Tutor>().eq(Tutor::getId, id));
+        tutor.setPassword(password);
+        tutorDao.updateById(tutor);
+        return true;
+    }
 }

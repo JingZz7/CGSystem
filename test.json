@@ -326,5 +326,11 @@
     "学号/工号 String": "id",
     "电话 String": "phone",
     "邮箱 String": "email"
+  },
+
+  "修改密码(个人中心) PUT": "json数据包含id、password",
+  "/personalCenter/modifyPasswordById": {
+    "学号/工号 String": "id",
+    "密码 String": "password"
   }
 }
