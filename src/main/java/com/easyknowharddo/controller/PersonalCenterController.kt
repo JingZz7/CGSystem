@@ -69,7 +69,7 @@ class PersonalCenterController {
      * @param null:
      * @return null
      * @author ZJ
-     * @description TODO [学生]修改电话和邮箱(个人中心)
+     * @description TODO 修改电话和邮箱(个人中心)
      * @date 2022/12/4 23:22
      */
     @RequestMapping(value = ["/modifyPhoneAndEmailById"], method = [RequestMethod.PUT])

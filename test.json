@@ -319,5 +319,12 @@
   "展示个人信息(个人中心) POST": "json数据包含id",
   "/personalCenter/displayPersonalInformation": {
     "学号/工号 String": "id"
+  },
+
+  "修改电话和邮箱(个人中心) PUT": "json数据包含id、phone、email",
+  "/personalCenter/modifyPhoneAndEmailById": {
+    "学号/工号 String": "id",
+    "电话 String": "phone",
+    "邮箱 String": "email"
   }
 }
