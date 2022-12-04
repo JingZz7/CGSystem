@@ -529,6 +529,30 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
     }
 
     /**
+     * @param id:
+     * @param phone:
+     * @param email:
+     * @return Boolean
+     * @author ZJ
+     * @description TODO [学生]修改电话和邮箱(个人中心)
+     * @date 2022/12/4 23:32
+     */
+    @Override
+    public Boolean modifyPhoneAndEmailById(String id, String phone, String email) {
+        Boolean flag = isStudentExist(id);
+        if (!flag) {
+            return false;
+        }
+        Student student =
+                studentDao.selectOne(new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted,
+                        0));
+        student.setPhone(phone);
+        student.setEmail(email);
+        studentDao.updateById(student);
+        return true;
+    }
+
+    /**
      * @param name: * @return List<Student>
      * @author ZJ
      * @description TODO 测试

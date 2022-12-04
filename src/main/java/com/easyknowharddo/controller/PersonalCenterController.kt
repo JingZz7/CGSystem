@@ -64,4 +64,35 @@ class PersonalCenterController {
         }
         return JsonResult.failed("获取失败")
     }
+
+    /**
+     * @param null:
+     * @return null
+     * @author ZJ
+     * @description TODO [学生]修改电话和邮箱(个人中心)
+     * @date 2022/12/4 23:22
+     */
+    @RequestMapping(value = ["/modifyPhoneAndEmailById"], method = [RequestMethod.PUT])
+    open fun modifyPhoneAndEmailById(@RequestBody jsonObject: JSONObject): JsonResult<*>? {
+        val flagStudent = iStudentService?.modifyPhoneAndEmailById(
+            jsonObject.getString("id"), jsonObject.getString("phone"), jsonObject
+                .getString("email")
+        )
+        val flagTeacher = iTeacherService?.modifyPhoneAndEmailById(
+            jsonObject.getString("id"), jsonObject.getString("phone"), jsonObject
+                .getString("email")
+        )
+        val flagTutor = iTutorService?.modifyPhoneAndEmailById(
+            jsonObject.getString("id"), jsonObject.getString("phone"), jsonObject
+                .getString("email")
+        )
+        val flagAdministrator = iAdministratorService?.modifyPhoneAndEmailById(
+            jsonObject.getString("id"), jsonObject.getString("phone"), jsonObject
+                .getString("email")
+        )
+        if (flagStudent == true || flagTeacher == true || flagTutor == true || flagAdministrator == true) {
+            return JsonResult.success("success", "修改成功");
+        }
+        return JsonResult.failed("error", "修改失败")
+    }
 }

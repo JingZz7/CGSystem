@@ -955,4 +955,28 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
         }
         return list;
     }
+
+    /**
+     * @param id:
+     * @param phone:
+     * @param email:
+     * @return Boolean
+     * @author ZJ
+     * @description TODO [教师]修改电话和邮箱(个人中心)
+     * @date 2022/12/4 23:32
+     */
+    @Override
+    public Boolean modifyPhoneAndEmailById(String id, String phone, String email) {
+        Boolean flag = isTeacherExist(id);
+        if (!flag) {
+            return false;
+        }
+        Teacher teacher =
+                teacherDao.selectOne(new LambdaQueryWrapper<Teacher>().eq(Teacher::getId, id).eq(Teacher::getDeleted,
+                        0));
+        teacher.setPhone(phone);
+        teacher.setEmail(email);
+        teacherDao.updateById(teacher);
+        return true;
+    }
 }

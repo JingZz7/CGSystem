@@ -12,24 +12,23 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/students")
-class StudentControllerKTTest {
+//@RequestMapping("/students")
+private class StudentControllerKTTest {
     @Autowired
     private val iStudentService: IStudentService? = null
 
-    /**
-     * @param null:
-     * @return null
-     * @author ZJ
-     * @description TODO test
-     */
-    @get:GetMapping
-    val all: Result
-        get() = Result(true, iStudentService!!.list())
+//    /**
+//     * @param null:
+//     * @return null
+//     * @author ZJ
+//     * @description TODO test
+//     */
+//    @get:GetMapping
+//    val allTest: Result
+//        get() = Result(true, iStudentService!!.list())
 
     /**
      * @param null:
@@ -38,8 +37,8 @@ class StudentControllerKTTest {
      * @description TODO test
      */
     @PostMapping
-    fun save(@RequestBody student: Student): Result {
-        return Result(iStudentService!!.save(student))
+    fun saveTest(@RequestBody student: Student): Result {
+        return Result(iStudentService?.save(student))
     }
 
     /**
@@ -49,10 +48,10 @@ class StudentControllerKTTest {
      * @description TODO test
      */
     @PutMapping("{id}")
-    fun update(@PathVariable id: String?, @RequestBody student: Student): Result {
+    fun updateTest(@PathVariable id: String?, @RequestBody student: Student): Result {
         val lqw = LambdaQueryWrapper<Student>()
         lqw.eq(SFunction<Student, Any> { obj: Student -> obj.id }, id)
-        return Result(iStudentService!!.update(student, lqw))
+        return Result(iStudentService?.update(student, lqw))
     }
 
     /**
@@ -62,10 +61,10 @@ class StudentControllerKTTest {
      * @description TODO test
      */
     @DeleteMapping("{id}") // http://localhost/Student/202026010512
-    fun delete(@PathVariable id: String?): Result {
+    fun deleteTest(@PathVariable id: String?): Result {
         val lqw = LambdaQueryWrapper<Student>()
         lqw.eq(SFunction<Student, Any> { obj: Student -> obj.id }, id)
-        return Result(iStudentService!!.remove(lqw))
+        return Result(iStudentService?.remove(lqw))
     }
 
     /**
@@ -75,10 +74,11 @@ class StudentControllerKTTest {
      * @description TODO test
      */
     @GetMapping("{id}")
-    fun getById(@PathVariable id: String?): Result {
+    fun getByIdTest(@PathVariable id: String?): kotlin.Result.Companion {
         val lqw = LambdaQueryWrapper<Student>()
         lqw.eq(SFunction<Student, Any> { obj: Student -> obj.id }, id)
-        return Result(true, iStudentService!!.getOne(lqw))
+//        return Result(true, iStudentService!!.getOne(lqw))
+        return Result;
     }
 
     //    /**
@@ -97,7 +97,7 @@ class StudentControllerKTTest {
      * @description TODO test
      */
     @GetMapping("/{id}/{password}")
-    fun login(@PathVariable id: String?, @PathVariable password: String?): Result {
-        return Result(iStudentService!!.login(id, password))
+    fun loginTest(@PathVariable id: String?, @PathVariable password: String?): Result {
+        return Result(iStudentService?.login(id, password))
     }
 }

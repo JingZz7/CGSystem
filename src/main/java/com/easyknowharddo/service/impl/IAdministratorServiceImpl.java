@@ -708,4 +708,27 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
         list.add(map);
         return list;
     }
+
+    /**
+     * @param id:
+     * @param phone:
+     * @param email:
+     * @return Boolean
+     * @author ZJ
+     * @description TODO [管理员]修改电话和邮箱(个人中心)
+     * @date 2022/12/4 23:32
+     */
+    @Override
+    public Boolean modifyPhoneAndEmailById(String id, String phone, String email) {
+        Boolean flag = isAdministratorExist(id);
+        if (!flag) {
+            return false;
+        }
+        Administrator administrator =
+                administratorDao.selectOne(new LambdaQueryWrapper<Administrator>().eq(Administrator::getId, id));
+        administrator.setPhone(phone);
+        administrator.setEmail(email);
+        administratorDao.updateById(administrator);
+        return true;
+    }
 }
