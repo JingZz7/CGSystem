@@ -1,8 +1,10 @@
 package com.easyknowharddo.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.easyknowharddo.controller.utils.JsonResult;
 import com.easyknowharddo.domain.Problem;
+import com.easyknowharddo.domain.ProblemDescription;
 import com.easyknowharddo.service.IFavoriteService;
 import com.easyknowharddo.service.IProblemDescriptionService;
 import com.easyknowharddo.service.IProblemService;
@@ -180,5 +182,17 @@ public class ProblemController {
 
         if (flag) return JsonResult.success("评论成功");
         return JsonResult.failed("评论失败");
+    }
+
+    /**
+     * @param jsonObject:
+     * @return JsonResult
+     * @author ZJ
+     * @description TODO 获取题目详细信息
+     * @date 2022/12/5 16:39
+     */
+    @RequestMapping(value = "/getProblemDescription", method = RequestMethod.POST)
+    public JsonResult getProblemDescription(@RequestBody JSONObject jsonObject) {
+        return JsonResult.success(iProblemDescriptionService.getOne(new LambdaQueryWrapper<ProblemDescription>().eq(ProblemDescription::getProblemId, jsonObject.getString("problemId"))));
     }
 }

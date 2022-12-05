@@ -337,5 +337,10 @@
   "/personalCenter/modifyPasswordById": {
     "学号/工号 String": "id",
     "密码 String": "password"
+  },
+
+  "获取题目详细信息 POST": "json数据包含problemId",
+  "/problem/getProblemDescription": {
+    "题号 String": "problemId"
   }
 }

@@ -26,49 +26,21 @@ public class ProblemDescription {
     @TableField("sample_output_1")
     private String sampleOutput1;
 
-    @TableField("sample_input_2")
-    private String sampleInput2;
-
-    @TableField("sample_output_2")
-    private String sampleOutput2;
-
     @TableField("problem_id")
     private String problemId;
 
     public ProblemDescription() {
     }
 
-    @Override
-    public String toString() {
-        return "ProblemDescription{"
-                + "pkProblemDescriptionId='"
-                + pkProblemDescriptionId
-                + '\''
-                + ", description='"
-                + description
-                + '\''
-                + ", inputForm='"
-                + inputForm
-                + '\''
-                + ", outputForm='"
-                + outputForm
-                + '\''
-                + ", sampleInput1='"
-                + sampleInput1
-                + '\''
-                + ", sampleOutput1='"
-                + sampleOutput1
-                + '\''
-                + ", sampleInput2='"
-                + sampleInput2
-                + '\''
-                + ", sampleOutput2='"
-                + sampleOutput2
-                + '\''
-                + ", problemId='"
-                + problemId
-                + '\''
-                + '}';
+    public ProblemDescription(String pkProblemDescriptionId, String description, String inputForm, String outputForm,
+                              String sampleInput1, String sampleOutput1, String problemId) {
+        this.pkProblemDescriptionId = pkProblemDescriptionId;
+        this.description = description;
+        this.inputForm = inputForm;
+        this.outputForm = outputForm;
+        this.sampleInput1 = sampleInput1;
+        this.sampleOutput1 = sampleOutput1;
+        this.problemId = problemId;
     }
 
     public String getPkProblemDescriptionId() {
@@ -119,22 +91,6 @@ public class ProblemDescription {
         this.sampleOutput1 = sampleOutput1;
     }
 
-    public String getSampleInput2() {
-        return sampleInput2;
-    }
-
-    public void setSampleInput2(String sampleInput2) {
-        this.sampleInput2 = sampleInput2;
-    }
-
-    public String getSampleOutput2() {
-        return sampleOutput2;
-    }
-
-    public void setSampleOutput2(String sampleOutput2) {
-        this.sampleOutput2 = sampleOutput2;
-    }
-
     public String getProblemId() {
         return problemId;
     }
@@ -143,24 +99,16 @@ public class ProblemDescription {
         this.problemId = problemId;
     }
 
-    public ProblemDescription(
-            String pkProblemDescriptionId,
-            String description,
-            String inputForm,
-            String outputForm,
-            String sampleInput1,
-            String sampleOutput1,
-            String sampleInput2,
-            String sampleOutput2,
-            String problemId) {
-        this.pkProblemDescriptionId = pkProblemDescriptionId;
-        this.description = description;
-        this.inputForm = inputForm;
-        this.outputForm = outputForm;
-        this.sampleInput1 = sampleInput1;
-        this.sampleOutput1 = sampleOutput1;
-        this.sampleInput2 = sampleInput2;
-        this.sampleOutput2 = sampleOutput2;
-        this.problemId = problemId;
+    @Override
+    public String toString() {
+        return "ProblemDescription{" +
+                "pkProblemDescriptionId='" + pkProblemDescriptionId + '\'' +
+                ", description='" + description + '\'' +
+                ", inputForm='" + inputForm + '\'' +
+                ", outputForm='" + outputForm + '\'' +
+                ", sampleInput1='" + sampleInput1 + '\'' +
+                ", sampleOutput1='" + sampleOutput1 + '\'' +
+                ", problemId='" + problemId + '\'' +
+                '}';
     }
 }
