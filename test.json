@@ -328,6 +328,11 @@
     "邮箱 String": "email"
   },
 
+  "获取密码(个人中心) Post": "json数据包含id",
+  "/personalCenter/getPasswordById": {
+    "学号/工号 String": "id"
+  },
+
   "修改密码(个人中心) PUT": "json数据包含id、password",
   "/personalCenter/modifyPasswordById": {
     "学号/工号 String": "id",

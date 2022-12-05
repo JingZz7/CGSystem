@@ -6,6 +6,7 @@ import com.easyknowharddo.service.IAdministratorService
 import com.easyknowharddo.service.IStudentService
 import com.easyknowharddo.service.ITeacherService
 import com.easyknowharddo.service.ITutorService
+import com.easyknowharddo.service.UserService
 import lombok.extern.slf4j.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.CrossOrigin
@@ -36,6 +37,9 @@ class PersonalCenterController {
 
     @Autowired
     private val iAdministratorService: IAdministratorService? = null
+
+    @Autowired
+    private val userService: UserService? = null
 
     /**
      * @param null:
@@ -94,6 +98,18 @@ class PersonalCenterController {
             return JsonResult.success("success", "修改成功");
         }
         return JsonResult.failed("error", "修改失败")
+    }
+
+    /**
+     * @param null:
+     * @return null
+     * @author ZJ
+     * @description TODO 获取密码(个人中心)
+     * @date 2022/12/5 14:50
+     */
+    @RequestMapping(value = ["/getPasswordById"], method = [RequestMethod.POST])
+    open fun getPasswordById(@RequestBody jsonObject: JSONObject): JsonResult<String>? {
+        return JsonResult.success(userService?.getPasswordById(jsonObject.getString("id")), "获取成功");
     }
 
     /**
