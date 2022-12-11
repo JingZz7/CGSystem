@@ -8,5 +8,4 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class IKnowledgeServiceImpl extends ServiceImpl<KnowledgePointDao, KnowledgePoint>
-        implements IKnowledgePointService {
-}
+    implements IKnowledgePointService {}

@@ -10,75 +10,74 @@ import java.math.BigInteger;
 @TableName("t_comment_teacher")
 public class CommentTeacher {
 
-    @TableId(value = "pk_comment_teacher_id", type = IdType.AUTO)
-    private BigInteger pkCommentTeacherId;
+  @TableId(value = "pk_comment_teacher_id", type = IdType.AUTO)
+  private BigInteger pkCommentTeacherId;
 
-    @TableField("description")
-    private String description;
+  @TableField("description")
+  private String description;
 
-    @TableField("teacher_id")
-    private String teacherId;
+  @TableField("teacher_id")
+  private String teacherId;
 
-    @TableField("problem_id")
-    private String problemId;
+  @TableField("problem_id")
+  private String problemId;
 
-    public CommentTeacher() {
-    }
+  public CommentTeacher() {}
 
-    @Override
-    public String toString() {
-        return "CommentTeacher{"
-                + "pkCommentTeacherId="
-                + pkCommentTeacherId
-                + ", description='"
-                + description
-                + '\''
-                + ", teacherId='"
-                + teacherId
-                + '\''
-                + ", problemId='"
-                + problemId
-                + '\''
-                + '}';
-    }
+  @Override
+  public String toString() {
+    return "CommentTeacher{"
+        + "pkCommentTeacherId="
+        + pkCommentTeacherId
+        + ", description='"
+        + description
+        + '\''
+        + ", teacherId='"
+        + teacherId
+        + '\''
+        + ", problemId='"
+        + problemId
+        + '\''
+        + '}';
+  }
 
-    public CommentTeacher(
-            BigInteger pkCommentTeacherId, String description, String teacherId, String problemId) {
-        this.pkCommentTeacherId = pkCommentTeacherId;
-        this.description = description;
-        this.teacherId = teacherId;
-        this.problemId = problemId;
-    }
+  public CommentTeacher(
+      BigInteger pkCommentTeacherId, String description, String teacherId, String problemId) {
+    this.pkCommentTeacherId = pkCommentTeacherId;
+    this.description = description;
+    this.teacherId = teacherId;
+    this.problemId = problemId;
+  }
 
-    public BigInteger getPkCommentTeacherId() {
-        return pkCommentTeacherId;
-    }
+  public BigInteger getPkCommentTeacherId() {
+    return pkCommentTeacherId;
+  }
 
-    public void setPkCommentTeacherId(BigInteger pkCommentTeacherId) {
-        this.pkCommentTeacherId = pkCommentTeacherId;
-    }
+  public void setPkCommentTeacherId(BigInteger pkCommentTeacherId) {
+    this.pkCommentTeacherId = pkCommentTeacherId;
+  }
 
-    public String getDescription() {
-        return description;
-    }
+  public String getDescription() {
+    return description;
+  }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+  public void setDescription(String description) {
+    this.description = description;
+  }
 
-    public String getTeacherId() {
-        return teacherId;
-    }
+  public String getTeacherId() {
+    return teacherId;
+  }
 
-    public void setTeacherId(String teacherId) {
-        this.teacherId = teacherId;
-    }
+  public void setTeacherId(String teacherId) {
+    this.teacherId = teacherId;
+  }
 
-    public String getProblemId() {
-        return problemId;
-    }
+  public String getProblemId() {
+    return problemId;
+  }
 
-    public void setProblemId(String problemId) {
-        this.problemId = problemId;
-    }
+  public void setProblemId(String problemId) {
+    this.problemId = problemId;
+  }
 }

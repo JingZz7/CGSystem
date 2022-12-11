@@ -5,9 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.HashMap;
-import java.util.List;
-
 @SpringBootTest
 public class IStudentServiceTest {
   @Autowired private IStudentService iStudentService;
@@ -51,7 +48,7 @@ public class IStudentServiceTest {
   }
 
   @Test
-  public void getProblemsListTest(){
-    iStudentService.getProblemsList("201810040108",1,1);
+  public void getProblemsListTest() {
+    iStudentService.getProblemsList("201810040108", 1, 1);
   }
 }

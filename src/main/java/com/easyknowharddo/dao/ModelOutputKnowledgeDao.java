@@ -5,5 +5,4 @@ import com.easyknowharddo.domain.ModelOutputKnowledge;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface ModelOutputKnowledgeDao extends BaseMapper<ModelOutputKnowledge> {
-}
+public interface ModelOutputKnowledgeDao extends BaseMapper<ModelOutputKnowledge> {}

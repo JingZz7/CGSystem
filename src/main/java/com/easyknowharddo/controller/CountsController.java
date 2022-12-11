@@ -15,17 +15,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/count")
 public class CountsController {
 
-    @Autowired
-    private IProblemDescriptionService iProblemDescriptionService;
+  @Autowired private IProblemDescriptionService iProblemDescriptionService;
 
-    /**
-     * @param : * @return JsonResult
-     * @author ZJ
-     * @description TODO 测试
-     * @date 2022/11/14 20:42
-     */
-    @RequestMapping(value = "/getList", method = RequestMethod.GET)
-    public JsonResult getList() {
-        return JsonResult.success(iProblemDescriptionService.list(), "获取成功");
-    }
+  /**
+   * @param : * @return JsonResult
+   * @author ZJ
+   * @description TODO 测试
+   * @date 2022/11/14 20:42
+   */
+  @RequestMapping(value = "/getList", method = RequestMethod.GET)
+  public JsonResult getList() {
+    return JsonResult.success(iProblemDescriptionService.list(), "获取成功");
+  }
 }

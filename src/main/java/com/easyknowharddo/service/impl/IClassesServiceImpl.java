@@ -8,5 +8,4 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class IClassesServiceImpl extends ServiceImpl<ClassesDao, Classes>
-        implements IClassesService {
-}
+    implements IClassesService {}

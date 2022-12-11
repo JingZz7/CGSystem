@@ -25,8 +25,8 @@ public class IAdministratorServiceTest {
 
   @Test
   public void addAccountTest() {
-//    iAdministratorService.addAccount(
-//        "tutor", "202026010512", "zj", "123456", "xxx@qq.com", "123321123");
+    //    iAdministratorService.addAccount(
+    //        "tutor", "202026010512", "zj", "123456", "xxx@qq.com", "123321123");
   }
 
   @Test
@@ -85,7 +85,7 @@ public class IAdministratorServiceTest {
   }
 
   @Test
-  public void administratorGetAccountListTest(){
+  public void administratorGetAccountListTest() {
     System.out.println(iAdministratorService.administratorGetAccountList(1, 10));
   }
 }

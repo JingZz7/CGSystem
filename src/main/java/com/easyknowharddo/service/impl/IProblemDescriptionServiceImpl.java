@@ -8,6 +8,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class IProblemDescriptionServiceImpl
-        extends ServiceImpl<ProblemDescriptionDao, ProblemDescription>
-        implements IProblemDescriptionService {
-}
+    extends ServiceImpl<ProblemDescriptionDao, ProblemDescription>
+    implements IProblemDescriptionService {}

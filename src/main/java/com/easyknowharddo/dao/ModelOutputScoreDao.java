@@ -5,5 +5,4 @@ import com.easyknowharddo.domain.ModelOutputScore;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface ModelOutputScoreDao extends BaseMapper<ModelOutputScore> {
-}
+public interface ModelOutputScoreDao extends BaseMapper<ModelOutputScore> {}
