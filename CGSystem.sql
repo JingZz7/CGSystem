@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : zjSQL
+ Source Server         : CGSystem
  Source Server Type    : MySQL
- Source Server Version : 80025
+ Source Server Version : 80030
  Source Host           : localhost:3306
  Source Schema         : cgsystem
 
  Target Server Type    : MySQL
- Target Server Version : 80025
+ Target Server Version : 80030
  File Encoding         : 65001
 
- Date: 23/11/2022 11:47:40
+ Date: 18/12/2022 16:43:28
 */
 
 SET NAMES utf8mb4;
@@ -24,21 +24,23 @@ FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `t_administrator`;
 CREATE TABLE `t_administrator`
 (
-    `pk_administrator_id` bigint                                                  NOT NULL,
-    `id`                  varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL,
-    `name`                varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL,
-    `password`            varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL,
-    `phone`               char(11) CHARACTER SET utf8 COLLATE utf8_general_ci     NOT NULL,
-    `email`               varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+    `pk_administrator_id` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NOT NULL,
+    `id`                  varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NOT NULL,
+    `name`                varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NOT NULL,
+    `password`            varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NOT NULL,
+    `phone`               char(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci     NOT NULL,
+    `email`               varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
     PRIMARY KEY (`pk_administrator_id`) USING BTREE,
     UNIQUE INDEX `id`(`id` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_administrator
 -- ----------------------------
 INSERT INTO `t_administrator`
-VALUES (1590268513125013266, 'A202026010512', 'A曾靖', '111222333', '18389670510', 'xxxxx@gmail.com');
+VALUES ('234423432', 'admin', 'admin', '123456', '17777777777', 'xxx@gmail.com');
+INSERT INTO `t_administrator`
+VALUES ('23445345', '456747234r', '管理员1', '123456', '433563454', 'e23e@gmail.com');
 
 -- ----------------------------
 -- Table structure for t_class
@@ -46,39 +48,39 @@ VALUES (1590268513125013266, 'A202026010512', 'A曾靖', '111222333', '183896705
 DROP TABLE IF EXISTS `t_class`;
 CREATE TABLE `t_class`
 (
-    `pk_class_id` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-    `id`          char(6) CHARACTER SET utf8 COLLATE utf8_general_ci     NOT NULL,
-    `name`        varchar(8) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL,
-    `deleted`     int NULL DEFAULT NULL,
+    `pk_class_id` bigint                                                      NOT NULL,
+    `id`          char(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci    NOT NULL,
+    `name`        varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+    `deleted`     int                                                         NOT NULL,
     PRIMARY KEY (`pk_class_id`) USING BTREE,
     UNIQUE INDEX `id`(`id` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_class
 -- ----------------------------
 INSERT INTO `t_class`
-VALUES ('1', '260101', '软件一班', 0);
+VALUES (1, '260101', '软件一班', 0);
 INSERT INTO `t_class`
-VALUES ('10', '080303', '通信三班', 0);
+VALUES (2, '260102', '软件二班', 0);
 INSERT INTO `t_class`
-VALUES ('11', '080304', '通信四班', 0);
+VALUES (3, '260103', '软件三班', 0);
 INSERT INTO `t_class`
-VALUES ('2', '260102', '软件二班', 0);
+VALUES (4, '260104', '软件四班', 0);
 INSERT INTO `t_class`
-VALUES ('3', '260103', '软件三班', 0);
+VALUES (5, '260105', '软件五班', 0);
 INSERT INTO `t_class`
-VALUES ('4', '260104', '软件四班', 0);
+VALUES (6, '080501', '拔尖一班', 0);
 INSERT INTO `t_class`
-VALUES ('5', '260105', '软件五班', 0);
+VALUES (7, '080502', '拔尖二班', 0);
 INSERT INTO `t_class`
-VALUES ('6', '080501', '拔尖一班', 0);
+VALUES (8, '080301', '通信一班', 0);
 INSERT INTO `t_class`
-VALUES ('7', '080502', '拔尖二班', 0);
+VALUES (9, '080302', '通信二班', 0);
 INSERT INTO `t_class`
-VALUES ('8', '080301', '通信一班', 0);
+VALUES (10, '080303', '通信三班', 0);
 INSERT INTO `t_class`
-VALUES ('9', '080302', '通信二班', 0);
+VALUES (11, '080304', '通信四班', 0);
 
 -- ----------------------------
 -- Table structure for t_comment_student
@@ -86,21 +88,27 @@ VALUES ('9', '080302', '通信二班', 0);
 DROP TABLE IF EXISTS `t_comment_student`;
 CREATE TABLE `t_comment_student`
 (
-    `pk_comment_student_id` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci    NOT NULL,
-    `description`           varchar(10000) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-    `student_id`            char(15) CHARACTER SET utf8 COLLATE utf8_general_ci       NOT NULL,
-    `problem_id`            varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci    NOT NULL,
+    `pk_comment_student_id` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci    NOT NULL,
+    `description`           varchar(10000) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+    `student_id`            char(15) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci       NOT NULL,
+    `problem_id`            varchar(10) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci    NOT NULL,
     `date_time`             datetime NULL DEFAULT NULL,
     PRIMARY KEY (`pk_comment_student_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_comment_student
 -- ----------------------------
 INSERT INTO `t_comment_student`
-VALUES ('1592045061813358592', 'xxxxxx', '202026010512', '1', '2022-11-14 14:41:32');
+VALUES ('1594979364410396673', '10', '201810040106', '25', '2022-11-22 17:01:28');
 INSERT INTO `t_comment_student`
-VALUES ('1592045061813358594', '好简单啊3113', 'E202108000102', '1', '2022-11-14 14:41:36');
+VALUES ('1594979591812976642', '10', '201810040106', '25', '2022-11-22 17:02:22');
+INSERT INTO `t_comment_student`
+VALUES ('1594980388030287873', '?', '201810040106', '25', '2022-11-22 17:05:32');
+INSERT INTO `t_comment_student`
+VALUES ('1595350944407756802', '?', '201810040106', '25', '2022-11-23 17:37:59');
+INSERT INTO `t_comment_student`
+VALUES ('234234543253454', '好简单啊', '202026010512', '1', '2022-11-14 14:41:36');
 
 -- ----------------------------
 -- Table structure for t_comment_teacher
@@ -108,12 +116,12 @@ VALUES ('1592045061813358594', '好简单啊3113', 'E202108000102', '1', '2022-1
 DROP TABLE IF EXISTS `t_comment_teacher`;
 CREATE TABLE `t_comment_teacher`
 (
-    `pk_comment_teacher_id` bigint                                                  NOT NULL,
-    `description`           varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-    `teacher_id`            varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL,
-    `problem_id`            varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL,
+    `pk_comment_teacher_id` bigint                                                        NOT NULL,
+    `description`           varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+    `teacher_id`            varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NOT NULL,
+    `problem_id`            varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NOT NULL,
     PRIMARY KEY (`pk_comment_teacher_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_comment_teacher
@@ -125,27 +133,49 @@ CREATE TABLE `t_comment_teacher`
 DROP TABLE IF EXISTS `t_favorite`;
 CREATE TABLE `t_favorite`
 (
-    `pk_favorite_id` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-    `student_id`     char(12) CHARACTER SET utf8 COLLATE utf8_general_ci    NOT NULL,
-    `problem_id`     varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+    `pk_favorite_id` bigint                                                       NOT NULL,
+    `student_id`     char(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci    NOT NULL,
+    `problem_id`     varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
     PRIMARY KEY (`pk_favorite_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_favorite
 -- ----------------------------
 INSERT INTO `t_favorite`
-VALUES ('1', '202026010512', '3');
+VALUES (1590167125883003297, '202026010513', '1');
 INSERT INTO `t_favorite`
-VALUES ('1590167125883003297', '202026010513', '1');
+VALUES (1591455186935791617, '202026010512', '2');
 INSERT INTO `t_favorite`
-VALUES ('1590167125883003298', '202026010512', '2');
+VALUES (1591792893704687617, '202026010512', '4');
 INSERT INTO `t_favorite`
-VALUES ('2', '202026010512', '4');
+VALUES (1593195803357384705, '202026010512', '25');
 INSERT INTO `t_favorite`
-VALUES ('3', '202026010512', '5');
+VALUES (1593200764128497666, '202026010512', '234');
 INSERT INTO `t_favorite`
-VALUES ('4', '202026010512', '6');
+VALUES (1593200771015544834, '202026010512', '24');
+INSERT INTO `t_favorite`
+VALUES (1593200777428635649, '202026010512', '212');
+INSERT INTO `t_favorite`
+VALUES (1593200783166443521, '202026010512', '113');
+INSERT INTO `t_favorite`
+VALUES (1593200788904251393, '202026010512', '5');
+INSERT INTO `t_favorite`
+VALUES (1593200806721654786, '202026010512', '3');
+INSERT INTO `t_favorite`
+VALUES (1593200813398986754, '202026010512', '6');
+INSERT INTO `t_favorite`
+VALUES (1593200831979753473, '202026010512', '97');
+INSERT INTO `t_favorite`
+VALUES (1593200838208294913, '202026010512', '231');
+INSERT INTO `t_favorite`
+VALUES (1593200844386504706, '202026010512', '7');
+INSERT INTO `t_favorite`
+VALUES (1593200852049498113, '202026010512', '35');
+INSERT INTO `t_favorite`
+VALUES (1599246295007215618, '201810040106', '25');
+INSERT INTO `t_favorite`
+VALUES (1599246302229807105, '201810040106', '27');
 
 -- ----------------------------
 -- Table structure for t_knowledge_point
@@ -153,14 +183,14 @@ VALUES ('4', '202026010512', '6');
 DROP TABLE IF EXISTS `t_knowledge_point`;
 CREATE TABLE `t_knowledge_point`
 (
-    `pk_knowledge_point_id` bigint                                                  NOT NULL,
-    `id`                    varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL,
-    `name`                  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-    `deleted`               int                                                     NOT NULL,
-    `student_id`            char(12) CHARACTER SET utf8 COLLATE utf8_general_ci     NOT NULL,
+    `pk_knowledge_point_id` bigint                                                        NOT NULL,
+    `id`                    varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NOT NULL,
+    `name`                  varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+    `deleted`               int                                                           NOT NULL,
+    `student_id`            char(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci     NOT NULL,
     PRIMARY KEY (`pk_knowledge_point_id`) USING BTREE,
     UNIQUE INDEX `id`(`id` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_knowledge_point
@@ -172,12 +202,12 @@ CREATE TABLE `t_knowledge_point`
 DROP TABLE IF EXISTS `t_model_input`;
 CREATE TABLE `t_model_input`
 (
-    `pk_model_input_id` bigint                                                  NOT NULL,
-    `student_id`        char(12) CHARACTER SET utf8 COLLATE utf8_general_ci     NOT NULL,
-    `homework_chapter`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-    `homework_score`    decimal(10, 0)                                          NOT NULL,
+    `pk_model_input_id` bigint                                                        NOT NULL,
+    `student_id`        char(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci     NOT NULL,
+    `homework_chapter`  varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+    `homework_score`    decimal(10, 0)                                                NOT NULL,
     PRIMARY KEY (`pk_model_input_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_model_input
@@ -189,12 +219,12 @@ CREATE TABLE `t_model_input`
 DROP TABLE IF EXISTS `t_model_output_knowledge`;
 CREATE TABLE `t_model_output_knowledge`
 (
-    `pk_model_output_knowledge_id` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-    `student_id`                   char(12) CHARACTER SET utf8 COLLATE utf8_general_ci    NOT NULL,
-    `knowledge_point_id`           varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-    `forecast`                     decimal(10, 9)                                         NOT NULL,
+    `pk_model_output_knowledge_id` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+    `student_id`                   char(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci    NOT NULL,
+    `knowledge_point_id`           varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+    `forecast`                     decimal(10, 9)                                               NOT NULL,
     PRIMARY KEY (`pk_model_output_knowledge_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_model_output_knowledge
@@ -2956,11 +2986,11 @@ VALUES ('99900720', '202108030405', '8', 0.961268900);
 DROP TABLE IF EXISTS `t_model_output_score`;
 CREATE TABLE `t_model_output_score`
 (
-    `pk_model_output_score_id` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-    `student_id`               char(12) CHARACTER SET utf8 COLLATE utf8_general_ci    NOT NULL,
-    `exam_score`               decimal(10, 6)                                         NOT NULL,
+    `pk_model_output_score_id` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+    `student_id`               char(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci    NOT NULL,
+    `exam_score`               decimal(10, 6)                                               NOT NULL,
     PRIMARY KEY (`pk_model_output_score_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_model_output_score
@@ -3222,266 +3252,232 @@ VALUES ('99763329', '202108030106', 75.051090);
 DROP TABLE IF EXISTS `t_problem`;
 CREATE TABLE `t_problem`
 (
-    `pk_problem_id`      varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-    `id`                 varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-    `knowledge_point_id` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-    `name`               varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-    `difficulty`         char(1) CHARACTER SET utf8 COLLATE utf8_general_ci     NOT NULL,
-    `label`              varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-    `deleted`            int                                                    NOT NULL,
+    `pk_problem_id`      varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+    `id`                 varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+    `knowledge_point_id` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+    `name`               varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+    `difficulty`         char(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci     NOT NULL,
+    `label`              varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+    `deleted`            int                                                          NOT NULL,
     PRIMARY KEY (`pk_problem_id`) USING BTREE,
     UNIQUE INDEX `id`(`id` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_problem
 -- ----------------------------
 INSERT INTO `t_problem`
-VALUES ('10472497', '39', '4', '点和正方形的关系', '3', '结构体', 0);
+VALUES ('12557518699', '16', '2', '哪来的输出（析构函数）', '1', '构造函数', 0);
 INSERT INTO `t_problem`
-VALUES ('11715766', '7', '1', '字频统计', '3', '继承', 0);
+VALUES ('13340297935', '90', '10', '三个数', '1', '控制结构', 0);
 INSERT INTO `t_problem`
-VALUES ('12382825', '48', '5', '字符串反转（指针实现）', '3', '指针', 0);
+VALUES ('14354601167', '25', '3', ' 菜单类的设计与实现', '1', '类和对象', 0);
 INSERT INTO `t_problem`
-VALUES ('12414218', '36', '4', '招聘', '3', '结构体', 0);
+VALUES ('14930189456', '66', '7', '音乐DJ和回响贝斯', '2', '字符串', 0);
 INSERT INTO `t_problem`
-VALUES ('13124660', '116', '11', '坐标格式化处理', '2', '语言基础', 0);
+VALUES ('17001977645', '38', '4', '高风险人群统计', '3', '结构体练习', 0);
 INSERT INTO `t_problem`
-VALUES ('13588248', '25', '3', '约瑟夫问题', '2', '类与对象', 0);
+VALUES ('17950670312', '67', '7', '字符串左删除', '3', '字符串', 0);
 INSERT INTO `t_problem`
-VALUES ('15940807', '2', '1', '组个最小数', '1', '继承', 0);
+VALUES ('19949980190', '85', '9', '下载文件', '2', '循环', 0);
 INSERT INTO `t_problem`
-VALUES ('16003382', '15', '2', '占座位', '2', '构造函数', 0);
+VALUES ('21121446959', '40', '5', '数组奇偶排列', '1', '指针', 0);
 INSERT INTO `t_problem`
-VALUES ('16192387', '50', '5', '相交链表', '3', '指针', 0);
+VALUES ('21275330955', '41', '5', '字符串反转（指针实现）', '2', '指针', 0);
 INSERT INTO `t_problem`
-VALUES ('17182755', '120', '11', '支票代码输出', '3', '语言基础', 0);
+VALUES ('21455209788', '62', '7', '加密与解密', '1', '字符串', 0);
 INSERT INTO `t_problem`
-VALUES ('17477876', '40', '5', '模拟实现扑克牌', '1', '指针', 0);
+VALUES ('21654224962', '36', '4', '公共钥匙盒', '3', '结构体练习', 0);
 INSERT INTO `t_problem`
-VALUES ('17499028', '114', '11', 'sizeof的作用', '1', '语言基础', 0);
+VALUES ('22613982822', '6', '1', '实现Point类', '2', '继承', 0);
 INSERT INTO `t_problem`
-VALUES ('18487694', '115', '11', '数据类型存储', '1', '语言基础', 0);
+VALUES ('24775748100', '27', '3', '返回什么才好呢', '2', '类和对象', 0);
 INSERT INTO `t_problem`
-VALUES ('18704408', '64', '7', '罗马数字转整数', '1', '字符串', 0);
+VALUES ('26286995153', '43', '5', '字符串中第二大的数字', '1', '指针', 0);
 INSERT INTO `t_problem`
-VALUES ('19197467', '60', '6', '最大公约数和最小公倍数', '3', '函数', 0);
+VALUES ('26702489908', '109', '11', '老鼠爱大米', '3', '语言基础', 0);
 INSERT INTO `t_problem`
-VALUES ('19568502', '21', '2', '相同生日', '3', '构造函数', 0);
+VALUES ('28642991884', '100', '11', '坐标格式化处理', '1', '语言基础', 0);
 INSERT INTO `t_problem`
-VALUES ('20161852', '77', '8', '删除有序数组中的重复项', '1', '数组', 0);
+VALUES ('33505282868', '31', '4', '选举', '1', '结构体练习', 0);
 INSERT INTO `t_problem`
-VALUES ('20498604', '90', '9', '金币', '1', '循环', 0);
+VALUES ('34467890261', '87', '9', '大象看朋友', '2', '循环', 0);
 INSERT INTO `t_problem`
-VALUES ('20962209', '17', '2', '最1的计算机', '2', '构造函数', 0);
+VALUES ('36387913098', '102', '11', ' 游泳训练时间计算', '2', '语言基础', 0);
 INSERT INTO `t_problem`
-VALUES ('21084265', '75', '7', '通配符匹配', '3', '字符串', 0);
+VALUES ('36982486421', '13', '2', '电话号码升位（拷贝构造函数）', '2', '构造函数', 0);
 INSERT INTO `t_problem`
-VALUES ('21219480', '28', '4', '评委打分', '1', '结构体', 0);
+VALUES ('37669972615', '79', '8', '小希的新工作', '2', '数组练习', 0);
 INSERT INTO `t_problem`
-VALUES ('21230250', '108', '10', 'ch3-5 3,5,7整除', '3', '控制结构', 0);
+VALUES ('37865441109', '60', '7', '飞来飞去', '1', '字符串', 0);
 INSERT INTO `t_problem`
-VALUES ('21396478', '14', '2', '带通配符的数', '2', '构造函数', 0);
+VALUES ('38922731624', '1', '1', 'animal和dog', '2', '继承', 0);
 INSERT INTO `t_problem`
-VALUES ('21670877', '55', '6', '低洼地', '1', '函数', 0);
+VALUES ('38966715490', '59', '6', '求奇数和', '1', '函数练习', 0);
 INSERT INTO `t_problem`
-VALUES ('21801918', '113', '11', '游泳训练时间计算', '1', '语言基础', 0);
+VALUES ('40120996504', '44', '5', '交替合并字符串', '2', '指针', 0);
 INSERT INTO `t_problem`
-VALUES ('22080678', '111', '10', '三个人比大小', '3', '控制结构', 0);
+VALUES ('40253710886', '63', '7', '炸弹', '2', '字符串', 0);
 INSERT INTO `t_problem`
-VALUES ('22965147', '70', '7', 'Z字形变换', '2', '字符串', 0);
+VALUES ('42350925732', '45', '5', '复写零', '1', '指针', 0);
 INSERT INTO `t_problem`
-VALUES ('23731468', '68', '7', '无重复字符的最长子串', '2', '字符串', 0);
+VALUES ('42813075152', '88', '9', '莫比乌斯函数', '2', '循环', 0);
 INSERT INTO `t_problem`
-VALUES ('23746188', '74', '7', '最长有效括号', '3', '字符串', 0);
+VALUES ('43012764810', '105', '11', 'sizeof的作用', '1', '语言基础', 0);
 INSERT INTO `t_problem`
-VALUES ('24643321', '83', '8', '四数之和', '2', '数组', 0);
+VALUES ('44189890552', '28', '3', 'Big & Base 封闭类问题', '2', '类和对象', 0);
 INSERT INTO `t_problem`
-VALUES ('26763750', '49', '5', '合并两个有序数组', '3', '指针', 0);
+VALUES ('44417730323', '71', '8', '小女孩与楼梯', '3', '数组练习', 0);
 INSERT INTO `t_problem`
-VALUES ('26856634', '102', '10', '走路去上课还是骑车去上课？', '1', '控制结构', 0);
+VALUES ('44551893278', '30', '4', '评委打分', '1', '结构体练习', 0);
 INSERT INTO `t_problem`
-VALUES ('26992686', '26', '3', '菜单类的设计与实现', '3', '类与对象', 0);
+VALUES ('44971413955', '58', '6', '判断回文数', '2', '函数练习', 0);
 INSERT INTO `t_problem`
-VALUES ('27749402', '103', '10', '这个月有多少天？', '1', '控制结构', 0);
+VALUES ('47066400991', '46', '5', '删除回文子序列', '1', '指针', 0);
 INSERT INTO `t_problem`
-VALUES ('27774839', '107', '10', '四个数排序', '2', '控制结构', 0);
+VALUES ('47227431609', '95', '10', '小希找工作', '3', '控制结构', 0);
 INSERT INTO `t_problem`
-VALUES ('28803891', '62', '6', '西游记公司', '3', '函数', 0);
+VALUES ('48771761755', '17', '2', '奇怪的类复制（复制构造函数）', '1', '构造函数', 0);
 INSERT INTO `t_problem`
-VALUES ('29757630', '105', '10', '输入字符统计', '2', '控制结构', 0);
+VALUES ('49502729586', '96', '10', '台球游戏', '3', '控制结构', 0);
 INSERT INTO `t_problem`
-VALUES ('29997107', '87', '8', '接雨水', '3', '数组', 0);
+VALUES ('50509154173', '37', '4', '武将排位', '2', '结构体练习', 0);
 INSERT INTO `t_problem`
-VALUES ('33914249', '16', '2', '写出来吧', '2', '构造函数', 0);
+VALUES ('50728485971', '12', '2', '姓名与住址', '1', '构造函数', 0);
 INSERT INTO `t_problem`
-VALUES ('34607552', '72', '7', '正则表达式匹配', '3', '字符串', 0);
+VALUES ('52340386425', '54', '6', '求指数', '1', '函数练习', 0);
 INSERT INTO `t_problem`
-VALUES ('35327328', '41', '5', '删除有序数组中的重复项', '1', '指针', 0);
+VALUES ('52546797254', '14', '2', '软件备份（拷贝构造函数）', '3', '构造函数', 0);
 INSERT INTO `t_problem`
-VALUES ('36295479', '30', '4', '公共钥匙盒', '1', '结构体', 0);
+VALUES ('53354887844', '103', '11', '字符输出', '1', '语言基础', 0);
 INSERT INTO `t_problem`
-VALUES ('37358885', '71', '7', '字符串转换整数 (atoi)', '2', '字符串', 0);
+VALUES ('53366860041', '7', '1', '求两个三角形面积和', '2', '继承', 0);
 INSERT INTO `t_problem`
-VALUES ('39587428', '67', '7', '最后一个单词的长度', '1', '字符串', 0);
+VALUES ('53580424767', '77', '8', '排队喝水', '1', '数组练习', 0);
 INSERT INTO `t_problem`
-VALUES ('40232215', '19', '2', '成绩大排队', '3', '构造函数', 0);
+VALUES ('54203681723', '94', '10', '输入字符统计', '1', '控制结构', 0);
 INSERT INTO `t_problem`
-VALUES ('41051115', '12', '2', '字符串数字置换 ', '1', '构造函数', 0);
+VALUES ('54341305730', '42', '5', '货币兑换', '3', '指针', 0);
 INSERT INTO `t_problem`
-VALUES ('41203674', '61', '6', '阶乘之和', '3', '函数', 0);
+VALUES ('55328322553', '82', '9', '数字游戏', '1', '循环', 0);
 INSERT INTO `t_problem`
-VALUES ('41983305', '59', '6', '小鱼的数字游戏', '2', '函数', 0);
+VALUES ('55553459969', '107', '11', ' 小猴与香蕉', '2', '语言基础', 0);
 INSERT INTO `t_problem`
-VALUES ('42146781', '99', '9', '懒惰的松雅', '3', '循环', 0);
+VALUES ('56346774412', '34', '4', '看电影', '2', '结构体练习', 0);
 INSERT INTO `t_problem`
-VALUES ('43618858', '10', '2', '最大报销额', '1', '构造函数', 0);
+VALUES ('58820489338', '64', '7', '激光镜像', '3', '字符串', 0);
 INSERT INTO `t_problem`
-VALUES ('43911792', '122', '11', 'RGB图像', '3', '语言基础', 0);
+VALUES ('59209635566', '24', '3', '学生类的设计与实现', '1', '类和对象', 0);
 INSERT INTO `t_problem`
-VALUES ('44163136', '4', '1', '回文串 ', '2', '继承', 0);
+VALUES ('59476745565', '73', '8', '飞机起飞时间安排', '3', '数组练习', 0);
 INSERT INTO `t_problem`
-VALUES ('44356917', '104', '10', 'ch3-4 分段函数求解', '2', '控制结构', 0);
+VALUES ('59877165245', '26', '3', '书籍类的设计与实现', '2', '类和对象', 0);
 INSERT INTO `t_problem`
-VALUES ('44473714', '66', '7', '有效的括号', '1', '字符串', 0);
+VALUES ('60637512639', '56', '6', '递归实现PrintN函数', '3', '函数练习', 0);
 INSERT INTO `t_problem`
-VALUES ('44760095', '34', '4', '画矩形', '2', '结构体', 0);
+VALUES ('60919562429', '76', '8', '阿迪看医生', '2', '数组练习', 0);
 INSERT INTO `t_problem`
-VALUES ('45406023', '42', '5', '验证回文串', '1', '指针', 0);
+VALUES ('61276951442', '2', '1', 'animal和dog和cat', '3', '继承', 0);
 INSERT INTO `t_problem`
-VALUES ('45909943', '118', '11', '苹果和虫子', '2', '语言基础', 0);
+VALUES ('61444616436', '4', '1', '实现宠物叫声的多态性', '1', '继承', 0);
 INSERT INTO `t_problem`
-VALUES ('48293309', '94', '9', '求sin(x)的近似值', '2', '循环', 0);
+VALUES ('61482658040', '61', '7', 'E-mail地址', '2', '字符串', 0);
 INSERT INTO `t_problem`
-VALUES ('48645378', '32', '4', '选举', '2', '结构体', 0);
+VALUES ('61793780370', '57', '6', '凯撒密码', '2', '函数练习', 0);
 INSERT INTO `t_problem`
-VALUES ('49485506', '24', '3', '学生类的设计与实现', '2', '类与对象', 0);
+VALUES ('63046173693', '55', '6', '字符串长度', '2', '函数练习', 0);
 INSERT INTO `t_problem`
-VALUES ('51934703', '88', '9', '除法的精确计算', '1', '循环', 0);
+VALUES ('63326988684', '51', '6', '最大公约数和最小公倍数', '1', '函数练习', 0);
 INSERT INTO `t_problem`
-VALUES ('52849260', '98', '9', '今夕何夕', '3', '循环', 0);
+VALUES ('63485721583', '23', '3', 'Point类的设计与实现', '2', '类和对象', 0);
 INSERT INTO `t_problem`
-VALUES ('53286597', '96', '9', '数字游戏', '3', '循环', 0);
+VALUES ('64875280410', '5', '1', '设计圆类', '2', '继承', 0);
 INSERT INTO `t_problem`
-VALUES ('54559806', '81', '8', '三数之和', '2', '数组', 0);
+VALUES ('65750411846', '18', '2', '学生信息处理程序', '2', '构造函数', 0);
 INSERT INTO `t_problem`
-VALUES ('55368637', '92', '9', '松雅旅馆的自动门', '2', '循环', 0);
+VALUES ('66393571108', '99', '10', '这个月有多少天？', '2', '控制结构', 0);
 INSERT INTO `t_problem`
-VALUES ('55394406', '73', '7', '串联所有单词的子串', '3', '字符串', 0);
+VALUES ('66543469753', '70', '8', '小希与火车', '3', '数组练习', 0);
 INSERT INTO `t_problem`
-VALUES ('56220331', '79', '8', '搜索插入位置', '1', '数组', 0);
+VALUES ('67531665829', '49', '5', '移动零', '1', '指针', 0);
 INSERT INTO `t_problem`
-VALUES ('56648321', '29', '4', '火星人足球赛', '1', '结构体', 0);
+VALUES ('67972122452', '75', '8', '猴导师', '2', '数组练习', 0);
 INSERT INTO `t_problem`
-VALUES ('56953676', '44', '5', '数组奇偶排列', '2', '指针', 0);
+VALUES ('68825179197', '86', '9', '汉明距离', '1', '循环', 0);
 INSERT INTO `t_problem`
-VALUES ('57008262', '91', '9', '松雅喜欢玩纸牌', '1', '循环', 0);
+VALUES ('71537397235', '32', '4', '招聘', '2', '结构体练习', 0);
 INSERT INTO `t_problem`
-VALUES ('57456230', '121', '11', '温度表达转化', '3', '语言基础', 0);
+VALUES ('72825593772', '15', '2', '手机服务（构造+拷贝构造+堆）', '3', '构造函数', 0);
 INSERT INTO `t_problem`
-VALUES ('57578886', '117', '11', '字符输出', '2', '语言基础', 0);
+VALUES ('73908169824', '92', '10', 'ch3-5 3,5,7整除', '2', '控制结构', 0);
 INSERT INTO `t_problem`
-VALUES ('58091472', '123', '11', '转义字符', '3', '语言基础', 0);
+VALUES ('74026537461', '69', '7', '小希练打字', '1', '字符串', 0);
 INSERT INTO `t_problem`
-VALUES ('58370420', '57', '6', '超级玛丽游戏', '2', '函数', 0);
+VALUES ('74720550991', '78', '8', '岁月留痕', '1', '数组练习', 0);
 INSERT INTO `t_problem`
-VALUES ('58955359', '100', '10', '三个数', '1', '控制结构', 0);
+VALUES ('78012170509', '106', '11', ' 苹果和虫子', '2', '语言基础', 0);
 INSERT INTO `t_problem`
-VALUES ('60141971', '11', '2', 'ab串', '1', '构造函数', 0);
+VALUES ('78089884013', '48', '5', '快乐数', '2', '指针', 0);
 INSERT INTO `t_problem`
-VALUES ('60395767', '110', '10', 'ch3-6 成绩分类', '3', '控制结构', 0);
+VALUES ('78292989312', '80', '9', '除法的精确计算', '2', '循环', 0);
 INSERT INTO `t_problem`
-VALUES ('63087111', '33', '4', '看电影', '2', '结构体', 0);
+VALUES ('80122083644', '84', '9', '金币', '2', '循环', 0);
 INSERT INTO `t_problem`
-VALUES ('63493081', '80', '8', '盛最多水的容器', '2', '数组', 0);
+VALUES ('80126943154', '22', '3', '约瑟夫问题', '3', '类和对象', 0);
 INSERT INTO `t_problem`
-VALUES ('63511368', '93', '9', '找7', '2', '循环', 0);
+VALUES ('80135334569', '20', '2', '矩阵相加', '3', '构造函数', 0);
 INSERT INTO `t_problem`
-VALUES ('64516091', '23', '3', '书籍类的设计与实现', '1', '类与对象', 0);
+VALUES ('80878907849', '97', '10', '三个人比大小', '2', '控制结构', 0);
 INSERT INTO `t_problem`
-VALUES ('64802498', '97', '9', '找12', '3', '循环', 0);
+VALUES ('80996572904', '108', '11', '铺地砖', '3', '语言基础', 0);
 INSERT INTO `t_problem`
-VALUES ('65102501', '31', '4', '计算星期几', '1', '结构体', 0);
+VALUES ('81784527826', '52', '6', '统计数字', '1', '函数练习', 0);
 INSERT INTO `t_problem`
-VALUES ('65341964', '85', '8', '解数独', '3', '数组', 0);
+VALUES ('82027658783', '110', '11', '分西瓜', '1', '语言基础', 0);
 INSERT INTO `t_problem`
-VALUES ('66212595', '58', '6', '硬币翻转', '2', '函数', 0);
+VALUES ('82038308869', '81', '9', '松雅旅馆的自动门', '3', '循环', 0);
 INSERT INTO `t_problem`
-VALUES ('66704923', '22', '3', 'Point类的设计与实现', '1', '类与对象', 0);
+VALUES ('82375353544', '35', '4', '青蛙与蚊子', '3', '结构体练习', 0);
 INSERT INTO `t_problem`
-VALUES ('67176272', '27', '3', '矩阵计算', '3', '类与对象', 0);
+VALUES ('84372269276', '98', '10', 'ch3-6 成绩分类', '1', '控制结构', 0);
 INSERT INTO `t_problem`
-VALUES ('67363318', '6', '1', '相等的多项式', '2', '继承', 0);
+VALUES ('86125548845', '47', '5', '移除元素', '1', '指针', 0);
 INSERT INTO `t_problem`
-VALUES ('68169805', '1', '1', '恺撒Caesar密码', '1', '继承', 0);
+VALUES ('88478399672', '104', '11', ' 温度表达转化', '2', '语言基础', 0);
 INSERT INTO `t_problem`
-VALUES ('68437883', '76', '8', '两数之和', '1', '数组', 0);
+VALUES ('88549409274', '21', '3', '矩阵计算', '3', '类和对象', 0);
 INSERT INTO `t_problem`
-VALUES ('69656663', '78', '8', '移除元素', '1', '数组', 0);
+VALUES ('89005954142', '19', '2', '构造函数', '2', '构造函数', 0);
 INSERT INTO `t_problem`
-VALUES ('70975665', '54', '6', '梦中的统计', '1', '函数', 0);
+VALUES ('89251018000', '53', '6', '猜数字', '1', '函数练习', 0);
 INSERT INTO `t_problem`
-VALUES ('71729458', '53', '6', '汉诺塔问题', '1', '函数', 0);
+VALUES ('89590705712', '65', '7', '杠杆', '2', '字符串', 0);
 INSERT INTO `t_problem`
-VALUES ('71880529', '9', '1', '最少钱币数', '3', '继承', 0);
+VALUES ('90216146656', '3', '1', '全面的MyString', '3', '继承', 0);
 INSERT INTO `t_problem`
-VALUES ('72060694', '82', '8', '最接近的三数之和', '2', '数组', 0);
+VALUES ('92129782165', '89', '9', ' 小熊与糖果', '3', '循环', 0);
 INSERT INTO `t_problem`
-VALUES ('72846073', '20', '2', '到底买不买', '3', '构造函数', 0);
+VALUES ('92373093522', '74', '8', '贪心的阿迪', '2', '数组练习', 0);
 INSERT INTO `t_problem`
-VALUES ('73020746', '35', '4', '计算线段长度', '2', '结构体', 0);
+VALUES ('95037852770', '72', '8', '松雅的旅馆', '3', '数组练习', 0);
 INSERT INTO `t_problem`
-VALUES ('74552085', '51', '5', '两个数组的交集', '3', '指针', 0);
+VALUES ('96362249072', '91', '10', ' ch3-4 分段函数求解', '2', '控制结构', 0);
 INSERT INTO `t_problem`
-VALUES ('76543716', '47', '5', '反转字符串', '2', '指针', 0);
+VALUES ('97116573802', '29', '3', '这个指针哪来的', '3', '类和对象', 0);
 INSERT INTO `t_problem`
-VALUES ('76713340', '18', '2', '愚人节的礼物', '3', '构造函数', 0);
+VALUES ('97603126750', '101', '11', '支票代码输出', '1', '语言基础', 0);
 INSERT INTO `t_problem`
-VALUES ('76778454', '119', '11', 'c++标识符', '2', '语言基础', 0);
+VALUES ('97746881848', '11', '2', '中国医药股票', '3', '构造函数', 0);
 INSERT INTO `t_problem`
-VALUES ('76882875', '86', '8', '缺失的第一个正数', '3', '数组', 0);
+VALUES ('98210192437', '83', '9', '牛友', '2', '循环', 0);
 INSERT INTO `t_problem`
-VALUES ('77837937', '65', '7', '最长公共前缀', '1', '字符串', 0);
+VALUES ('98342242939', '33', '4', '火星人足球赛', '3', '结构体练习', 0);
 INSERT INTO `t_problem`
-VALUES ('78113944', '84', '8', '寻找两个正序数组的中位数', '3', '数组', 0);
+VALUES ('99101185215', '68', '7', '机器人游戏', '3', '字符串', 0);
 INSERT INTO `t_problem`
-VALUES ('79258792', '37', '4', '青蛙与蚊子', '3', '结构体', 0);
+VALUES ('99575848807', '93', '10', '小芳找工作', '2', '控制结构', 0);
 INSERT INTO `t_problem`
-VALUES ('81378166', '38', '4', '对齐输出', '3', '结构体', 0);
-INSERT INTO `t_problem`
-VALUES ('83611028', '101', '10', '小芳找工作', '1', '控制结构', 0);
-INSERT INTO `t_problem`
-VALUES ('83850992', '8', '1', '蛇行矩阵', '3', '继承', 0);
-INSERT INTO `t_problem`
-VALUES ('84420118', '45', '5', '移除元素', '2', '指针', 0);
-INSERT INTO `t_problem`
-VALUES ('85615528', '46', '5', '环形链表', '2', '指针', 0);
-INSERT INTO `t_problem`
-VALUES ('85623999', '3', '1', '选美比赛', '1', '继承', 0);
-INSERT INTO `t_problem`
-VALUES ('85761038', '69', '7', '最长回文子串', '2', '字符串', 0);
-INSERT INTO `t_problem`
-VALUES ('86317812', '43', '5', '回文链表', '1', '指针', 0);
-INSERT INTO `t_problem`
-VALUES ('88225641', '109', '10', '小希找工作', '3', '控制结构', 0);
-INSERT INTO `t_problem`
-VALUES ('88576721', '89', '9', '牛友', '1', '循环', 0);
-INSERT INTO `t_problem`
-VALUES ('91878706', '63', '6', '表达式括号匹配', '3', '函数', 0);
-INSERT INTO `t_problem`
-VALUES ('91901131', '95', '9', '整数反转', '2', '循环', 0);
-INSERT INTO `t_problem`
-VALUES ('93155469', '52', '6', '魔数', '1', '函数', 0);
-INSERT INTO `t_problem`
-VALUES ('94726743', '13', '2', 'Web导航', '1', '构造函数', 0);
-INSERT INTO `t_problem`
-VALUES ('96019278', '5', '1', '疫情期间', '2', '继承', 0);
-INSERT INTO `t_problem`
-VALUES ('97389050', '112', '11', '浮点误差', '1', '语言基础', 0);
-INSERT INTO `t_problem`
-VALUES ('97517733', '106', '10', '数字单词', '2', '控制结构', 0);
-INSERT INTO `t_problem`
-VALUES ('98016600', '56', '6', '小熊买糖果', '2', '函数', 0);
+VALUES ('99880716275', '50', '6', '小熊买糖果', '3', '函数练习', 0);
 
 -- ----------------------------
 -- Table structure for t_problem_description
@@ -3489,26 +3485,483 @@ VALUES ('98016600', '56', '6', '小熊买糖果', '2', '函数', 0);
 DROP TABLE IF EXISTS `t_problem_description`;
 CREATE TABLE `t_problem_description`
 (
-    `pk_problem_description_id` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci    NOT NULL,
-    `description`               varchar(20000) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-    `input_form`                varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci   NOT NULL,
-    `output_form`               varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci   NOT NULL,
-    `sample_input_1`            varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci   NOT NULL,
-    `sample_output_1`           varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci   NOT NULL,
-    `sample_input_2`            varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-    `sample_output_2`           varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-    `problem_id`                varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci    NOT NULL,
+    `pk_problem_description_id` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+    `description`               text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+    `input_form`                text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+    `output_form`               text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+    `sample_input_1`            text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+    `sample_output_1`           text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+    `problem_id`                varchar(10) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
     PRIMARY KEY (`pk_problem_description_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_problem_description
 -- ----------------------------
 INSERT INTO `t_problem_description`
-VALUES ('1590171782370619393',
-        '春节期间小希计划乘坐火车去旅行。开始时，火车位于位置1，目的地在位置L。火车的速度是1单位长度/分钟（也就是第1分钟火车在位置1，第2分钟在位置2，等等）。 中国人过年都喜欢挂灯笼，在该路线上就有许多灯笼，它们位于能被 v 整除的位置上（也就是说，第1个灯笼在位置 v ，第2个灯笼在位置2v，等等）。 有另外一辆火车停留在从位置 l 到 r 的地方 显然，当 p 能被 v 整除的时候，且该处没有火车停留（p∉[l;r]），小希就可以看到处于位置 p 上的灯笼。因此，灯笼的位置如果被停留的火车遮挡，小希就看不见这些灯笼。 请输出小希在旅行期间能看到的灯笼数',
-        '输入的第一行为一个整数T，表示测试数据的组数。接下来的T行，每行4个整数，为L、v、l、r，分别表示目的地的位置、灯笼的间距、停留火车的位置区间段。', '输出为T行，对应每个测试用例的输出结果。',
-        '4\n10 2 3 7\n100 51 51 51\n1234 1 100 199\n1000000000 1 1 1000000000', '3\n0\n1134\n0', NULL, NULL, '1');
+VALUES ('10298419736', ' 输入A、B、C3个人的生日，格式为：yyyy mm dd，按照年龄从大到小输出。', ' 输入有3行，分别表示A、B、C三个人的生日。',
+        ' ABC或ACB或BAC或BCA或CAB或CBA', '2018 1 12\n1997 7 1\n2000 12 31', 'BCA', '97');
+INSERT INTO `t_problem_description`
+VALUES ('12169647332', ' 有三个非负整数a、b、c，现按随机顺序给出它们的两两和以及总和4个整数，即a+b、a+c、b+c、a+b+c，注意，给出的4个数的顺序是随机的，请根据这四个数求出a、b、c是多少？',
+        '输入为一行4个正整数，x1、x2、x3、x4 （0≤xi≤109），表示a+b、a+c、b+c、a+b+c结果的随机顺序的值，输入保证能求出结果。',
+        '输出为一行，以非递减的方式输出a、b、c，注意a、b、c可能相等。', '3 6 5 4', '1 2 3', '90');
+INSERT INTO `t_problem_description`
+VALUES ('12586574096',
+        '有两个矩阵 a 和 b，均为2行3列。求两个矩阵之和。重载运算符“+”、流插入运算符 “<<” 和流提取运算符 “>>” ，使之能用于该矩阵的输入和输出。，使之能用于矩阵相加。如 c = a + b',
+        '输入两个2行3列的矩阵', '输出两个2行3列矩阵相加的结果', '7 9 8\n6 2 4\n1 3 5\n8 5 2', '8 12 13\n14 7 6', '20');
+INSERT INTO `t_problem_description`
+VALUES ('13112786129', '输入支票代码（正整数）和支票金额（浮点数）；\n按格式要求输出：支票代码占8位，不足8位，则补充前导符‘0’；支票金额保留两位小数 。\n', '支票代码（正整数）和支票金额（浮点数）',
+        '支票代码占8位，不足8位，则补充前导符‘0’；支票金额保留两位小数 。', '123456 123.1', '00123456\n\n123.10', '101');
+INSERT INTO `t_problem_description`
+VALUES ('13158756455',
+        '一个长度为n(1=<n<=1000)的字符串s（原文，可能包括空格）可以通过以下算法进行加密\n\n       a). 按递减顺序迭代n的所有因子，也就是从n到1\n\n       b). 对于每个因子d，反转字符串s的前d个字符s[0,...,d-1]，从而形成新的s\n\n       给定一个已加密的字符串t（密文），你的任务是找出原始字符串s（原文），输入保证字符串s是存在且唯一的。',
+        '输入为一行一个字符串t，表示密文', '输出原文字符串s', 'owrldolleh', 'helloworld', '62');
+INSERT INTO `t_problem_description`
+VALUES ('13270646465',
+        '阿迪在一个大型机场担任飞机跑道交通管制员，他控制一个通常用于着陆的跑道。因此，他有一个未来一段时间飞机着陆的时间安排，每次着陆持续时间为1分钟。\n\n       他被要求在安排表中插入一次起飞，起飞本身需要1分钟，但出于安全考虑，起飞和着陆之间应有至少s分钟的时间间隔。 \n\n       请找出阿迪能插入的起飞的最早时间。',
+        '  输入的第一行包含两个整数n和s（1≤n≤1001≤n≤100, 1≤s≤601≤s≤60），分别表示在时间安排表中的着陆的航班数量以及在着陆与起飞之间的最小允许时间（以分钟计）。\n\n        接下来的n行，每行包含两个整数h和m （0≤h≤230≤h≤23, 0≤m≤590≤m≤59），表示飞机着陆的时间，以小时和分钟计，从当前时刻开始（也就是说当前时刻是0时0分），这些时间以递增的顺序给出。',
+        '输出两个整数h和m，代表可以插入的起飞的最早时间的小时和分', '6 60\n0 0\n1 20\n3 21\n5 0\n19 30\n23 40', '6 1', '73');
+INSERT INTO `t_problem_description`
+VALUES ('14048196877', '给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。\n\n请注意 ，必须在不复制数组的情况下原地对数组进行操作。', '一个数组', '一个数组',
+        'nums = [0,1,0,3,12]', '[1,3,12,0,0]', '49');
+INSERT INTO `t_problem_description`
+VALUES ('14347330959',
+        'e 妹儿公司的一个主要业务是提供电子邮件服务，每天都有数以万计的用户在使用该平台收发电子邮件e-mail。然而不幸的是，最近公司的邮件服务器遭受到了网络攻击，几乎所有的邮件内容都受到了破坏，每个邮件都只留下了一个长长的字符串。恢复所有邮件是不可能完成的任务，但似乎从这串留下的字符串中还可以解析出一些可能的e-mail地址，这样公司可以通过向这些解析出的e-mail地址发送邮件以减少用户的损失。\n\n        一个有效的e-mail地址的形式符合以下原则:\n\n        1、邮件开始部分必须是字母、数字和‘_’组成的串，但必须以字母开头\n\n        2、接着必须为字符‘@’\n\n        3、接着是非空的字母或数字序列\n\n        4、接着必须为‘.’\n\n        5、地址必须以非空的字母串结束，不能含有数字，\'_\'，和\'.\'\n\n       你很幸运地承担了这项工作，但请注意子串的区分，子串是指一个字符串中某些连续的字符组成的串。对于两个子串，其中一个组成的字符编号为l1、l1+1、l1+2、...、r1，另外一个组成的字符编号为l2、l2+1、l2+2、...、r2，如果l1≠l2或r1≠r2，则认为这是两个不同的子串。',
+        '输入仅有一行，为一个字符序列s1s2...sn( 1≤ n ≤ 106)，为给定的字符串。输入保证这个字符串中只包含小写字母、数字以及字符 \'.\'、\'_\'、\'@\'。',
+        ' 输出为一个数，表示可以解析出的有效e-mail地址的数量（允许重复）。', 'gerald.agapov1991@gmail.com', '18', '61');
+INSERT INTO `t_problem_description`
+VALUES ('15069088083', '从键盘输入n个整数，将奇数调整到前半部分，将偶数调整到后半部分，并分别按从小到大的顺序排列后输出。', '输入为两行，第一行为一个整数n（0<n≤107），第二行为n个整数。',
+        '输出为一行，为经过排列之后的n个整数。', '6\n12 17 6 11 2 3', '3 11 17 2 6 12', '40');
+INSERT INTO `t_problem_description`
+VALUES ('16758987839',
+        '在一场全国性选举中，有n位候选人，编号从1~n，这个国家有m个城市，已知每个城市每个候选人的得票数。\n\n       这个国家的选举制度很不寻常。在选举的第一阶段，每个城市的票数被计算出来，在每个城市，获胜者为得票最多的候选人，如果有相同得票数，则编号最小的获胜。\n\n       在第二个阶段，比较赢得的城市数，赢得的城市最多者获胜，如果赢得的城市数相等，则编号小者获胜。\n\n       请确定最终谁将获得选举胜利。',
+        '输入的第一行为两个正整数n和m (1 ≤ n, m ≤ 100)，表示候选人的个数和城市的个数。\n\n       接下来的m行，每行包含n个非负整数，第i行的第j个数aij(1 ≤ j ≤ n, 1 ≤ i ≤ m, 0 ≤ aij ≤ 109) 表示第j个候选人在第i个城市的得票数。',
+        '输出为一个数，最终获胜者的编号。', '3 3\n1 2 3\n2 3 1\n1 2 1', '2', '31');
+INSERT INTO `t_problem_description`
+VALUES ('17037490619', '给定一个正整数N（0<N<=1000)，请编写一个递归函数 void PrintN( int N); 顺序打印从1~N的全部整数。', '一个int类型的正整数N', '每行输出一个整数',
+        '6', '1\n2\n3\n4\n5\n6', '56');
+INSERT INTO `t_problem_description`
+VALUES ('17400428823',
+        '软件作为一种对象也可以用类来描述，软件的属性包括软件名称、类型（分别用O、T和B表示原版、试用版还是备份）、有效截至日期（用CDate类子对象表示）和存储介质（分别用D、H和U表示光盘、磁盘和U盘）等。软件拷贝可通过拷贝构造函数来实现，此时在拷贝构造函数中软件类型改成\"B\", 存储介质改为\"H\"，其它不变。试完成该类的拷贝构造、构造和打印(包括从2015年4月7日算起有效期还有多少天，是否过期)成员函数的实现。\n当输入软件有效截止日期是0年0月0日，表示无日期限制，为unlimited;当输入日期在2015年4月7日之前，则是过期，表示为expired;如果输入日期在2015年4月7日之后，则显示之后的剩余天数。具体输出信息看输出范例。',
+        '测试数据的组数 t\n\n第一个软件名称\n\n第一个软件类型 第一个软件介质类型 第一个软件有效期年 月 日\n\n第二个软件名称\n\n第二个软件类型 第二个软件介质类型 第二个软件有效期年 月 日\n\n…',
+        'name： 第一个软件名称\n\n类型： 第一个软件类型\n\nmedia： 第一个软件介质类型\n\n第一个软件2015-4-7后的有效天数\n\nname： 第一个软件名称\n\n类型： 备份\n\n介质：硬盘\n\n第一个软件2015-4-7后的有效天数\n\n…',
+        '3\nPhotoshop_CS5\nO D 0 0 0\nAudition_3.0\nB U 2015 2 3\nVisual_Studio_2010\nT H 2015 5 5\n',
+        'name:Photoshop_CS5\ntype:original\nmedia:optical disk\nthis software has unlimited use\n\nname:Photoshop_CS5\ntype:backup\nmedia:hard disk\nthis software has unlimited use\n\nname:Audition_3.0\ntype:backup\nmedia:USB disk\nthis software has expired\n\nname:Audition_3.0\ntype:backup\nmedia:hard disk\nthis software has expired\n\nname:Visual_Studio_2010\ntype:trial\nmedia:hard disk\nthis software is going to be expired in 28 days\n\nname:Visual_Studio_2010\ntype:backup\nmedia:hard disk\nthis software is going to be expired in 28 days\n',
+        '14');
+INSERT INTO `t_problem_description`
+VALUES ('17832179673',
+        '松雅作为一位商业人士，经常需要在天津和深圳之间飞来飞去，因为在这两个城市，她有多间旅馆。当然在冬天她更愿意从天津飞到深圳，因为深圳更暖和。她实在是太忙了，以至于她根本就不记得在这两个方向上坐过多少航班了。\n\n       在最近的n天，她知道自己哪天在天津的办公室哪天在深圳的办公室，她总是在晚上飞，因此不可能在同一天出现在两地的办公室。考虑到这些信息，确定在过去的n天里，她从深圳飞天津的次数是否更多。',
+        '输入的第一行为一个整数T，表示测试用例的个数。\n\n       接下来的T行，每行为一个测试用例，表示为一个整数n和一个n个字符的字符串，整数表示最近过去的天数，字符串表示松雅停留在两地办公室的情况，由大写字母\'S\'和\'T\'组成，如果第i个字符为\'S\'，表示这天她在深圳的办公室，否则在天津的办公室。最远的一天为第一个字符，最近的一天为最后一个字符。',
+        '输出有n行，每行对应一个测试用例，如果从深圳飞天津的次数更多，输出“YES”,否则输出“NO”。', '4\n4 TSST\n2 ST\n10 TTTTTTTTTT\n10 SSTTSTTSTT',
+        'NO\nYES\nNO\nYES', '60');
+INSERT INTO `t_problem_description`
+VALUES ('18800482763',
+        '小芳在校期间成绩优秀，毕业之前她决定去找一份她喜欢的工作，她将在自己中意的公司中选择，并设定了3个条件，满足其中2个条件的工作她认为可以接受。这三个条件分别为：\n\n          1. 月薪不低于5000元\n\n          2. 有带薪休假\n\n          3. 离家不超过2000公里\n\n          请根据某公司给定的3个给定条件的数据，判断小芳是否应该接受该公司的offer。',
+        '输入一行包含3个数据，分别表示公司给定的月薪、有无带薪休假(y-有，n-无)、离家距离', '输出一行，Accept为接受，Refuse为拒绝', '5500 y 1500', 'Accept', '93');
+INSERT INTO `t_problem_description`
+VALUES ('19398545497',
+        ' 这几天同学们总是对阿迪议论纷纷，这使得他很烦恼，似乎产生了一些抑郁，头也有点痛，打不起精神，他只好去看医生。然而，他只有去看过 n 个医生之后才能确诊病情，每个医生都需要上一个医生的诊断结果，因此他必须按顺序去预约每个医生，也就是说，他必须先去看医生1，然后再去看医生2，然后是医生3，等等。只有到最后一个医生那里才能确诊，且每天只能看一个医生。\n\n      从今天开始，每个医生都有一个固定的出诊安排表，医生 i 在第 si 天看病人，然后在之后的每个第 di 天看诊。因此，他只在 si、si+di、si+2di、... 这些天工作。\n\n      预约每个医生有些困难，他想知道看完所有医生至少需要多少天？',
+        '  输入的第一行一个正整数 n ，表示医生的数量。\n\n       接下来的 n 行，每行两个正整数 si 和 di，表示第 i 个医生的工作情况。', '   输出一行一个整数，表示阿迪看完最后一个医生的天数。',
+        '3\n2 2\n1 2\n2 2', '4', '76');
+INSERT INTO `t_problem_description`
+VALUES ('19889630788',
+        '请在代码框中填充正确的代码，完成以下功能：\n\n（1）声明一个Student类型，包含学号和成绩两个属性。\n\n（2）定义无参构造函数，从键盘输入学生的数据（学号、成绩），初始化Student对象\n\n（3）定义建立一个对象数组，存储n个学生的数据信息\n\n（4）定义一个全局函数void pass( Student *pStu,int size)，用指针作为形参，输出所有及格的学生数据（大于等于60分即为及格）。如果没有，则输出“not exist”。',
+        '输入有n+1行，第一行输入正整数n，接下来的n行输入n个学生的数据，学号与成绩之间用空格分隔', '输出有若干行，分别表示学生数组中及格学生的数据，左对齐，且学号信息占12位宽度，成绩有1位小数。',
+        '3\nzhangsan 100\nlisi 65.5\nwangwu 58.1', 'zhangsan    100.0\nlisi        65.5', '24');
+INSERT INTO `t_problem_description`
+VALUES ('20838292882', '凯撒密码的加密过程是：给定一串字符，把其中每个大写字母变换成按顺序向后移N位的字母，遇到26个字母结束要环回到字母A计算顺序，其他字符不变。请编写函数实现凯撒加密，输出密文。',
+        '首先输入N的值。\n\n    然后输入一串包含一些大写字母的字符串，不包含空格，串长小于100个字符。', '输出加密后的密文字符串', '3\nABC123&*XYZ', 'DEF123&*ABC', '57');
+INSERT INTO `t_problem_description`
+VALUES ('21021410424',
+        '设定以下汇率常量\n\n美元汇率为6.2619，表示1美元兑换6.2619元人民币\n\n欧元汇率为6.6744，表示1欧元兑换6.6744元人民币\n\n日元汇率为0.0516，表示1元日元兑换0.0516元人民币\n\n港币汇率为0.8065，表示1元港币币兑换0.8065元人民币\n\n定义一个常量指针，根据需求指针指向不同的汇率，然后计算出各种货币兑换为人民币的数量\n\n要求：不能直接使用汇率常量进行计算，必须使用常量指针，只能使用一个指针',
+        '输入一个t表示有t个测试实例\n\n每行先输入一个字母，表示货币类型，然后再输入一个数字（正浮点数），表示货币数量\n\nD表示美元，E表示欧元，Y表示日圆，H表示港币\n\n依次输入t行', '输出四位浮点数',
+        '1\nD 5\n', '31.3095', '42');
+INSERT INTO `t_problem_description`
+VALUES ('21135034629',
+        '校园卡拉OK比赛设置了7名评委，当一名选手K完歌之后，主持人报出歌手名字后，7位评委同时亮分，按照惯例，去掉一个最高分和一个最低分后，其余5位评委评分总和为该选手的最终得分。\n\n       一共有n组选手参加比赛，请你编写一个程序，当所有比赛结束后，列出所有选手的排名以及最终得分情况。\n\n       假定不会出现总分相同的情况',
+        '第1行为一个正整数n，表示参赛人数。随后n行，每行开始为选手的名字，随后7个正整数表示评委亮分情况，数据间以空格分隔。', '按名次升序输出所有选手的名字以及总分，总共n行。',
+        '4\nAlice 90 90 85 92 90 90 90\nBob 92 99 88 92 92 92 92\nCindy 80 85 94 94 94 94 94\nDony 95 95 100 90 95 95 95',
+        'Dony 475\nCindy 461\nBob 460\nAlice 450', '30');
+INSERT INTO `t_problem_description`
+VALUES ('21450235534', ' 你买了一箱n个苹果，很不幸的是买完时箱子里混进了一条虫子。虫子每x小时能吃掉一个苹果，假设虫子在吃完一个苹果之前不会吃另一个，那么经过y小时你还有多少个完整的苹果？',
+        ' 输入仅一行，包括n，x和y（均为整数）。', '输出也仅一行，剩下的苹果个数。', '10 4 9', '7', '106');
+INSERT INTO `t_problem_description`
+VALUES ('23362807949',
+        '为了备战游泳比赛，小张在拼命训练以获取好的名次。\n某天小张对自己的游泳训练时间进行了计时(计时按24小时制)，分别记录了自己当天开始训练的时间a时b分c秒和结束训练的时间d时e分f秒。\n请计算出小张当天总的游泳训练时间。\n',
+        '游泳训练的开始时间和结束时间，开始与结束时间之间以空格作为间隔，时间格式均为“时:分:秒”。', '总的训练时间，格式为“时:分:秒”。', '11:20:15 11:25:21', '0:05:06', '102');
+INSERT INTO `t_problem_description`
+VALUES ('23988291694',
+        '给你一个长度固定的整数数组 arr ，请你将该数组中出现的每个零都复写一遍，并将其余的元素向右平移。\n\n注意：请不要在超过该数组长度的位置写入元素。请对输入的数组 就地 进行上述修改，不要从函数返回任何东西。',
+        'n位整型', 'n位整形', 'arr = [1,0,2,3,0,4,5,0]', '[1,0,0,2,3,0,0,4]', '45');
+INSERT INTO `t_problem_description`
+VALUES ('24770297992',
+        '定义一个电话号码类CTelNumber，包含1个字符指针数据成员，以及构造、析构、打印及拷贝构造函数。\n字符指针是用于动态创建一个字符数组，然后保存外来输入的电话号码\n构造函数的功能是为对象设置键盘输入的7位电话号码，\n拷贝构造函数的功能是用原来7位号码的对象升位为8位号码对象,也就是说拷贝构造的对象是源对象的升级.电话升位的规则是原2、3、4开头的电话号码前面加8，原5、6、7、8开头的前面加2。\n注意:电话号码只能全部是数字字符，且与上述情况不符的输入均为非法)',
+        '测试数据的组数 t\n\n第一个7位号码\n\n第二个7位号码\n\n…', '第一个号码升位后的号码\n\n第二个号码升位后的号码\n\n…', '3\n6545889\n3335656\n565655\n',
+        '26545889\n83335656\nIllegal phone number\n', '13');
+INSERT INTO `t_problem_description`
+VALUES ('25215674578',
+        '#include <iostream>\nusing namespace std;\nclass A {\n public:\n  int i;\n  A(int x) { i = x; }\n// 在此处补充你的代码\n};\nint main()\n{\n A a(1);\n A * pa = new A(2);\n delete pa;\n return 0;\n}\n（练习时请复制上述已有代码）\n',
+        '无', '无', '无', '2\n1\n', '16');
+INSERT INTO `t_problem_description`
+VALUES ('28252915871',
+        '莫比乌斯函数，数论函数，由德国数学家和天文学家莫比乌斯(Möbius ,1790–1868)提出。梅滕斯(Mertens)首先使用μ(n)作为莫比乌斯函数的记号。而据说，高斯(Gauss)比莫比乌斯早三十年就曾考虑过这个函数。莫比乌斯函数在数论中有着广泛应用。\n\n       莫比乌斯函数完整定义的通俗表达：\n\n       1）莫比乌斯函数μ(n)的定义域是N\n\n       2）μ(1)=1\n\n       3）当n存在平方因子时，μ(n)=0\n\n       4）当n是素数或奇数个不同素数之积时，μ(n)=-1\n\n       5）当n是偶数个不同素数之积时，μ(n)=1 \n\n\n\n      例如：\n\n             μ(8)，μ(12)，μ(18) = 0\n\n             μ(2)，μ(3)，μ(30) = -1\n\n             μ(1)，μ(6)，μ(10) = 1\n\n        给出一个数n, 计算μ(n)。',
+        ' 输入一行一个整数n', '输出μ(n)', '12', '0', '88');
+INSERT INTO `t_problem_description`
+VALUES ('28685999113',
+        '设计一个类来实现手机的功能。它包含私有属性：号码类型、号码、号码状态、停机日期；包含方法：构造、拷贝构造、打印、停机。\n1、号码类型表示用户类别，只用单个字母，A表示机构，B表示企业、C表示个人\n2、号码是11位整数，用一个字符串表示\n3、号码状态用一个数字表示，1、2、3分别表示在用、未用、停用\n4、停机日期是一个日期对象指针，在初始化时该成员指向空，该日期类包含私有属性年月日，以及构造函数和打印函数等\n5、构造函数的作用就是接受外来参数，并设置各个属性值,并输出提示信息，看示例输出\n6、拷贝构造的作用是复制已有对象的信息，并输出提示信息，看示例输出。\n想一下停机日期该如何复制，没有停机如何复制？？已经停机又如何复制？？\n7、打印功能是把对象的所有属性都输出，输出格式看示例\n8、停机功能是停用当前号码，参数是停机日期，无返回值，操作是把状态改成停用，并停机日期指针创建为动态对象，并根据参数来设置停机日期，最后输出提示信息，看示例输出\n要求：在主函数中实现号码备份的功能，对已有的虚拟手机号的所有信息进行复制，并将号码类型改成D表示备份；将手机号码末尾加字母X',
+        '第一行输入t表示有t个号码\n\n第二行输入6个参数，包括号码类型、号码、状态、停机的年、月、日，用空格隔开\n\n依次输入t行',
+        '每个示例输出三行，依次输出原号码信息、备份号码信息和原号码停机后的信息\n\n每个示例之间用短划线（四个）分割开，看示例输出',
+        '2\nA 15712345678 1 2015 1 1\nB 13287654321 2 2012 12 12\n\n',
+        'Construct a new phone 15712345678\n类型=机构||号码=15712345678||State=在用\nConstruct a copy of phone 15712345678\n类型=备份||号码=15712345678X||State=在用\nStop the phone 15712345678\n类型=机构||号码=15712345678||State=停用 ||停机日期=2015.1.1\n----\nConstruct a new phone 13287654321\n类型=企业||号码=13287654321||State=未用\nConstruct a copy of phone 13287654321\n类型=备份||号码=13287654321X||State=未用\nStop the phone 13287654321\n类型=企业||号码=13287654321||State=停用 ||停机日期=2012.12.12\n----\n',
+        '15');
+INSERT INTO `t_problem_description`
+VALUES ('29299924177', '编写函数，求一个用字符数组存储的字符串长度。在主函数中调用该函数，输出结果。输入的字符串允许包含空格。', '一个字符串，长度不超过50.', '一个表示字符串长度的整数',
+        'How are you?', '12', '55');
+INSERT INTO `t_problem_description`
+VALUES ('30722708728', '从键盘输入n个字符，请分别统计大写字母、小写字母、数字、其他字符的个数并输出；还需要输出所有数字字符之和。', '第一行为一个整数n（100>=n>=0），接下来n行每行一个字符。',
+        '输出第1行为4个整数，分别表示大写字母、小写字母、数字、其他字符的个数，第2行为一个数字，表示其中所有数字字符所对应的数字之和，当输入的字符中不包含数字字符时，没有第2行。', '5\na\nA\n5\n6\n@',
+        '1 1 2 1\n11', '94');
+INSERT INTO `t_problem_description`
+VALUES ('31331336253',
+        '小希看到小芳很容易就找到了她满意的工作，他也想去尝试一下，并参考了小芳找工作的方法。\n\n         与小芳不同的是，小希希望根据三个条件综合评估来选择。\n\n                月薪得分:  月薪/5000*100取整\n\n                带薪假得分：有20分，无0分\n\n                离家距离得分：不超过2000公里为100分。每超过200公里减10分，不足200公里按200公里计算，直至0分为止。\n\n          给定3个公司A、B、C的数据，根据分数最大来判断小希应该接受哪家公司的offer。',
+        '  输入为3行（分别为A、B和C公司的数据），每行包含3个数据，分别表示公司给定的月薪（整数）、有无带薪休假(y-有，n-无)、离家距离（整数），所有的输入保证没有两个公司最终的得分相等。',
+        '输出一行一个字符(A或B或C，表示小希应该选择的公司)', '24723 y 23588\n37395 n 32313\n36389 n 21061', 'B', '95');
+INSERT INTO `t_problem_description`
+VALUES ('31641533728',
+        '  松雅的旅馆门口有一个自动门，按照以下方式工作：\n\n当门是关闭的时候，1或多个人来到门前，门将马上自动打开，所有人都能马上入内；\n\n当门是打开的时候，1或多个人来到门前，所有人都能马上入内；\n\n打开的门在打开后的 d 秒钟内立即关闭；\n\n当门正在关闭时，1或多个人在同一时刻来到门前，所有人有足够时间入内，之后才会关闭 \n\n       例如，如果 d=3，有4人在4个不同时刻t1=4、t2=7、t3=9 和 t4=13 来到门前，门将会打开3次，即在时刻4、9和13打开，在时刻7和12关闭。\n\n       已知有 n 个员工将在 a、2*a、3*a、...、n*a（ a 是一个正整数）时刻进入，同时在 t1、t2、...、tm 时刻有 m 个客人进入。\n\n       编程求出自动门打开的次数，假定开始时门是关闭的。',
+        '  第一行4个正整数 n、m、a、d，分别表示员工数、客人数、第一个雇员进入的时刻、门打开后到关闭的时间长度。\n\n       第二行包括一个正整数序列 t1、t2、...、tm，表示 m 个客人来到门前的时刻，这是一个非递减序列。',
+        ' 输出门打开的次数', '1 1 3 4\n7', '1', '81');
+INSERT INTO `t_problem_description`
+VALUES ('31936821611', '仔细阅读主程序中的调用语句，模拟实现书籍类（Book）。每本书包含一个书架号（shelf_id）和价格（price）。',
+        '总共2n+1行，第一行输入n，表示有n本书，接下来的2n行，分别输入n本书的书架号和价格。', '总共n行，每一行输出一本书的书架号和价格。输出包括前导输出信息，书架号占18个字符宽度。详见输出样例。1',
+        '3\nA12 3.34\n15\nB1 11.34\n15\nC 4352.45\n60',
+        'Shelf_ID: A12 3.34          Price: 15\nShelf_ID: B1 11.34          Price: 15\nShelf_ID: C 4352.45         Price: 60',
+        '26');
+INSERT INTO `t_problem_description`
+VALUES ('31942770930', '请自行设计一个矩形类，可以计算矩形的面积、周长、对角线，判断是否是正方形。请用上类似的构造函数，自己设计main()函数，对设计的类进行测试。',
+        '一行数据，两个元素表示矩形的长和宽，用空格隔开。', '五行数据，第一行输出矩形长和宽，第二行输出周长，第三行输出面积，第四行输出对角线长度，第五行输出是否为正方形（是输出Yes，否输出No），详见样例。', '5 6',
+        'length = 5,width = 6\nC = 22\nS = 30\nThe diagonal length = 7.81025\nIs square ? No', '19');
+INSERT INTO `t_problem_description`
+VALUES ('33706275828',
+        '两只小熊都喜欢吃糖果，也喜欢玩和糖果有关的游戏。\nLimak 和 Bob 在玩下面的游戏：Limak 先 吃一颗糖，然后Bob 吃两颗，接着 Limak 吃 3 颗，再接着Bob 吃 4 颗，以此类推。如果轮到一只 熊吃糖，但他却吃不到该吃那么多的糖，它就输了。 \nLimak最多能吃 A 颗糖（不然会肚子痛的），而 Bob 最多能吃 B 颗糖。谁能获胜呢？请输出胜者的名字（“Limak”或“Bob”）。\n',
+        '输入的第一行包含一个整数 T，代表测试数据的组数。接下来是 T 组数据。 每组数据仅有一行，包含两个整数 A 和 B，分别代表 Limak 和 Bob 最多能吃的糖果颗数。 ', '输出共T行，代表每组测试数据的赢家',
+        '10\n3 2\n4 2\n1 1\n1 2\n1 3\n9 3\n9 11\n9 12\n9 1000\n8 11',
+        'Bob\nLimak\nLimak\nBob\nBob\nLimak\nLimak\nBob\nBob\nBob', '89');
+INSERT INTO `t_problem_description`
+VALUES ('36069508602', '两个整数之间的汉明距离指的是这两个数字对应二进制位不同的位置的数目。', '给出两个整数 x 和 y(0 ≤ x, y < 231)，用空格分隔', '输出它们之间的汉明距离', '1 4',
+        '2', '86');
+INSERT INTO `t_problem_description`
+VALUES ('36644316628', '输出两行字符。', '无', '\"This is a C++ program.\"\nc:\\teacher\\navision', '无',
+        '\"This is a C++ program.\"\nc:\\teacher\\navision', '103');
+INSERT INTO `t_problem_description`
+VALUES ('36905996245',
+        '火星人足球赛的比赛规则与地球人的比赛规则有些非常相似，比如严重犯规，将被给予黄牌警告，特别严重的犯规，将给予红牌直接罚下，如果有人得到第2张黄牌，则自动获得红牌罚下，比赛同样采取主客场制。\n\n       与地球人足球赛不同的是，火星人足球赛每队可以上场的人数不会固定为11人，可以多个人，比赛时间也会更长一些。\n\n       比赛时的裁判员是机器人，判罚非常严厉，如果有人获得红黄牌，机器人裁判将自动记录当时的情况。    ',
+        '输入的第一行为主队队名，第二行为客队队名，队名的长度不超过20个字符。\n\n       第三行为一个整数 n (0 ≤ n ≤ 90) ，表示得到红黄牌的犯规次数。\n\n       接下来的n行，每行包含用空格分隔的4个部分，表示犯规的情况:\n\n首先为一个整数，表示犯规的时间（分钟）\n\n接着为一个字符\"h\"或\"a\"，如果为\"h\"，表示该张牌会给到主队球员，否则会给到客队球员\n\n接下来为球员编号m  (1 ≤ m ≤ 99)\n\n接下来为一个字符\"y\"或\"r\"，如果为\"y\"，表示为黄牌，否则为红牌\n\n       不同球队的球员可能有相同的号码，在同一球队球员的号码不相同，犯规记录按时间顺序排列。',
+        '输出按时间顺序排列的获得红牌的记录，如果时间相同，则主队排在前面，如果同一时间同一球队有多人获得红牌，则编号大的排在前面。每个红牌一行，包含3个部分：球员所属球队的名字、犯规球员编号、获得红牌时间。\n\n      如果全场比赛无红牌，输出\"No Red Card\"',
+        'MC\nCSKA\n9\n28 a 3 y\n62 h 25 y\n66 h 42 y\n70 h 25 y\n77 a 4 y\n79 a 25 y\n82 h 42 r\n89 h 16 y\n90 a 13 r',
+        'MC 25 70\nMC 42 82\nCSKA 13 90', '33');
+INSERT INTO `t_problem_description`
+VALUES ('38030969511',
+        '两只老鼠兄弟分别去偷大米，它们事先约定，老大偷到的大米，必须留下1/3作为储备粮，老二必须留下1/4，剩下的它们可以自己吃掉。现給出老大和老二本次偷得的大米数，且假定它们所偷得的大米数总是为整数。求老鼠兄弟本次可以有多少储备大米？',
+        '输入为两个整数，表示老鼠兄弟所偷得的大米数。', '   输出为一个数，表示最后老鼠兄弟本次可以获得的储备大米数，保留两位小数。', '12 16', '8.00', '109');
+INSERT INTO `t_problem_description`
+VALUES ('38390687458',
+        '小希打字太慢了，因此他在苦练打字技巧。他用了一个教学 App，可以一个个显示自己打出来的英文单词。 \n\n当小希输入一个词时，他需要花0.2 秒输入第一个字母。而对于接下来的每个字母，如果在标 准指法下和前一个字母使用同侧手输入，则需要 0.4 秒；否则只需 0.2 秒。输入一个词所需的时间 为输入每个字母所需时间之和。不过，如果小希之前练过这个词，那么所需的时间可以降为初次 输入时的一半。\n\n小希输入的内容只包含26个英文字符（区分大小写），字符要求按照标准指法规定输入，其中\"qwertasdfgzxcvb\"这15个字符为左手字符，“yuiophjklnm”这11个字符为右手字符。 \n\n给定小希在练习中依次输入的词，请计算小希的总耗时。',
+        '每组数据的第一行包含一个整数 N。接下来 N 行，每行包含一个字符串，代表小希输入的词。', '对于每组数据，输出一行，包含一个整数，代表小希的总耗时，单位为十分之一秒。',
+        '5\nfdjkd\ndFjdk\ndfD\nfdjkd\nKkJjk', '61', '69');
+INSERT INTO `t_problem_description`
+VALUES ('38479180192', '设计一个三角形类Triangle，包含三角形三条边长的私有数据成员，另有一个重载运算符”+”，以实现求两个三角形对象的面积之和。', '分别输入两个三角形的三边长',
+        '输出两个三角形的面积和', '3 4 5\n6 8 10', '30', '7');
+INSERT INTO `t_problem_description`
+VALUES ('38502291169', '编写函数exponent(num,k)，函数功能是根据整数num和底数k，求解指数x，如果找不到满足幂运算结果的底数就返回0',
+        '两个整数，第一个为num的值，第二个为底数k的值，用空格隔开', '一个整数，表示指数，满足k的x次方等于num。', '32 2', '5', '54');
+INSERT INTO `t_problem_description`
+VALUES ('39422201925',
+        '设计一个宠物类Pet，具有颜色、体重、年龄等属性，以及一个虚函数speak，其功能为输出宠物的叫声。以该类为基类，派生出Cat类和Dog类，他们各自包含自身的构造函数及speak函数的不同实现。编写对一个具体的Cat和Dog进行测试的程序。',
+        '无', '分别输出宠物猫和狗的叫声', '无', 'Cat: miao miao miao...\nDog: wang wang wang...', '4');
+INSERT INTO `t_problem_description`
+VALUES ('40275216873', '给你一个混合字符串 s ，请你返回 s 中 第二大 的数字，如果不存在第二大的数字，请你返回 -1 。\n\n混合字符串 由小写英文字母和数字组成。', '字符串', '数字',
+        'dfa12321afd', '2', '43');
+INSERT INTO `t_problem_description`
+VALUES ('40571426312',
+        '某公司需要招聘一批员工，该公司有自己独特的评价体系，对应聘者设立了 3 个指标：技能值 Ki、智慧值 Ii 和忠诚度 Ei ，i=1, 2, ...\n\n        经过严格的初选和复选以及各项测试以后，有 N 个人进入最后的名单，公司给出了每个人的各项指标值，并规定对于某人 i，如果存在另外人 j，有Ki < Kj 、Ii < Ij 、Ei < Ej ，则 i 将会被淘汰。\n\n        请找出总共有多少人会被淘汰。',
+        '第一行包含一个整数 N （1≤ N ≤ 500000），表示最终进入评价名单的人数。第二行包括 N 个整数 Ki，第三行包含 N 个整数 Ii，第四行包含 N 个整数 Ei ，0 ≤ Ki、Ii 、 Ei  ≤ 109。',
+        '输出为一行一个整数。', '3\n1 4 2\n4 3 2\n2 5 3', '1', '32');
+INSERT INTO `t_problem_description`
+VALUES ('40871685993',
+        ' 阿迪和他的朋友一共k个人，分吃n颗糖，每颗糖只能分给他们中的某个人或者丢弃。\n\n         人的编号从1到k，阿迪是第1号。阿迪将选择一个正整数x来分糖，他先给自己x颗，然后给下一个人x颗，再给第三个人x颗，如此继续，循环往复。剩余的（不能整除x的部分）将会丢弃。\n\n         阿迪不能选择大于M的x去分配，因为这样会被别人认为太贪心（嘿嘿，其实他真的很贪心）。还有，他不能选择一个小的x，使得有人会收到糖的次数超过D，这样会被认为分得太慢。\n\n         阿迪想请你找出一个有效的x，保证让阿迪能得到最多的糖。',
+        '输入为一行4个整数n、k、M和D，分别表示糖的数量、人的数量、每次能分配的最大数量、人可以收到糖的最大次数。', '输出为一个整数，表示阿迪自己能收到的最大可能的糖的颗数。', '20 4 5 2', '8',
+        '74');
+INSERT INTO `t_problem_description`
+VALUES ('41346201003',
+        '国王将金币作为工资，发放给忠诚的骑士。第1天，骑士收到一枚金币；之后两天(第2天和第3天)里，每天收到两枚金币；之后三天(第4、5、6天)里，每天收到三枚金币；之后四天(第7、8、9、10天)里，每天收到四枚金币……这种工资发放模式会一直这样延续下去：当连续n天每天收到n枚金币后，骑士会在之后的连续n+1天里，每天收到n+1枚金币(n为任意正整数)。\n\n你需要编写一个程序，确定从第一天开始的给定天数内，骑士一共获得了多少金币。',
+        '一个整数（范围1到10000），表示天数。', '骑士获得的金币数。', '6', '14', '84');
+INSERT INTO `t_problem_description`
+VALUES ('41621415128',
+        ' 松雅认为，拥有自己的旅馆是赚钱的最好方式，因为她可以在任何她想要的地方赚钱和休闲。\n\n       松雅生活的国度是一个无尽头的线状型，在这条直线的每个整数坐标上有一座城市。她有n个旅馆，第i个旅馆位于具有坐标xi的城市。松雅是位聪明的女孩，她不会在同一城市开设两家或多家旅馆。\n\n       松雅想拓展业务，因此，她决定开更多的旅馆。她想让新开的旅馆到所有其他旅馆的最短距离等于d，这个女孩知道有很多地方可以建造这样的旅馆。她想知道有多少可以建造一家新旅馆的城市。 \n\n       在一家自己的旅馆，她懒洋洋地躺在按摩浴缸里，要求你帮她找出能建新旅馆的城市数目，使得从原来的n家旅馆到新的旅馆的最小距离等于d。 ',
+        '输入的第一行包含两个整数n和d，表示松雅现有的旅馆数量和新旅馆到其他所有旅馆的最短距离。\n\n      第二行包括n个不同的整数，以严格递增的形式给出，表示现有的旅馆所在城市的坐标。',
+        '输出为一个整数，表示松雅可以新建旅馆的城市坐标的数量。', '4 3\n-3 2 9 16', '6', '72');
+INSERT INTO `t_problem_description`
+VALUES ('41670862884',
+        '  在本台球游戏中，包含多种颜色的球，其中：红球15只各1分、黄球1只2分、绿球1只3分、咖啡球1只4分、蓝球1只5分、粉球1只6分、黑球1只7分。\n\n        球的颜色表示为：\n\n                           r-红色球 y-黄色球 g-绿色球 c-咖啡色球 b-蓝色球 p-粉红球 B-黑色球\n\n        其中红球可能一次打进多个，且打进后不再摆回，其他球打进之后需要再摆回。\n\n        请计算n次击打之后总的得分。',
+        '输入第一行为非负整数n，表示一个人进行了n次击打。\n\n        接下来为n次击打记录，每次记录有两种形式:\n\n                 如果打进红球，则有两行， 第一行为r，第二行为一个整数(<=15)，表示打进的红球个数\n\n                 如果打进其他球，仅有一行，为ygcbpB中任意一个字符。',
+        ' 输出一个整数，表示该人最终的得分。', '5\nr\n3\ng\ny\nr\n1\nB', '16', '96');
+INSERT INTO `t_problem_description`
+VALUES ('43244791100',
+        '#include <cstdlib>\n#include <iostream>\nusing namespace std;\nint strlen(const char * s) \n{ int i = 0;\n for(; s[i]; ++i);\n return i;\n}\nvoid strcpy(char * d,const char * s)\n{\n int i = 0;\n for( i = 0; s[i]; ++i)\n  d[i] = s[i];\n d[i] = 0;\n  \n}\nint strcmp(const char * s1,const char * s2)\n{\n for(int i = 0; s1[i] && s2[i] ; ++i) {\n  if( s1[i] < s2[i] )\n   return -1;\n  else if( s1[i] > s2[i])\n   return 1;\n }\n return 0;\n}\nvoid strcat(char * d,const char * s)\n{\n int len = strlen(d);         //len不过包括0\n strcpy(d+len,s);       //后面还会cpy一个0\n}\nclass MyString\n{\n// 在此处补充你的代码\n};\nint CompareString( const void * e1, const void * e2)\n{\n MyString * s1 = (MyString * ) e1;\n MyString * s2 = (MyString * ) e2;\n if( * s1 < *s2 )\n return -1;\n else if( *s1 == *s2)\n return 0;\n else if( *s1 > *s2 )\n return 1;\n}\nint main()\n{\n MyString s1(\"abcd-\"),s2,s3(\"efgh-\"),s4(s1);\n MyString SArray[4] = {\"big\",\"me\",\"about\",\"take\"};\n cout << \"1. \" << s1 << s2 << s3<< s4<< endl;\n s4 = s3;\n s3 = s1 + s3;\n cout << \"2. \" << s1 << endl;\n cout << \"3. \" << s2 << endl;\n cout << \"4. \" << s3 << endl;\n cout << \"5. \" << s4 << endl;\n cout << \"6. \" << s1[2] << endl;\n s2 = s1;\n s1 = \"ijkl-\";\n s1[2] = \'A\' ;\n cout << \"7. \" << s2 << endl;\n cout << \"8. \" << s1 << endl;\n s1 += \"mnop\";\n cout << \"9. \" << s1 << endl;\n s4 = \"qrst-\" + s2;\n cout << \"10. \" << s4 << endl;\n s1 = s2 + s4 + \" uvw \" + \"xyz\";\n cout << \"11. \" << s1 << endl;\n qsort(SArray,4,sizeof(MyString),CompareString);\n for( int i = 0;i < 4;i ++ )\n cout << SArray[i] << endl;\n //s1的从下标0开始长度为4的子串\n cout << s1(0,4) << endl;\n //s1的从下标5开始长度为10的子串\n cout << s1(5,10) << endl;\n return 0;\n}\n（练习时请复制上述已有代码）',
+        '无', '无', '无',
+        '1. abcd-efgh-abcd-\n2. abcd-\n3.\n4. abcd-efgh-\n5. efgh-\n6. c\n7. abcd-\n8. ijAl-\n9. ijAl-mnop\n10. qrst-abcd-\n11. abcd-qrst-abcd- uvw xyz\nabout\nbig\nme\ntake\nabcd\nqrst-abcd-\n',
+        '3');
+INSERT INTO `t_problem_description`
+VALUES ('43840652162', '有一个房间，大小为 M×N m2，小王准备用尺寸为 2×1 m2的瓷砖铺满整个房间，每块瓷砖铺贴时可以旋转且尽可能不做切割。请问小王至少需要准备多少块这样的瓷砖？',
+        '输入为两个整数 M 和 N，表示房间的大小。', ' 输出为一个整数，表示小王铺满整个房间至少需要准备的瓷砖数。', '3 3', '5', '108');
+INSERT INTO `t_problem_description`
+VALUES ('45919840608',
+        ' 猴子王国里有n只猴子，第i只猴子有ri种技能。\n\n       猴子a可以是猴子b的导师，当且仅当猴子a的技能严格大于猴子b的技能(ra>rb)，并且a和b无性格冲突，有性格冲突的猴子在一起会打架。\n\n       给定每个猴子的技能值，以及有性格冲突的k对猴子。对于每只猴子，找出可以成为其他猴子导师的个数。',
+        '  第一行包含两个正整数n和k，表示猴子的数量以及有性格冲突的猴子的对数。\n\n       第二行为一个整数序列，r1、r2、...、rn，其中ri表示第i只猴子的技能数。\n\n       接下来的k行，每行为两个正整数x、y(1≤ x、y≤n，x≠ y)，表示有性格冲突的一对猴子编号，输入保证(x,y)和(y,x)不会同时出现。',
+        ' 输出n个整数，第i个整数表示第i个猴子能成为多少只猴子的导师。', '4 2\n10 4 10 15\n1 2\n4 3', '0 0 1 2', '75');
+INSERT INTO `t_problem_description`
+VALUES ('45953672145',
+        '有一个 n×m 的网格，其中包含一些实心单元和一些空心单元。网格左上角的坐标为(1, 1)，而右下角的坐标为(n, m)。其中有 k 个实心单元，而其他的则是空心的。这时从坐标为( xs，ys )的单元中心向四个对角方向之一（也就是东北、西北、东南和西南）的方向发射一个激光束，如果激光束遇到实心单元或网格边缘则形成反射或折射。方式如下（入射角度为NE为例）：一段时间后，激光束将进入一个死循环，计算在进入死循环之前激光束穿越至少一次的空单元格总数，穿越是指穿过单元中心。',
+        '输入的第一行包含三个整数 n、m 和 k (1≤n、m≤1000, 0≤k≤1000)。接下来的 k 行每行包含两个整数 xi 和 yi (1≤xi≤n，1≤yi≤m)，表示第 i 个实心单元的位置。\n\n       最后一行包含两个整数xs 、 ys (1≤xs≤n，1≤ys≤m)以及激光发射方向，分别用\"NE\"、\"NW\"、\"SE\"、\"SW\"代表东北、西北、东南、西南方向。',
+        '输出仅有一行一个数字，表示激光束进入死循环之前所穿越过至少一次的空心单元格的总数。', '3 3 0\n1 2 SW', '6', '64');
+INSERT INTO `t_problem_description`
+VALUES ('47313171650',
+        '一只小猴想去商店里购买 w 只香蕉，它购买第一只香蕉需要 k 元，购买第2只香蕉需要 2k 元，以此类推，购买第 i 只香蕉需要 i●k 元，然而它只有 n 元， 那么它还需要向它的朋友借多少元？',
+        '输入为一行，包含三个数 k、n、w (1≤ k、w ≤1000，0 ≤ n ≤ 109)。', ' 输出为一个整数，表示小猴购买 w 只香蕉需要向它朋友所借的钱数，如果不需要借，则输出0。', '3 17 4',
+        '13', '107');
+INSERT INTO `t_problem_description`
+VALUES ('47663177537',
+        '输入若干个（≤105）武将的信息，包括姓名、体力、智力和武力值，直到用户输入为‘#’，表示输入结束。再输入指标编号（1表示体力 2表示智力 3表示武力），根据该指标对所有将领进行从大到小排序，指标值相同的武将保持输入时的先后顺序不变，并将排序后的结果输出，每个信息之间用空格分隔。请自己实现排序算法。',
+        '‘#’之前的每一行都包含四个信息，分别是姓名、体力、智力、武力；‘#’后一行的数字表示单项指标序号，如1表示按体力排序。 ',
+        '将排序后的武将信息，按行输出，每行包含姓名、体力、武力、智力等四个数据，每个数据之间用单个空格分隔。', 'guan 90 80 90\nzhao 90 90 90\nzhang 100 70 80\n#\n2',
+        'zhao 90 90 90\nguan 90 80 90\nzhang 100 70 80', '37');
+INSERT INTO `t_problem_description`
+VALUES ('52765888981', '输入两个正整数A和B，其中A和B都小于32767，求A/B的值，精确到小数点后N位（1<=N<=200）。', '输入只有一行，包括三个整数，分别为A、B和N。',
+        '输出只有一行，包括一个数，这个数有N位小数。', '10 3 10', '3.3333333333', '80');
+INSERT INTO `t_problem_description`
+VALUES ('54889756601',
+        '#include <iostream>\n#include <string>\n#include <cstdio>\n#include <cstring>\n#include <sstream>\n#include <cstdlib>\nusing namespace std;\n\nclass Student {\n// 在此处补充你的代码\n};\n\nint main() {\n Student student;        // 定义类的对象\n student.input();        // 输入数据\n student.calculate();    // 计算平均成绩\n student.output();       // 输出数据\n}\n（练习时请复制上述代码）\n',
+        '输入数据为一行，包括：\n姓名,年龄,学号,第一学年平均成绩,第二学年平均成绩,第三学年平均成绩,第四学年平均成绩。\n其中姓名为由字母和空格组成的字符串（输入保证姓名不超过20个字符，并且空格不会出现在字符串两端），年龄、学号和学年平均成绩均为非负整数。信息之间用逗号隔开。',
+        '输出一行数据，包括：\n姓名,年龄,学号,四年平均成绩。\n信息之间用逗号隔开。', 'Tom Hanks,18,7817,80,80,90,70', 'Tom Hanks,18,7817,80', '18');
+INSERT INTO `t_problem_description`
+VALUES ('55766001084', '所谓回文数是指其各位数字左右对称的整数。例如：121，676，94249等。\n\n   输入一个正整数N，编写函数判断N是否为回文数。', '输入一个正整数N',
+        '如果N是回文数则输出true，否则输出false', '121', '1', '58');
+INSERT INTO `t_problem_description`
+VALUES ('56221707317',
+        '小熊去到商店，选择了一种它非常喜欢的糖果，其单价为 k 元，假定商店里有无穷多的这种糖果。\n\n       它的父亲允许它花费任意多的10元硬币和一个 r 元硬币去购买，但不能找零，请帮助小熊确定它能购买的最少数量的糖果是多少？',
+        '输入为一行两个整数 k 和 r (1≤ k ≤1000，1≤  r ≤9)，分别表示糖果的价格以及小熊手里的单独硬币的币值。', '输出为一个数，表示小熊在不找零的情况下所能购买糖果的最小数量。', '117 3',
+        '9', '50');
+INSERT INTO `t_problem_description`
+VALUES ('56756009437',
+        '给你一个字符串 s，它仅由字母 \'a\' 和 \'b\' 组成。每一次删除操作都可以从 s 中删除一个回文 子序列。\n\n返回删除给定字符串中所有字符（字符串为空）的最小删除次数。\n\n「子序列」定义：如果一个字符串可以通过删除原字符串某些字符而不改变原字符顺序得到，那么这个字符串就是原字符串的一个子序列。\n\n「回文」定义：如果一个字符串向后和向前读是一致的，那么这个字符串就是一个回文。',
+        '字符串', '整型', 's = \"ababa\"', '1', '46');
+INSERT INTO `t_problem_description`
+VALUES ('57037632265', 'n 个人（编号从1~n）围成一圈，从第 k 个人开始数数，数到 m 的人出圈，然后继续从未出列的下一个人开始数数，数到 m 的人出圈，重复上述过程，直到圈中仅剩下一人。',
+        '输入为一行三个正整数，n、k、m。', '输出为一个正整数，表示最后剩下的人的编号。', '100 1 5', '47', '22');
+INSERT INTO `t_problem_description`
+VALUES ('58537753196', '仔细阅读主程序中的调用语句，请根据所给代码，模拟一个菜单类（menu）。该类存储若干条菜单选项（item），支持菜单项内容的输入和输出。',
+        '总共n+1行，第一行输入整数n，表示该菜单有n项，接下来的n行，输入每个菜单项信息。', '总共n行，输出n条菜单项的具体内容，每个菜单项占一行。', '3\n1 open\n2 copy\n3 exit',
+        '1 open\n2 copy\n3 exit', '25');
+INSERT INTO `t_problem_description`
+VALUES ('58579219361',
+        '春节期间小希计划乘坐火车去旅行。开始时，火车位于位置1，目的地在位置L。火车的速度是1单位长度/分钟（也就是第1分钟火车在位置1，第2分钟在位置2，等等）。\n\n        中国人过年都喜欢挂灯笼，在该路线上就有许多灯笼，它们位于能被 v 整除的位置上（也就是说，第1个灯笼在位置 v ，第2个灯笼在位置2v，等等）。\n\n        有另外一辆火车停留在从位置 l 到 r 的地方。\n\n        显然，当 p 能被 v 整除的时候，且该处没有火车停留（p∉[l;r]），小希就可以看到处于位置 p 上的灯笼。因此，灯笼的位置如果被停留的火车遮挡，小希就看不见这些灯笼。\n\n        请输出小希在旅行期间能看到的灯笼数。',
+        '输入的第一行为一个整数T，表示测试数据的组数。\n\n        接下来的T行，每行4个整数，为L、v、l、r，分别表示目的地的位置、灯笼的间距、停留火车的位置区间段。',
+        ' 输出为T行，对应每个测试用例的输出结果。', '4\n10 2 3 7\n100 51 51 51\n1234 1 100 199\n1000000000 1 1 1000000000',
+        '3\n0\n1134\n0', '70');
+INSERT INTO `t_problem_description`
+VALUES ('59553614435',
+        '有一个学校的老师共用N个教室，按照规定，所有的钥匙都必须放在公共钥匙盒里，老师不能带钥匙回家。每次老师上课前，都从公共钥匙盒里找到自己上课的教室的钥匙去开门，上完课后，再将钥匙放回到钥匙盒中。\n　　钥匙盒一共有N个挂钩，从左到右排成一排，用来挂N个教室的钥匙。一串钥匙没有固定的悬挂位置，但钥匙上有标识，所以老师们不会弄混钥匙。\n　　每次取钥匙的时候，老师们都会找到自己所需要的钥匙将其取走，而不会移动其他钥匙。每次还钥匙的时候，还钥匙的老师会找到最左边的空的挂钩，将钥匙挂在这个挂钩上。如果有多位老师还钥匙，则他们按钥匙编号从小到大的顺序还。如果同一时刻既有老师还钥匙又有老师取钥匙，则老师们会先将钥匙全还回去再取出。\n　　今天开始的时候钥匙是按编号从小到大的顺序放在钥匙盒里的。有K位老师要上课，给出每位老师所需要的钥匙、开始上课的时间和上课的时长，假设下课时间就是还钥匙时间，请问最终钥匙盒里面钥匙的顺序是怎样的？',
+        '输入的第一行包含两个整数N, K。\n　　接下来K行，每行三个整数w, s, c，分别表示一位老师要使用的钥匙编号、开始上课的时间和上课的时长。可能有多位老师使用同一把钥匙，但是老师使用钥匙的时间不会重叠。\n　　保证输入数据满足输入格式，你不用检查数据合法性。',
+        '输出一行，包含N个整数，相邻整数间用一个空格分隔，依次表示每个挂钩上挂的钥匙编号。', '5 2\n4 3 3\n2 2 7', '1 4 3 2 5', '36');
+INSERT INTO `t_problem_description`
+VALUES ('61078495343',
+        '矩阵是线性代数中的重要概念，应用领域非常广泛，在C/C++中，通常将矩阵定义为一个二维数组。\n\n       本问题中，将输入两个矩阵 A 和 B，实现对矩阵的数乘、矩阵加法、矩阵乘法以及行列式的计算。',
+        '输入的第一行为两个正整数 M 和 N，分别表示矩阵 A 的行数和列数；\n\n       接下来的 M 行，每行 N 个用空格分隔的整数，表示矩阵 A 的元素值；\n\n       接下来的一行，为一个整数 x,  用于对矩阵 A 进行数乘；\n\n       接下来的一行为两个正整数 K 和 L, 分别表示矩阵 B 的行数和列数；\n\n       接下来的 K 行，每行为 L 个用空格分隔的整数，表示矩阵 B 的元素值。',
+        '输出的第一部分为 M 行，每行为 N 个用空格分隔的整数，表示 x 数乘 A 的结果；\n\n       接下来(如果有），如果 A 和 B 可以相加，则输出 M 行，每行为 N 个用空格分隔的整数，表示矩阵 A+B 的结果；\n\n       接下来(如果有），如果 A 和 B 可以相乘，则输出 M 行，每行为 L 个用空格分隔的整数，表示矩阵 A×B 的结果；\n\n       接下来一行(如果有），如果 A 的行列式存在，则输出一个整数，表示 A 的行列式的值；\n\n       接下来一行(如果有），如果 B 的行列式存在，则输出一个整数，表示 B 的行列式的值。',
+        '2 2\n29 51\n7 84\n9\n2 9\n1 1 4 8 5 7 4 5 9\n2 5 5 1 6 1 4 8 6',
+        '261 459\n63 756\n131 284 371 283 451 254 320 553 567\n175 427 448 140 539 133 364 707 567\n2079', '21');
+INSERT INTO `t_problem_description`
+VALUES ('62563870792',
+        '某班有 n 个学生，下课铃一响，大家都去饮水机喝水，没有两个人能同时使用饮水机，因此，同学们必须排队取水。\n\n      第 i 个学生在第 li 秒来到队尾，如果同一时刻有多个学生来到队伍，则编号大的排在编号小的后面，排在队伍最前面的学生将花1秒的时间取水，然后离开，其他人在后面排队。如果到第 ri 秒学生 i 还没有取到水且他前面还有人，他将不打水而直接离开队伍。\n\n       编程求每个学生取到水的时间。',
+        '输入第一行为一个整数T，表示测试用例的个数。\n\n       接下来是T个测试用例，每个用例的第一行为一个整数 n，表示学生数，接下来的 n 行，每行两个整数 li 和 ri ，分别表示第 i 个同学在第 li 秒来到队伍末尾，如果第 ri 秒还没取到水则离开队伍的时间。',
+        '对于每个测试用例，输出 n 个整数，表示第 i 个学生取到水的秒数，如果没取到水则为0', '2\n2\n1 3\n1 4\n3\n1 5\n1 1\n2 3', '1 2 \n1 0 2', '77');
+INSERT INTO `t_problem_description`
+VALUES ('63861934986',
+        '#include <iostream>\nusing namespace std;\nclass Sample {\npublic:\n int v;\n// 在此处补充你的代码\n};\nvoid PrintAndDouble(Sample o)\n{\n cout << o.v;\n cout << endl;\n}\nint main()\n{\n Sample a(5);\n Sample b = a;\n PrintAndDouble(b);\n Sample c = 20;\n PrintAndDouble(c);\n Sample d;\n d = a;\n cout << d.v;\n return 0;\n}\n（练习时请复制上述代码）\n',
+        '无', '无', '无', '9\n22\n5\n', '17');
+INSERT INTO `t_problem_description`
+VALUES ('64070845756',
+        ' 小女孩塔雅在一栋多层建筑中攀爬楼梯，每次爬过一个楼梯，她喜欢从1到顶数楼梯的台阶级数，并大声地说出每个数字。如果她爬了两个楼梯，第一个有3级，第二个有4级，她将读出数字1、2、3、1、2、3、4。\n\n       给出塔雅读出的所有数字，判断她爬了多少楼梯，且输出每个楼梯有多少台阶级数？',
+        '输出的第一行为一个整数n，表示塔雅读出了多少个数字。\n\n       第二行包含n个整数a1、a2、...、an，表示塔雅攀爬楼梯时读出的数字，按顺序从第1个到最后一个，当攀爬一个有x级的楼梯时，她将依次读出1、2、...、x。',
+        '输出的第一行一个t，表示塔雅攀爬的楼梯个数，第二行输出t个数，表示每个楼梯的台阶数。', '7\n1 2 3 1 2 3 4', '2\n3 4', '71');
+INSERT INTO `t_problem_description`
+VALUES ('64748704801',
+        '编写一个算法来判断一个数 n 是不是快乐数。\n\n「快乐数」 定义为：\n\n对于一个正整数，每一次将该数替换为它每个位置上的数字的平方和。\n然后重复这个过程直到这个数变为 1，也可能是 无限循环 但始终变不到 1。\n如果这个过程 结果为 1，那么这个数就是快乐数。\n如果 n 是 快乐数 就返回 true ；不是，则返回 false 。',
+        '一个数', 'true 或 false', 'n = 19', 'true', '48');
+INSERT INTO `t_problem_description`
+VALUES ('64759199325', ' 今年夏天特别热，阿迪和朋友两人决定去买个西瓜然后分着吃，西瓜的重量为 w，他们两人都是偶数迷，将西瓜分为两份，他们能否都得到重量为偶数的西瓜？',
+        ' 输入为一个整数 w(1≤ w ≤5×1010)，表示西瓜的重量。', ' 如果西瓜的重量能被分为两个偶数，输出\"Yes\"，否则输出\"No\"。', '8', 'Yes', '110');
+INSERT INTO `t_problem_description`
+VALUES ('65554835940',
+        ' 村里刚刚通网，小芳非常激动，下载了很多文件。她的网络使用情况如下： 在最开始的 T1 分钟内，下载速度是 D1 MB/min；接下来的 T2 分钟内，下载速度是 D2 MB/min；以此类推，最后 TN 分钟内，下载速度是 DN MB/min。 互联网运营商的收费标准是，先免费提供 K 分钟的网络使用，之后每 MB 数据收取 1 元费用。请你算出小芳需要付多少网费。',
+        '输入数据的第一行包含一个整数 T，表示测试数据的组数。接下来是 T 组数据。 每组数据的第一行包含两个整数 N 和 K。接下来 N 行，每行包含两个整数 Ti 和 Di，描述了小芳的网络使用状况。',
+        '对于每组数据，输出一行，包含一个整数，代表小芳需要付的网费，单位为元', '3\n2 2\n2 1\n2 3\n2 2\n1 2\n2 3\n3 0\n1 2\n2 4\n10 10', '6\n3\n110',
+        '85');
+INSERT INTO `t_problem_description`
+VALUES ('67187139811',
+        '创建一个Point类，表示二维平面上的一个点，包含私有数据成员x坐标和y坐标。请参考已有代码及注释，补充代码，完成以下任务。【注意系统库中存在POINT类，所以类名请注意区分】\n\n（1）成员函数：setPoint函数，从键盘输入，设置点的x坐标和y坐标\n\n（2）成员函数：getX函数，getY函数，分别获得该点的x坐标和y坐标\n\n（3）成员函数：myDistance函数，可调用sqrt()函数，计算并输出两个点之间的距离【库函数中存在distance函数，所以改名，避免冲突】',
+        '输入包括两行，每行包含两个整数，分别表示点的横坐标和纵坐标', '输出包括一行，只有一个实数，即两个点之间的距离，保留三位小数。', '0 0\n1 1', '1.414', '23');
+INSERT INTO `t_problem_description`
+VALUES ('67342581837',
+        '有人建造了一些机器人，并且将他们放置在包含n个单元的一维网格上，一个长度为n的字符串s代表了他们的编排方式，字符串中的字符既可以是\'.\'，也可以是\'0\'~\'9\'之间的一个数字字符，字符\'.\'表示开始时在相应的单元上无机器人，数字表示开始时在相应的单元上有一个机器人。特别地，数字x表示他可以从开始点向左移动x个单元，或从开始点向右移动x个单元，每次移动距离为一个单元格。\n\n       例如，假定字符串的第7个字符为3，代表机器人从第7个单元开始，他的活动范围为第4个单元（7-3=4）到第10个单元（7+3=10）(包含两个端点），机器人仅仅可以在这个范围内移动，但不可以移出网格。一旦达到范围边界，机器人会折返。\n\n       在此范围内，开始时机器人可以在任意时间按照任意方向移动，但如果两个机器人可能同时到达同一单元格时， 就会发生碰撞。 \n\n       请判断，机器人的编排方式是否安全。 ',
+        '第一行为一个整数T，代表测试数据的组数，接下来T行，每行为一个测试字符串s。', '对于每个测试用例，输出一行为\"safe\"或\"unsafe\"(无引号）。',
+        '4\n....\n.2.....\n.2...2..\n1.1.1.', 'safe\nsafe\nunsafe\nunsafe', '68');
+INSERT INTO `t_problem_description`
+VALUES ('67829500318',
+        '请编写一个程序，玩家从键盘输入猜测数字，程序根据猜测数字进行反馈，每次游戏玩家可猜测五次，猜测正确或超过五次，程序自动结束。玩家猜测错误且数值太高时输出\"Wrong! Too high!\"，太低时输出\"Wrong! Too low!\"，正确时输出\"Right!\"，正确的数字为35.',
+        '每次输入一个1-100的整型数字', '提示字符串', '13\n14\n15\n19\n45',
+        'Wrong! Too low!\nWrong! Too low!\nWrong! Too low!\nWrong! Too low!\nWrong! Too high!', '53');
+INSERT INTO `t_problem_description`
+VALUES ('67998097432',
+        ' 这是一个军事阵地，为具有 n × m 个分块单元的方形区域，每个单元既可以是空（用“.”表示），或者可以被墙（用“*”表示）占用。\n\n       有一颗炸弹，如果将其放在单元 (x, y)上，引爆后将摧毁 x 行和 y 列上所有的墙。\n\n       请确定放置并引爆一颗炸弹是否可以摧毁所有的墙，其中炸弹可以放置在空的单元，也可以放置在被墙占用的单元。',
+        '输入的第一行一个整数 T，表示测试用例数。\n\n       对于每个测试用例，输入的第一行包含两个整数 n 和 m (1 ≤ n, m ≤ 1000)，表示区域的行数和列数。\n\n       接下来的 n 行，每行包含 m 个符号 \".\" 或  \"*\"，表示区域上第 i 行第 j 列上的符号。',
+        '输出有 T 行，每行对应一个测试用例的结果，如果不可能摧毁所有的墙，则输出\"NO\"，否则输出\"YES\"。', '2\n3 4\n.*..\n....\n.*..\n3 3\n..*\n.*.\n*..',
+        'YES\nNO', '63');
+INSERT INTO `t_problem_description`
+VALUES ('68204119847',
+        '根据以下函数关系，对输入的每个x值，求y值。函数关系：\n（1）y=x*(x+2)   2<x<=10\n（2）y=2*x         -1<x<=2\n（3）y=x-1         x<=-1\n\n',
+        '输入一个小数x。', '输出对应的y值（6位小数）', '1', '2', '91');
+INSERT INTO `t_problem_description`
+VALUES ('69030923833',
+        'Bessie和其他的所有奶牛的耳朵上都戴有一个射频识别（RFID，不能使用英文缩略词）序列号码牌。因此FJ可以机\n械化地计算他们的数量。很多奶牛有一个“牛友”：一只奶牛的牛友的序列号刚好等于奶牛自己的序列号的所有约\n数之和。在这里，一个数的“约数”不包括这个数本身。因为一些奶牛的号码约数和大于其他任何奶牛的号码，所\n以这些奶牛没有牛友。一些奶牛有一个“非常好友”。当两个奶牛互为“牛友”时，他们就是一对“非常好友”。\n注意在这道题中，忽略那些自己是自己的“非常好友”的情况。给定一个序列号S (6 <= S <= 18,000)，找到序列\n号不小于S的第一只有“非常好友”的奶牛。比如说，考虑序列号220，它的约数是1, 2, 4, 5, 10, 11, 20, 22, \n44, 55, 和110。和是284。类似的，284的约数是1, 2, 4, 71, 和142。他们的和是220',
+        '第1行: 一个单独的整数: S ', '第1行: 单独一行，包含2个由空格隔开的整数。第一个整数表示第一个序列号不小于S的有非常好友的奶牛，第\n二个整数是他的好友的序列号。', '206', '220 284',
+        '83');
+INSERT INTO `t_problem_description`
+VALUES ('71041088581', '给定一个整数表示考试成绩，判断并输出该成绩属于哪一类。设90分及以上 为“A”，80分至89分为“B”，70分至79分为“C”，60分至69分 为“D”，60分以下为“E”。',
+        '输入一个整数成绩。', '输出一个字符，表示成绩的等级（大写字母）。', '59', 'E', '98');
+INSERT INTO `t_problem_description`
+VALUES ('71795287893',
+        '可以将一个杠杆描述为一个字符串，将字符串的长度表示为|s|，那么杠杆看起来很像具有一个支点的水平棒，可以看成是在OX轴上的点0到|s-1|之间的一段。\n\n       杠杆描述的解码如下：\n\n如果字符串的第 i 个字符为“^”，意指在坐标 i 的位置水平棒下是支点\n\n如果字符串的第 i 个字符为“=”，意指在坐标 i 的位置水平棒上面没有任何内容\n\n如果字符串的第 i 个字符为c(1-9)，意指在坐标 i 的位置上的水平棒上有一个质量为c的重量\n\n        给出杠杆的描述，输出它平衡与否。忽略杠杆本身的重量，假设最初它是平衡的，所有的重量都同时施加在上面，杠杆要么向左倾斜，要么向右倾斜，要么处于平衡状态。',
+        '输入的第一行为一个正整数T，表示有多组测试用例\n\n       接下来T行，每行对应一个测试用例，输入为一个非空字符串s(3 ≤|s| ≤106)，由数字1-9以及字符“^”和“=”组成，输入保证这行有且只有一个“^”字符，输入保证字符“^”不在字符串的两端。',
+        '输出有T行，每行对应一个测试用例，如果杠杆向左倾斜，输出“left”，向右倾斜，输出“right”，否则输出“balance”。', '2\n9===^==1\n41^52==', 'left\nbalance',
+        '65');
+INSERT INTO `t_problem_description`
+VALUES ('73214411936', '  给定 n (1 ≤ n ≤ 24)个正整数a1、a2、...、an，请判断这 n 个数是否是连续 n 个月份的天数，这些月份可以跨年度。',
+        '输入第一行为一个整数 n，第二行为n个正整数 a1、a2、...、an(28 ≤ ai ≤ 31)。', '输出Yes或No。', '4\n31 31 30 31', 'Yes', '78');
+INSERT INTO `t_problem_description`
+VALUES ('74038821974', '输入年份和月份，输出该月份的天数。', '输入一行，两个整数，分别为年份和月份。', '一个整数，表示该月份的天数', '2018 3', '31', '99');
+INSERT INTO `t_problem_description`
+VALUES ('75623469698',
+        '1. 编写三个类\nDog类和Cat类继承Animal类；\nDog类、Cat类、Animal类各有一个默认构造函数，分别输出字符串“Dog”、“Cat”和“Animal”。输出字符串后换行。注意三个字符串的首字母都是大写。\n在 Animal 类中定义纯虚函数 speak()；\n在 Dog 和 Cat类中覆写基类的 speak() 函数。Dog类的speak函数输出字符串“wang”之后换行；Cat类的speak函数输出字符串“miao”之后换行。注意字符串“wang”和“miao”都是小写字母\n上述三个类中如果有任何其它函数，则这些函数不直接或者间接输出任何信息\n2. 编写主函数\n在主函数中接受用户输入的一个整数N（大于0）；\n创建一个vector对象v （你可以用其它名字），存储Animal对象的指针。\n按照先创建一个 Dog 对象，紧接着再创建一个 Cat 对象这样交替创建的次序，一共创建 N 个 Dog对象和N个 Cat 对象；将这些Dog对象和Cat对象的指针按照创建的次序都存入v中。（提示：可以使用vector::push_back()函数）。\n将存入v中的对象，按照先后次序，逐个调用 speak() 函数，然后用 delete 显式销毁。（注意：每调用一个对象的 speak() 之后，就立即用 delete 销毁该对象）。\n程序中除了接受用户输入的整数之外，没有任何其它输入语句；\n程序中除了构造函数和speak()的输出之外，没有任何其它输出。',
+        '一个大于零的整数', '输出多行信息，最后一行是空行', '2',
+        'Animal\n\nDog\n\nAnimal\n\nCat\n\nAnimal\n\nDog\n\nAnimal\n\nCat\n\nwang\n\nmiao\n\nwang\n\nmiao', '2');
+INSERT INTO `t_problem_description`
+VALUES ('76651591270',
+        '编写一个名为Person的类，使其表示人员的姓名和住址（使用string对象存放这些元素）。为你的Person类添加正确的构造函数，并提供操作使其能够返回姓名和住址，最后显示打印姓名和住址。（后两个操作均由成员函数实现）\n\ninclude<iostream>\nusing namespace std;\n/*你的代码将被嵌入到这里*/ \nint main() {\n     std::string name, address;\n     std::cin >> name >> address;\n     Person p(name, address); //使用构造函数进行初始化\n    p.display(); //显示打印姓名和住址\n    return 0;\n }\n（练习时请复制上述已有代码）',
+        '第一行输入姓名。\n\n第二行输入地址。', '第一行输出Name:姓名\n\n第二行输出Address:地址', '无', '无', '12');
+INSERT INTO `t_problem_description`
+VALUES ('79016420488',
+        '#include <iostream>\n#include <string>\nusing namespace std;\nclass Base {\npublic:\n int k;\n Base(int n):k(n) { }\n};\nclass Big\n{\npublic:\n int v;\n Base b;\n// 在此处补充你的代码\n};\nint main()\n{\n int n;\n while(cin >>n) {\n  Big a1(n);\n  Big a2 = a1;\n  cout << a1.v << \",\" << a1.b.k << endl;\n  cout << a2.v << \",\" << a2.b.k << endl;\n }\n}\n（练习时请复制上述代码）\n',
+        '多组数据，每组一行，是一个整数', '对每组数据，输出两行，每行把输入的整数打印两遍', '3\n4', '3,3\n3,3\n4,4\n4,4', '28');
+INSERT INTO `t_problem_description`
+VALUES ('79474888060', '输入一个整数，判断其能否被3、5、7整除，若：\n\n（1）能同时被3,5,7整除，则输出It\'s divisible by 3, 5,
+        7；\n\n（2）能被其中两数（要指出哪两个）整除（如能被3, 7整除），则输出It\'s divisible by 3,7；\n\n（3）能被其中一个数（要指出哪一个）整除（如能被3整除），则输出It\' s
+        divisible by 3；\n\n（4）不能被3, 5, 7任一个整除，则输出null。', ' 输入一个整数n。', ' 输出一个判断信息，表示答案。', ' 30 ', ' It\'s divisible by 3,5',
+        '92');
+INSERT INTO `t_problem_description`
+VALUES ('79912704793', '利用公式 C = 5*(F-32)/9(其中C表示摄氏温度，F表示华氏温度)进行计算转化,输入华氏温度F，输出摄氏温度C，要求精确到小数点后5位。',
+        '输入一行，包含一个实数F，表示华氏温度。（F >= -459.67）', '输出一行，包含一个实数，表示对应的摄氏温度，要求精确到小数点后5位。', '41', '5', '104');
+INSERT INTO `t_problem_description`
+VALUES ('81245375911',
+        '1. 编写两个类\nDog类继承Animal类；Animal类和Dog类各有一个默认构造函数，分别输出字符串 “Animal”和“Dog”。输出字符串后换行\n2. 编写主函数\n在主函数中接受用户输入的一个整数N（大于0）；\n按照先创建一个 Animal 对象，紧接着再创建一个 Dog 对象这样交替创建的次序，一共创建 N 个 Animal对象和Dog对象\n程序中除了接受用户输入的整数之外，没有任何其它输入语句；\n程序中除了构造函数的输出之外，没有任何其它输出。',
+        '一个大于零的整数', '输出多行信息，最后一行是空行', '2', 'Animal\n\nAnimal\n\nDog\n\nAnimal\n\nAnimal\n\nDog', '1');
+INSERT INTO `t_problem_description`
+VALUES ('83634356877',
+        '运算符sizeof()通常用于求指定数据类型或者变量的字节数，请输出短整型、整型、长整型、长长整型、单精度浮点、双精度浮点、长双精度浮点、字符类型的字节数。\n其含义为如果sizeof(int)的结果为4，则所有声明的数据类型为int的变量，在存储时均占用4bytes，理解内存字节数非常重要，请大家记住。\n',
+        ' 无', '字节数', '无', '2\n4\n4\n8\n4\n8\n16\n1', '105');
+INSERT INTO `t_problem_description`
+VALUES ('84044209749',
+        '  小希最近找到了大公司的客户经理的新工作，每天工作时间为 L 分钟，他主要为 n 个固定的高端客人服务，第 i 个客人会在第 ti 分钟到来，他需要为其服务 li 分钟，在此期间不会有其他客人到来。\n\n       他喜欢在工作的间隙放松一下，喝杯咖啡，或者做做简单的运动，每次需要 a 分钟的时间，如果可以，这样惬意的事情他能够连续做好多次。但在有顾客的时间里，他必须在工作岗位上，否则，他会被投诉。那么，在一天的工作时间之内，他最多有几次这样轻松的时光？',
+        '  输入的第一行包含3个整数 n、L 和 a。\n\n       接下来的 n 行，每行两个整数 ti  和 li，分别表示第i个客人到来的时间和需要服务的时间，输入保证 ti+li ≤ ti+1',
+        '输出为一个整数，表示小希在一天的工作时间内最多可以放松多少次？', '2 11 3\n0 1\n1 1', '3', '79');
+INSERT INTO `t_problem_description`
+VALUES ('86296422526',
+        '有 n 只青蛙位于坐标轴 OX 上，对于每只青蛙，有两个已知值 xi、ti，表示第 i 只青蛙在坐标的位置（各不相同）以及它的舌头的长度。同样有 m 只蚊子一只接一只的落到坐标轴上，对于每只蚊子，有两个已知值， pj 表示第 j 只蚊子所在的位置，bj 为第 j 只蚊子的重量。青蛙和蚊子表示为坐标上的点。\n\n       如果蚊子和青蛙在同一位置或者在右边，青蛙可以吃掉蚊子，它们之间的距离不超过青蛙舌头的长度。\n\n       如果有几只青蛙都能在某一时刻吃到一只蚊子，最左边的青蛙就会吃掉它（最小的 xi）。吃完蚊子后，青蛙的舌头将增加蚊子重量的长度，在之后，青蛙又能够吃其他蚊子(在舌头长度增加之后)。 \n\n       在所有蚊子落下以及青蛙吃掉所有可能的蚊子之后，对于每个青蛙，输出两个值，即吃蚊子的数量以及舌头的长度。\n\n       每只蚊子只有在青蛙吃完之前所有可能的蚊子之后才会落到坐标上，蚊子的值是按其落到坐标轴上的顺序给出的。 ',
+        '输入的第一行为两个整数(1 ≤ n，m ≤ 2*105），表示青蛙和蚊子的数量。\n\n       接下来的 n 行，每行两个整数 xi、ti（0 ≤ xi、ti ≤ 109），表示第 i 只青蛙所在的位置以及它的舌头的初始长度，输入保证所有的 xi 互不相同。\n\n       接下来的 m 行，每行两个整数 pj、bj（0 ≤ pj、bj ≤ 109），表示第 j 只蚊子落下的位置以及它的重量。',
+        '输出为 n 行，第 i 行包含另两个整数值 ci、li，表示被第 i 只青蛙吃掉的蚊子数量以及最终的青蛙的舌头长度。',
+        '4 6\n10 2\n15 0\n6 1\n0 1\n110 10\n1 1\n6 0\n15 10\n14 100\n12 2', '3 114\n1 10\n1 1\n1 2', '35');
+INSERT INTO `t_problem_description`
+VALUES ('89280654606',
+        '#include <iostream>\nusing namespace std;\nclass A {\npublic:\n int val;\n\n A(int\n// 在此处补充你的代码\n};\nint main()\n{\n int m,n;\n A a;\n cout << a.val << endl;\n while(cin >> m >> n) {\n  a.GetObj() = m;\n  cout << a.val << endl;\n  a.GetObj() = A(n);\n  cout << a.val<< endl;\n }\n return 0;\n}\n（练习时请复制上述代码）\n',
+        '多组数据，每组一行，是整数 m 和 n', '先输出一行：\n123\n然后，对每组数据，输出两行，第一行是m,第二行是n', '2 3\n4 5', '123\n2\n3\n4\n5 ', '27');
+INSERT INTO `t_problem_description`
+VALUES ('89463787825',
+        '给你两个字符串 word1 和 word2 。请你从 word1 开始，通过交替添加字母来合并字符串。如果一个字符串比另一个字符串长，就将多出来的字母追加到合并后字符串的末尾。\n\n返回 合并后的字符串 。',
+        '字符串', '字符串', 'word1 = \"abc\", word2 = \"pqr\"', '\"apbqcr\"', '44');
+INSERT INTO `t_problem_description`
+VALUES ('90054734502',
+        '从一个整数开始，比如：6593。将这个整数中的各位数字全部取出，如果为0，则忽略，将他们相乘，\n得到一个新的整数，上面的例子就是6*5*9*3=810，然后继续做下去，8*1得到了一个个位数8。\n读入一个数并计算出得到一个个位数的过程。',
+        '一个整数n', '在单独的一行中按顺序输出游戏过程中产生的每一个数直到一个个位数结束。', '98886', '98886 27648 2688 768 336 54 20 2', '82');
+INSERT INTO `t_problem_description`
+VALUES ('90606142449',
+        '湖南大学正在举办一场重要的国际学术会议，出席会议的 n 位科学家来自不同的国家，每位科学家都只熟悉一种语言，为方便起见，世界上所有的语言用1~1000的数字编号来列出。\n\n       晚上，主办方安排所有科学家去看电影，电影院里有 m 部电影，每部电影可以用两个不同的整数来描述，即音频语言和字幕语言的编号。看电影的科学家，如果他熟悉电影的音频语言，他会非常高兴，如果他熟悉字幕的语言，他基本上满意，如果他两种都不熟悉，他会感到不满意(请注意，每部电影的音频语言和字幕语言总是不同的)。 \n\n       科学家们决定一起去看同一部电影。你必须帮助他们选择电影，使得非常高兴的科学家的数量是最大的，如果有多部这样的电影，在其中选择能使基本满意的科学家的数量最大，如果还有多部，则全部输出。如果没有这样的电影，则输出\"unsatisfied\"。',
+        '输入的第一行为一个正整数 n (1 ≤ n ≤ 200000)  ，表示科学家的数量。\n\n       第二行为 n 个正整数a1、a2、...、an (1 ≤ ai ≤ 1000)，其中ai 表示第 i 位科学家熟悉的语言编号。\n\n       第三行包含一个正整数m(1 ≤ m ≤ 200000)，表示电影院里的电影数量，编号从1~m。\n\n       第四行包含 m 个正整数 b1, b2, ..., bm (1 ≤ bj ≤ 1000)，其中 bj 表示第  j 部电影的音频语言。\n\n        第五行包含 m 个正整数 c1, c2, ..., cm (1 ≤ cj ≤ 1000)，其中 cj 表示第  j 部电影的字幕语言。\n\n         输入保证 bj ≠ cj  。',
+        '输出为若干整数，从小到大，表示科学家们可以去选择去看的电影的编号。如果没有这样的电影，则输出\"unsatisfied\"。', '3\n2 3 2\n2\n3 2\n2 3', '2', '34');
+INSERT INTO `t_problem_description`
+VALUES ('91297673363',
+        '一头大象决定去看朋友，大象住在直线坐标0的位置，而它的朋友则住在直线坐标x（1≤|x|≤106）的位置，大象每走一步可以跨越1、3、5、...、2m-1中的任何一个数字位置，其中1≤m≤106，那么大象到达朋友处最少需要走多少步？',
+        '输入为一行两个整数x、m，x表示大象朋友所住的位置，m为一个整数。', '  输出为一个整数，表示大象到达朋友处最少需要的步数。', '5 3', '1', '87');
+INSERT INTO `t_problem_description`
+VALUES ('92391178722', '实现Point类对象与整数加法,实现两个Point类对象的加法', '输入四个数字', '第一行 实现两个Point类对象的加法\n第二行 实现Point类对象与整数2的加法',
+        '1 2 3 4', '4 6\n6 8', '6');
+INSERT INTO `t_problem_description`
+VALUES ('92502920480',
+        '众所周知中国医药已经十三天十个涨停板，小明因为只吃了3个涨停板而感到懊恼不已，现在你站在上帝的未来视角，拥有批量的数据。假设一个股票前一段的涨跌幅和你拥有数据的一部分一样，那么接下来的涨跌幅就会和你知道的数据一样。现在小明想知道自己这支股票该怎么操作，你能帮帮他吗?\n注：\n（1） 所有数据都是从同一天开始，小明的所有股票也都是这一天买入的。因为DH不想持有太久，如果利润相同的情况下告诉他更早的那一天卖出。\n（2） 股票的价格四舍五入到小数点后第二位。',
+        '第一行输入一个整数n(1 ≤n ≤100)代表你有n个股票数据。\n接下来n行数据，每一行的第一个输入一个浮点数wi(1≤wi≤ 10000)代表股票的初始价格，第二个输入一个整数ki(1≤ki≤100)代表股票涨幅数据的天数。接下来ki个数字aj(-20≤aj≤20)代表第j天该股票的涨幅。\n第n＋2行包含一个数字q(1≤ q≤ 100)，代表有q次询问。\n接下来q行数据，每一行数据第一个整数vi(1≤vi≤100)代表有vi天的数据，接下来vi个数字bj(-20≤bj≤20)代表第j天该股票的涨幅。\n注: wi, aj和bj是小数点后不超过两位的浮点数。',
+        '对于每一次询问输出一行，如果可以继续持有则输出应该持有的天数，如果应该立即卖出则输出-1，如果你不知道该怎么办(没有类似数据或者能找到多个相同的股票数据)输出-2',
+        '2\n1.5 6 1 1 1 0 1 0\n9.5 6 1 1 1 0 -1 1\n3\n5 1 1 1 0 1\n4 1 1 1 0\n5 1 1 1 0 -1\n', '-1\n-2\n1\n\n', '11');
+INSERT INTO `t_problem_description`
+VALUES ('93696897257', '设计圆类，并以圆类为基类，派生圆柱类、圆锥类和圆球类（分别求出其面积和体积）', '无', '分别输出对应的面积体积', '无',
+        '创建一个圆对象\n半径 ：2.0\n面积 ：12.5664\n\n创建一个圆柱对象\n半径 ：2.0\n高度 ：3.0\n面积 ：62.8319\n体积 ：37.6991\n\n创建一个圆锥对象\n半径 ：2.0\n高度 ：3.0\n面积 ：35.2207\n体积 ：12.5664\n\n创建一个球对象\n半径 ：2.0\n面积 ：50.2655\n体积 ：33.5103',
+        '5');
+INSERT INTO `t_problem_description`
+VALUES ('94245034554', '从键盘输入一个长度不超过200的字符串，将该字符串反转后输出。', '输入为一行一个字符串', '输出反转后的字符串', 'student', 'tneduts', '41');
+INSERT INTO `t_problem_description`
+VALUES ('94347222613',
+        '使用函数统计指定数字的个数：读入一个大整数number和一个数字x，统计并输出大整数number中数字x（个位数）出现的个数。要求定义并调用函数  count(number, x)，它的功能是统计大整数number中数字x的个数。例如， count(12292,2)的返回值是 3。试编写相应程序。',
+        '一行两个数据，即number和x，以空格分隔，number的数位长度小于30。', 'number中x的个数', '12292 2', '3', '52');
+INSERT INTO `t_problem_description`
+VALUES ('95017822558',
+        '现给出高风险地区的左上角顶点坐标和右下角顶点坐标，请统计随后输入的 N 个坐标中，有几个点落在了高风险区域内。\n\n（1）从键盘输入高风险地区的左上角顶点坐标和右下角顶点坐标，分别用空格间隔四个整数。\n\n（2）接下来，从键盘输入 N 和2×N 个整数，分别表示这 N 个点的 X 和 Y 坐标\n\n（3）统计并落在高风险区域内的坐标个数（坐标在分界线上，也算区域内）。\n\n（4）所有坐标均为整数，且 N ≥1，且 N ≤100000。',
+        '输入包括三行。第一行有四个整数，前四个整数分别表示高风险区域的左上顶点坐标和右下角顶点坐标；第二行为整数 N ；第三行为2×N 个整数，表示 N 个点的 X 和 Y 坐标；整数之间以单个空格分隔。',
+        '输出只有一行，包含1个整数，即落在高风险区域内的坐标个数，若不存在，则输出0。', '0 3 4 1\n3\n0 0 2 1 3 2', '2', '38');
+INSERT INTO `t_problem_description`
+VALUES ('95554758518', '从键盘输入两个正整数，求他们的最大公约数和最小公倍数。', '输入为一行，两个正整数', '输入为一行，表示这两个正整数的最大公约数和最小公倍数', '15 125', '5 375',
+        '51');
+INSERT INTO `t_problem_description`
+VALUES ('96755229314',
+        '#include <iostream>\nusing namespace std;\n\nstruct A\n{\n int v;\n A(int vv):v(vv) { }\n// 在此处补充你的代码\n};\n\nint main()\n{\n const A a(10);  //常量对象可以使用常量成员函数\n const A * p = a.getPointer(); //常变量——常变量函数 \n cout << p->v << endl;\n return 0;\n}\n（练习时请复制上述代码）\n',
+        '无', '无', '无', '10', '29');
+INSERT INTO `t_problem_description`
+VALUES ('97659223388',
+        '给你一个数组 nums 和一个值 val，你需要 原地 移除所有数值等于 val 的元素，并返回移除后数组的新长度。\n\n不要使用额外的数组空间，你必须仅使用 O(1) 额外空间并 原地 修改输入数组。\n\n元素的顺序可以改变。你不需要考虑数组中超出新长度后面的元素。',
+        '一个数组和一个值', '一个数组', 'nums = [3,2,2,3], val = 3', '2, nums = [2,2]', '47');
+INSERT INTO `t_problem_description`
+VALUES ('98947880904',
+        '给定两个字符串s和t，每一次处理将从两个字符串中任选一个，删除第一个字符（也就是最左边字符），显然删除后字符串的长度减1，当然不能再从一个空字符串中去删除。\n\n       例如：\n\n           对字符串\"where\"处理后，结果为\"here\"；对字符串\"a\"处理后，结果为\"\"。\n\n       我们需要在经过最少次数的处理后，使得两个字符串相等。当然，经过处理后，两个字符串都可能为空串，这也是相等的，在这种情况下，答案很显然是两个字符串最开始时的长度之和。\n\n       编程求能使得两个字符串相等的需要处理的最小次数。',
+        '输入为两行，分别为需要进行处理的两个字符串s和t，两个字符串均有小写字母组成。', '输出需要处理的最小次数。', 'test\nwest', '2', '67');
+INSERT INTO `t_problem_description`
+VALUES ('99052056023',
+        '维亚是一家音乐俱乐部里的音乐DJ，在工作中经常使用Dubstep(回响贝斯)音乐。最近，他决定拿出几首老歌进行混音处理。\n\n       假定一首歌的歌词是一句英文句子，为了将Dubstep混录到歌曲里，维亚将一定数量（可以为0）的“WUB”插入到歌词的第一个单词之前、最后一个单词之后（可以为0）、以及两个单词之间（在相邻的一对单词之间至少一个），然后他将所有的单词包括“WUB”合并在一起形成一个混音字符串，在俱乐部里播放。\n\n       例如，歌词\"I AM X\"可以转换为回响贝斯混音“WUBWUBIWUBAMWUBWUBX”，但不能转换为“WUBWUBIAMWUBX”。\n\n       有人突发奇想，在听过维亚播放过的混音之后，尝试恢复原始的歌曲，请你帮助他。',
+        '输入为一行非空字符串，由英文字母组成，长度不超过200个字符。表示这是经过混音之后的歌词，输入保证在混入“WUB”之前，原始歌词中不包括“WUB”，且歌词至少包含一个单词。', '输出为一行一个字符串，表示原始的歌词。',
+        'WUBWEWUBAREWUBWUBTHEWUBCHAMPIONSWUBMYWUBFRIENDWUB', 'WE ARE THE CHAMPIONS MY FRIEND', '66');
+INSERT INTO `t_problem_description`
+VALUES ('99124519241', '输入一批正整数（以零或负数为结束标志），求其中的奇数的和（保证和不会超过int类型范围）。要求定义和调用函数even(n)判断数的奇偶性，当n为偶数时返回1，否则返回0。',
+        '一批以零或负数为结束标志的正整数', '输入数据中奇数的和', '50 421 84 6 111 0', '532', '59');
+INSERT INTO `t_problem_description`
+VALUES ('99604368226', '输入3组坐标，按指定格式输出', '(x1,y1),(x2,y2),(x3,y3)', '[x1,y1]\n\n[x2,y2]\n\n[x3,y3]',
+        '(1,1),(2,3),(4,5)', '[1,1]\n\n[2,3]\n\n[4,5]', '100');
 
 -- ----------------------------
 -- Table structure for t_recommend_problem
@@ -3516,11 +3969,11 @@ VALUES ('1590171782370619393',
 DROP TABLE IF EXISTS `t_recommend_problem`;
 CREATE TABLE `t_recommend_problem`
 (
-    `pk_recommend_problem_id` bigint                                                 NOT NULL,
-    `student_id`              char(12) CHARACTER SET utf8 COLLATE utf8_general_ci    NOT NULL,
-    `problem_id`              varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+    `pk_recommend_problem_id` bigint                                                       NOT NULL,
+    `student_id`              char(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci    NOT NULL,
+    `problem_id`              varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
     PRIMARY KEY (`pk_recommend_problem_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_recommend_problem
@@ -3532,23 +3985,29 @@ CREATE TABLE `t_recommend_problem`
 DROP TABLE IF EXISTS `t_student`;
 CREATE TABLE `t_student`
 (
-    `pk_student_id` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-    `id`            char(15) CHARACTER SET utf8 COLLATE utf8_general_ci    NOT NULL,
-    `name`          varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-    `password`      varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-    `phone`         char(11) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-    `email`         varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-    `deleted`       int                                                    NOT NULL,
-    `class_id`      char(6) CHARACTER SET utf8 COLLATE utf8_general_ci     NOT NULL,
+    `pk_student_id` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NOT NULL,
+    `id`            char(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci     NOT NULL,
+    `name`          varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NOT NULL,
+    `password`      varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NOT NULL,
+    `phone`         char(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci     NOT NULL,
+    `email`         varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+    `deleted`       int NULL DEFAULT NULL,
+    `class_id`      char(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci      NOT NULL,
     PRIMARY KEY (`pk_student_id`) USING BTREE,
     UNIQUE INDEX `id`(`id` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_student
 -- ----------------------------
 INSERT INTO `t_student`
-VALUES ('324441', '201810040106', '鞠方茂', '123456', '75551285661', 'zhiyuandai@icloud.com', 0, '080301');
+VALUES ('1594983270657986561', '123456', 'ljj', '123456', '13974799812', '1499489512@qq.com', 0, '260102');
+INSERT INTO `t_student`
+VALUES ('1594983730374676482', '1234', 'zj', '12345', '13941898177', '1499489512@qq.con', 1, '未分配');
+INSERT INTO `t_student`
+VALUES ('1594984265819525122', '123', 'zj', '123', '13913415511', '1499489512@qq.com', 1, '未分配');
+INSERT INTO `t_student`
+VALUES ('324441', '201810040106', '鞠方茂', '123456', '75551285662', 'zhiyuandai@icloud.com', 0, '080301');
 INSERT INTO `t_student`
 VALUES ('324442', '201810040108', '杨丰羽', '123456', '13864536805', 'jg1017@icloud.com', 0, '080301');
 INSERT INTO `t_student`
@@ -3812,28 +4271,28 @@ VALUES ('423451', '202108030230', '潘继正', '123456', '2835965843', 'jacobsto
 DROP TABLE IF EXISTS `t_teacher`;
 CREATE TABLE `t_teacher`
 (
-    `pk_teacher_id` bigint                                                  NOT NULL,
-    `id`            varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL,
-    `name`          varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL,
-    `password`      varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL,
-    `phone`         char(11) CHARACTER SET utf8 COLLATE utf8_general_ci     NOT NULL,
-    `email`         varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-    `deleted`       int                                                     NOT NULL,
+    `pk_teacher_id` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NOT NULL,
+    `id`            varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NOT NULL,
+    `name`          varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NOT NULL,
+    `password`      varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NOT NULL,
+    `phone`         char(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci     NOT NULL,
+    `email`         varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+    `deleted`       int                                                           NOT NULL,
     PRIMARY KEY (`pk_teacher_id`) USING BTREE,
     UNIQUE INDEX `id`(`id` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_teacher
 -- ----------------------------
 INSERT INTO `t_teacher`
-VALUES (1590268513125003267, 'T202026010512', 'T曾靖', '123321', '1111111', 'aaa@qq.com', 0);
+VALUES ('1592029535656873986', 't1', '教师1', '123456', '13288888888', '1499489512@qq.com', 0);
 INSERT INTO `t_teacher`
-VALUES (1591345797845868545, '2222222222', 'xxx', '111222333', '3424123414', 'xxx@11111.com', 0);
+VALUES ('1594281977610121218', '202026010513', 'xxx', '123321123', '3424123414', 'xxx@11111.com', 0);
 INSERT INTO `t_teacher`
-VALUES (1591346538660560898, '2222222221', 'xxx', '123321123', '3424123414', 'xxx@11111.com', 0);
+VALUES ('1594282764524466177', '202026010512', 'xxx', '123321123', '3424123414', 'xxx@11111.com', 0);
 INSERT INTO `t_teacher`
-VALUES (1591347007587995649, '2222222224', 'xxx', '123321123', '3424123414', 'xxx@11111.com', 1);
+VALUES ('31242345235235423', 't23', '老师', '123456', '18888888888', 'aaa@gmail.com', 0);
 
 -- ----------------------------
 -- Table structure for t_tutor
@@ -3841,25 +4300,21 @@ VALUES (1591347007587995649, '2222222224', 'xxx', '123321123', '3424123414', 'xx
 DROP TABLE IF EXISTS `t_tutor`;
 CREATE TABLE `t_tutor`
 (
-    `pk_tutor_id` bigint                                                  NOT NULL,
-    `id`          varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL,
-    `name`        varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL,
-    `password`    varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL,
-    `phone`       char(11) CHARACTER SET utf8 COLLATE utf8_general_ci     NOT NULL,
-    `email`       varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+    `pk_tutor_id` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NOT NULL,
+    `id`          varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NOT NULL,
+    `name`        varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NOT NULL,
+    `password`    varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NOT NULL,
+    `phone`       char(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci     NOT NULL,
+    `email`       varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
     PRIMARY KEY (`pk_tutor_id`) USING BTREE,
     UNIQUE INDEX `id`(`id` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_tutor
 -- ----------------------------
 INSERT INTO `t_tutor`
-VALUES (31232444, '253454353', '靖曾', '123456', '2435235', 'gegege');
-INSERT INTO `t_tutor`
-VALUES (1594323841824890882, '2222222222', 'xxx', '123321123', '3424123414', 'xxx@11111.com');
-INSERT INTO `t_tutor`
-VALUES (1594324019990536193, '2222222224', 'xxx', '123321123', '3424123414', 'xxx@11111.com');
+VALUES ('1598959803609366530', 't123456', 'ljl', '123456', '13222211111', '1499489512@qq.com');
 
 SET
 FOREIGN_KEY_CHECKS = 1;
