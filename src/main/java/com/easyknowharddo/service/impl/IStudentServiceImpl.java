@@ -537,6 +537,9 @@ public class IStudentServiceImpl extends ServiceImpl<StudentDao, Student>
     if (!flag) {
       return false;
     }
+    if (phone.charAt(0) != '1' || phone.length() != 11) {
+      return false;
+    }
     Student student =
         studentDao.selectOne(
             new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted, 0));

@@ -264,7 +264,9 @@ public class AccountManagementController {
             jsonObject.getString("email"),
             jsonObject.getString("phone"),
             jsonObject.getString("className"));
-    if (flag) return JsonResult.success("添加成功");
+    if (flag) {
+      return JsonResult.success("添加成功");
+    }
     return JsonResult.failed("添加失败");
   }
 

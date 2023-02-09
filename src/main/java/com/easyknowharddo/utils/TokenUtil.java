@@ -11,7 +11,7 @@ import java.util.List;
 public class TokenUtil {
 
   private static final long EXPIRE_TIME = 150 * 60 * 1000;
-  private static final String TOKEN_SECRET = "tokenqkj"; // 密钥盐
+  private static final String TOKEN_SECRET = "tokenzj"; // 密钥盐
 
   /**
    * 签名生成

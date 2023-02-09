@@ -369,9 +369,15 @@ public class IAdministratorServiceImpl extends ServiceImpl<AdministratorDao, Adm
 
     if (type.equals("student")) {
 
+      if (classesDao.selectOne(new LambdaQueryWrapper<Classes>().eq(Classes::getName, className))
+              == null) {
+        return false;
+      }
+
       if (studentDao.selectOne(
               new LambdaQueryWrapper<Student>().eq(Student::getId, id).eq(Student::getDeleted, 1))
           != null) {
+
         Student student =
             studentDao.selectOne(
                 new LambdaQueryWrapper<Student>()

@@ -25,7 +25,10 @@ import com.github.pagehelper.PageInfo;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -712,10 +715,21 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
    */
   @Override
   public Boolean addProblem(String id, String name, String label, String difficulty) {
+    if (id.charAt(0) == '-' || id.charAt(0) == '0') { // 负数和0
+      return false;
+    }
+    boolean flag = isNumeric(id);
+    if (!flag) { // 不是数字
+      return false;
+    }
     if (problemDao.selectOne(
             new LambdaQueryWrapper<Problem>().eq(Problem::getId, id).eq(Problem::getDeleted, 0))
-        != null) return false;
-    if (difficulty.length() > 1) return false;
+        != null) { // id已存在
+      return false;
+    }
+    if (difficulty.length() > 1) { // 难度不匹配
+      return false;
+    }
     if (problemDao.selectOne(
             new LambdaQueryWrapper<Problem>().eq(Problem::getId, id).eq(Problem::getDeleted, 1))
         != null) {
@@ -741,6 +755,26 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
     return true;
   }
 
+  /**
+   * @param str:  * @return boolean
+   * @author ZJ
+   * @description TODO 判断字符串是否为数字
+   * @date 2023/2/8 23:41
+   */
+  public static boolean isNumeric(String str) {
+    for (int i = str.length(); --i >= 0; ) {
+      int chr = str.charAt(i);
+      if (chr < 48 || chr > 57) return false;
+    }
+    return true;
+  }
+
+  /**
+   * @param : * @return List<Integer>
+   * @author ZJ
+   * @description TODO [教师]获取成绩分布
+   * @date 2022/11/22 17:34
+   */
   @Override
   public List<Integer> gradeDistribution() {
     List<ModelOutputScore> modelOutputScores = modelOutputScoreDao.selectList(null);
@@ -781,46 +815,61 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
   @Override
   public List<Integer> gradeDistributionByClass(String className) {
     Integer[] i = new Integer[10];
+    for (int index = 0; index < 10; ++index) {
+      i[index] = 0;
+    }
+
     List<Student> students = new ArrayList<>();
-    if (className.equals("通信一班")) students = selectStudentByClassName("080301");
-    else if (className.equals("通信二班")) students = selectStudentByClassName("080302");
-    else if (className.equals("通信三班")) students = selectStudentByClassName("080303");
-    else if (className.equals("通信四班")) students = selectStudentByClassName("080304");
+    if (className.equals("通信一班")) {
+      students = selectStudentByClassName("080301");
+    } else if (className.equals("通信二班")) {
+      students = selectStudentByClassName("080302");
+    } else if (className.equals("通信三班")) {
+      students = selectStudentByClassName("080303");
+    } else if (className.equals("通信四班")) {
+      students = selectStudentByClassName("080304");
+    }
 
     for (Student student : students) {
       if (modelOutputScoreDao.selectOne(
               new LambdaQueryWrapper<ModelOutputScore>()
                   .eq(ModelOutputScore::getStudentId, student.getId()))
-          == null) continue;
+          == null) {
+        continue;
+      }
       BigDecimal examScore =
           modelOutputScoreDao
               .selectOne(
                   new LambdaQueryWrapper<ModelOutputScore>()
                       .eq(ModelOutputScore::getStudentId, student.getId()))
               .getExamScore(); // student学生对应的成绩
-      if (examScore.compareTo(new BigDecimal("0")) == 1
+      System.out.println(examScore);
+      if (examScore.compareTo(new BigDecimal("0")) > -1
           && examScore.compareTo(new BigDecimal("10")) == -1) i[0]++;
-      else if (examScore.compareTo(new BigDecimal("10")) == 1
+      else if (examScore.compareTo(new BigDecimal("10")) > -1
           && examScore.compareTo(new BigDecimal("20")) == -1) i[1]++;
-      else if (examScore.compareTo(new BigDecimal("20")) == 1
+      else if (examScore.compareTo(new BigDecimal("20")) > -1
           && examScore.compareTo(new BigDecimal("30")) == -1) i[2]++;
-      else if (examScore.compareTo(new BigDecimal("30")) == 1
+      else if (examScore.compareTo(new BigDecimal("30")) > -1
           && examScore.compareTo(new BigDecimal("40")) == -1) i[3]++;
-      else if (examScore.compareTo(new BigDecimal("40")) == 1
+      else if (examScore.compareTo(new BigDecimal("40")) > -1
           && examScore.compareTo(new BigDecimal("50")) == -1) i[4]++;
-      else if (examScore.compareTo(new BigDecimal("50")) == 1
+      else if (examScore.compareTo(new BigDecimal("50")) > -1
           && examScore.compareTo(new BigDecimal("60")) == -1) i[5]++;
-      else if (examScore.compareTo(new BigDecimal("60")) == 1
+      else if (examScore.compareTo(new BigDecimal("60")) > -1
           && examScore.compareTo(new BigDecimal("70")) == -1) i[6]++;
-      else if (examScore.compareTo(new BigDecimal("70")) == 1
+      else if (examScore.compareTo(new BigDecimal("70")) > -1
           && examScore.compareTo(new BigDecimal("80")) == -1) i[7]++;
-      else if (examScore.compareTo(new BigDecimal("80")) == 1
+      else if (examScore.compareTo(new BigDecimal("80")) > -1
           && examScore.compareTo(new BigDecimal("90")) == -1) i[8]++;
       else i[9]++;
+      System.out.println(examScore);
     }
 
     List<Integer> list = new ArrayList<>();
-    for (Integer index : i) list.add(index);
+    for (Integer index : i) {
+      list.add(index);
+    }
     return list;
   }
 
@@ -842,47 +891,91 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
     for (ModelOutputKnowledge modelOutputKnowledge : modelOutputKnowledges) {
       HashMap<String, BigDecimal> map = new HashMap<>();
       if (modelOutputKnowledge.getKnowledgePointId().equals("1")) {
-        map.put("继承", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
+        map.put(
+            "继承",
+            sqrt(modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)), 2)
+                .setScale(0, BigDecimal.ROUND_DOWN)
+                .multiply(new BigDecimal("10")));
         list.add(map);
         index[10] = i;
       } else if (modelOutputKnowledge.getKnowledgePointId().equals("2")) {
-        map.put("构造函数", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
+        map.put(
+            "构造函数",
+            sqrt(modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)), 2)
+                .setScale(0, BigDecimal.ROUND_DOWN)
+                .multiply(new BigDecimal("10")));
         list.add(map);
         index[9] = i;
       } else if (modelOutputKnowledge.getKnowledgePointId().equals("3")) {
-        map.put("类与对象", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
+        map.put(
+            "类与对象",
+            sqrt(modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)), 2)
+                .setScale(0, BigDecimal.ROUND_DOWN)
+                .multiply(new BigDecimal("10")));
         list.add(map);
         index[8] = i;
       } else if (modelOutputKnowledge.getKnowledgePointId().equals("4")) {
-        map.put("结构体", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
+        map.put(
+            "结构体",
+            sqrt(modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)), 2)
+                .setScale(0, BigDecimal.ROUND_DOWN)
+                .multiply(new BigDecimal("10")));
         list.add(map);
         index[7] = i;
       } else if (modelOutputKnowledge.getKnowledgePointId().equals("5")) {
-        map.put("指针", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
+        map.put(
+            "指针",
+            sqrt(modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)), 2)
+                .setScale(0, BigDecimal.ROUND_DOWN)
+                .multiply(new BigDecimal("10")));
         list.add(map);
         index[6] = i;
       } else if (modelOutputKnowledge.getKnowledgePointId().equals("6")) {
-        map.put("函数", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
+        map.put(
+            "函数",
+            sqrt(modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)), 2)
+                .setScale(0, BigDecimal.ROUND_DOWN)
+                .multiply(new BigDecimal("10")));
         list.add(map);
         index[5] = i;
       } else if (modelOutputKnowledge.getKnowledgePointId().equals("7")) {
-        map.put("字符串", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
+        map.put(
+            "字符串",
+            sqrt(modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)), 2)
+                .setScale(0, BigDecimal.ROUND_DOWN)
+                .multiply(new BigDecimal("10")));
         list.add(map);
         index[4] = i;
       } else if (modelOutputKnowledge.getKnowledgePointId().equals("8")) {
-        map.put("数组", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
+        map.put(
+            "数组",
+            sqrt(modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)), 2)
+                .setScale(0, BigDecimal.ROUND_DOWN)
+                .multiply(new BigDecimal("10")));
         list.add(map);
         index[3] = i;
       } else if (modelOutputKnowledge.getKnowledgePointId().equals("9")) {
-        map.put("循环", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
+        map.put(
+            "循环",
+            sqrt(modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)), 2)
+                .setScale(0, BigDecimal.ROUND_DOWN)
+                .multiply(new BigDecimal("10")));
         list.add(map);
         index[2] = i;
       } else if (modelOutputKnowledge.getKnowledgePointId().equals("10")) {
-        map.put("控制结构", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
+        map.put(
+            "控制结构",
+            sqrt(modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)), 2)
+                .setScale(0, BigDecimal.ROUND_DOWN)
+                .multiply(new BigDecimal("10")));
         list.add(map);
         index[1] = i;
       } else if (modelOutputKnowledge.getKnowledgePointId().equals("11")) {
-        map.put("语言基础", modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)));
+        map.put(
+            "语言基础",
+            sqrt(modelOutputKnowledge.getForecast().multiply(new BigDecimal(100)), 2)
+                .setScale(0, BigDecimal.ROUND_DOWN)
+                .multiply(new BigDecimal("10")));
         index[0] = i;
         list.add(map);
       }
@@ -890,6 +983,27 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
     }
 
     return ITeacherServiceImpl.customSortList(list, index);
+  }
+
+  /**
+   * @param value:
+   * @param scale: * @return BigDecimal
+   * @author ZJ
+   * @description TODO BigDecimal牛顿迭代法计算平方根
+   * @date 2023/2/8 23:17
+   */
+  public static BigDecimal sqrt(BigDecimal value, int scale) {
+    BigDecimal num2 = BigDecimal.valueOf(2);
+    int precision = 100;
+    MathContext mc = new MathContext(precision, RoundingMode.HALF_UP);
+    BigDecimal deviation = value;
+    int cnt = 0;
+    while (cnt < precision) {
+      deviation = (deviation.add(value.divide(deviation, mc))).divide(num2, mc);
+      cnt++;
+    }
+    deviation = deviation.setScale(scale, BigDecimal.ROUND_HALF_UP);
+    return deviation;
   }
 
   /**
@@ -941,7 +1055,7 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
    */
   private static List<BigDecimal> customSortList(
       List<HashMap<String, BigDecimal>> platformDataStatistics, int[] index) {
-    List<BigDecimal> list = new ArrayList<BigDecimal>();
+    List<BigDecimal> list = new ArrayList<>();
     for (int i = 0; i < 11; ++i) {
       Collection<BigDecimal> values =
           platformDataStatistics.get(index[i]).values(); // 获取一个Hashmap中的value数组
