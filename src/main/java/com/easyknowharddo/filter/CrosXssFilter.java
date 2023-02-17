@@ -17,7 +17,7 @@ import java.io.IOException;
 public class CrosXssFilter implements Filter {
   @Override
   public void init(FilterConfig filterConfig) throws ServletException {
-    System.out.println("sql过滤器");
+//    System.out.println("sql过滤器");
   }
 
   @Override

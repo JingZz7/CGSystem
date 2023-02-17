@@ -279,7 +279,7 @@ public class ITeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher>
       String type, String id, String name, String password, String email, String phone) {
     if (selectOneStudentByIdAndDeleted0(id) != null || selectOneTutorById(id) != null) return false;
     if (type.equals("student")) {
-      if (selectOneStudentByIdAndDeleted1(id) != null) {
+      if (selectOneStudentByIdAndDeleted1(id) != null) {//deleted
         Student student = selectOneStudentByIdAndDeleted1(id);
         student.setName(name);
         student.setPassword(password);
